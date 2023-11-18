@@ -8,7 +8,7 @@ class QuestionEegonomicWidget extends StatelessWidget {
   final Map<int, bool?> currentOptions;
   final int index;
 
-  QuestionEegonomicWidget({
+  const QuestionEegonomicWidget({
     super.key,
     required this.question,
     required this.imagePath,

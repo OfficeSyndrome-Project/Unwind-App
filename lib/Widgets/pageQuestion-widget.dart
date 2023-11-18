@@ -42,10 +42,10 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
   }
 
   Future<void> initOptions() async {
-    var _storedOptions =
+    var storedOptions =
         await StoredOptionsService.readCurrntOptions(widget.idCategory);
     setState(() {
-      storedOptions = _storedOptions;
+      storedOptions = storedOptions;
     });
   }
 
