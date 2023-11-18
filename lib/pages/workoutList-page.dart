@@ -6,7 +6,7 @@ class WorkoutListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppscreenTheme(
+    return const AppscreenTheme(
         textBar: "ชุดท่าบริหาร",
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
