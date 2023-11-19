@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import '../data/ergonomic-model.dart';
 
 class QuestionService {

@@ -1,7 +1,8 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
 import '../data/ergonomic-model.dart';
 import 'ergonomicQ-widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import '../services/storedOptions-service.dart';
 
@@ -31,7 +32,6 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
     return {for (int i = 0; i < length; i++) i: null};
   }
 
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late Map<int, bool?> storedOptions =
       createDefaultOption(widget.questions.length);
 
