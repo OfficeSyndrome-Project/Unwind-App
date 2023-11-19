@@ -1,5 +1,7 @@
 //time data model state
 
+// ignore_for_file: file_names
+
 class BreakStates {
   String? breaktimes;
 
