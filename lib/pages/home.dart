@@ -1,10 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:unwind_app/pages/history-page.dart';
+import 'package:unwind_app/pages/history-feature/history-page.dart';
 import 'package:unwind_app/pages/menu-page.dart';
-import 'package:unwind_app/pages/profile-page.dart';
-import 'package:unwind_app/pages/workoutList-page.dart';
+import 'package:unwind_app/pages/profile-feature/profile-page.dart';
+import 'package:unwind_app/pages/workoutList-feature/workoutList-page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

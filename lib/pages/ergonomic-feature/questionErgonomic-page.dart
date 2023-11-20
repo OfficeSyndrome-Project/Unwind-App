@@ -5,8 +5,8 @@ import 'package:unwind_app/Routes/routes-config.dart';
 import 'package:unwind_app/globals/theme/appscreen-theme.dart';
 import 'package:unwind_app/services/question-service.dart';
 
-import '../Widgets/pageQuestion-widget.dart';
-import '../globals/theme/buttomtap-theme.dart';
+import '../../Widgets/pageQuestion-widget.dart';
+import '../../globals/theme/buttonTap-theme.dart';
 
 class QuestionErgonomicPage extends StatefulWidget {
   const QuestionErgonomicPage({Key? key}) : super(key: key);
@@ -101,13 +101,13 @@ class DetectorButtom extends StatelessWidget {
                 curve: Curves.easeIn);
       },
       child: ButtomTapTheme(
-          "ถัดไป",
-          32,
-          double.infinity,
-          52,
-          Theme.of(context).colorScheme.primary,
-          BorderSide.none,
-          Theme.of(context).textTheme.headlineSmall),
+          text: "ถัดไป",
+          radius: 32,
+          width: double.infinity,
+          height: 52,
+          color: Theme.of(context).colorScheme.primary,
+          borderSide: BorderSide.none,
+          style: Theme.of(context).textTheme.headlineSmall),
     );
   }
 }

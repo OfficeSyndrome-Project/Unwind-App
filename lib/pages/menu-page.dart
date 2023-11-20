@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:unwind_app/globals/theme/appscreen-theme.dart';
-import 'package:unwind_app/pages/clock-page.dart';
-import 'package:unwind_app/pages/ergonomic-page.dart';
+import 'package:unwind_app/pages/alarm-feature/clock-page.dart';
+
+import 'ergonomic-feature/ergonomic-page.dart';
 
 class MenuWidget extends StatelessWidget {
   const MenuWidget({Key? key}) : super(key: key);

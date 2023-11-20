@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:unwind_app/globals/theme/appscreen-theme.dart';
-import 'package:unwind_app/globals/theme/buttomtap-theme.dart';
+import 'package:unwind_app/globals/theme/buttonTap-theme.dart';
 
 class AfterBreakPage extends StatelessWidget {
   const AfterBreakPage({Key? key}) : super(key: key);
@@ -56,14 +56,14 @@ class AfterBreakPage extends StatelessWidget {
                 navigatorBack(false, context);
               },
               child: ButtomTapTheme(
-                  "หยุดการทำงาน",
-                  8,
-                  137,
-                  50,
-                  Theme.of(context).colorScheme.background,
-                  BorderSide(
+                  text: "หยุดการทำงาน",
+                  radius: 8,
+                  width: 137,
+                  height: 50,
+                  color: Theme.of(context).colorScheme.background,
+                  borderSide: BorderSide(
                       width: 1, color: Theme.of(context).colorScheme.primary),
-                  Theme.of(context).textTheme.headlineMedium),
+                  style: Theme.of(context).textTheme.headlineMedium),
             ),
             const SizedBox(
               width: 8,
@@ -73,13 +73,13 @@ class AfterBreakPage extends StatelessWidget {
                   navigatorBack(true, context);
                 },
                 child: ButtomTapTheme(
-                    "ทำงานต่อ",
-                    8,
-                    107,
-                    50,
-                    Theme.of(context).colorScheme.primary,
-                    BorderSide.none,
-                    Theme.of(context).textTheme.headlineSmall)),
+                    text: "ทำงานต่อ",
+                    radius: 8,
+                    width: 107,
+                    height: 50,
+                    color: Theme.of(context).colorScheme.primary,
+                    borderSide: BorderSide.none,
+                    style: Theme.of(context).textTheme.headlineSmall)),
           ],
         ),
       ],

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes-config.dart';
 import 'package:unwind_app/Widgets/resultErg-box-widget.dart';
 import 'package:unwind_app/globals/theme/appscreen-theme.dart';
-import 'package:unwind_app/globals/theme/buttomtap-theme.dart';
+import 'package:unwind_app/globals/theme/buttonTap-theme.dart';
 import 'package:unwind_app/services/storedOptions-service.dart';
 
 // ignore: must_be_immutable
@@ -70,13 +70,13 @@ class ResultErgonomicPage extends StatelessWidget {
               Navigator.of(context).popUntil((route) => route.isFirst);
             },
             child: ButtomTapTheme(
-                "กลับเมนู",
-                32,
-                double.infinity,
-                52,
-                Theme.of(context).colorScheme.primary,
-                BorderSide.none,
-                Theme.of(context).textTheme.headlineSmall),
+                text: "กลับเมนู",
+                radius: 32,
+                width: double.infinity,
+                height: 52,
+                color: Theme.of(context).colorScheme.primary,
+                borderSide: BorderSide.none,
+                style: Theme.of(context).textTheme.headlineSmall),
           )
         ]);
   }
