@@ -8,10 +8,11 @@ import 'package:unwind_app/Widgets/btnCircle-widget.dart';
 import 'package:unwind_app/data/timewatch-obj.dart';
 import 'package:unwind_app/globals/theme/appscreen-theme.dart';
 
-import 'package:unwind_app/pages/infoClock-page.dart';
 import 'package:unwind_app/Widgets/wheelTile-widget.dart';
 import 'package:unwind_app/data/time-workstate.dart';
 import 'package:unwind_app/data/time-breakstate.dart';
+
+import 'infoClock-page.dart';
 
 class ClockPage extends StatefulWidget {
   const ClockPage({Key? key}) : super(key: key);

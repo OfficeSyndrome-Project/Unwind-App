@@ -8,10 +8,10 @@ import 'package:unwind_app/Widgets/btnCircle-widget.dart';
 import 'package:unwind_app/Widgets/textIcon-widget.dart';
 import 'package:unwind_app/data/timewatch-obj.dart';
 import 'package:unwind_app/globals/theme/appscreen-theme.dart';
-import 'package:unwind_app/globals/theme/buttomtap-theme.dart';
-import 'package:unwind_app/pages/afterBreak-page.dart';
+import 'package:unwind_app/globals/theme/buttonTap-theme.dart';
 
-import 'package:unwind_app/pages/contentAfterWork-page.dart';
+import 'afterBreak-page.dart';
+import 'contentAfterWork-page.dart';
 
 class TimeWatchPage extends StatefulWidget {
   final List<TimeWatchObj> timesArr;
@@ -162,17 +162,17 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                                     .popUntil((route) => route.isFirst);
                               },
                               child: ButtomTapTheme(
-                                  "ใช่",
-                                  8,
-                                  63,
-                                  32,
-                                  Colors.white,
-                                  BorderSide(
+                                  text: "ใช่",
+                                  radius: 8,
+                                  width: 63,
+                                  height: 32,
+                                  color: Colors.white,
+                                  borderSide: BorderSide(
                                       width: 1,
                                       color: Theme.of(context)
                                           .colorScheme
                                           .primary),
-                                  TextStyle(
+                                  style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                       fontSize: 12,
@@ -189,13 +189,13 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                                 Navigator.of(dialogcontext).pop();
                               },
                               child: ButtomTapTheme(
-                                  "ไม่",
-                                  8,
-                                  63,
-                                  32,
-                                  Theme.of(context).colorScheme.primary,
-                                  BorderSide.none,
-                                  const TextStyle(
+                                  text: "ไม่",
+                                  radius: 8,
+                                  width: 63,
+                                  height: 32,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  borderSide: BorderSide.none,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 12,
                                     fontFamily: "Noto Sans Thai",

@@ -7,12 +7,19 @@ class ButtomTapTheme extends StatelessWidget {
   final double radius;
   final double width;
   final double height;
-  final Color color;
+  final Color? color;
   final BorderSide borderSide;
   final TextStyle? style;
-  const ButtomTapTheme(this.text, this.radius, this.width, this.height,
-      this.color, this.borderSide, this.style,
-      {super.key});
+  const ButtomTapTheme(
+      {Key? key,
+      required this.text,
+      required this.radius,
+      required this.width,
+      required this.height,
+      required this.color,
+      required this.borderSide,
+      required this.style})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

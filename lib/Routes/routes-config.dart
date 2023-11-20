@@ -1,20 +1,19 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:unwind_app/pages/afterBreak-page.dart';
-import 'package:unwind_app/pages/clock-page.dart';
-import 'package:unwind_app/pages/contentAfterWork-page.dart';
-import 'package:unwind_app/pages/ergonomic-page.dart';
-import 'package:unwind_app/pages/history-page.dart';
+import 'package:unwind_app/pages/alarm-feature/clock-page.dart';
+import 'package:unwind_app/pages/history-feature/history-page.dart';
 import 'package:unwind_app/pages/home.dart';
-import 'package:unwind_app/pages/profile-page.dart';
-import 'package:unwind_app/pages/questionErgonomic-page.dart';
-import 'package:unwind_app/pages/resultErgonomic-page.dart';
-import 'package:unwind_app/pages/summary-page.dart';
-import 'package:unwind_app/pages/timeWatch-page.dart';
-import 'package:unwind_app/pages/workoutList-page.dart';
-
+import 'package:unwind_app/pages/profile-feature/profile-page.dart';
+import 'package:unwind_app/pages/history-feature/summary-page.dart';
+import 'package:unwind_app/pages/workoutList-feature/workoutList-page.dart';
 import '../data/timewatch-obj.dart';
+import '../pages/alarm-feature/afterBreak-page.dart';
+import '../pages/alarm-feature/contentAfterWork-page.dart';
+import '../pages/alarm-feature/timeWatch-page.dart';
+import '../pages/ergonomic-feature/ergonomic-page.dart';
+import '../pages/ergonomic-feature/questionErgonomic-page.dart';
+import '../pages/ergonomic-feature/resultErgonomic-page.dart';
 
 class PageRoutes {
   Home home = Home();

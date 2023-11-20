@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes-config.dart';
 import 'package:unwind_app/globals/theme/appscreen-theme.dart';
-import 'package:unwind_app/globals/theme/buttomtap-theme.dart';
+import 'package:unwind_app/globals/theme/buttonTap-theme.dart';
 
 class ErgonomicPage extends StatelessWidget {
   ErgonomicPage({Key? key}) : super(key: key);
@@ -71,13 +71,13 @@ class ErgonomicPage extends StatelessWidget {
                 context, pageRoutes.menu.questionergonomic().route(context));
           },
           child: ButtomTapTheme(
-              "ถัดไป",
-              32,
-              double.infinity,
-              52,
-              Theme.of(context).colorScheme.primary,
-              BorderSide.none,
-              Theme.of(context).textTheme.headlineSmall),
+              text: "ถัดไป",
+              radius: 32,
+              width: double.infinity,
+              height: 52,
+              color: Theme.of(context).colorScheme.primary,
+              borderSide: BorderSide.none,
+              style: Theme.of(context).textTheme.headlineSmall),
         ),
       ],
     );
