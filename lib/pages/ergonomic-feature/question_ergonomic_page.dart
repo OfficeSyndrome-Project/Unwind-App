@@ -1,9 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/services/question_service.dart';
-
-import '../../Widgets/pagequestion_widget.dart';
+import '../../Widgets/ergonomic-widget/erg_rowsquestion_widget.dart';
 import '../../globals/theme/button_withouticon_theme.dart';
 
 class QuestionErgonomicPage extends StatefulWidget {

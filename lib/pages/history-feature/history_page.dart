@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
-import 'package:unwind_app/Widgets/history_workoutlist_widget.dart';
+import 'package:unwind_app/Widgets/history-widget/history_boxworkoutlist_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class HistoryPage extends StatelessWidget {
