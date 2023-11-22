@@ -4,6 +4,7 @@ import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
+import 'package:unwind_app/pages/screening-feature/screening_part_one.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 import '../data/timewatch_obj.dart';
 import '../pages/alarm-feature/afterbreak_page.dart';
@@ -12,12 +13,19 @@ import '../pages/alarm-feature/time_watch_page.dart';
 import '../pages/ergonomic-feature/ergonomic_page.dart';
 import '../pages/ergonomic-feature/question_ergonomic_page.dart';
 import '../pages/ergonomic-feature/result_ergonomic_page.dart';
+import '../pages/screening-feature/screening_part_one.dart';
 
 class PageRoutes {
   Home home = Home();
   Menu menu = Menu();
   History history = History();
   Profile profile = Profile();
+  Screening screening = Screening();
+}
+
+class Screening {
+  PathRoute screeningpage() =>
+      PathRoute(title: "", widget: const ScreeningPartOne());
 }
 
 class Home {
