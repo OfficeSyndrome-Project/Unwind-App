@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/pages/home.dart';
-import 'package:unwind_app/globals/theme/theme-app.dart';
+import 'package:unwind_app/globals/theme/theme_app.dart';
 void main() {
   runApp(const MyApp());
 }
