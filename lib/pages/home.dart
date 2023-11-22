@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:unwind_app/pages/screening-feature/screening_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/menu_page.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
@@ -17,6 +18,7 @@ class _HomeState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
+    ScreeningPage(),
     const WorkoutListPage(),
     const MenuWidget(),
     HistoryPage(),
@@ -42,6 +44,12 @@ class _HomeState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'screening',
+            backgroundColor: Color(0xffebedf0),
+          ),
           BottomNavigationBarItem(
             activeIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),

@@ -84,6 +84,7 @@ flutter:
     - lib/assets/images/w-17.png
     - lib/assets/images/w-18.png
     - lib/assets/images/w-19.png
+    - lib/assets/images/screeningPart/screening-1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
