@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
-import 'package:unwind_app/Widgets/resulterg_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 import 'package:unwind_app/services/storedoptions_service.dart';
+
+import '../../Widgets/ergonomic-widget/erg_boxresult_widget.dart';
 
 // ignore: must_be_immutable
 class ResultErgonomicPage extends StatelessWidget {
