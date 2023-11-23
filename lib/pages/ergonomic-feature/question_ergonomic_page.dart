@@ -6,7 +6,6 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/services/question_service.dart';
 import 'package:unwind_app/services/storedoptions_service.dart';
 import '../../Widgets/ergonomic-widget/erg_rowsquestion_widget.dart';
-import '../../globals/theme/button_withouticon_theme.dart';
 
 class QuestionErgonomicPage extends StatefulWidget {
   const QuestionErgonomicPage({super.key});
@@ -21,13 +20,6 @@ class _QuestionErgonomicPageState extends State<QuestionErgonomicPage> {
       PageController(initialPage: 0, viewportFraction: 1);
   PageRoutes pageRoutes = PageRoutes();
 
-  bool disable = true;
-  void setDisable(bool value) {
-    setState(() {
-      disable = value;
-    });
-  }
-
   void handleBackWard(BuildContext context) {
     StoredOptionsService.clearStoredOptions();
     Navigator.pop(context);
@@ -39,14 +31,9 @@ class _QuestionErgonomicPageState extends State<QuestionErgonomicPage> {
         .map((idCategory) => PageQuestionWidget(
               questions: QuestionService.getQuestionsByIdCategory(idCategory),
               idCategory: idCategory,
-              widget: DetectorButtom(
-                currentPage: currentPage,
-                pageRoutes: pageRoutes,
-                controller: _controller,
-                disable: disable,
-                updateDisable: setDisable,
-              ),
-              updateDisable: setDisable,
+              controller: _controller,
+              currentPage: currentPage,
+              pageRoutes: pageRoutes,
             ))
         .toList();
 
@@ -87,51 +74,5 @@ class _QuestionErgonomicPageState extends State<QuestionErgonomicPage> {
             height: 8,
           ),
         ]);
-  }
-}
-
-//buttom---------------------------------------------------------------------------
-class DetectorButtom extends StatelessWidget {
-  const DetectorButtom(
-      {super.key,
-      required this.currentPage,
-      required this.pageRoutes,
-      required PageController controller,
-      required this.disable,
-      required this.updateDisable})
-      : _controller = controller;
-
-  final int currentPage;
-  final PageRoutes pageRoutes;
-  final PageController _controller;
-  final bool disable;
-  final Function(bool) updateDisable;
-
-  void handleOnTap(BuildContext context) {
-    currentPage == 5
-        ? Navigator.push(
-            context, pageRoutes.menu.resultergonomic().route(context))
-        : _controller.nextPage(
-            duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-    updateDisable(true);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (!disable) {
-          handleOnTap(context);
-        }
-      },
-      child: ButtomTapTheme(
-          text: "ถัดไป",
-          radius: 32,
-          width: double.infinity,
-          height: 52,
-          color: Theme.of(context).colorScheme.primary,
-          borderSide: BorderSide.none,
-          style: Theme.of(context).textTheme.headlineSmall),
-    );
   }
 }
