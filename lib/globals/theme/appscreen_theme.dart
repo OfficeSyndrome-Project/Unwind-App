@@ -4,6 +4,7 @@ import 'package:unwind_app/globals/theme/appbar_theme.dart';
 class AppscreenTheme extends StatelessWidget {
   final String? textBar;
   final Color? colorBar;
+  final TextStyle? textStyle;
   final IconButton? iconButtonStart;
   final IconButton? iconButtonEnd;
   final List<Widget> children;
@@ -13,6 +14,7 @@ class AppscreenTheme extends StatelessWidget {
   const AppscreenTheme({
     super.key,
     this.textBar,
+    this.textStyle,
     this.colorBar,
     this.iconButtonStart,
     this.iconButtonEnd,
@@ -34,6 +36,7 @@ class AppscreenTheme extends StatelessWidget {
             AppbarTheme(
               color: colorBar,
               text: textBar,
+              style: textStyle,
               iconButtonStart: iconButtonStart,
               iconButtonEnd: iconButtonEnd,
             ),
