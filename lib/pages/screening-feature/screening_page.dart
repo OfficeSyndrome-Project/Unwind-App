@@ -1,6 +1,7 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
-import 'package:unwind_app/Widgets/screening_box_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/screening_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
@@ -22,6 +23,23 @@ class _ScreeningPageState extends State<ScreeningPage> {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
+        iconButtonStart: (currentPage >= 1)
+            ? IconButton(
+                onPressed: () {
+                  currentPage >= 1
+                      ? _controller.previousPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeOut)
+                      : Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.all(0),
+              )
+            : null,
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,34 +58,50 @@ class _ScreeningPageState extends State<ScreeningPage> {
               },
               children: [
                 ScreeningBoxWidget(
-                  assetPath: 'lib/assets/images/screeningPart/screening-1.png',
-                  titleLabel: "ปวดเมื่อยจากการทำงานใช่ไหม ?",
-                  descriptionLabel:
-                      "หากการทำงานทำให้คุณรู้สึกปวดเมื่อยไม่สบายตัว\nส่งผลต่อสภาพจิตใจและร่างกายของคุณอยู่บ่อยครั้งให้ unwind ช่วยคุณ"
-                ),
+                    assetPath:
+                        'lib/assets/images/screeningPart/get_started_1.png',
+                    titleLabel: "ปวดเมื่อยจากการทำงานใช่ไหม ?",
+                    descriptionLabel:
+                        "หากการทำงานทำให้คุณรู้สึกปวดเมื่อยไม่สบายตัว\nส่งผลต่อสภาพจิตใจและร่างกายของคุณอยู่บ่อยครั้งให้ unwind ช่วยคุณ"),
                 ScreeningBoxWidget(
-                  assetPath: 'lib/assets/images/screeningPart/screening-1.png',
+                  assetPath:
+                      'lib/assets/images/screeningPart/get_started_2.png',
                   titleLabel: "บรรเทาอาการเจ็บปวด",
                   descriptionLabel:
                       "บรรเทาอาการปวดเหล่านั้นกับ unwind\nด้วยวิธีการตรวจที่แม่นยำและให้ชุดท่าบริหารที่เหมาะสม\nซึ่งได้รับการยืนยันจากแพทย์ผู้เชี่ยวชาญ",
                 ),
                 ScreeningBoxWidget(
-                    assetPath: '',
+                    assetPath:
+                        'lib/assets/images/screeningPart/get_started_3.png',
                     titleLabel: 'ติดตามผลอาการของคุณ',
                     descriptionLabel:
                         'unwind ติดตามผลอาการของคุณอย่างสม่ำเสมอ\nโดยคุณสามารถดูผลอาการของตนเองย้อนหลังได้'),
                 ScreeningBoxWidget(
-                    assetPath: '',
+                    assetPath:
+                        'lib/assets/images/screeningPart/get_started_4.png',
                     titleLabel: 'ป้องกันอาการเจ็บปวด',
                     descriptionLabel:
                         'ป้องกันอาการเจ็บปวดจากการทำงานที่ต้นเหตุ\nunwind จะแนะนำการจัดสภาพแวดล้อมการทำงาน รวมถึงเวลาในการทำงานที่เหมาะให้กับคุณ'),
                 ScreeningBoxWidget(
-                    assetPath: '',
+                    assetPath:
+                        'lib/assets/images/screeningPart/get_started_1.png',
                     titleLabel: 'ยินดีต้อนรับเข้าสู่ unwind ! ',
                     descriptionLabel:
                         'แอปพลิเคชันที่คุณสามารถรักษาอาการ\nออฟฟิศซินโดรมได้ด้วยตัวของคุณเอง '),
-              
               ],
+            ),
+          ),
+          const SizedBox(
+            height: 32,
+          ),
+          DotsIndicator(
+            dotsCount: 5,
+            position: currentPage.toDouble(),
+            decorator: DotsDecorator(
+              color: const Color(0xFFC3C8D2),
+              activeColor: Theme.of(context).colorScheme.primary,
+              size: const Size.square(8.0),
+              spacing: const EdgeInsets.all(4.0),
             ),
           ),
           const SizedBox(
@@ -81,6 +115,8 @@ class _ScreeningPageState extends State<ScreeningPage> {
         ]);
   }
 }
+
+//Back Button
 
 //Button Next Page Controller
 class StartingNextPageButton extends StatefulWidget {

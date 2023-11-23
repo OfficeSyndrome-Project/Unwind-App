@@ -35,6 +35,7 @@ dependencies:
   google_fonts: ^4.0.4
   go_router: ^4.5.1
   shared_preferences: ^2.2.2
+  dots_indicator: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -84,8 +85,16 @@ flutter:
     - lib/assets/images/w-17.png
     - lib/assets/images/w-18.png
     - lib/assets/images/w-19.png
-    - lib/assets/images/screeningPart/screening-1.png
-
+    - lib/assets/images/screeningPart/get_started_1.png
+    - lib/assets/images/screeningPart/get_started_2.png
+    - lib/assets/images/screeningPart/get_started_3.png
+    - lib/assets/images/screeningPart/get_started_4.png
+    - lib/assets/images/screeningPart/scr_part_one_1.png
+    - lib/assets/images/screeningPart/scr_part_one_2.png
+    - lib/assets/images/screeningPart/scr_part_two_1.png
+    - lib/assets/images/screeningPart/scr_part_two_2.png
+    - lib/assets/images/screeningPart/scr_part_two_pose1.png
+    - lib/assets/images/screeningPart/scr_part_three_1.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
