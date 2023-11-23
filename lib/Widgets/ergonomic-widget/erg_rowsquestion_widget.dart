@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/ergonomic-widget/erg_btn_widget.dart';
 import 'package:unwind_app/services/question_service.dart';
+import '../../Routes/routes_config.dart';
 import '../../services/storedoptions_service.dart';
 import '../../data/ergonomic_model.dart';
 import 'erg_boxquestion_widget.dart';
@@ -7,16 +9,19 @@ import 'dart:async';
 
 class PageQuestionWidget extends StatefulWidget {
   final int idCategory;
-  final Widget widget;
   final Map<int, bool?> storedOptions = {};
-  final Function(bool) updateDisable;
+  final int currentPage;
+  final PageRoutes pageRoutes;
+  final PageController controller;
 
-  PageQuestionWidget(
-      {super.key,
-      required this.questions,
-      required this.widget,
-      required this.idCategory,
-      required this.updateDisable});
+  PageQuestionWidget({
+    super.key,
+    required this.questions,
+    required this.idCategory,
+    required this.currentPage,
+    required this.pageRoutes,
+    required this.controller,
+  });
 
   final List<ErgonomicModel> questions;
 
@@ -26,6 +31,7 @@ class PageQuestionWidget extends StatefulWidget {
 
 class _PageQuestionWidgetState extends State<PageQuestionWidget> {
   var index = 0;
+  bool disable = true;
 
   //initailize
   Map<int, bool?> createDefaultOption(int length) {
@@ -59,7 +65,13 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
         return;
       }
     }
-    widget.updateDisable(false);
+    setDisable(!disable);
+  }
+
+  void setDisable(bool value) {
+    setState(() {
+      disable = value;
+    });
   }
 
   //set state new
@@ -116,7 +128,11 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
                       },
                     ));
               } else {
-                return widget.widget;
+                return DetectorButton(
+                    currentPage: widget.currentPage,
+                    pageRoutes: widget.pageRoutes,
+                    controller: widget.controller,
+                    disable: disable);
               }
             },
           ),
