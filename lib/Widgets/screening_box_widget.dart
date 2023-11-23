@@ -5,10 +5,11 @@ class ScreeningBoxWidget extends StatelessWidget {
   final String titleLabel;
   final String descriptionLabel;
 
-  const ScreeningBoxWidget({Key? key,
-  required this.assetPath,
-  required this.titleLabel,
-  required this.descriptionLabel}) : super(key: key);
+  const ScreeningBoxWidget(
+      {super.key,
+      required this.assetPath,
+      required this.titleLabel,
+      required this.descriptionLabel});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class ScreeningBoxWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
+        SizedBox(
           width: 240,
           height: 240,
           child: AspectRatio(
@@ -25,8 +26,7 @@ class ScreeningBoxWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image:
-                      AssetImage(assetPath),
+                  image: AssetImage(assetPath),
                   fit: BoxFit.fill,
                 ),
               ),

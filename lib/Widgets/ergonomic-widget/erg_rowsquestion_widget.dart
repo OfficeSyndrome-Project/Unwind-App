@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/services/question_service.dart';
 import '../../services/storedoptions_service.dart';
 import '../../data/ergonomic_model.dart';
 import 'erg_boxquestion_widget.dart';
@@ -8,13 +9,14 @@ class PageQuestionWidget extends StatefulWidget {
   final int idCategory;
   final Widget widget;
   final Map<int, bool?> storedOptions = {};
+  final Function(bool) updateDisable;
 
-  PageQuestionWidget({
-    Key? key,
-    required this.questions,
-    required this.widget,
-    required this.idCategory,
-  }) : super(key: key);
+  PageQuestionWidget(
+      {super.key,
+      required this.questions,
+      required this.widget,
+      required this.idCategory,
+      required this.updateDisable});
 
   final List<ErgonomicModel> questions;
 
@@ -27,7 +29,7 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
 
   //initailize
   Map<int, bool?> createDefaultOption(int length) {
-    return {for (int i = 0; i < length; i++) i: null};
+    return {for (int i = 1; i <= length; i++) i: null};
   }
 
   late Map<int, bool?> storedOptions =
@@ -40,11 +42,24 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
   }
 
   Future<void> initOptions() async {
-    var storedOptions =
+    var storedOptionsData =
         await StoredOptionsService.readCurrntOptions(widget.idCategory);
     setState(() {
-      storedOptions = storedOptions;
+      storedOptions = storedOptionsData;
     });
+    checkAndUpdateDisable();
+  }
+
+  //set state btn
+  void checkAndUpdateDisable() {
+    for (var i = 1;
+        i <= QuestionService.getLenghtByIdCategory(widget.idCategory);
+        i++) {
+      if (storedOptions[i] == null) {
+        return;
+      }
+    }
+    widget.updateDisable(false);
   }
 
   //set state new
@@ -55,7 +70,7 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
       storedOptions = Map<int, bool?>.from(storedOptions)
         ..[questionIndex] = value;
     });
-    print('storedOptions : $storedOptions');
+    checkAndUpdateDisable();
   }
 
   @override
@@ -91,12 +106,13 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
                 return SizedBox(
                     width: double.infinity,
                     child: QuestionEegonomicWidget(
-                      index: index,
+                      index: widget.questions[index].questionOrder,
                       currentOptions: storedOptions,
                       question: widget.questions[index].question,
                       imagePath: widget.questions[index].imagepath,
                       onCurrentOptionsChanged: (value) {
-                        handleCurrentOptions(index, value);
+                        handleCurrentOptions(
+                            widget.questions[index].questionOrder, value);
                       },
                     ));
               } else {

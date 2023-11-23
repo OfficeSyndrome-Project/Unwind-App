@@ -5,7 +5,7 @@ import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'ergonomic-feature/ergonomic_page.dart';
 
 class MenuWidget extends StatelessWidget {
-  const MenuWidget({Key? key}) : super(key: key);
+  const MenuWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

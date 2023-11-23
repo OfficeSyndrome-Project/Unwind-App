@@ -4,7 +4,7 @@ import 'package:unwind_app/Widgets/topic_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class SummaryPage extends StatelessWidget {
-  SummaryPage({Key? key}) : super(key: key);
+  SummaryPage({super.key});
 
   final PageRoutes pageRoutes = PageRoutes();
 

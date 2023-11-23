@@ -3,7 +3,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
 class AfterBreakPage extends StatelessWidget {
-  const AfterBreakPage({Key? key}) : super(key: key);
+  const AfterBreakPage({super.key});
 
   void navigatorBack(bool isWorking, BuildContext context) {
     Navigator.pop(context, isWorking);

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/screening_box_widget.dart';
@@ -5,7 +7,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
 class ScreeningPage extends StatefulWidget {
-  ScreeningPage({Key? key}) : super(key: key);
+  const ScreeningPage({super.key});
 
   @override
   State<ScreeningPage> createState() => _ScreeningPageState();
@@ -38,13 +40,13 @@ class _ScreeningPageState extends State<ScreeningPage> {
                   currentPage = value;
                 });
               },
-              children: [
+              children: const [
                 ScreeningBoxWidget(
-                  assetPath: 'lib/assets/images/screeningPart/screening-1.png',
-                  titleLabel: "ปวดเมื่อยจากการทำงานใช่ไหม ?",
-                  descriptionLabel:
-                      "หากการทำงานทำให้คุณรู้สึกปวดเมื่อยไม่สบายตัว\nส่งผลต่อสภาพจิตใจและร่างกายของคุณอยู่บ่อยครั้งให้ unwind ช่วยคุณ"
-                ),
+                    assetPath:
+                        'lib/assets/images/screeningPart/screening-1.png',
+                    titleLabel: "ปวดเมื่อยจากการทำงานใช่ไหม ?",
+                    descriptionLabel:
+                        "หากการทำงานทำให้คุณรู้สึกปวดเมื่อยไม่สบายตัว\nส่งผลต่อสภาพจิตใจและร่างกายของคุณอยู่บ่อยครั้งให้ unwind ช่วยคุณ"),
                 ScreeningBoxWidget(
                   assetPath: 'lib/assets/images/screeningPart/screening-1.png',
                   titleLabel: "บรรเทาอาการเจ็บปวด",
@@ -66,7 +68,6 @@ class _ScreeningPageState extends State<ScreeningPage> {
                     titleLabel: 'ยินดีต้อนรับเข้าสู่ unwind ! ',
                     descriptionLabel:
                         'แอปพลิเคชันที่คุณสามารถรักษาอาการ\nออฟฟิศซินโดรมได้ด้วยตัวของคุณเอง '),
-              
               ],
             ),
           ),
@@ -85,7 +86,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
 //Button Next Page Controller
 class StartingNextPageButton extends StatefulWidget {
   const StartingNextPageButton({
-    Key? key,
+    super.key,
     required this.currentPage,
     required this.pageRoutes,
     required PageController controller,
@@ -102,7 +103,6 @@ class StartingNextPageButton extends StatefulWidget {
 class _StartingNextPageButton extends State<StartingNextPageButton> {
   @override
   Widget build(BuildContext context) {
-    print("currentPage: ${widget.currentPage}");
     return GestureDetector(
         onTap: () {
           widget.currentPage < 4

@@ -5,7 +5,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
 class ContentAfterWorkPage extends StatefulWidget {
-  const ContentAfterWorkPage({Key? key}) : super(key: key);
+  const ContentAfterWorkPage({super.key});
 
   @override
   _ContentAfterWorkPageState createState() => _ContentAfterWorkPageState();
