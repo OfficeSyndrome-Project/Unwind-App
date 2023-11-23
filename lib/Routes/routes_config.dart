@@ -42,7 +42,7 @@ class Menu {
   PathRoute questionergonomic() => PathRoute(
       title: "ปรับสภาพแวดล้อมการทำงาน", widget: const QuestionErgonomicPage());
   PathRoute resultergonomic() => PathRoute(
-      title: "ปรับสภาพแวดล้อมการทำงาน", widget: ResultErgonomicPage());
+      title: "ปรับสภาพแวดล้อมการทำงาน", widget: const ResultErgonomicPage());
   PathRoute clockpage() =>
       PathRoute(title: "นาฬิกาจับเวลา", widget: const ClockPage());
   PathRoute timewatchpage(List<TimeWatchObj> timesArr) => PathRoute(

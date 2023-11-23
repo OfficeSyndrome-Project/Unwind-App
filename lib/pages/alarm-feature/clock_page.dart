@@ -15,7 +15,7 @@ import 'package:unwind_app/data/time_breakstate.dart';
 import 'info_clock_page.dart';
 
 class ClockPage extends StatefulWidget {
-  const ClockPage({Key? key}) : super(key: key);
+  const ClockPage({super.key});
 
   @override
   _ClockPageState createState() => _ClockPageState();

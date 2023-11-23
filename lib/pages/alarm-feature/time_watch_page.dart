@@ -16,7 +16,7 @@ import 'content_afterwork_page.dart';
 class TimeWatchPage extends StatefulWidget {
   final List<TimeWatchObj> timesArr;
 
-  const TimeWatchPage({Key? key, required this.timesArr}) : super(key: key);
+  const TimeWatchPage({super.key, required this.timesArr});
 
   @override
   _TimeWatchPageState createState() => _TimeWatchPageState();

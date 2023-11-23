@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class WheelTile extends StatelessWidget {
   final String textstates;
 
-  const WheelTile(this.textstates, {Key? key}) : super(key: key);
+  const WheelTile(this.textstates, {super.key});
 
   @override
   Widget build(BuildContext context) {

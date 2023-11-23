@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class InfoErgonomicPage extends StatelessWidget {
-  const InfoErgonomicPage({Key? key}) : super(key: key);
+  const InfoErgonomicPage({super.key});
 
   @override
   Widget build(BuildContext context) {
