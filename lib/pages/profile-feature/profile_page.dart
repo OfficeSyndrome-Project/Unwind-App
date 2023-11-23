@@ -28,8 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               CircleAvatar(
                 backgroundImage:
-                    // AssetImage('lib/assets/images/blank_profile.png'),
-                    AssetImage('lib/assets/images/w-12.png'),
+                    AssetImage('lib/assets/images/blank_profile.png'),
                 radius: 60,
               ),
               // Container(
@@ -112,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text('ณัฐวดี',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .labelMedium,
                                       textAlign: TextAlign.right),
                                 )
                               ],
@@ -132,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text('ลี',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .labelMedium,
                                       textAlign: TextAlign.right),
                                 )
                               ],
@@ -150,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text('21',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .labelMedium,
                                       textAlign: TextAlign.right),
                                 )
                               ],
@@ -169,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text('หญิง',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .labelMedium,
                                       textAlign: TextAlign.right),
                                 )
                               ],
@@ -188,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text('40 กก.',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .labelMedium,
                                       textAlign: TextAlign.right),
                                 )
                               ],
@@ -207,7 +206,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text('160 ซม.',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .labelMedium,
                                       textAlign: TextAlign.right),
                                 )
                               ],
@@ -225,7 +224,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text('นักเรียน/นักศึกษา',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .labelMedium,
                                       textAlign: TextAlign.right),
                                 )
                               ],
@@ -243,7 +242,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Text('test@gmail.com',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .labelMedium,
                                       textAlign: TextAlign.right),
                                 )
                               ],
@@ -258,7 +257,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context, pageRoutes.profile.editpage().route(context));
+            },
             child:
                 // Text(
                 //   'จัดการโปรโฟล์',
