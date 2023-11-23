@@ -20,10 +20,28 @@ class StoredOptionsService {
     int questionLength = QuestionService.getLenghtByIdCategory(idCategory);
     Map<int, bool?> storedOptions = {};
 
-    for (var i = 0; i < questionLength; i++) {
+    for (var i = 1; i <= questionLength; i++) {
       var value = prefs.getBool(getKey(i, idCategory));
       storedOptions[i] = value;
     }
+
     return storedOptions;
+  }
+
+  static Future<void> removeStoredOptions(int idCategory) async {
+    final SharedPreferences prefs = await _prefs;
+    int questionLength = QuestionService.getLenghtByIdCategory(idCategory);
+
+    for (var i = 1; i <= questionLength; i++) {
+      prefs.remove(getKey(i, idCategory));
+    }
+  }
+
+  static Future<void> clearStoredOptions() async {
+    var allIdCategory = QuestionService.getAllIdCategory();
+
+    for (var idCategory in allIdCategory) {
+      await removeStoredOptions(idCategory);
+    }
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ScreeningPartOne extends StatelessWidget {
-const ScreeningPartOne({ Key? key }) : super(key: key);
+  const ScreeningPartOne({super.key});
 
   @override
-  Widget build(BuildContext context){
-    return Text("testๆจ้า");
+  Widget build(BuildContext context) {
+    return const Text("testๆจ้า");
   }
 }

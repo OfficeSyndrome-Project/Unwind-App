@@ -13,7 +13,6 @@ import '../pages/alarm-feature/time_watch_page.dart';
 import '../pages/ergonomic-feature/ergonomic_page.dart';
 import '../pages/ergonomic-feature/question_ergonomic_page.dart';
 import '../pages/ergonomic-feature/result_ergonomic_page.dart';
-import '../pages/screening-feature/screening_part_one.dart';
 
 class PageRoutes {
   Home home = Home();
@@ -41,7 +40,7 @@ class Menu {
   PathRoute questionergonomic() => PathRoute(
       title: "ปรับสภาพแวดล้อมการทำงาน", widget: const QuestionErgonomicPage());
   PathRoute resultergonomic() => PathRoute(
-      title: "ปรับสภาพแวดล้อมการทำงาน", widget: ResultErgonomicPage());
+      title: "ปรับสภาพแวดล้อมการทำงาน", widget: const ResultErgonomicPage());
   PathRoute clockpage() =>
       PathRoute(title: "นาฬิกาจับเวลา", widget: const ClockPage());
   PathRoute timewatchpage(List<TimeWatchObj> timesArr) => PathRoute(

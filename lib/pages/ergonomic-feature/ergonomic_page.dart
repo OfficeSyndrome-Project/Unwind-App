@@ -4,7 +4,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
 class ErgonomicPage extends StatelessWidget {
-  ErgonomicPage({Key? key}) : super(key: key);
+  ErgonomicPage({super.key});
   final PageRoutes pageRoutes = PageRoutes();
 
   @override

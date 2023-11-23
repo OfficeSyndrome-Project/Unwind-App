@@ -9,15 +9,14 @@ class ButtomTapTheme extends StatelessWidget {
   final BorderSide borderSide;
   final TextStyle? style;
   const ButtomTapTheme(
-      {Key? key,
+      {super.key,
       required this.text,
       required this.radius,
       required this.width,
       required this.height,
       required this.color,
       required this.borderSide,
-      required this.style})
-      : super(key: key);
+      required this.style});
 
   @override
   Widget build(BuildContext context) {

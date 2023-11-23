@@ -1,26 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/data/ergonomic_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
+import 'package:unwind_app/pages/loading_page.dart';
+import 'package:unwind_app/services/question_service.dart';
 import 'package:unwind_app/services/storedoptions_service.dart';
 
-import '../../Widgets/ergonomic-widget/erg_boxresult_widget.dart';
+import '../../Widgets/ergonomic-widget/erg_boxcategory_widget.dart';
 
 // ignore: must_be_immutable
-class ResultErgonomicPage extends StatelessWidget {
-  ResultErgonomicPage({Key? key}) : super(key: key);
+class ResultErgonomicPage extends StatefulWidget {
+  const ResultErgonomicPage({super.key});
 
+  @override
+  State<ResultErgonomicPage> createState() => _ResultErgonomicPageState();
+}
+
+class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
   final PageRoutes pageRoutes = PageRoutes();
   final int index = 0;
 
-  void handleResult() {
-    var storedOptions = StoredOptionsService.readCurrntOptions(index);
-    print('result : $storedOptions');
+  final List<int> allIdCategory = QuestionService.getAllIdCategory();
+  Map<int, Map<int, bool?>> allStoredOptions = {};
+
+  @override
+  void initState() {
+    super.initState();
+    initAllStoredOptions();
+  }
+
+  Future<void> initAllStoredOptions() async {
+    Map<int, Map<int, bool?>> listOfStoredOptions = {};
+
+    //loop
+    for (var idCategory in allIdCategory) {
+      listOfStoredOptions[idCategory] =
+          await StoredOptionsService.readCurrntOptions(idCategory);
+    }
+    setState(() {
+      allStoredOptions = listOfStoredOptions;
+    });
+  }
+
+  List<ErgonomicModel> filteredOptionsQuestions(int idCategory) {
+    var questions = QuestionService.getQuestionsByIdCategory(idCategory);
+    var storedOption = allStoredOptions[idCategory];
+    return questions
+        .where((question) => storedOption![question.questionOrder] == false)
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    handleResult();
+    if (allStoredOptions.isEmpty) {
+      return const LoadingPage();
+    }
     return AppscreenTheme(
         textBar: pageRoutes.menu.resultergonomic().title,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -48,24 +83,31 @@ class ResultErgonomicPage extends StatelessWidget {
           const SizedBox(
             height: 16,
           ),
-          // ListView.separated(
-          //   separatorBuilder: (context, index) => const SizedBox(height: 16,),
-          //   itemCount: StoredOptionsService.readCurrntOptions(index)
-          //   itemBuilder: (context, index) {
-          //   },
-          // )
-
-          const ResultErgBoxWidget(
-              idCategory: 1,
-              type: 'type',
-              question: 'question',
-              solution: 'solution',
-              prevent: 'prevent'),
+          Expanded(
+            child: NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (notification) {
+                  notification.disallowIndicator();
+                  return true;
+                },
+                child: ListView.separated(
+                    itemBuilder: (context, index) => CategoryErgBoxWidget(
+                          idCategory: allIdCategory[index],
+                          type: QuestionService.getTypeByIdCategory(
+                              allIdCategory[index]),
+                          questions:
+                              filteredOptionsQuestions(allIdCategory[index]),
+                        ),
+                    separatorBuilder: (context, index) => const SizedBox(
+                          height: 16,
+                        ),
+                    itemCount: allIdCategory.length)),
+          ),
           const SizedBox(
             height: 16,
           ),
           GestureDetector(
             onTap: () {
+              StoredOptionsService.clearStoredOptions();
               Navigator.of(context).popUntil((route) => route.isFirst);
             },
             child: ButtomTapTheme(
