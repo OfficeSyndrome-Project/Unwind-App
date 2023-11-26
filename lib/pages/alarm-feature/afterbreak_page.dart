@@ -49,35 +49,32 @@ class AfterBreakPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () {
-                navigatorBack(false, context);
-              },
-              child: ButtomTapTheme(
-                  text: "หยุดการทำงาน",
-                  radius: 8,
-                  width: 137,
-                  height: 50,
-                  color: Theme.of(context).colorScheme.background,
-                  borderSide: BorderSide(
-                      width: 1, color: Theme.of(context).colorScheme.primary),
-                  style: Theme.of(context).textTheme.headlineMedium),
-            ),
+            ButtonTapTheme(
+                onTap: () {
+                  navigatorBack(false, context);
+                },
+                text: "หยุดการทำงาน",
+                radius: 8,
+                width: 137,
+                height: 50,
+                color: Theme.of(context).colorScheme.background,
+                borderSide: BorderSide(
+                    width: 1, color: Theme.of(context).colorScheme.primary),
+                style: Theme.of(context).textTheme.headlineMedium),
             const SizedBox(
               width: 8,
             ),
-            GestureDetector(
+            ButtonTapTheme(
                 onTap: () {
                   navigatorBack(true, context);
                 },
-                child: ButtomTapTheme(
-                    text: "ทำงานต่อ",
-                    radius: 8,
-                    width: 107,
-                    height: 50,
-                    color: Theme.of(context).colorScheme.primary,
-                    borderSide: BorderSide.none,
-                    style: Theme.of(context).textTheme.headlineSmall)),
+                text: "ทำงานต่อ",
+                radius: 8,
+                width: 107,
+                height: 50,
+                color: Theme.of(context).colorScheme.primary,
+                borderSide: BorderSide.none,
+                style: Theme.of(context).textTheme.headlineSmall),
           ],
         ),
       ],
