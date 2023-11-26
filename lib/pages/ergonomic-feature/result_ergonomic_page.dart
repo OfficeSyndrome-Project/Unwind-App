@@ -105,20 +105,18 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
           const SizedBox(
             height: 16,
           ),
-          GestureDetector(
-            onTap: () {
-              StoredOptionsService.clearStoredOptions();
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            },
-            child: ButtomTapTheme(
-                text: "กลับเมนู",
-                radius: 32,
-                width: double.infinity,
-                height: 52,
-                color: Theme.of(context).colorScheme.primary,
-                borderSide: BorderSide.none,
-                style: Theme.of(context).textTheme.headlineSmall),
-          )
+          ButtonTapTheme(
+              onTap: () {
+                StoredOptionsService.clearStoredOptions();
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+              text: "กลับเมนู",
+              radius: 32,
+              width: double.infinity,
+              height: 52,
+              color: Theme.of(context).colorScheme.primary,
+              borderSide: BorderSide.none,
+              style: Theme.of(context).textTheme.headlineSmall),
         ]);
   }
 }

@@ -103,7 +103,7 @@ class StartingNextPageButton extends StatefulWidget {
 class _StartingNextPageButton extends State<StartingNextPageButton> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return ButtonTapTheme(
         onTap: () {
           widget.currentPage < 4
               ? widget._controller.nextPage(
@@ -112,13 +112,12 @@ class _StartingNextPageButton extends State<StartingNextPageButton> {
               : Navigator.push(context,
                   widget.pageRoutes.screening.screeningpage().route(context));
         },
-        child: ButtomTapTheme(
-            text: "ถัดไป",
-            radius: 32,
-            width: 345,
-            height: 52,
-            color: Theme.of(context).colorScheme.primary,
-            borderSide: BorderSide.none,
-            style: Theme.of(context).textTheme.displayMedium));
+        text: "ถัดไป",
+        radius: 32,
+        width: 345,
+        height: 52,
+        color: Theme.of(context).colorScheme.primary,
+        borderSide: BorderSide.none,
+        style: Theme.of(context).textTheme.displayMedium);
   }
 }

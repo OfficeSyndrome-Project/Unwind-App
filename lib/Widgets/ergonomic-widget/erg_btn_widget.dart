@@ -27,22 +27,20 @@ class DetectorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (!disable) {
-          handleOnTap(context);
-        }
-      },
-      child: ButtomTapTheme(
-          text: "ถัดไป",
-          radius: 32,
-          width: double.infinity,
-          height: 52,
-          color: !disable
-              ? Theme.of(context).colorScheme.primary
-              : const Color(0xFF9BA4B5),
-          borderSide: BorderSide.none,
-          style: Theme.of(context).textTheme.headlineSmall),
-    );
+    return ButtonTapTheme(
+        onTap: () {
+          if (!disable) {
+            handleOnTap(context);
+          }
+        },
+        text: "ถัดไป",
+        radius: 32,
+        width: double.infinity,
+        height: 52,
+        color: !disable
+            ? Theme.of(context).colorScheme.primary
+            : const Color(0xFF9BA4B5),
+        borderSide: BorderSide.none,
+        style: Theme.of(context).textTheme.headlineSmall);
   }
 }

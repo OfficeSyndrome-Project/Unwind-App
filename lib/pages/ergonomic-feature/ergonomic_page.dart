@@ -64,20 +64,18 @@ class ErgonomicPage extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context, pageRoutes.menu.questionergonomic().route(context));
-          },
-          child: ButtomTapTheme(
-              text: "ถัดไป",
-              radius: 32,
-              width: double.infinity,
-              height: 52,
-              color: Theme.of(context).colorScheme.primary,
-              borderSide: BorderSide.none,
-              style: Theme.of(context).textTheme.headlineSmall),
-        ),
+        ButtonTapTheme(
+            onTap: () {
+              Navigator.push(
+                  context, pageRoutes.menu.questionergonomic().route(context));
+            },
+            text: "ถัดไป",
+            radius: 32,
+            width: double.infinity,
+            height: 52,
+            color: Theme.of(context).colorScheme.primary,
+            borderSide: BorderSide.none,
+            style: Theme.of(context).textTheme.headlineSmall),
       ],
     );
   }
