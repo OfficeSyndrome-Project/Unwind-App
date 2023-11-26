@@ -90,16 +90,24 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
                   return true;
                 },
                 child: ListView.separated(
-                    itemBuilder: (context, index) => CategoryErgBoxWidget(
-                          idCategory: allIdCategory[index],
-                          type: QuestionService.getTypeByIdCategory(
-                              allIdCategory[index]),
-                          questions:
-                              filteredOptionsQuestions(allIdCategory[index]),
-                        ),
-                    separatorBuilder: (context, index) => const SizedBox(
-                          height: 16,
-                        ),
+                    itemBuilder: (context, index) =>
+                        filteredOptionsQuestions(allIdCategory[index]).isEmpty
+                            ? const SizedBox()
+                            : CategoryErgBoxWidget(
+                                idCategory: allIdCategory[index],
+                                type: QuestionService.getTypeByIdCategory(
+                                    allIdCategory[index]),
+                                questions: filteredOptionsQuestions(
+                                    allIdCategory[index]),
+                              ),
+                    separatorBuilder: (context, index) =>
+                        filteredOptionsQuestions(allIdCategory[index]).isEmpty
+                            ? const SizedBox(
+                                height: 0,
+                              )
+                            : const SizedBox(
+                                height: 16,
+                              ),
                     itemCount: allIdCategory.length)),
           ),
           const SizedBox(
