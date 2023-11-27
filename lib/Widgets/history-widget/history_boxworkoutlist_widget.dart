@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
-  const HistoryWorkoutlistWidget({Key? key}) : super(key: key);
+  const HistoryWorkoutlistWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

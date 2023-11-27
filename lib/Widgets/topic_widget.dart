@@ -4,8 +4,7 @@ class TopicWidget extends StatelessWidget {
   final Icon startIcon;
   final String topicName;
   const TopicWidget(
-      {Key? key, required this.startIcon, required this.topicName})
-      : super(key: key);
+      {super.key, required this.startIcon, required this.topicName});
 
   @override
   Widget build(BuildContext context) {

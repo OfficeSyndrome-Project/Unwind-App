@@ -102,10 +102,15 @@ class QuestionEegonomicWidget extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          Text(
-            question,
-            style: Theme.of(context).textTheme.bodyLarge,
-            textAlign: TextAlign.center,
+          SizedBox(
+            width: 280,
+            child: Text(
+              question,
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+              softWrap: true,
+              overflow: TextOverflow.clip,
+            ),
           ),
           const SizedBox(
             height: 8,

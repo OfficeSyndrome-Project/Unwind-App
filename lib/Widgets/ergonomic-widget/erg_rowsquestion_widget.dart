@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/ergonomic-widget/erg_btn_widget.dart';
+import 'package:unwind_app/services/question_service.dart';
+import '../../Routes/routes_config.dart';
 import '../../services/storedoptions_service.dart';
 import '../../data/ergonomic_model.dart';
 import 'erg_boxquestion_widget.dart';
@@ -6,15 +9,19 @@ import 'dart:async';
 
 class PageQuestionWidget extends StatefulWidget {
   final int idCategory;
-  final Widget widget;
   final Map<int, bool?> storedOptions = {};
+  final int currentPage;
+  final PageRoutes pageRoutes;
+  final PageController controller;
 
   PageQuestionWidget({
-    Key? key,
+    super.key,
     required this.questions,
-    required this.widget,
     required this.idCategory,
-  }) : super(key: key);
+    required this.currentPage,
+    required this.pageRoutes,
+    required this.controller,
+  });
 
   final List<ErgonomicModel> questions;
 
@@ -24,10 +31,11 @@ class PageQuestionWidget extends StatefulWidget {
 
 class _PageQuestionWidgetState extends State<PageQuestionWidget> {
   var index = 0;
+  bool disable = true;
 
   //initailize
   Map<int, bool?> createDefaultOption(int length) {
-    return {for (int i = 0; i < length; i++) i: null};
+    return {for (int i = 1; i <= length; i++) i: null};
   }
 
   late Map<int, bool?> storedOptions =
@@ -40,10 +48,29 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
   }
 
   Future<void> initOptions() async {
-    var storedOptions =
+    var storedOptionsData =
         await StoredOptionsService.readCurrntOptions(widget.idCategory);
     setState(() {
-      storedOptions = storedOptions;
+      storedOptions = storedOptionsData;
+    });
+    checkAndUpdateDisable();
+  }
+
+  //set state btn
+  void checkAndUpdateDisable() {
+    for (var i = 1;
+        i <= QuestionService.getLenghtByIdCategory(widget.idCategory);
+        i++) {
+      if (storedOptions[i] == null) {
+        return;
+      }
+    }
+    setDisable(!disable);
+  }
+
+  void setDisable(bool value) {
+    setState(() {
+      disable = value;
     });
   }
 
@@ -55,7 +82,7 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
       storedOptions = Map<int, bool?>.from(storedOptions)
         ..[questionIndex] = value;
     });
-    print('storedOptions : $storedOptions');
+    checkAndUpdateDisable();
   }
 
   @override
@@ -91,16 +118,21 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
                 return SizedBox(
                     width: double.infinity,
                     child: QuestionEegonomicWidget(
-                      index: index,
+                      index: widget.questions[index].questionOrder,
                       currentOptions: storedOptions,
                       question: widget.questions[index].question,
                       imagePath: widget.questions[index].imagepath,
                       onCurrentOptionsChanged: (value) {
-                        handleCurrentOptions(index, value);
+                        handleCurrentOptions(
+                            widget.questions[index].questionOrder, value);
                       },
                     ));
               } else {
-                return widget.widget;
+                return DetectorButton(
+                    currentPage: widget.currentPage,
+                    pageRoutes: widget.pageRoutes,
+                    controller: widget.controller,
+                    disable: disable);
               }
             },
           ),

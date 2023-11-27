@@ -4,7 +4,7 @@ import 'package:unwind_app/Widgets/history-widget/history_boxworkoutlist_widget.
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class HistoryPage extends StatelessWidget {
-  HistoryPage({Key? key}) : super(key: key);
+  HistoryPage({super.key});
 
   final PageRoutes pageRoutes = PageRoutes();
 

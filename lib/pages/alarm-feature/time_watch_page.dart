@@ -16,7 +16,7 @@ import 'content_afterwork_page.dart';
 class TimeWatchPage extends StatefulWidget {
   final List<TimeWatchObj> timesArr;
 
-  const TimeWatchPage({Key? key, required this.timesArr}) : super(key: key);
+  const TimeWatchPage({super.key, required this.timesArr});
 
   @override
   _TimeWatchPageState createState() => _TimeWatchPageState();
@@ -156,53 +156,48 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(dialogcontext)
-                                    .popUntil((route) => route.isFirst);
-                              },
-                              child: ButtomTapTheme(
-                                  text: "ใช่",
-                                  radius: 8,
-                                  width: 63,
-                                  height: 32,
-                                  color: Colors.white,
-                                  borderSide: BorderSide(
-                                      width: 1,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
-                                  style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      fontSize: 12,
-                                      fontFamily: "Noto Sans Thai",
-                                      fontWeight: FontWeight.w600,
-                                      decoration: TextDecoration.none,
-                                      letterSpacing: 1.0)),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(dialogcontext).pop();
-                              },
-                              child: ButtomTapTheme(
-                                  text: "ไม่",
-                                  radius: 8,
-                                  width: 63,
-                                  height: 32,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  borderSide: BorderSide.none,
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                            ButtonTapTheme(
+                                onTap: () {
+                                  Navigator.of(dialogcontext)
+                                      .popUntil((route) => route.isFirst);
+                                },
+                                text: "ใช่",
+                                radius: 8,
+                                width: 63,
+                                height: 32,
+                                color: Colors.white,
+                                borderSide: BorderSide(
+                                    width: 1,
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                     fontSize: 12,
                                     fontFamily: "Noto Sans Thai",
                                     fontWeight: FontWeight.w600,
                                     decoration: TextDecoration.none,
-                                  )),
+                                    letterSpacing: 1.0)),
+                            const SizedBox(
+                              width: 8,
                             ),
+                            ButtonTapTheme(
+                                onTap: () {
+                                  Navigator.of(dialogcontext).pop();
+                                },
+                                text: "ไม่",
+                                radius: 8,
+                                width: 63,
+                                height: 32,
+                                color: Theme.of(context).colorScheme.primary,
+                                borderSide: BorderSide.none,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontFamily: "Noto Sans Thai",
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.none,
+                                )),
                           ],
                         ),
                       ],

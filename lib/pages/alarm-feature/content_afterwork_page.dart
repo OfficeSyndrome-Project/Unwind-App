@@ -5,7 +5,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
 class ContentAfterWorkPage extends StatefulWidget {
-  const ContentAfterWorkPage({Key? key}) : super(key: key);
+  const ContentAfterWorkPage({super.key});
 
   @override
   _ContentAfterWorkPageState createState() => _ContentAfterWorkPageState();
@@ -59,19 +59,17 @@ class _ContentAfterWorkPageState extends State<ContentAfterWorkPage> {
           const SizedBox(
             height: 48,
           ),
-          GestureDetector(
+          ButtonTapTheme(
             onTap: () {
               startworkTimes();
             },
-            child: ButtomTapTheme(
-              text: "ถัดไป",
-              radius: 32,
-              width: double.infinity,
-              height: 52,
-              color: Theme.of(context).colorScheme.primary,
-              borderSide: BorderSide.none,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
+            text: "ถัดไป",
+            radius: 32,
+            width: double.infinity,
+            height: 52,
+            color: Theme.of(context).colorScheme.primary,
+            borderSide: BorderSide.none,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ]);
   }

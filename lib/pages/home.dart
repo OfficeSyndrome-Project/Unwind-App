@@ -8,7 +8,7 @@ import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomeState createState() => _HomeState();
@@ -18,7 +18,7 @@ class _HomeState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    ScreeningPage(),
+    const ScreeningPage(),
     const WorkoutListPage(),
     const MenuWidget(),
     HistoryPage(),

@@ -6,7 +6,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
 class ScreeningPage extends StatefulWidget {
-  ScreeningPage({Key? key}) : super(key: key);
+  const ScreeningPage({super.key});
 
   @override
   State<ScreeningPage> createState() => _ScreeningPageState();
@@ -107,54 +107,24 @@ class _ScreeningPageState extends State<ScreeningPage> {
           const SizedBox(
             height: 32,
           ),
-          StartingNextPageButton(
-            currentPage: currentPage,
-            pageRoutes: pageRoutes,
-            controller: _controller,
-          ),
+          ButtonTapTheme(
+              text: currentPage == 4 ? 'เริ่มประเมินอาการปวดของคุณ' : 'ถัดไป',
+              radius: 32,
+              width: 345,
+              height: 52,
+              color: Theme.of(context).colorScheme.primary,
+              borderSide: BorderSide.none,
+              style: Theme.of(context).textTheme.displayMedium,
+              onTap: () {
+                currentPage < 4 
+                    ? _controller.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeOut)
+                    : Navigator.push(context,
+                        pageRoutes.screening.screeningpage().route(context));
+              }),
+
+          // ),
         ]);
-  }
-}
-
-//Back Button
-
-//Button Next Page Controller
-class StartingNextPageButton extends StatefulWidget {
-  const StartingNextPageButton({
-    Key? key,
-    required this.currentPage,
-    required this.pageRoutes,
-    required PageController controller,
-  }) : _controller = controller;
-
-  final int currentPage;
-  final PageRoutes pageRoutes;
-  final PageController _controller;
-
-  @override
-  _StartingNextPageButton createState() => _StartingNextPageButton();
-}
-
-class _StartingNextPageButton extends State<StartingNextPageButton> {
-  @override
-  Widget build(BuildContext context) {
-    print("currentPage: ${widget.currentPage}");
-    return GestureDetector(
-        onTap: () {
-          widget.currentPage < 4
-              ? widget._controller.nextPage(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeOut)
-              : Navigator.push(context,
-                  widget.pageRoutes.screening.screeningpage().route(context));
-        },
-        child: ButtomTapTheme(
-            text: "ถัดไป",
-            radius: 32,
-            width: 345,
-            height: 52,
-            color: Theme.of(context).colorScheme.primary,
-            borderSide: BorderSide.none,
-            style: Theme.of(context).textTheme.displayMedium));
   }
 }
