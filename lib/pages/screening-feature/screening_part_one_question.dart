@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
+import 'package:unwind_app/services/screening_service.dart';
 
 class ScreeningPartOneQuestion extends StatefulWidget {
   @override
@@ -18,6 +22,18 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> questionsWidgets = ScreeningQuestionService.getAllQuestionPage()
+        .map((questionPage) => ScreeningQuestionBoxWidget(
+              assetPath:
+                  questionPage.assetPath,
+              questions:
+                  ScreeningQuestionService.getQuestionsByPage(questionPage.questionPage),
+              currentPage: currentPage,
+              pageRoutes: pageRoutes,
+              controller: _controller,
+            ))
+        .toList();
+
     return AppscreenTheme(
         iconButtonStart: IconButton(
           icon: Icon(Icons.arrow_back_ios_rounded),
@@ -32,8 +48,45 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // ScreeningQuestionBoxWidget(),
-          
+          //Container for PageView (not hug the content yet)
+          Flexible(
+            fit: FlexFit.loose,
+            child: PageView(
+              controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              children: [
+                ...questionsWidgets,
+              ],
+            ),
+          ),
+
+          SizedBox(
+            height: 24,
+          ),
+
+          ButtonTapTheme(
+            onTap: () {
+              currentPage < questionsWidgets.length - 1
+                  ? _controller.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut)
+                  : Navigator.push(context,
+                      pageRoutes.screening.screeningpage().route(context));
+            },
+            text: "ถัดไป",
+            radius: 32,
+            width: 345,
+            height: 52,
+            color: Theme.of(context).colorScheme.primary,
+            borderSide: BorderSide.none,
+            style: Theme.of(context).textTheme.displayMedium,
+          )
         ]);
   }
 }
