@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Routes/routes_config.dart';
-import '../../globals/theme/button_withouticon_theme.dart';
+import '../button_withouticon_widget.dart';
 
 class DetectorButton extends StatelessWidget {
   const DetectorButton(

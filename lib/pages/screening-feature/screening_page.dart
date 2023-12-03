@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/screening_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
+import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
 class ScreeningPage extends StatefulWidget {
   const ScreeningPage({super.key});
