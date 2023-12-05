@@ -41,7 +41,7 @@ class _GeneralAnimatedCustomRadioState extends State<GeneralAnimatedCustomRadio>
       end: widget.activeColor, // Use the active color
     ).animate(_controller);
 
-    _controller.value = widget.value == widget.groupValue ? 1.0 : 0.0;
+    _controller.value = (widget.value == widget.groupValue ? 1.0 : 0.0);
 
     _controller.addListener(() {
       setState(() {}); // Rebuild the widget as the animation progresses
@@ -71,7 +71,11 @@ class _GeneralAnimatedCustomRadioState extends State<GeneralAnimatedCustomRadio>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        // print(widget.value);
         widget.onChanged?.call(widget.value);
+        // print("onTap");
+        // print(widget.value);
+        // print(widget.groupValue);
       },
       child: Container(
         width: 24.0,

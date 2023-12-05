@@ -52,10 +52,10 @@ class _ScreeningQuestionBoxWidgetState
               Row(children: [
                 GeneralAnimatedCustomRadio<int>(
                     value: 1,
-                    groupValue: currentOptions,
+                    groupValue: this.currentOptions,
                     onChanged: (value) {
                       setState(() {
-                        currentOptions = value;
+                        this.currentOptions = value;
                         print(value);
                         print(currentOptions);
                       });
@@ -75,10 +75,10 @@ class _ScreeningQuestionBoxWidgetState
                 children: [
                   GeneralAnimatedCustomRadio<int>(
                       value: 2,
-                      groupValue: currentOptions,
+                      groupValue: this.currentOptions,
                       onChanged: (value) {
                         setState(() {
-                          currentOptions = value;
+                          this.currentOptions = value;
                           print(value);
                           print(currentOptions);
                         });
@@ -150,18 +150,106 @@ class _ScreeningQuestionBoxWidgetState
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 16,
                 ),
-                itemBuilder: (context, index) => Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.questions[index],
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    radioWidget(context, currentOptions)
-                  ],
-                ),
+                itemBuilder: (context, index) => QuestionAndRadioButton(
+                    questions: widget.questions[index],
+                    questionId: index,
+                    questionPage: widget.currentPage),
               ))
         ]);
+  }
+}
+
+class QuestionAndRadioButton extends StatefulWidget {
+  final String questions;
+  final int questionPage;
+  final int questionId;
+  final String pagename = "screening";
+
+  const QuestionAndRadioButton({
+    super.key,
+    required this.questionPage,
+    required this.questionId,
+    required this.questions,
+  });
+
+  @override
+  State<QuestionAndRadioButton> createState() => _QuestionAndRadioButtonState();
+}
+
+class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
+  int? currentOptions;
+  String get questions => widget.questions;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          questions,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                width: 16,
+              ),
+              Column(
+                children: [
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Row(children: [
+                    GeneralAnimatedCustomRadio<int>(
+                        value: 1,
+                        groupValue: currentOptions,
+                        onChanged: (value) {
+                          setState(() {
+                            currentOptions = value;
+                            print(widget.questionId);
+                            // print(value);
+                            print(currentOptions);
+                          });
+                          // onCurrentOptionsChanged(true);
+                        },
+                        activeColor: Theme.of(context).colorScheme.primary,
+                        inactiveColor: Theme.of(context).colorScheme.primary),
+                    Text(
+                      'ใช่',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ]),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Row(
+                    children: [
+                      GeneralAnimatedCustomRadio<int>(
+                          value: 2,
+                          groupValue: currentOptions,
+                          onChanged: (value) {
+                            setState(() {
+                              currentOptions = value;
+                              print(widget.questionId);
+                              // print(value);
+                              print(currentOptions);
+                            });
+                          },
+                          activeColor: Theme.of(context).colorScheme.primary,
+                          inactiveColor: Theme.of(context).colorScheme.primary),
+                      Text(
+                        'ไม่',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      )
+                    ],
+                  )
+                ],
+              )
+            ])
+      ],
+    );
   }
 }
