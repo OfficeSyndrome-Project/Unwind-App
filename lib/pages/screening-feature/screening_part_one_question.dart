@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
-import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 import 'package:unwind_app/services/screening_service.dart';
@@ -22,23 +21,27 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> questionsWidgets = ScreeningQuestionService.getAllQuestionPage()
-        .map((questionPage) => ScreeningQuestionBoxWidget(
-              assetPath:
-                  questionPage.assetPath,
-              questions:
-                  ScreeningQuestionService.getQuestionsByPage(questionPage.questionPage),
-              currentPage: currentPage,
-              pageRoutes: pageRoutes,
-              controller: _controller,
-            ))
-        .toList();
+    List<Widget> questionsWidgets =
+        ScreeningQuestionService.getAllQuestionPage()
+            .map((questionPage) => ScreeningQuestionBoxWidget(
+                  assetPath: questionPage.assetPath,
+                  questions: ScreeningQuestionService.getQuestionsByPage(
+                      questionPage.questionPage),
+                  currentPage: currentPage,
+                  pageRoutes: pageRoutes,
+                  controller: _controller,
+                ))
+            .toList();
 
     return AppscreenTheme(
         iconButtonStart: IconButton(
           icon: Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
-            Navigator.pop(context);
+            currentPage >= 1
+                      ? _controller.previousPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeOut)
+                      : Navigator.pop(context);
           },
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.all(0),
@@ -49,8 +52,9 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //Container for PageView (not hug the content yet)
-          Flexible(
-            fit: FlexFit.loose,
+          SizedBox(
+            width: double.infinity,
+            height:448 ,
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
@@ -76,8 +80,11 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                   ? _controller.nextPage(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeOut)
-                  : Navigator.push(context,
-                      pageRoutes.screening.screeningpage().route(context));
+                  : Navigator.push(
+                      context,
+                      pageRoutes.screening
+                          .introscreeningpageparttwo()
+                          .route(context));
             },
             text: "ถัดไป",
             radius: 32,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/general_radio_widget.dart';
 import 'package:unwind_app/Widgets/radio_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
 
-class ScreeningQuestionBoxWidget extends StatelessWidget {
+class ScreeningQuestionBoxWidget extends StatefulWidget {
   final String? assetPath;
   final List<String> questions;
   final int currentPage;
@@ -20,52 +21,82 @@ class ScreeningQuestionBoxWidget extends StatelessWidget {
       required this.controller})
       : super(key: key);
 
-void onCurrentOptionsChanged(bool bool) {
+  @override
+  State<ScreeningQuestionBoxWidget> createState() =>
+      _ScreeningQuestionBoxWidgetState();
 }
 
-Widget radioWidget(BuildContext context,int index, Map<int, bool?>? currentOptions) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-        children:[
-        AnimatedCustomRadio(
-            value: currentOptions != null && currentOptions.containsKey(index)
-                ? currentOptions[index] ?? false
-                : false,
-            groupValue: true,
-            onChanged: (value) {
-              onCurrentOptionsChanged(true);
-            },
-            activeColor: Theme.of(context).colorScheme.primary,
-            inactiveColor: Theme.of(context).colorScheme.primary),
-        Text(
-          'ใช่',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),]),
-        const SizedBox(
-          width: 16,
-        ),
-        Row(children: [AnimatedCustomRadio(
-            value: !(currentOptions != null && currentOptions.containsKey(index)
-                ? currentOptions[index] ?? true
-                : true),
-            groupValue: true,
-            onChanged: (value) {
-              onCurrentOptionsChanged(false);
-            },
-            activeColor: Theme.of(context).colorScheme.primary,
-            inactiveColor: Theme.of(context).colorScheme.primary),
-        Text(
-          'ไม่',
-          style: Theme.of(context).textTheme.bodyLarge,
-        )
-      ],
-    )]);
+class _ScreeningQuestionBoxWidgetState
+    extends State<ScreeningQuestionBoxWidget> {
+  void onCurrentOptionsChanged(bool bool) {
+    //here
   }
 
+  int? currentOptions;
+
+//radio button
+  Widget radioWidget(BuildContext context, int? currentOptions) {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(
+            width: 16,
+          ),
+          Column(
+            children: [
+              const SizedBox(
+                height: 4,
+              ),
+              Row(children: [
+                GeneralAnimatedCustomRadio<int>(
+                    value: 1,
+                    groupValue: currentOptions,
+                    onChanged: (value) {
+                      setState(() {
+                        currentOptions = value;
+                        print(value);
+                        print(currentOptions);
+                      });
+                      // onCurrentOptionsChanged(true);
+                    },
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    inactiveColor: Theme.of(context).colorScheme.primary),
+                Text(
+                  'ใช่',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ]),
+              const SizedBox(
+                height: 4,
+              ),
+              Row(
+                children: [
+                  GeneralAnimatedCustomRadio<int>(
+                      value: 2,
+                      groupValue: currentOptions,
+                      onChanged: (value) {
+                        setState(() {
+                          currentOptions = value;
+                          print(value);
+                          print(currentOptions);
+                        });
+                      },
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      inactiveColor: Theme.of(context).colorScheme.primary),
+                  Text(
+                    'ไม่',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  )
+                ],
+              )
+            ],
+          )
+        ]);
+  }
+
+//question box
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -73,7 +104,7 @@ Widget radioWidget(BuildContext context,int index, Map<int, bool?>? currentOptio
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (assetPath != null) // Check if assetPath is not null
+          if (widget.assetPath != null) // Check if assetPath is not null
             Column(
               children: [
                 SizedBox(
@@ -84,7 +115,7 @@ Widget radioWidget(BuildContext context,int index, Map<int, bool?>? currentOptio
                     child: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(assetPath!),
+                          image: AssetImage(widget.assetPath!),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -104,26 +135,32 @@ Widget radioWidget(BuildContext context,int index, Map<int, bool?>? currentOptio
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x19000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 1),
+                    spreadRadius: 0,
+                  ),
+                ],
               ),
               child: ListView.separated(
                 shrinkWrap: true,
-                itemCount: questions.length,
+                itemCount: widget.questions.length,
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 16,
                 ),
-                itemBuilder: (context,index) => 
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        questions[index],
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      radioWidget(context, index,null)
-                    ],
-                  )
-                ,
+                itemBuilder: (context, index) => Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.questions[index],
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    radioWidget(context, currentOptions)
+                  ],
+                ),
               ))
         ]);
   }

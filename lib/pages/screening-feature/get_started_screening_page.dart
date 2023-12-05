@@ -121,7 +121,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeOut)
                     : Navigator.push(context,
-                        pageRoutes.screening.screeningpage().route(context));
+                        pageRoutes.screening.introscreeningpagepartone().route(context));
               }),
 
           // ),

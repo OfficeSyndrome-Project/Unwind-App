@@ -6,16 +6,6 @@ class ScreeningQuestionService {
   static List<ScreeningPartOneModel> questions =
       ScreeningPartOneModel.getScreeningPartOneModel();
   static List<ScreeningQPage> pages = ScreeningQPage.getScreeningQPage();
-  //get q by page
-  // static List<ScreeningPartOneModel> getQuestionsByPage(int questionPage){
-  //   // debugPrint(question.toString());
-  //   // debugPrint(questions.toString());
-  //   List<ScreeningPartOneModel> result = questions
-  //   .where((question) => question.questionPage == questionPage)
-  //   .toList();
-  //   print(result);
-  //   return result;
-  // }
 
   //get all qId
   static List<int> getAllQuestionId() {
@@ -34,7 +24,7 @@ class ScreeningQuestionService {
         .map((question) => question.question)
         .toList();
     // .toString();
-    print(result);
+    // print(result);
     return result;
 
     //get type of question

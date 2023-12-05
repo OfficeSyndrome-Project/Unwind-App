@@ -4,8 +4,9 @@ import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
-import 'package:unwind_app/pages/screening-feature/intro_screening_part_one.dart';
+import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
+import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 import '../data/timewatch_obj.dart';
 import '../pages/alarm-feature/afterbreak_page.dart';
@@ -24,10 +25,14 @@ class PageRoutes {
 }
 
 class Screening {
-  PathRoute screeningpage() =>
+  PathRoute introscreeningpagepartone() =>
       PathRoute(title: "", widget: IntroScreeningPartOne());
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: ScreeningPartOneQuestion());
+  PathRoute introscreeningpageparttwo() =>
+      PathRoute(title: "", widget: IntroScreeningPartTwo());
+  PathRoute screeningparttwoquestion() =>
+      PathRoute(title: "", widget: ScreeningPartTwoQuestion());
 }
 
 class Home {

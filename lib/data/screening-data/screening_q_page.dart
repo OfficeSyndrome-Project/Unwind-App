@@ -17,5 +17,9 @@ class ScreeningQPage {
           questionPage: 2,
           assetPath: null,
         ),
+        ScreeningQPage(
+          questionPage: 3,
+          assetPath: null,
+        ),
       ];
 }

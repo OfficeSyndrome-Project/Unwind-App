@@ -93,9 +93,10 @@ flutter:
     - lib/assets/images/screeningPart/scr_part_one_1.png
     - lib/assets/images/screeningPart/scr_part_one_2.png
     - lib/assets/images/screeningPart/scr_part_two_1.png
-    - lib/assets/images/screeningPart/scr_part_two_2.png
-    - lib/assets/images/screeningPart/scr_part_two_pose1.png
     - lib/assets/images/screeningPart/scr_part_three_1.png
+    - lib/assets/images/screeningPart/scr_part_three_2.png
+    - lib/assets/images/screeningPart/scr_part_three_testpicture.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
