@@ -11,6 +11,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/alarm-widget/alarm_wheeltile_widget.dart';
 import 'package:unwind_app/data/time_workstate.dart';
 import 'package:unwind_app/data/time_breakstate.dart';
+import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
 import 'info_clock_page.dart';
 
@@ -90,12 +91,15 @@ class _ClockPageState extends State<ClockPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                Container(
                   width: double.infinity,
                   height: 30,
+                  margin: const EdgeInsets.only(bottom: 8),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: _worktoggle == true
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       textIcon(
@@ -108,29 +112,20 @@ class _ClockPageState extends State<ClockPage> {
                         ),
                       ),
                       _worktoggle == true
-                          ? const SizedBox(
-                              width: 72,
-                              height: 3,
-                            )
-                          : ElevatedButton(
-                              onPressed: () {
+                          ? const SizedBox()
+                          : ButtonTapTheme(
+                              onTap: () {
                                 scrollWorkTimes();
                               },
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                fixedSize: const Size(72, 30),
-                              ),
-                              child: Text(
-                                'ยืนยัน',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                            )
+                              text: 'ยืนยัน',
+                              radius: 4,
+                              width: 72,
+                              height: 30,
+                              color: Theme.of(context).colorScheme.primary,
+                              borderSide: BorderSide.none,
+                              style: Theme.of(context).textTheme.headlineSmall)
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 8,
                 ),
                 AnimatedContainer(
                     //time-wheel 1
@@ -248,13 +243,16 @@ class _ClockPageState extends State<ClockPage> {
                 const SizedBox(
                   height: 48,
                 ),
-                SizedBox(
+                Container(
                   //break
                   width: double.infinity,
                   height: 30,
+                  margin: const EdgeInsets.only(bottom: 8),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: _breaktoggle == true
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       textIcon(
@@ -267,29 +265,20 @@ class _ClockPageState extends State<ClockPage> {
                         ),
                       ),
                       _breaktoggle == true
-                          ? const SizedBox(
-                              width: 72,
-                              height: 3,
-                            )
-                          : ElevatedButton(
-                              onPressed: () {
+                          ? const SizedBox()
+                          : ButtonTapTheme(
+                              onTap: () {
                                 scrollBreakTimes();
                               },
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                fixedSize: const Size(72, 30),
-                              ),
-                              child: Text(
-                                'ยืนยัน',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall,
-                              ),
-                            )
+                              text: 'ยืนยัน',
+                              radius: 4,
+                              width: 72,
+                              height: 30,
+                              color: Theme.of(context).colorScheme.primary,
+                              borderSide: BorderSide.none,
+                              style: Theme.of(context).textTheme.headlineSmall)
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 8,
                 ),
                 AnimatedContainer(
                     //time-wheel 2
