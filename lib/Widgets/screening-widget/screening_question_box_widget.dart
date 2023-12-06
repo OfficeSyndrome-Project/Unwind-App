@@ -38,9 +38,9 @@ class _ScreeningQuestionBoxWidgetState
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(
-            width: 16,
-          ),
+          // const SizedBox(
+          //   width: 16,
+          // ),
           Column(
             children: [
               const SizedBox(
@@ -102,31 +102,29 @@ class _ScreeningQuestionBoxWidgetState
         mainAxisSize: MainAxisSize.min,
         children: [
           if (widget.assetPath != null) // Check if assetPath is not null
-            Column(
-              children: [
-                SizedBox(
-                  width: 240,
-                  height: 240,
-                  child: AspectRatio(
-                    aspectRatio: 1 / 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(widget.assetPath!),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+
+            SizedBox(
+              width: 240,
+              height: 240,
+              child: AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(widget.assetPath!),
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
-              ],
+              ),
             ),
+          // const SizedBox(
+          //   height: 16,
+          // ),
           Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
+              // margin: const EdgeInsets.only(bottom: 24),
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(

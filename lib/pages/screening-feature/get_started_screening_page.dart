@@ -44,9 +44,10 @@ class _ScreeningPageState extends State<ScreeningPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          Container(
             width: double.infinity,
             height: 356,
+            margin: const EdgeInsets.only(bottom: 32),
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
@@ -90,9 +91,6 @@ class _ScreeningPageState extends State<ScreeningPage> {
                         'แอปพลิเคชันที่คุณสามารถรักษาอาการ\nออฟฟิศซินโดรมได้ด้วยตัวของคุณเอง '),
               ],
             ),
-          ),
-          const SizedBox(
-            height: 32,
           ),
           DotsIndicator(
             dotsCount: 5,
