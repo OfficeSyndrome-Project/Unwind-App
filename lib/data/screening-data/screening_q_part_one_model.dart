@@ -54,15 +54,12 @@ class ScreeningPartOneModel {
         ScreeningPartOneModel(
             questionId: 7,
             questionPage: 3,
-            question:
-                "7. ท่านมีความเครียดระหว่างการทำงานหรือไม่ ?",
+            question: "7. ท่านมีความเครียดระหว่างการทำงานหรือไม่ ?",
             questionType: "คัดแยกโรค"),
         ScreeningPartOneModel(
             questionId: 8,
             questionPage: 3,
-            question:
-                "8. ท่านรู้สึกกล้ามเนื้อตึงในขณะทำงานหรือไม่ ?",
+            question: "8. ท่านรู้สึกกล้ามเนื้อตึงในขณะทำงานหรือไม่ ?",
             questionType: "คัดแยกโรค"),
-
       ];
 }

@@ -54,7 +54,9 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //Container for PageView (not hug the content yet)
-          Expanded(
+          SizedBox(
+            width: double.infinity,
+            height: 448,
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),

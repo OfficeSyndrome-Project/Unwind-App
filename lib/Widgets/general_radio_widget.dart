@@ -19,7 +19,8 @@ class GeneralAnimatedCustomRadio<Type> extends StatefulWidget {
   });
 
   @override
-  _GeneralAnimatedCustomRadioState createState() => _GeneralAnimatedCustomRadioState();
+  _GeneralAnimatedCustomRadioState createState() =>
+      _GeneralAnimatedCustomRadioState();
 }
 
 class _GeneralAnimatedCustomRadioState extends State<GeneralAnimatedCustomRadio>
