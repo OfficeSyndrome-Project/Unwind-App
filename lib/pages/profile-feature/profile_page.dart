@@ -226,7 +226,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(left: 20),
+            margin: const EdgeInsets.only(left: 20),
             child: TextButton(
               onPressed: () {
                 Navigator.push(

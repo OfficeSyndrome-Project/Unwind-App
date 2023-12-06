@@ -45,7 +45,7 @@ class _EditProfileState extends State<EditProfile> {
         children: [
           Container(
             // width: 312,
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -113,7 +113,7 @@ class _EditProfileState extends State<EditProfile> {
                       _selectedValue = value;
                     });
                   },
-                  hint: Text(
+                  hint: const Text(
                     "เพศ",
                     style: TextStyle(
                       color: Color(0xFF9BA4B5),
@@ -126,7 +126,7 @@ class _EditProfileState extends State<EditProfile> {
                     Icons.keyboard_arrow_down_rounded,
                     color: Color(0xFF9BA4B5),
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                     color: Color(0xFF9BA4B5),
