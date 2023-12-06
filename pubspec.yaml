@@ -99,7 +99,6 @@ flutter:
     - lib/assets/images/screeningPart/scr_part_three_1.png
     - lib/assets/images/screeningPart/scr_part_three_2.png
     - lib/assets/images/screeningPart/scr_part_three_testpicture.png
-    - lib/assets/images/screeningPart/screening-1.png
     - lib/assets/images/blank_profile.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
