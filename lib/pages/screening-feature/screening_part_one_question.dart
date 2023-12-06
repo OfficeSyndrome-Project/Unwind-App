@@ -71,11 +71,9 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
               ],
             ),
           ),
-
-          const SizedBox(
-            height: 24,
-          ),
-
+          // SizedBox(
+          //   height: 24,
+          // ),
           ButtonTapTheme(
             onTap: () {
               currentPage < questionsWidgets.length - 1
