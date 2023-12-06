@@ -56,7 +56,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           //Container for PageView (not hug the content yet)
           SizedBox(
             width: double.infinity,
-            height:448 ,
+            height: 448,
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
