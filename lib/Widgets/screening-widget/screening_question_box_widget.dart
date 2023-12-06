@@ -53,8 +53,8 @@ class _ScreeningQuestionBoxWidgetState
                     onChanged: (value) {
                       setState(() {
                         this.currentOptions = value;
-                        print(value);
-                        print(currentOptions);
+                        // print(value);
+                        // print(currentOptions);
                       });
                       // onCurrentOptionsChanged(true);
                     },
@@ -76,8 +76,8 @@ class _ScreeningQuestionBoxWidgetState
                       onChanged: (value) {
                         setState(() {
                           this.currentOptions = value;
-                          print(value);
-                          print(currentOptions);
+                          // print(value);
+                          // print(currentOptions);
                         });
                       },
                       activeColor: Theme.of(context).colorScheme.primary,
@@ -206,9 +206,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         onChanged: (value) {
                           setState(() {
                             currentOptions = value;
-                            print(widget.questionId);
+                            // print(widget.questionId);
                             // print(value);
-                            print(currentOptions);
+                            // print(currentOptions);
                           });
                           // onCurrentOptionsChanged(true);
                         },
@@ -230,9 +230,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                           onChanged: (value) {
                             setState(() {
                               currentOptions = value;
-                              print(widget.questionId);
+                              // print(widget.questionId);
                               // print(value);
-                              print(currentOptions);
+                              // print(currentOptions);
                             });
                           },
                           activeColor: Theme.of(context).colorScheme.primary,

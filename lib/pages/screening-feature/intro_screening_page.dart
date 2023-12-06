@@ -16,9 +16,6 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPartOne> {
 
   int currentPage = 0;
 
-  final PageController _controller =
-      PageController(initialPage: 0, viewportFraction: 1);
-
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
@@ -73,9 +70,6 @@ class _IntroScreeningPartTwoState extends State<IntroScreeningPartTwo> {
   PageRoutes pageRoutes = PageRoutes();
 
   int currentPage = 0;
-
-  final PageController _controller =
-      PageController(initialPage: 0, viewportFraction: 1);
 
   @override
   Widget build(BuildContext context) {

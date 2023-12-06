@@ -8,10 +8,10 @@ class EditProfile extends StatefulWidget {
   // PageRoutes pageRoutes = PageRoutes();
 
   @override
-  _EditProfileState createState() => _EditProfileState();
+  EditProfileState createState() => EditProfileState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class EditProfileState extends State<EditProfile> {
   PageRoutes pageRoutes = PageRoutes();
   String? _selectedValue;
   // String? item = 'item1';
