@@ -3,7 +3,6 @@ import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
 import 'package:unwind_app/pages/home.dart';
-import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
 import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
@@ -17,7 +16,6 @@ import '../pages/ergonomic-feature/ergonomic_page.dart';
 import '../pages/ergonomic-feature/question_ergonomic_page.dart';
 import '../pages/ergonomic-feature/result_ergonomic_page.dart';
 import '../pages/profile-feature/edit_profile.dart';
-import '../pages/screening-feature/screening_part_one.dart';
 
 class PageRoutes {
   Home home = Home();
@@ -29,13 +27,13 @@ class PageRoutes {
 
 class Screening {
   PathRoute introscreeningpagepartone() =>
-      PathRoute(title: "", widget: IntroScreeningPartOne());
+      PathRoute(title: "", widget: const IntroScreeningPartOne());
   PathRoute screeningpartonequestion() =>
-      PathRoute(title: "", widget: ScreeningPartOneQuestion());
+      PathRoute(title: "", widget: const ScreeningPartOneQuestion());
   PathRoute introscreeningpageparttwo() =>
-      PathRoute(title: "", widget: IntroScreeningPartTwo());
+      PathRoute(title: "", widget: const IntroScreeningPartTwo());
   PathRoute screeningparttwoquestion() =>
-      PathRoute(title: "", widget: ScreeningPartTwoQuestion());
+      PathRoute(title: "", widget: const ScreeningPartTwoQuestion());
 }
 
 class Home {
@@ -74,7 +72,7 @@ class History {
 
 class Profile {
   PathRoute editpage() =>
-      PathRoute(title: "แก้ไขโปรไฟล์", widget: EditProfile());
+      PathRoute(title: "แก้ไขโปรไฟล์", widget: const EditProfile());
 }
 
 class PathRoute {
