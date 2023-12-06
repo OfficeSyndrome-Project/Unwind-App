@@ -7,7 +7,6 @@ class ScreeningQPage {
     required this.assetPath,
   });
   @override
-
   static List<ScreeningQPage> getScreeningQPage() => [
         ScreeningQPage(
           questionPage: 1,

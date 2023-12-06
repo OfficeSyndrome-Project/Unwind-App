@@ -5,7 +5,7 @@ import 'package:unwind_app/Widgets/text_with_starticon_widget.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 backgroundImage:
                     AssetImage('lib/assets/images/blank_profile.png'),
                 radius: 60,
@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   ////////// หัวข้อ- ข้อมูลส่วนตัว/////////////
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -76,9 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               context,
                               "ข้อมูลส่วนตัว",
                               const Color(0xFF484D56),
-                              Icon(
+                              const Icon(
                                 Icons.contact_mail_outlined,
-                                color: const Color(0xFF7F8795),
+                                color: Color(0xFF7F8795),
                                 size: 16,
                               ),
                             ),
@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     //////////////แสดงข้อมูล//////////
                     const SizedBox(height: 8),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       height: 220, ////แก้ด้วย*****
                       child: Column(

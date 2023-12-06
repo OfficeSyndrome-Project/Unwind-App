@@ -3,13 +3,13 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 //select point to check
 class ScreeningPartTwoQuestion extends StatelessWidget {
-  const ScreeningPartTwoQuestion({Key? key}) : super(key: key);
+  const ScreeningPartTwoQuestion({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
       iconButtonStart: IconButton(
-        icon: Icon(Icons.arrow_back_ios_rounded),
+        icon: const Icon(Icons.arrow_back_ios_rounded),
         onPressed: () {
           // currentPage >= 1
           //           ? _controller.previousPage(
@@ -24,10 +24,8 @@ class ScreeningPartTwoQuestion extends StatelessWidget {
       ),
       colorBar: Colors.transparent,
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center, 
-      children: [
-        Text("ScreeningPartTwoQuestion")
-      ],
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const [Text("ScreeningPartTwoQuestion")],
     );
   }
 }
