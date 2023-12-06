@@ -6,6 +6,8 @@ import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 import 'package:unwind_app/services/screening_service.dart';
 
 class ScreeningPartOneQuestion extends StatefulWidget {
+  const ScreeningPartOneQuestion({super.key});
+
   @override
   State<ScreeningPartOneQuestion> createState() =>
       _ScreeningPartOneQuestionState();
@@ -35,13 +37,13 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
 
     return AppscreenTheme(
         iconButtonStart: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded),
+          icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             currentPage >= 1
-                      ? _controller.previousPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeOut)
-                      : Navigator.pop(context);
+                ? _controller.previousPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeOut)
+                : Navigator.pop(context);
           },
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.all(0),
@@ -52,9 +54,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //Container for PageView (not hug the content yet)
-          SizedBox(
-            width: double.infinity,
-            height:448 ,
+          Expanded(
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
@@ -69,11 +69,9 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
               ],
             ),
           ),
-
-          SizedBox(
-            height: 24,
-          ),
-
+          // SizedBox(
+          //   height: 24,
+          // ),
           ButtonTapTheme(
             onTap: () {
               currentPage < questionsWidgets.length - 1

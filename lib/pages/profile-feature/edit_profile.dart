@@ -4,7 +4,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import '../../Routes/routes_config.dart';
 
 class EditProfile extends StatefulWidget {
-  EditProfile({Key? key}) : super(key: key);
+  const EditProfile({super.key});
   // PageRoutes pageRoutes = PageRoutes();
 
   @override
@@ -42,7 +42,7 @@ class _EditProfileState extends State<EditProfile> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: 312,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
