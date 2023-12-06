@@ -116,12 +116,15 @@ class _ScreeningPageState extends State<ScreeningPage> {
               borderSide: BorderSide.none,
               style: Theme.of(context).textTheme.displayMedium,
               onTap: () {
-                currentPage < 4 
+                currentPage < 4
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeOut)
-                    : Navigator.push(context,
-                        pageRoutes.screening.introscreeningpagepartone().route(context));
+                    : Navigator.push(
+                        context,
+                        pageRoutes.screening
+                            .introscreeningpagepartone()
+                            .route(context));
               }),
 
           // ),
