@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/topic_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
@@ -67,22 +68,25 @@ class SummaryPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: nameWorkout.map((data) {
-                      return Row(
-                        children: [
-                          const Text(
-                            '\u2022',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16, color: Color(0xFF484D56)),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            data,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          )
-                        ],
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          children: [
+                            const Text(
+                              '\u2022',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 16, color: Color(0xFF484D56)),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              data,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )
+                          ],
+                        ),
                       );
                     }).toList()),
                 const SizedBox(
@@ -97,37 +101,104 @@ class SummaryPage extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                Container(
-                  width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      color: Theme.of(context).colorScheme.secondary,
-                      shadows: const [
-                        BoxShadow(
-                          color: Color(0x19000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 1),
-                          spreadRadius: 0,
-                        )
-                      ]),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Weeknd num',
-                        style: Theme.of(context).textTheme.headlineSmall,
+                ButtonWithiconWidget(
+                  onTap: () {},
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  text: 'Weeknd num',
+                  color: Theme.of(context).colorScheme.secondary,
+                  colorText: Colors.white,
+                  radius: 8,
+                  side: BorderSide.none,
+                  icon: Icons.arrow_forward_ios_rounded,
+                  iconcolor: Colors.white,
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x19000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 1),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                const Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    //pain score
+                    Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                              text: 'ค่าความเจ็บปวด : ',
+                              style: TextStyle(
+                                fontFamily: "Noto Sans Thai",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF484D56),
+                              )),
+                          TextSpan(
+                              text: 'num',
+                              style: TextStyle(
+                                fontFamily: "Noto Sans Thai",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF3B67CD),
+                              )),
+                        ],
                       ),
-                      const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.white,
+                    ),
+                    //frequency
+                    Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                              text: 'ความสม่ำเสมอ : ',
+                              style: TextStyle(
+                                fontFamily: "Noto Sans Thai",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF484D56),
+                              )),
+                          TextSpan(
+                              text: 'num',
+                              style: TextStyle(
+                                fontFamily: "Noto Sans Thai",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF3B67CD),
+                              )),
+                        ],
                       ),
-                    ],
-                  ),
+                    ), //frequency
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                ButtonWithiconWidget(
+                  onTap: () {},
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  text: 'ผลการประเมินแบบทดสอบ',
+                  color: const Color(0xFFC4D1F0),
+                  colorText: const Color(0xFF6285D7),
+                  radius: 8,
+                  side: BorderSide.none,
+                  icon: Icons.arrow_forward_ios_rounded,
+                  iconcolor: const Color(0xFF6285D7),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x19000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 1),
+                      spreadRadius: 0,
+                    )
+                  ],
                 ),
               ],
             ),
