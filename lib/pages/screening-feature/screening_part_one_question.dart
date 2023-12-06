@@ -6,6 +6,8 @@ import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 import 'package:unwind_app/services/screening_service.dart';
 
 class ScreeningPartOneQuestion extends StatefulWidget {
+  const ScreeningPartOneQuestion({super.key});
+
   @override
   State<ScreeningPartOneQuestion> createState() =>
       _ScreeningPartOneQuestionState();
@@ -35,7 +37,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
 
     return AppscreenTheme(
         iconButtonStart: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded),
+          icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             currentPage >= 1
                       ? _controller.previousPage(
@@ -70,7 +72,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
             ),
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
 

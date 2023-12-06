@@ -4,7 +4,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import '../../Routes/routes_config.dart';
 
 class EditProfile extends StatefulWidget {
-  EditProfile({Key? key}) : super(key: key);
+  const EditProfile({super.key});
   // PageRoutes pageRoutes = PageRoutes();
 
   @override
@@ -13,6 +13,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   PageRoutes pageRoutes = PageRoutes();
+  String? _selectedValue;
   // String? item = 'item1';
   // List items = [
   //   'item1',
@@ -43,7 +44,8 @@ class _EditProfileState extends State<EditProfile> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 312,
+            // width: 312,
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -80,6 +82,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
                       hintText: 'อายุ',
                       hintStyle: TextStyle(
@@ -95,14 +98,77 @@ class _EditProfileState extends State<EditProfile> {
                       ))),
                 ),
                 const SizedBox(height: 8),
-                // DropdownButton(
-                //   value: item,
-                //   items: items
-                //       .map((item) =>
-                //           DropdownMenuItem(value: item, child: Text(item)))
-                //       .toList(),
-                //   onChanged: (value) => setState(() => item = value.toString()),
-                // ),
+                DropdownButtonFormField(
+                  items: <String>[
+                    'ชาย',
+                    'หญิง',
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _selectedValue = value;
+                    });
+                    print('---value---');
+                    print(_selectedValue);
+                  },
+                  hint: Text(
+                    "เพศ",
+                    style: TextStyle(
+                      color: Color(0xFF9BA4B5),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  value: _selectedValue,
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Color(0xFF9BA4B5),
+                  ),
+                  decoration: InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                    color: Color(0xFF9BA4B5),
+                    width: 1,
+                  ))),
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      hintText: 'ส่วนสูง',
+                      hintStyle: TextStyle(
+                        color: Color(0xFF9BA4B5),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        height: 0.09,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                        color: Color(0xFF9BA4B5),
+                        width: 1,
+                      ))),
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      hintText: 'น้ำหนัก',
+                      hintStyle: TextStyle(
+                        color: Color(0xFF9BA4B5),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        height: 0.09,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                        color: Color(0xFF9BA4B5),
+                        width: 1,
+                      ))),
+                ),
               ],
             ),
           ),

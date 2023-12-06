@@ -5,7 +5,7 @@ import 'package:unwind_app/Widgets/text_with_starticon_widget.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -19,14 +19,13 @@ class _ProfilePageState extends State<ProfilePage> {
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        // textBar: "ข้อมูลครับอ้วน",
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 backgroundImage:
                     AssetImage('lib/assets/images/blank_profile.png'),
                 radius: 60,
@@ -49,9 +48,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 16,
               ),
               Container(
-                width: 308,
-                height: 283,
+                // width: 308,
+                // height: 283,
                 padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                 decoration: ShapeDecoration(
                   color: const Color(0xFFEBECF0),
                   // color: Colors.cyan,
@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   ////////// หัวข้อ- ข้อมูลส่วนตัว/////////////
                   children: [
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -76,26 +76,19 @@ class _ProfilePageState extends State<ProfilePage> {
                               context,
                               "ข้อมูลส่วนตัว",
                               const Color(0xFF484D56),
-                              Icon(
+                              const Icon(
                                 Icons.contact_mail_outlined,
-                                color: const Color(0xFF7F8795),
+                                color: Color(0xFF7F8795),
                                 size: 16,
                               ),
                             ),
 
-                            // Expanded(
-                            //     child: SizedBox(
-                            //   child: Text(
-                            //     'ข้อมูลส่วนตัว',
-                            //     style: Theme.of(context).textTheme.titleMedium,
-                            //   ),
-                            // )),
                             const SizedBox(height: 8),
                           ]),
                     ),
                     //////////////แสดงข้อมูล//////////
                     const SizedBox(height: 8),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       height: 220, ////แก้ด้วย*****
                       child: Column(
@@ -256,25 +249,22 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                  context, pageRoutes.profile.editpage().route(context));
-            },
-            child:
-                // Text(
-                //   'จัดการโปรโฟล์',
-                //   style: Theme.of(context).textTheme.displaySmall,
-                // ),
-
-                iconText(
-              context,
-              "จัดการโปรโฟล์",
-              const Color(0xff3b67cd),
-              Icon(
-                Icons.edit_outlined,
-                color: Theme.of(context).colorScheme.primary,
-                size: 22,
+          Container(
+            margin: EdgeInsets.only(left: 20),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context, pageRoutes.profile.editpage().route(context));
+              },
+              child: iconText(
+                context,
+                "จัดการโปรโฟล์",
+                const Color(0xff3b67cd),
+                Icon(
+                  Icons.edit_outlined,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 22,
+                ),
               ),
             ),
           ),

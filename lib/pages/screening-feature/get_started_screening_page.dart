@@ -56,7 +56,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                   currentPage = value;
                 });
               },
-              children: [
+              children: const [
                 ScreeningBoxWidget(
                     assetPath:
                         'lib/assets/images/screeningPart/get_started_1.png',

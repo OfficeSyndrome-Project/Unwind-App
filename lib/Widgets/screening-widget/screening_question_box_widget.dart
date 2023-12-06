@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
-import 'package:unwind_app/Widgets/radio_widget.dart';
-import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
 
 class ScreeningQuestionBoxWidget extends StatefulWidget {
   final String? assetPath;
@@ -12,14 +10,13 @@ class ScreeningQuestionBoxWidget extends StatefulWidget {
   final PageController controller;
   // final ScreeningPartOneModel question;
 
-  ScreeningQuestionBoxWidget(
-      {Key? key,
+  const ScreeningQuestionBoxWidget(
+      {super.key,
       required this.assetPath,
       required this.questions,
       required this.currentPage,
       required this.pageRoutes,
-      required this.controller})
-      : super(key: key);
+      required this.controller});
 
   @override
   State<ScreeningQuestionBoxWidget> createState() =>
