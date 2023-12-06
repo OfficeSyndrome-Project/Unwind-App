@@ -1,7 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
-  const HistoryWorkoutlistWidget({super.key});
+  HistoryWorkoutlistWidget({super.key});
+
+  List<ChartData> chartData = [ChartData(1, 10)];
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +47,27 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
               )
             ],
           ),
-          Container(
+          SizedBox(
             width: 48,
             height: 48,
-            color: Colors.amber,
+            child: CircularPercentIndicator(
+              radius: 24,
+              lineWidth: 8,
+              circularStrokeCap: CircularStrokeCap.round,
+              percent: 0.5,
+              animation: false,
+              backgroundColor: const Color(0xFFD9D9D9),
+              progressColor: const Color(0xFF6285D7),
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+class ChartData {
+  final int day;
+  final double frequent;
+  ChartData(this.day, this.frequent);
 }

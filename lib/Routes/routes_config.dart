@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
+import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
@@ -15,6 +16,8 @@ import '../pages/alarm-feature/time_watch_page.dart';
 import '../pages/ergonomic-feature/ergonomic_page.dart';
 import '../pages/ergonomic-feature/question_ergonomic_page.dart';
 import '../pages/ergonomic-feature/result_ergonomic_page.dart';
+import '../pages/profile-feature/edit_profile.dart';
+import '../pages/screening-feature/screening_part_one.dart';
 
 class PageRoutes {
   Home home = Home();
@@ -65,11 +68,13 @@ class Menu {
 class History {
   PathRoute historylist() => PathRoute(title: "ประวัติ", widget: HistoryPage());
   PathRoute summarypage() => PathRoute(title: "ประวัติ", widget: SummaryPage());
+  PathRoute resultperweekpage() =>
+      PathRoute(title: "ประวัติ", widget: ResultPerWeekPage());
 }
 
 class Profile {
   PathRoute editpage() =>
-      PathRoute(title: "ชุดท่าบริหาร", widget: const ProfilePage());
+      PathRoute(title: "แก้ไขโปรไฟล์", widget: EditProfile());
 }
 
 class PathRoute {
