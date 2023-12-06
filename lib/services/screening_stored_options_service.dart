@@ -1,4 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unwind_app/services/general_stored_service.dart';
 
 class ScreeningStoredService {
