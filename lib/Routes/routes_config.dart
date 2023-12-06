@@ -13,6 +13,8 @@ import '../pages/alarm-feature/time_watch_page.dart';
 import '../pages/ergonomic-feature/ergonomic_page.dart';
 import '../pages/ergonomic-feature/question_ergonomic_page.dart';
 import '../pages/ergonomic-feature/result_ergonomic_page.dart';
+import '../pages/profile-feature/edit_profile.dart';
+import '../pages/screening-feature/screening_part_one.dart';
 
 class PageRoutes {
   Home home = Home();
@@ -61,7 +63,7 @@ class History {
 
 class Profile {
   PathRoute editpage() =>
-      PathRoute(title: "ชุดท่าบริหาร", widget: const ProfilePage());
+      PathRoute(title: "แก้ไขโปรไฟล์", widget: EditProfile());
 }
 
 class PathRoute {
