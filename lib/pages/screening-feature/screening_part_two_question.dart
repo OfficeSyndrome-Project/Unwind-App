@@ -24,10 +24,8 @@ class ScreeningPartTwoQuestion extends StatelessWidget {
       ),
       colorBar: Colors.transparent,
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center, 
-      children: const [
-        Text("ScreeningPartTwoQuestion")
-      ],
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const [Text("ScreeningPartTwoQuestion")],
     );
   }
 }

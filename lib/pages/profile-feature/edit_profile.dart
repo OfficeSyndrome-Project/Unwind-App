@@ -112,8 +112,6 @@ class _EditProfileState extends State<EditProfile> {
                     setState(() {
                       _selectedValue = value;
                     });
-                    print('---value---');
-                    print(_selectedValue);
                   },
                   hint: Text(
                     "เพศ",

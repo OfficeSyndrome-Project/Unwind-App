@@ -40,10 +40,10 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             currentPage >= 1
-                      ? _controller.previousPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeOut)
-                      : Navigator.pop(context);
+                ? _controller.previousPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeOut)
+                : Navigator.pop(context);
           },
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.all(0),
@@ -56,7 +56,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           //Container for PageView (not hug the content yet)
           SizedBox(
             width: double.infinity,
-            height:448 ,
+            height: 448,
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),

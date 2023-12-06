@@ -93,153 +93,129 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 220, ////แก้ด้วย*****
                       child: Column(
                         children: [
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'ชื่อ',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                Expanded(
-                                  child: Text('ณัฐวดี',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                      textAlign: TextAlign.right),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'ชื่อ',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Expanded(
+                                child: Text('ณัฐวดี',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    textAlign: TextAlign.right),
+                              )
+                            ],
                           ),
                           const SizedBox(
                             height: 4,
                           ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'นามสกุล',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                Expanded(
-                                  child: Text('ลี',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                      textAlign: TextAlign.right),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'นามสกุล',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Expanded(
+                                child: Text('ลี',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    textAlign: TextAlign.right),
+                              )
+                            ],
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'อายุ',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                Expanded(
-                                  child: Text('21',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                      textAlign: TextAlign.right),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'อายุ',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Expanded(
+                                child: Text('21',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    textAlign: TextAlign.right),
+                              )
+                            ],
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'เพศ',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                // const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text('หญิง',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                      textAlign: TextAlign.right),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'เพศ',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              // const SizedBox(width: 8),
+                              Expanded(
+                                child: Text('หญิง',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    textAlign: TextAlign.right),
+                              )
+                            ],
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'น้ำหนัก',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                // const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text('40 กก.',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                      textAlign: TextAlign.right),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'น้ำหนัก',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              // const SizedBox(width: 8),
+                              Expanded(
+                                child: Text('40 กก.',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    textAlign: TextAlign.right),
+                              )
+                            ],
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'ส่วนสูง',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                // const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text('160 ซม.',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                      textAlign: TextAlign.right),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'ส่วนสูง',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              // const SizedBox(width: 8),
+                              Expanded(
+                                child: Text('160 ซม.',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    textAlign: TextAlign.right),
+                              )
+                            ],
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'อาชีพ',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                Expanded(
-                                  child: Text('นักเรียน/นักศึกษา',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                      textAlign: TextAlign.right),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'อาชีพ',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Expanded(
+                                child: Text('นักเรียน/นักศึกษา',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    textAlign: TextAlign.right),
+                              )
+                            ],
                           ),
                           const SizedBox(height: 4),
-                          Container(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'อีเมลล์',
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
-                                Expanded(
-                                  child: Text('test@gmail.com',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium,
-                                      textAlign: TextAlign.right),
-                                )
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'อีเมลล์',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Expanded(
+                                child: Text('test@gmail.com',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                    textAlign: TextAlign.right),
+                              )
+                            ],
                           ),
                         ],
                       ),
