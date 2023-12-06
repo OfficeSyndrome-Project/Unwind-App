@@ -44,9 +44,10 @@ class _ScreeningPageState extends State<ScreeningPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          Container(
             width: double.infinity,
             height: 356,
+            margin: const EdgeInsets.only(bottom: 32),
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
@@ -91,9 +92,6 @@ class _ScreeningPageState extends State<ScreeningPage> {
               ],
             ),
           ),
-          const SizedBox(
-            height: 32,
-          ),
           DotsIndicator(
             dotsCount: 5,
             position: currentPage.toDouble(),
@@ -116,12 +114,15 @@ class _ScreeningPageState extends State<ScreeningPage> {
               borderSide: BorderSide.none,
               style: Theme.of(context).textTheme.displayMedium,
               onTap: () {
-                currentPage < 4 
+                currentPage < 4
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeOut)
-                    : Navigator.push(context,
-                        pageRoutes.screening.introscreeningpagepartone().route(context));
+                    : Navigator.push(
+                        context,
+                        pageRoutes.screening
+                            .introscreeningpagepartone()
+                            .route(context));
               }),
 
           // ),
