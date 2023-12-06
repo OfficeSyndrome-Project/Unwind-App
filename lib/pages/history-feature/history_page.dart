@@ -20,7 +20,7 @@ class HistoryPage extends StatelessWidget {
               Navigator.push(
                   context, pageRoutes.history.summarypage().route(context));
             },
-            child: const HistoryWorkoutlistWidget(),
+            child: HistoryWorkoutlistWidget(),
           )
         ]);
   }

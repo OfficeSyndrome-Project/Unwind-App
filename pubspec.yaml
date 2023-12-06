@@ -36,6 +36,9 @@ dependencies:
   go_router: ^12.1.1
   shared_preferences: ^2.2.2
   loading_animation_widget: ^1.2.0+4
+  syncfusion_flutter_charts: ^23.2.6
+  intl: ^0.18.1
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

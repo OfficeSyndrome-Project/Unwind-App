@@ -102,7 +102,10 @@ class SummaryPage extends StatelessWidget {
                   height: 8,
                 ),
                 ButtonWithiconWidget(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        pageRoutes.history.resultperweekpage().route(context));
+                  },
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   text: 'Weeknd num',
                   color: Theme.of(context).colorScheme.secondary,

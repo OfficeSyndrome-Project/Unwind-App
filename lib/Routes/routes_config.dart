@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
+import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
@@ -57,6 +58,8 @@ class Menu {
 class History {
   PathRoute historylist() => PathRoute(title: "ประวัติ", widget: HistoryPage());
   PathRoute summarypage() => PathRoute(title: "ประวัติ", widget: SummaryPage());
+  PathRoute resultperweekpage() =>
+      PathRoute(title: "ประวัติ", widget: ResultPerWeekPage());
 }
 
 class Profile {
