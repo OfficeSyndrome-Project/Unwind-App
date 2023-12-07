@@ -156,7 +156,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            ButtonTapTheme(
+                            ButtonWithoutIconWidget(
                                 onTap: () {
                                   Navigator.of(dialogcontext)
                                       .popUntil((route) => route.isFirst);
@@ -181,7 +181,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                             const SizedBox(
                               width: 8,
                             ),
-                            ButtonTapTheme(
+                            ButtonWithoutIconWidget(
                                 onTap: () {
                                   Navigator.of(dialogcontext).pop();
                                 },

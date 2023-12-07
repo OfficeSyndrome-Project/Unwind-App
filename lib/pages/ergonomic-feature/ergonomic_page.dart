@@ -64,7 +64,7 @@ class ErgonomicPage extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        ButtonTapTheme(
+        ButtonWithoutIconWidget(
             onTap: () {
               Navigator.push(
                   context, pageRoutes.menu.questionergonomic().route(context));

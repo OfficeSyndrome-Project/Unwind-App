@@ -37,7 +37,7 @@ class MenuWidget extends StatelessWidget {
                       color: Colors.black,
                       image: const DecorationImage(
                         image: AssetImage('lib/assets/images/ergonomic.jpg'),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -80,7 +80,7 @@ class MenuWidget extends StatelessWidget {
                       color: Colors.black,
                       image: const DecorationImage(
                         image: AssetImage('lib/assets/images/clock.jpg'),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),

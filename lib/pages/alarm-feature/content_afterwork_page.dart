@@ -59,7 +59,7 @@ class _ContentAfterWorkPageState extends State<ContentAfterWorkPage> {
           const SizedBox(
             height: 48,
           ),
-          ButtonTapTheme(
+          ButtonWithoutIconWidget(
             onTap: () {
               startworkTimes();
             },

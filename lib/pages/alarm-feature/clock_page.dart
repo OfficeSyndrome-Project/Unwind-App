@@ -11,8 +11,8 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/alarm-widget/alarm_wheeltile_widget.dart';
 import 'package:unwind_app/data/time_workstate.dart';
 import 'package:unwind_app/data/time_breakstate.dart';
-import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 
+import '../../Widgets/button_withouticon_widget.dart';
 import 'info_clock_page.dart';
 
 class ClockPage extends StatefulWidget {
@@ -113,7 +113,7 @@ class _ClockPageState extends State<ClockPage> {
                       ),
                       _worktoggle == true
                           ? const SizedBox()
-                          : ButtonTapTheme(
+                          : ButtonWithoutIconWidget(
                               onTap: () {
                                 scrollWorkTimes();
                               },
@@ -266,7 +266,7 @@ class _ClockPageState extends State<ClockPage> {
                       ),
                       _breaktoggle == true
                           ? const SizedBox()
-                          : ButtonTapTheme(
+                          : ButtonWithoutIconWidget(
                               onTap: () {
                                 scrollBreakTimes();
                               },
