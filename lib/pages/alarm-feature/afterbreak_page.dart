@@ -49,7 +49,7 @@ class AfterBreakPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ButtonTapTheme(
+            ButtonWithoutIconWidget(
                 onTap: () {
                   navigatorBack(false, context);
                 },
@@ -64,7 +64,7 @@ class AfterBreakPage extends StatelessWidget {
             const SizedBox(
               width: 8,
             ),
-            ButtonTapTheme(
+            ButtonWithoutIconWidget(
                 onTap: () {
                   navigatorBack(true, context);
                 },

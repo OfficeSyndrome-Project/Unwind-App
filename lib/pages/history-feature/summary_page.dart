@@ -137,7 +137,7 @@ class SummaryPage extends StatelessWidget {
                       TextSpan(
                         children: [
                           TextSpan(
-                              text: 'ค่าความเจ็บปวด : ',
+                              text: 'ค่าความเจ็บปวดเฉลี่ย : ',
                               style: TextStyle(
                                 fontFamily: "Noto Sans Thai",
                                 fontSize: 14,

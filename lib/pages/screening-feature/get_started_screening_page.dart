@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/screening-widget/get_started_screening_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
+
+import '../../Widgets/button_withouticon_widget.dart';
 
 class ScreeningPage extends StatefulWidget {
   const ScreeningPage({super.key});
@@ -105,7 +106,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
           const SizedBox(
             height: 32,
           ),
-          ButtonTapTheme(
+          ButtonWithoutIconWidget(
               text: currentPage == 4 ? 'เริ่มประเมินอาการปวดของคุณ' : 'ถัดไป',
               radius: 32,
               width: 345,

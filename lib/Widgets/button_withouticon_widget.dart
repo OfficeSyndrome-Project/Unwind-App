@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ButtonTapTheme extends StatelessWidget {
+class ButtonWithoutIconWidget extends StatelessWidget {
   final String text;
   final double radius;
   final double width;
@@ -9,7 +9,7 @@ class ButtonTapTheme extends StatelessWidget {
   final BorderSide borderSide;
   final TextStyle? style;
   final void Function()? onTap;
-  const ButtonTapTheme(
+  const ButtonWithoutIconWidget(
       {super.key,
       required this.onTap,
       required this.text,

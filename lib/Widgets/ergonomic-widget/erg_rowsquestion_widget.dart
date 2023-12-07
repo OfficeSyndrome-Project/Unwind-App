@@ -65,7 +65,7 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
         return;
       }
     }
-    setDisable(!disable);
+    setDisable(false);
   }
 
   void setDisable(bool value) {

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/screening-widget/intro_screening_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
+
+import '../../Widgets/button_withouticon_widget.dart';
 
 //intro to part one
 class IntroScreeningPartOne extends StatefulWidget {
@@ -40,7 +41,7 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPartOne> {
           const SizedBox(
             height: 32,
           ),
-          ButtonTapTheme(
+          ButtonWithoutIconWidget(
               onTap: () {
                 Navigator.push(
                     context,
@@ -95,7 +96,7 @@ class _IntroScreeningPartTwoState extends State<IntroScreeningPartTwo> {
           const SizedBox(
             height: 32,
           ),
-          ButtonTapTheme(
+          ButtonWithoutIconWidget(
               onTap: () {
                 Navigator.push(
                     context,

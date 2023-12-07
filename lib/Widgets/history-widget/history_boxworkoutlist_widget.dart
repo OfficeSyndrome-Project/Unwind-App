@@ -51,7 +51,7 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
             height: 48,
             child: CircularPercentIndicator(
               radius: 24,
-              lineWidth: 8,
+              lineWidth: 9.5,
               circularStrokeCap: CircularStrokeCap.round,
               percent: 0.5,
               animation: false,
