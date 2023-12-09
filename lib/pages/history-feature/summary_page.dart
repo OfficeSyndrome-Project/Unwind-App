@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withicon_widget.dart';
@@ -13,6 +14,8 @@ class SummaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isScreenWide = MediaQuery.of(context).size.width > 768;
+
     return AppscreenTheme(
         textBar: pageRoutes.history.summarypage().title,
         iconButtonStart: IconButton(
@@ -49,9 +52,11 @@ class SummaryPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Center(
-                  child: Text(
+                  child: AutoSizeText(
                     "Date - Date Month Year",
                     style: Theme.of(context).textTheme.titleLarge,
+                    maxFontSize: 18,
+                    minFontSize: 16,
                   ),
                 ),
                 const SizedBox(
@@ -81,9 +86,11 @@ class SummaryPage extends StatelessWidget {
                             const SizedBox(
                               width: 8,
                             ),
-                            Text(
+                            AutoSizeText(
                               data,
                               style: Theme.of(context).textTheme.bodyLarge,
+                              maxFontSize: 16,
+                              minFontSize: 14,
                             )
                           ],
                         ),
@@ -123,66 +130,70 @@ class SummaryPage extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
-                const Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    //pain score
-                    Text.rich(
-                      textAlign: TextAlign.center,
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'ค่าความเจ็บปวดเฉลี่ย : ',
-                              style: TextStyle(
-                                fontFamily: "Noto Sans Thai",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFF484D56),
-                              )),
-                          TextSpan(
-                              text: 'num',
-                              style: TextStyle(
-                                fontFamily: "Noto Sans Thai",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFF3B67CD),
-                              )),
-                        ],
+                Container(
+                  margin: EdgeInsets.only(top: 16, bottom: 16),
+                  child: Flex(
+                    direction: isScreenWide ? Axis.horizontal : Axis.vertical,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: isScreenWide
+                        ? MainAxisAlignment.spaceBetween
+                        : MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      //pain score
+                      AutoSizeText.rich(
+                        maxFontSize: 16,
+                        minFontSize: 14,
+                        textAlign: TextAlign.center,
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'ค่าความเจ็บปวดเฉลี่ย : ',
+                                style: TextStyle(
+                                  fontFamily: "Noto Sans Thai",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF484D56),
+                                )),
+                            TextSpan(
+                                text: 'num',
+                                style: TextStyle(
+                                  fontFamily: "Noto Sans Thai",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF3B67CD),
+                                )),
+                          ],
+                        ),
                       ),
-                    ),
-                    //frequency
-                    Text.rich(
-                      textAlign: TextAlign.center,
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'ความสม่ำเสมอ : ',
-                              style: TextStyle(
-                                fontFamily: "Noto Sans Thai",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFF484D56),
-                              )),
-                          TextSpan(
-                              text: 'num',
-                              style: TextStyle(
-                                fontFamily: "Noto Sans Thai",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFF3B67CD),
-                              )),
-                        ],
-                      ),
-                    ), //frequency
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
+                      //frequency
+                      AutoSizeText.rich(
+                        textAlign: TextAlign.center,
+                        maxFontSize: 16,
+                        minFontSize: 14,
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'ความสม่ำเสมอ : ',
+                                style: TextStyle(
+                                  fontFamily: "Noto Sans Thai",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF484D56),
+                                )),
+                            TextSpan(
+                                text: 'num',
+                                style: TextStyle(
+                                  fontFamily: "Noto Sans Thai",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF3B67CD),
+                                )),
+                          ],
+                        ),
+                      ), //frequency
+                    ],
+                  ),
                 ),
                 ButtonWithiconWidget(
                   onTap: () {},

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
@@ -59,15 +60,19 @@ class ResultPerWeekPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Center(
-                  child: Text(
+                  child: AutoSizeText(
                     'สัปดาห์ที่ num',
                     style: Theme.of(context).textTheme.titleLarge,
+                    maxFontSize: 18,
+                    minFontSize: 16,
                   ),
                 ),
                 Center(
-                  child: Text(
+                  child: AutoSizeText(
                     'Date - Date Month Year',
                     style: Theme.of(context).textTheme.titleMedium,
+                    maxFontSize: 16,
+                    minFontSize: 14,
                   ),
                 ),
                 const SizedBox(
@@ -140,17 +145,21 @@ class ResultPerWeekPage extends StatelessWidget {
                     children: keepScoreAndDateData.map((data) {
                       return Row(
                         children: [
-                          Text(
+                          AutoSizeText(
                             'วันที่ ${DateFormat("dd/MM/yy").format(data.dateTime)} : ',
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.bodyLarge,
+                            maxFontSize: 16,
+                            minFontSize: 14,
                           ),
                           const SizedBox(
                             width: 8,
                           ),
-                          Text(
+                          AutoSizeText(
                             '${data.beforeScore}/${data.afterScore}',
                             style: Theme.of(context).textTheme.titleMedium,
+                            maxFontSize: 16,
+                            minFontSize: 14,
                           )
                         ],
                       );
@@ -160,30 +169,54 @@ class ResultPerWeekPage extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 4),
-                  child: Text.rich(
+                  child: AutoSizeText.rich(
+                    maxFontSize: 16,
+                    minFontSize: 14,
                     textAlign: TextAlign.center,
                     TextSpan(
                       children: [
                         TextSpan(
                             text: 'ค่าความเจ็บปวดเฉลี่ย : ',
-                            style: Theme.of(context).textTheme.titleMedium),
+                            style: TextStyle(
+                              fontFamily: "Noto Sans Thai",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF484D56),
+                            )),
                         TextSpan(
                             text: 'num',
-                            style: Theme.of(context).textTheme.bodySmall),
+                            style: TextStyle(
+                              fontFamily: "Noto Sans Thai",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF3B67CD),
+                            )),
                       ],
                     ),
                   ),
                 ),
-                Text.rich(
+                AutoSizeText.rich(
                   textAlign: TextAlign.center,
+                  maxFontSize: 16,
+                  minFontSize: 14,
                   TextSpan(
                     children: [
                       TextSpan(
                           text: 'ความสม่ำเสมอ : ',
-                          style: Theme.of(context).textTheme.titleMedium),
+                          style: TextStyle(
+                            fontFamily: "Noto Sans Thai",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF484D56),
+                          )),
                       TextSpan(
                           text: 'num',
-                          style: Theme.of(context).textTheme.bodySmall),
+                          style: TextStyle(
+                            fontFamily: "Noto Sans Thai",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF3B67CD),
+                          )),
                     ],
                   ),
                 ),

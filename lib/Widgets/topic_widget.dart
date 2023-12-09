@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class TopicWidget extends StatelessWidget {
@@ -11,15 +12,17 @@ class TopicWidget extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         startIcon,
         const SizedBox(
           width: 8,
         ),
-        Text(
+        AutoSizeText(
           topicName,
           style: Theme.of(context).textTheme.bodySmall,
+          maxFontSize: 16,
+          minFontSize: 14,
         ),
       ],
     );

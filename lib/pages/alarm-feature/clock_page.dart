@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/text_with_starticon_widget.dart';
@@ -149,13 +150,16 @@ class _ClockPageState extends State<ClockPage> {
                             children: [
                               Positioned(
                                 child: Center(
-                                  child: Text(
+                                  child: AutoSizeText(
                                     '$currentWorkState นาที',
                                     style: const TextStyle(
                                         color: Color(0xFF6285D7),
                                         fontSize: 16,
                                         fontFamily: 'Noto Sans Thai',
                                         fontWeight: FontWeight.w600),
+                                    maxFontSize: 16,
+                                    minFontSize: 14,
+                                    maxLines: 1,
                                   ),
                                 ),
                               ),
@@ -302,13 +306,16 @@ class _ClockPageState extends State<ClockPage> {
                             children: [
                               Positioned(
                                 child: Center(
-                                  child: Text(
+                                  child: AutoSizeText(
                                     '$currentBreakState นาที',
                                     style: const TextStyle(
                                         color: Color(0xFF6285D7),
                                         fontSize: 16,
                                         fontFamily: 'Noto Sans Thai',
                                         fontWeight: FontWeight.w600),
+                                    maxFontSize: 16,
+                                    minFontSize: 14,
+                                    maxLines: 1,
                                   ),
                                 ),
                               ),
@@ -414,16 +421,17 @@ class _ClockPageState extends State<ClockPage> {
             child: Container(
               //section 2 btn
               width: double.infinity,
-              // color: Colors.blue,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  AutoSizeText(
                     'กดปุ่มเพื่อเริ่มการทำงาน',
                     style: Theme.of(context).textTheme.bodyLarge,
+                    maxFontSize: 16,
+                    minFontSize: 14,
+                    maxLines: 1,
                   ),
                   const SizedBox(
                     height: 8,

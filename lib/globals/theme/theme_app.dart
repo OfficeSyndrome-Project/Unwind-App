@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 //import theme to other file
 final ThemeData appTheme = _appTheme();
-
 //define base theme
 ThemeData _appTheme() {
   final ThemeData base = ThemeData.light();
@@ -32,7 +31,7 @@ TextTheme _textTheme(TextTheme base) => base.copyWith(
     displayMedium: base.displayMedium!.copyWith(
       //text in appbar
       fontFamily: "Noto Sans Thai",
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: FontWeight.w600,
       color: const Color(0xFFebedf0),
     ),
@@ -46,14 +45,14 @@ TextTheme _textTheme(TextTheme base) => base.copyWith(
     headlineMedium: base.headlineMedium!.copyWith(
       //text in btn
       fontFamily: "Noto Sans Thai",
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: FontWeight.w600,
       color: const Color(0xFF3b67cd),
     ),
     headlineSmall: base.headlineSmall!.copyWith(
       //text in btn backgroud blue
       fontFamily: "Noto Sans Thai",
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: FontWeight.w600,
       color: const Color(0xFFFFFFFF),
     ),
@@ -67,7 +66,7 @@ TextTheme _textTheme(TextTheme base) => base.copyWith(
     titleMedium: base.titleMedium!.copyWith(
       //title widget
       fontFamily: "Noto Sans Thai",
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: FontWeight.w600,
       color: const Color(0xFF484D56),
     ),

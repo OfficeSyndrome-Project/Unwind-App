@@ -113,7 +113,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
               height: 52,
               color: Theme.of(context).colorScheme.primary,
               borderSide: BorderSide.none,
-              style: Theme.of(context).textTheme.displayMedium,
+              style: Theme.of(context).textTheme.headlineSmall,
               onTap: () {
                 currentPage < 4
                     ? _controller.nextPage(

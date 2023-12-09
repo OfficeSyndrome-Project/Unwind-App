@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/alarm-widget/alarm_btncircle_widget.dart';
@@ -237,7 +238,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
               ),
             ),
             // buildSecondsTime(),
-            Text(
+            AutoSizeText(
               'จาก ${timesObj.times} นาที',
               style: const TextStyle(
                 color: Color(0xFFC3C8D2),
@@ -245,6 +246,8 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                 fontFamily: 'Noto Sans Thai',
                 fontWeight: FontWeight.w400,
               ),
+              minFontSize: 14,
+              maxLines: 1,
             ),
             const SizedBox(
               height: 40,
