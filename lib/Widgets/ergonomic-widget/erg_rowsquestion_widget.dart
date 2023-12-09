@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/ergonomic-widget/erg_btn_widget.dart';
 import 'package:unwind_app/services/question_service.dart';
@@ -92,9 +93,11 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        AutoSizeText(
           "ส่วนที่ ${widget.idCategory} ${widget.questions.first.category}",
           style: Theme.of(context).textTheme.titleMedium,
+          maxFontSize: 16,
+          minFontSize: 14,
         ),
         const SizedBox(
           height: 8,

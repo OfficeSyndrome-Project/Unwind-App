@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
@@ -33,16 +34,15 @@ class AfterBreakPage extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 24,
-        ),
-        Text(
-          'ตอนนี้คุณได้พักครบตามเวลาที่ได้ตั้งไว้\nคุณสนใจที่จะทำงานต่อหรือหยุดเพียงเท่านี้',
-          style: Theme.of(context).textTheme.titleSmall,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 48,
+        Container(
+          margin: EdgeInsets.only(top: 24, bottom: 48),
+          child: AutoSizeText(
+            'ตอนนี้คุณได้พักครบตามเวลาที่ได้ตั้งไว้\nคุณสนใจที่จะทำงานต่อหรือหยุดเพียงเท่านี้',
+            style: Theme.of(context).textTheme.titleSmall,
+            textAlign: TextAlign.center,
+            maxFontSize: 16,
+            minFontSize: 14,
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
@@ -45,20 +46,20 @@ class ErgonomicPage extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        SizedBox(
-          width: double.infinity,
-          child: Text(
-            "รายการตรวจสอบการยศาสตร์",
-            style: Theme.of(context).textTheme.titleMedium,
-            textAlign: TextAlign.center,
-          ),
+        AutoSizeText(
+          "รายการตรวจสอบการยศาสตร์",
+          style: Theme.of(context).textTheme.titleMedium,
+          maxFontSize: 18,
+          minFontSize: 16,
         ),
         SizedBox(
           width: double.infinity,
-          child: Text(
+          child: AutoSizeText(
             "เป้าหมายของรายการนี้คือการช่วยให้คุณจัดท่าทาง\nการนั่งในการทำงานได้อย่างเหมาะสมที่สุดเพื่อ\nการทำงานที่มีประสิทธิภาพ โดยมีทั้งหมด 7 ส่วน",
             style: Theme.of(context).textTheme.titleSmall,
             textAlign: TextAlign.center,
+            maxFontSize: 16,
+            minFontSize: 14,
           ),
         ),
         const SizedBox(

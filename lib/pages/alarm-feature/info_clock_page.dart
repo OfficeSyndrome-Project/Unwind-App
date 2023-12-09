@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
@@ -64,21 +65,29 @@ class InfoErgonomicPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  AutoSizeText(
                     '1. เลือกจำนวนเวลาที่ต้องการทำงาน',
                     style: Theme.of(context).textTheme.titleSmall,
+                    minFontSize: 14,
+                    maxLines: 16,
                   ),
-                  Text(
+                  AutoSizeText(
                     '2. เลือกจำนวนเวลาที่ต้องการพัก',
                     style: Theme.of(context).textTheme.titleSmall,
+                    minFontSize: 14,
+                    maxLines: 16,
                   ),
-                  Text(
+                  AutoSizeText(
                     '3. นาฬิกาจะแจ้งเตือนเมื่อครบเวลาที่กำหนดไว้',
                     style: Theme.of(context).textTheme.titleSmall,
+                    minFontSize: 14,
+                    maxLines: 16,
                   ),
-                  Text(
+                  AutoSizeText(
                     '4. เมื่อพักเสร็จสิ้น สามารถเลือกได้ว่าต้องการทำงานต่อหรือไม่',
                     style: Theme.of(context).textTheme.titleSmall,
+                    minFontSize: 14,
+                    maxLines: 16,
                   ),
                 ],
               ),

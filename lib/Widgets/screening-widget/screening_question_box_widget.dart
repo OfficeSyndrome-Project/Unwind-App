@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
@@ -30,68 +31,6 @@ class _ScreeningQuestionBoxWidgetState
   }
 
   int? currentOptions;
-
-//radio button
-  Widget radioWidget(BuildContext context, int? currentOptions) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // const SizedBox(
-          //   width: 16,
-          // ),
-          Column(
-            children: [
-              const SizedBox(
-                height: 4,
-              ),
-              Row(children: [
-                GeneralAnimatedCustomRadio<int>(
-                    value: 1,
-                    groupValue: this.currentOptions,
-                    onChanged: (value) {
-                      setState(() {
-                        this.currentOptions = value;
-                        // print(value);
-                        // print(currentOptions);
-                      });
-                      // onCurrentOptionsChanged(true);
-                    },
-                    activeColor: Theme.of(context).colorScheme.primary,
-                    inactiveColor: Theme.of(context).colorScheme.primary),
-                Text(
-                  'ใช่',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ]),
-              const SizedBox(
-                height: 4,
-              ),
-              Row(
-                children: [
-                  GeneralAnimatedCustomRadio<int>(
-                      value: 2,
-                      groupValue: this.currentOptions,
-                      onChanged: (value) {
-                        setState(() {
-                          this.currentOptions = value;
-                          // print(value);
-                          // print(currentOptions);
-                        });
-                      },
-                      activeColor: Theme.of(context).colorScheme.primary,
-                      inactiveColor: Theme.of(context).colorScheme.primary),
-                  Text(
-                    'ไม่',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  )
-                ],
-              )
-            ],
-          )
-        ]);
-  }
 
 //question box
   @override
@@ -180,9 +119,11 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        AutoSizeText(
           questions,
           style: Theme.of(context).textTheme.titleMedium,
+          maxFontSize: 16,
+          minFontSize: 14,
         ),
         Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -204,17 +145,16 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         onChanged: (value) {
                           setState(() {
                             currentOptions = value;
-                            // print(widget.questionId);
-                            // print(value);
-                            // print(currentOptions);
                           });
                           // onCurrentOptionsChanged(true);
                         },
                         activeColor: Theme.of(context).colorScheme.primary,
                         inactiveColor: Theme.of(context).colorScheme.primary),
-                    Text(
+                    AutoSizeText(
                       'ใช่',
                       style: Theme.of(context).textTheme.bodyLarge,
+                      maxFontSize: 16,
+                      minFontSize: 14,
                     ),
                   ]),
                   const SizedBox(
@@ -228,16 +168,15 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                           onChanged: (value) {
                             setState(() {
                               currentOptions = value;
-                              // print(widget.questionId);
-                              // print(value);
-                              // print(currentOptions);
                             });
                           },
                           activeColor: Theme.of(context).colorScheme.primary,
                           inactiveColor: Theme.of(context).colorScheme.primary),
-                      Text(
+                      AutoSizeText(
                         'ไม่',
                         style: Theme.of(context).textTheme.bodyLarge,
+                        maxFontSize: 16,
+                        minFontSize: 14,
                       )
                     ],
                   )

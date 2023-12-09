@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 Widget textIcon(BuildContext context, String text, Color color, Icon icon) {
@@ -10,7 +11,7 @@ Widget textIcon(BuildContext context, String text, Color color, Icon icon) {
       const SizedBox(
         width: 8,
       ),
-      Text(
+      AutoSizeText(
         text,
         style: TextStyle(
           fontFamily: "Noto Sans Thai",
@@ -18,6 +19,9 @@ Widget textIcon(BuildContext context, String text, Color color, Icon icon) {
           color: color,
           fontWeight: FontWeight.w600,
         ),
+        maxFontSize: 16,
+        minFontSize: 14,
+        maxLines: 1,
       ),
     ],
   );

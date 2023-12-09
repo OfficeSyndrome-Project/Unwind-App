@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/data/ergonomic_model.dart';
@@ -65,7 +66,7 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
                 Icons.receipt,
@@ -75,9 +76,11 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
               const SizedBox(
                 width: 8,
               ),
-              Text(
+              AutoSizeText(
                 "ผลลัพธ์",
                 style: Theme.of(context).textTheme.titleLarge,
+                maxFontSize: 16,
+                minFontSize: 14,
               )
             ],
           ),

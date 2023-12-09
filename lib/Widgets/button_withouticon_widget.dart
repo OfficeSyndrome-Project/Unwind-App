@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ButtonWithoutIconWidget extends StatelessWidget {
   final String text;
@@ -40,9 +41,12 @@ class ButtonWithoutIconWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            AutoSizeText(
               text,
               style: style,
+              maxFontSize: 16,
+              minFontSize: 14,
+              maxLines: 1,
             )
           ],
         ),

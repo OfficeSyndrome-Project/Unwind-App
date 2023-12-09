@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class ScreeningIntroToQuestionWidget extends StatelessWidget {
@@ -34,13 +35,23 @@ class ScreeningIntroToQuestionWidget extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        Text(titleLabel, style: Theme.of(context).textTheme.titleLarge),
+        AutoSizeText(
+          titleLabel,
+          style: Theme.of(context).textTheme.titleLarge,
+          maxFontSize: 18,
+          minFontSize: 16,
+          maxLines: 1,
+        ),
         const SizedBox(
           height: 8,
         ),
-        Text(descriptionLabel,
-            style: Theme.of(context).textTheme.titleSmall,
-            textAlign: TextAlign.center),
+        AutoSizeText(
+          descriptionLabel,
+          style: Theme.of(context).textTheme.titleSmall,
+          textAlign: TextAlign.center,
+          maxFontSize: 16,
+          minFontSize: 12,
+        ),
       ],
     );
   }

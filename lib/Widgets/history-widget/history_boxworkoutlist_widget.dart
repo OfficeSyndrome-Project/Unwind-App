@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -36,13 +37,17 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AutoSizeText(
                 "name workout list",
                 style: Theme.of(context).textTheme.titleMedium,
+                maxFontSize: 16,
+                minFontSize: 14,
               ),
-              Text(
+              AutoSizeText(
                 "date start and date end",
                 style: Theme.of(context).textTheme.bodyMedium,
+                maxFontSize: 14,
+                minFontSize: 12,
               )
             ],
           ),
