@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
-import 'package:unwind_app/data/ergonomic_model.dart';
+import 'package:unwind_app/data/ergonomic-data/ergonomic_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 import 'package:unwind_app/pages/loading_page.dart';

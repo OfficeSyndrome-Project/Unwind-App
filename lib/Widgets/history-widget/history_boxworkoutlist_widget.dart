@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -7,7 +5,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 class HistoryWorkoutlistWidget extends StatelessWidget {
   HistoryWorkoutlistWidget({super.key});
 
-  List<ChartData> chartData = [ChartData(1, 10)];
+  static List<ChartData> chartData = [ChartData(1, 10)];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
