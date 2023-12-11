@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:unwind_app/data/ergonomic_model.dart';
+import 'package:unwind_app/data/ergonomic-data/ergonomic_model.dart';
 
 class ErgBoxresultWidget extends StatelessWidget {
   final ErgonomicModel question;
