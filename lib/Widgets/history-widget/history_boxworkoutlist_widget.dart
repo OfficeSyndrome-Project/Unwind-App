@@ -40,12 +40,14 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium,
                 maxFontSize: 16,
                 minFontSize: 14,
+                maxLines: 1,
               ),
               AutoSizeText(
                 "date start and date end",
                 style: Theme.of(context).textTheme.bodyMedium,
                 maxFontSize: 14,
                 minFontSize: 12,
+                maxLines: 1,
               )
             ],
           ),

@@ -13,9 +13,15 @@ class ScoreChartWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 4, top: 4),
       child: SfCartesianChart(
         legend: Legend(
+            overflowMode: LegendItemOverflowMode.wrap,
+            width: '100%',
+            height: '100%',
+            padding: 5,
+            isResponsive: true,
             isVisible: true,
             toggleSeriesVisibility: false,
             position: LegendPosition.bottom,
+            alignment: ChartAlignment.near,
             iconWidth: 8,
             iconHeight: 8,
             textStyle: TextStyle(fontWeight: FontWeight.w500)),

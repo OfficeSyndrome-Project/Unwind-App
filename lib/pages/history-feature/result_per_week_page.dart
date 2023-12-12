@@ -89,6 +89,7 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                     style: Theme.of(context).textTheme.titleLarge,
                     maxFontSize: 18,
                     minFontSize: 16,
+                    maxLines: 1,
                   ),
                 ),
                 Container(
@@ -119,6 +120,7 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                     style: Theme.of(context).textTheme.titleMedium,
                     maxFontSize: 16,
                     minFontSize: 14,
+                    maxLines: 1,
                   ),
                 ),
                 TopicWidget(
@@ -137,9 +139,12 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                       legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
                       legendIconType: LegendIconType.rectangle,
                       color: Color(0xFFb1c2eb),
-                      animationDuration: 0,
                       markerSettings: const MarkerSettings(
-                          isVisible: true, height: 6, width: 6),
+                        isVisible: true,
+                        height: 6,
+                        width: 6,
+                      ),
+                      animationDuration: 0,
                       dataSource:
                           [keepScoreObj.weeklyChunks[currentIndex]].first,
                       xValueMapper: (KeepScoreAndDateModel score, _) =>
@@ -177,6 +182,7 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                             style: Theme.of(context).textTheme.bodyLarge,
                             maxFontSize: 16,
                             minFontSize: 14,
+                            maxLines: 1,
                           ),
                           const SizedBox(
                             width: 8,
@@ -186,6 +192,7 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                             style: Theme.of(context).textTheme.titleMedium,
                             maxFontSize: 16,
                             minFontSize: 14,
+                            maxLines: 1,
                           )
                         ],
                       );
