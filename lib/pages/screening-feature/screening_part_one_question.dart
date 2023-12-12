@@ -58,18 +58,18 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
               // width: double.infinity,
               // height: 448,
               child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (value) {
-                  setState(() {
-                    currentPage = value;
-                  });
-                },
-                children: [
-                  ...questionsWidgets,
-                ],
-              )),
+            controller: _controller,
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            onPageChanged: (value) {
+              setState(() {
+                currentPage = value;
+              });
+            },
+            children: [
+              ...questionsWidgets,
+            ],
+          )),
           // SizedBox(
           //   height: 24,
           // ),
