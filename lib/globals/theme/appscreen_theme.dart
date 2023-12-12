@@ -45,6 +45,8 @@ class AppscreenTheme extends StatelessWidget {
                 color: Colors.transparent,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                // child: SingleChildScrollView(
+                //   physics: const BouncingScrollPhysics(),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: mainAxisAlignment,
@@ -53,6 +55,7 @@ class AppscreenTheme extends StatelessWidget {
                 ),
               ),
             ),
+            // ),
           ],
         ),
       ),

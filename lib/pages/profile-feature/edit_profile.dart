@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 import '../../Routes/routes_config.dart';
@@ -43,131 +44,118 @@ class EditProfileState extends State<EditProfile> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            // width: 312,
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(
-                      hintText: 'ชื่อ',
-                      hintStyle: TextStyle(
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              child: ListView(
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const ProfileTextForm(
+                    formName: 'ชื่อ',
+                  ),
+                  const SizedBox(height: 8),
+                  const ProfileTextForm(
+                    formName: 'นามสกุล',
+                  ),
+                  const SizedBox(height: 8),
+                  const ProfileTextForm(
+                    formName: 'อายุ',
+                    inputType: TextInputType.number,
+                    formUnit: 'ปี',
+                  ),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField(
+                    items: <String>[
+                      'ชาย',
+                      'หญิง',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedValue = value;
+                      });
+                    },
+                    hint: const Text(
+                      "เพศ",
+                      style: TextStyle(
                         color: Color(0xFF9BA4B5),
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        height: 0.09,
                       ),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                        color: Color(0xFF9BA4B5),
-                        width: 1,
-                      ))),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  decoration: const InputDecoration(
-                      hintText: 'นามสกุล',
-                      hintStyle: TextStyle(
-                        color: Color(0xFF9BA4B5),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        height: 0.09,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                        color: Color(0xFF9BA4B5),
-                        width: 1,
-                      ))),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      hintText: 'อายุ',
-                      hintStyle: TextStyle(
-                        color: Color(0xFF9BA4B5),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        height: 0.09,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                        color: Color(0xFF9BA4B5),
-                        width: 1,
-                      ))),
-                ),
-                const SizedBox(height: 8),
-                DropdownButtonFormField(
-                  items: <String>[
-                    'ชาย',
-                    'หญิง',
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedValue = value;
-                    });
-                  },
-                  hint: const Text(
-                    "เพศ",
-                    style: TextStyle(
-                      color: Color(0xFF9BA4B5),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
                     ),
+                    value: _selectedValue,
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: Color(0xFF9BA4B5),
+                    ),
+                    decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                      color: Color(0xFF9BA4B5),
+                      width: 1,
+                    ))),
                   ),
-                  value: _selectedValue,
-                  icon: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: Color(0xFF9BA4B5),
+                  const SizedBox(height: 8),
+                  const ProfileTextForm(
+                    formName: 'ส่วนสูง',
+                    inputType: TextInputType.number,
+                    formUnit: 'ซม.',
                   ),
-                  decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                    color: Color(0xFF9BA4B5),
-                    width: 1,
-                  ))),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      hintText: 'ส่วนสูง',
-                      hintStyle: TextStyle(
+                  const SizedBox(height: 8),
+                  const ProfileTextForm(
+                    formName: 'น้ำหนัก',
+                    inputType: TextInputType.number,
+                    formUnit: 'กก.',
+                  ),
+                  const SizedBox(height: 8),
+                  const ProfileTextForm(formName: 'สมมติว่ามี'),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField(
+                    items: <String>[
+                      'ชาย',
+                      'หญิง',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500),
+                          ));
+                    }).toList(),
+                    onChanged: (String? value) {
+                      setState(() {
+                        _selectedValue = value;
+                      });
+                    },
+                    hint: const Text(
+                      "เพศ",
+                      style: TextStyle(
                         color: Color(0xFF9BA4B5),
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        height: 0.09,
                       ),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                        color: Color(0xFF9BA4B5),
-                        width: 1,
-                      ))),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      hintText: 'น้ำหนัก',
-                      hintStyle: TextStyle(
-                        color: Color(0xFF9BA4B5),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        height: 0.09,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                        color: Color(0xFF9BA4B5),
-                        width: 1,
-                      ))),
-                ),
-              ],
+                    ),
+                    value: _selectedValue,
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: Color(0xFF9BA4B5),
+                    ),
+                    decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                      color: Color(0xFF9BA4B5),
+                      width: 1,
+                    ))),
+                  ),
+                ],
+              ),
             ),
           ),
         ]);
