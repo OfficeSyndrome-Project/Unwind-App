@@ -53,6 +53,7 @@ class _ContentAfterWorkPageState extends State<ContentAfterWorkPage> {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall,
               minFontSize: 14,
+              maxLines: 2,
             ),
           ),
           ButtonWithoutIconWidget(

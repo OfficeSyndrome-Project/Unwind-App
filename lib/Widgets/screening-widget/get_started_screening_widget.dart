@@ -55,6 +55,7 @@ class ScreeningBoxWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               maxFontSize: 16,
               minFontSize: 14,
+              maxLines: 3,
             ),
           ],
         ));

@@ -54,6 +54,7 @@ class MenuWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                   maxFontSize: 16,
                   minFontSize: 14,
+                  maxLines: 1,
                 )
               ],
             ),
@@ -99,6 +100,7 @@ class MenuWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                   maxFontSize: 16,
                   minFontSize: 14,
+                  maxLines: 1,
                 )
               ],
             ),

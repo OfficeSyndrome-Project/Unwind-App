@@ -19,6 +19,7 @@ class ScoreAverageWidget extends StatelessWidget {
           AutoSizeText.rich(
             maxFontSize: 16,
             minFontSize: 14,
+            maxLines: 1,
             textAlign: TextAlign.center,
             TextSpan(
               children: [

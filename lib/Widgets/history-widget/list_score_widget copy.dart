@@ -22,6 +22,7 @@ class ListScoreWidget extends StatelessWidget {
         children: <Widget>[
           //pain score
           AutoSizeText.rich(
+            maxLines: 1,
             maxFontSize: 16,
             minFontSize: 14,
             textAlign: TextAlign.center,
@@ -49,6 +50,7 @@ class ListScoreWidget extends StatelessWidget {
           AutoSizeText.rich(
             maxFontSize: 16,
             minFontSize: 14,
+            maxLines: 1,
             textAlign: TextAlign.center,
             TextSpan(
               children: [
@@ -74,6 +76,7 @@ class ListScoreWidget extends StatelessWidget {
           AutoSizeText.rich(
             maxFontSize: 16,
             minFontSize: 14,
+            maxLines: 1,
             textAlign: TextAlign.center,
             TextSpan(
               children: [
