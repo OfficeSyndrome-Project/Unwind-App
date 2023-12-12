@@ -51,7 +51,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
 
   void startTimer() {
     timer = Timer.periodic(
-      const Duration(microseconds: 500),
+      const Duration(microseconds: 900),
       (timer) async {
         if (remainingTimes > 0) {
           setState(() {

@@ -5,9 +5,8 @@ import 'package:unwind_app/data/ergonomic-data/ergonomic_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 import 'package:unwind_app/pages/loading_page.dart';
-import 'package:unwind_app/services/question_service.dart';
-import 'package:unwind_app/services/storedoptions_service.dart';
-
+import 'package:unwind_app/services/ergonomics-service/question_service.dart';
+import 'package:unwind_app/services/ergonomics-service/storedoptions_service.dart';
 import '../../Widgets/button_withouticon_widget.dart';
 import '../../Widgets/ergonomic-widget/erg_boxcategory_widget.dart';
 

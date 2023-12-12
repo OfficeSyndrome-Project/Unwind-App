@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:unwind_app/services/screening_service.dart';
-
+import 'package:unwind_app/services/screening-service/screening_service.dart';
 import '../../Widgets/button_withouticon_widget.dart';
 
 class ScreeningPartOneQuestion extends StatefulWidget {
@@ -55,23 +54,22 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //Container for PageView (not hug the content yet)
-          SizedBox(
-            width: double.infinity,
-            height: 448,
-            child: PageView(
-              controller: _controller,
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              onPageChanged: (value) {
-                setState(() {
-                  currentPage = value;
-                });
-              },
-              children: [
-                ...questionsWidgets,
-              ],
-            ),
-          ),
+          Expanded(
+              // width: double.infinity,
+              // height: 448,
+              child: PageView(
+            controller: _controller,
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            onPageChanged: (value) {
+              setState(() {
+                currentPage = value;
+              });
+            },
+            children: [
+              ...questionsWidgets,
+            ],
+          )),
           // SizedBox(
           //   height: 24,
           // ),
