@@ -59,6 +59,7 @@ class ButtonWithiconWidget extends StatelessWidget {
                       ),
                       maxFontSize: 16,
                       minFontSize: 14,
+                      maxLines: 1,
                     ),
                     Icon(
                       icon,

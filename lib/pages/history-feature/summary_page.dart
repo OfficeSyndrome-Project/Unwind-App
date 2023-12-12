@@ -94,6 +94,7 @@ class SummaryPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                     maxFontSize: 18,
                     minFontSize: 16,
+                    maxLines: 1,
                   ),
                 ),
                 const SizedBox(
@@ -128,6 +129,7 @@ class SummaryPage extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyLarge,
                               maxFontSize: 16,
                               minFontSize: 14,
+                              maxLines: 1,
                             )
                           ],
                         ),

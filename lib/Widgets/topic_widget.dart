@@ -23,6 +23,7 @@ class TopicWidget extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall,
           maxFontSize: 16,
           minFontSize: 14,
+          maxLines: 1,
         ),
       ],
     );

@@ -44,6 +44,7 @@ class AppbarTheme extends StatelessWidget {
             style: style ?? defaultStyle,
             maxFontSize: 18,
             minFontSize: 16,
+            maxLines: 1,
           ),
           _buildIconButtonEnd(
             iconButtonEnd,
