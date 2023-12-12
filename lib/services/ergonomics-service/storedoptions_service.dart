@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:unwind_app/services/question_service.dart';
+import 'package:unwind_app/services/ergonomics-service/question_service.dart';
 
 class StoredOptionsService {
   static final Future<SharedPreferences> _prefs =

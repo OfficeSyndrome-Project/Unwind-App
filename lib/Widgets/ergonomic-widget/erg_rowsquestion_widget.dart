@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/ergonomic-widget/erg_btn_widget.dart';
-import 'package:unwind_app/services/question_service.dart';
+import 'package:unwind_app/services/ergonomics-service/question_service.dart';
+import 'package:unwind_app/services/ergonomics-service/storedoptions_service.dart';
 import '../../Routes/routes_config.dart';
-import '../../services/storedoptions_service.dart';
 import '../../data/ergonomic_model.dart';
 import 'erg_boxquestion_widget.dart';
 import 'dart:async';
