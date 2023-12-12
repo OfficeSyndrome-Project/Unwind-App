@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class ButtonWithiconWidget extends StatelessWidget {
@@ -48,14 +49,16 @@ class ButtonWithiconWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: mainAxisAlignment == MainAxisAlignment.spaceBetween
                 ? <Widget>[
-                    Text(
+                    AutoSizeText(
                       text,
                       style: TextStyle(
                         fontFamily: "Noto Sans Thai",
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: colorText,
                       ),
+                      maxFontSize: 16,
+                      minFontSize: 14,
                     ),
                     Icon(
                       icon,
@@ -70,14 +73,16 @@ class ButtonWithiconWidget extends StatelessWidget {
                     const SizedBox(
                       width: 8,
                     ),
-                    Text(
+                    AutoSizeText(
                       text,
                       style: TextStyle(
                         fontFamily: "Noto Sans Thai",
-                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: colorText,
                       ),
+                      minFontSize: 14,
+                      maxFontSize: 16,
+                      maxLines: 1,
                     )
                   ]),
       ),

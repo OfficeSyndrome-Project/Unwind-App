@@ -1,12 +1,11 @@
-// ignore_for_file: must_be_immutable
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
   HistoryWorkoutlistWidget({super.key});
 
-  List<ChartData> chartData = [ChartData(1, 10)];
+  static List<ChartData> chartData = [ChartData(1, 10)];
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +28,24 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AutoSizeText(
                 "name workout list",
                 style: Theme.of(context).textTheme.titleMedium,
+                maxFontSize: 16,
+                minFontSize: 14,
               ),
-              Text(
+              AutoSizeText(
                 "date start and date end",
                 style: Theme.of(context).textTheme.bodyMedium,
+                maxFontSize: 14,
+                minFontSize: 12,
               )
             ],
           ),
@@ -51,7 +54,7 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
             height: 48,
             child: CircularPercentIndicator(
               radius: 24,
-              lineWidth: 8,
+              lineWidth: 9.5,
               circularStrokeCap: CircularStrokeCap.round,
               percent: 0.5,
               animation: false,

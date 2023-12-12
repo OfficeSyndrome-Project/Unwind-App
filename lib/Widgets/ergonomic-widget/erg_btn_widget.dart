@@ -27,7 +27,7 @@ class DetectorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonTapTheme(
+    return ButtonWithoutIconWidget(
         onTap: () {
           if (!disable) {
             handleOnTap(context);

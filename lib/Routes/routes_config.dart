@@ -8,7 +8,9 @@ import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
-import '../data/timewatch_obj.dart';
+import '../data/alarm-data/timewatch_obj.dart';
+import '../data/history-data/summary_list_obj.dart';
+
 import '../pages/alarm-feature/afterbreak_page.dart';
 import '../pages/alarm-feature/content_afterwork_page.dart';
 import '../pages/alarm-feature/time_watch_page.dart';
@@ -66,8 +68,11 @@ class Menu {
 class History {
   PathRoute historylist() => PathRoute(title: "ประวัติ", widget: HistoryPage());
   PathRoute summarypage() => PathRoute(title: "ประวัติ", widget: SummaryPage());
-  PathRoute resultperweekpage() =>
-      PathRoute(title: "ประวัติ", widget: ResultPerWeekPage());
+  PathRoute resultperweekpage(List<SummaryListObj> summaryArr) => PathRoute(
+      title: "ประวัติ",
+      widget: ResultPerWeekPage(
+        summaryArr: summaryArr,
+      ));
 }
 
 class Profile {

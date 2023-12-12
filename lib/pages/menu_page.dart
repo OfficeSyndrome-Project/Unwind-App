@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
@@ -37,7 +38,7 @@ class MenuWidget extends StatelessWidget {
                       color: Colors.black,
                       image: const DecorationImage(
                         image: AssetImage('lib/assets/images/ergonomic.jpg'),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -48,9 +49,11 @@ class MenuWidget extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
+                AutoSizeText(
                   'ปรับสภาพแวดล้อมการทำงาน',
                   style: Theme.of(context).textTheme.titleMedium,
+                  maxFontSize: 16,
+                  minFontSize: 14,
                 )
               ],
             ),
@@ -80,7 +83,7 @@ class MenuWidget extends StatelessWidget {
                       color: Colors.black,
                       image: const DecorationImage(
                         image: AssetImage('lib/assets/images/clock.jpg'),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -91,9 +94,11 @@ class MenuWidget extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
+                AutoSizeText(
                   'นาฬิกาจับเวลา',
                   style: Theme.of(context).textTheme.titleMedium,
+                  maxFontSize: 16,
+                  minFontSize: 14,
                 )
               ],
             ),

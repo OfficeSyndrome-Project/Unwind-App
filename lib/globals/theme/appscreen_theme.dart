@@ -48,7 +48,7 @@ class AppscreenTheme extends StatelessWidget {
                 // child: SingleChildScrollView(
                 //   physics: const BouncingScrollPhysics(),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: mainAxisAlignment,
                   crossAxisAlignment: crossAxisAlignment,
                   children: children,

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class ScreeningBoxWidget extends StatelessWidget {
@@ -38,17 +39,22 @@ class ScreeningBoxWidget extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Text(
+            AutoSizeText(
               titleLabel,
               style: Theme.of(context).textTheme.titleLarge,
+              maxFontSize: 18,
+              minFontSize: 16,
+              maxLines: 1,
             ),
             const SizedBox(
               height: 8,
             ),
-            Text(
+            AutoSizeText(
               descriptionLabel,
               style: Theme.of(context).textTheme.titleSmall,
               textAlign: TextAlign.center,
+              maxFontSize: 16,
+              minFontSize: 14,
             ),
           ],
         ));
