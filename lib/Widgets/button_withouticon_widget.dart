@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
-class ButtonTapTheme extends StatelessWidget {
+class ButtonWithoutIconWidget extends StatelessWidget {
   final String text;
   final double radius;
   final double width;
@@ -9,7 +10,7 @@ class ButtonTapTheme extends StatelessWidget {
   final BorderSide borderSide;
   final TextStyle? style;
   final void Function()? onTap;
-  const ButtonTapTheme(
+  const ButtonWithoutIconWidget(
       {super.key,
       required this.onTap,
       required this.text,
@@ -40,9 +41,12 @@ class ButtonTapTheme extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            AutoSizeText(
               text,
               style: style,
+              maxFontSize: 16,
+              minFontSize: 14,
+              maxLines: 1,
             )
           ],
         ),

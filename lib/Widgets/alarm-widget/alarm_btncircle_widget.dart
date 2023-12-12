@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 Widget btnCircle(BuildContext context, String text, Color color) {
@@ -53,7 +54,7 @@ Widget btnCircle(BuildContext context, String text, Color color) {
         ),
         Positioned(
           child: Center(
-            child: Text(
+            child: AutoSizeText(
               text,
               style: const TextStyle(
                 color: Colors.white,
@@ -61,6 +62,9 @@ Widget btnCircle(BuildContext context, String text, Color color) {
                 fontFamily: 'Noto Sans Thai',
                 fontWeight: FontWeight.w600,
               ),
+              maxFontSize: 18,
+              minFontSize: 16,
+              maxLines: 1,
             ),
           ),
         ),

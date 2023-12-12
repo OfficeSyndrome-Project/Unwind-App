@@ -1,18 +1,18 @@
-// ignore_for_file: library_private_types_in_public_api
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/text_with_starticon_widget.dart';
 
 import 'package:unwind_app/Widgets/alarm-widget/alarm_btncircle_widget.dart';
-import 'package:unwind_app/data/timewatch_obj.dart';
+
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 import 'package:unwind_app/Widgets/alarm-widget/alarm_wheeltile_widget.dart';
-import 'package:unwind_app/data/time_workstate.dart';
-import 'package:unwind_app/data/time_breakstate.dart';
-import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
+import 'package:unwind_app/data/alarm-data/time_breakstate.dart';
 
+import '../../Widgets/button_withouticon_widget.dart';
+import '../../data/alarm-data/time_workstate.dart';
+import '../../data/alarm-data/timewatch_obj.dart';
 import 'info_clock_page.dart';
 
 class ClockPage extends StatefulWidget {
@@ -113,7 +113,7 @@ class _ClockPageState extends State<ClockPage> {
                       ),
                       _worktoggle == true
                           ? const SizedBox()
-                          : ButtonTapTheme(
+                          : ButtonWithoutIconWidget(
                               onTap: () {
                                 scrollWorkTimes();
                               },
@@ -149,13 +149,16 @@ class _ClockPageState extends State<ClockPage> {
                             children: [
                               Positioned(
                                 child: Center(
-                                  child: Text(
+                                  child: AutoSizeText(
                                     '$currentWorkState นาที',
                                     style: const TextStyle(
                                         color: Color(0xFF6285D7),
                                         fontSize: 16,
                                         fontFamily: 'Noto Sans Thai',
                                         fontWeight: FontWeight.w600),
+                                    maxFontSize: 16,
+                                    minFontSize: 14,
+                                    maxLines: 1,
                                   ),
                                 ),
                               ),
@@ -266,7 +269,7 @@ class _ClockPageState extends State<ClockPage> {
                       ),
                       _breaktoggle == true
                           ? const SizedBox()
-                          : ButtonTapTheme(
+                          : ButtonWithoutIconWidget(
                               onTap: () {
                                 scrollBreakTimes();
                               },
@@ -302,13 +305,16 @@ class _ClockPageState extends State<ClockPage> {
                             children: [
                               Positioned(
                                 child: Center(
-                                  child: Text(
+                                  child: AutoSizeText(
                                     '$currentBreakState นาที',
                                     style: const TextStyle(
                                         color: Color(0xFF6285D7),
                                         fontSize: 16,
                                         fontFamily: 'Noto Sans Thai',
                                         fontWeight: FontWeight.w600),
+                                    maxFontSize: 16,
+                                    minFontSize: 14,
+                                    maxLines: 1,
                                   ),
                                 ),
                               ),
@@ -414,16 +420,17 @@ class _ClockPageState extends State<ClockPage> {
             child: Container(
               //section 2 btn
               width: double.infinity,
-              // color: Colors.blue,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  AutoSizeText(
                     'กดปุ่มเพื่อเริ่มการทำงาน',
                     style: Theme.of(context).textTheme.bodyLarge,
+                    maxFontSize: 16,
+                    minFontSize: 14,
+                    maxLines: 1,
                   ),
                   const SizedBox(
                     height: 8,

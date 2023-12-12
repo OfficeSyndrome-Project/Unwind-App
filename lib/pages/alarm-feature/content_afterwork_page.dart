@@ -1,5 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
@@ -46,20 +45,18 @@ class _ContentAfterWorkPageState extends State<ContentAfterWorkPage> {
                   ),
                 ]),
           ),
-          const SizedBox(
-            height: 24,
-          ),
-          Center(
-            child: Text(
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top: 24, bottom: 48),
+            child: AutoSizeText(
               "ตอนนี้คุณได้ทำงานครบตามเวลาที่ได้ตั้งไว้\nได้เวลาพักสายตาและยืดเส้นยืดสาย",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall,
+              minFontSize: 14,
+              maxLines: 2,
             ),
           ),
-          const SizedBox(
-            height: 48,
-          ),
-          ButtonTapTheme(
+          ButtonWithoutIconWidget(
             onTap: () {
               startworkTimes();
             },

@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
@@ -81,7 +79,9 @@ class _HomeState extends State<HomePage> {
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),
+        selectedFontSize: 12,
         showUnselectedLabels: true,
+        elevation: 0,
         unselectedItemColor: Theme.of(context).colorScheme.primary,
         selectedItemColor: Theme.of(context).colorScheme.primary,
         onTap: _onItemTapped,

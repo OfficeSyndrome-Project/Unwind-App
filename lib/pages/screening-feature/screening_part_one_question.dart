@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:unwind_app/globals/theme/button_withouticon_theme.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
+import '../../Widgets/button_withouticon_widget.dart';
 
 class ScreeningPartOneQuestion extends StatefulWidget {
   const ScreeningPartOneQuestion({super.key});
@@ -73,8 +73,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           // SizedBox(
           //   height: 24,
           // ),
-
-          ButtonTapTheme(
+          ButtonWithoutIconWidget(
             onTap: () {
               currentPage < questionsWidgets.length - 1
                   ? _controller.nextPage(

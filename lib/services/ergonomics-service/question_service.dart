@@ -1,4 +1,4 @@
-import '../../data/ergonomic_model.dart';
+import 'package:unwind_app/data/ergonomic-data/ergonomic_model.dart';
 
 class QuestionService {
   //all of question etc get or something

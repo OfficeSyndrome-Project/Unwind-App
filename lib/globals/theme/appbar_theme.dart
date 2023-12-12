@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class AppbarTheme extends StatelessWidget {
@@ -38,9 +39,12 @@ class AppbarTheme extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildIconButtonStart(iconButtonStart),
-          Text(
+          AutoSizeText(
             text ?? '',
             style: style ?? defaultStyle,
+            maxFontSize: 18,
+            minFontSize: 16,
+            maxLines: 1,
           ),
           _buildIconButtonEnd(
             iconButtonEnd,

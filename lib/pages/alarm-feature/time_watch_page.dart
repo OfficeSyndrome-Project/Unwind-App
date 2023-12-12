@@ -2,14 +2,16 @@
 
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/alarm-widget/alarm_btncircle_widget.dart';
 import 'package:unwind_app/Widgets/text_with_starticon_widget.dart';
-import 'package:unwind_app/data/timewatch_obj.dart';
+
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
+import '../../data/alarm-data/timewatch_obj.dart';
 import 'afterbreak_page.dart';
 import 'content_afterwork_page.dart';
 
@@ -156,7 +158,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            ButtonTapTheme(
+                            ButtonWithoutIconWidget(
                                 onTap: () {
                                   Navigator.of(dialogcontext)
                                       .popUntil((route) => route.isFirst);
@@ -181,7 +183,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                             const SizedBox(
                               width: 8,
                             ),
-                            ButtonTapTheme(
+                            ButtonWithoutIconWidget(
                                 onTap: () {
                                   Navigator.of(dialogcontext).pop();
                                 },
@@ -237,7 +239,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
               ),
             ),
             // buildSecondsTime(),
-            Text(
+            AutoSizeText(
               'จาก ${timesObj.times} นาที',
               style: const TextStyle(
                 color: Color(0xFFC3C8D2),
@@ -245,6 +247,8 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                 fontFamily: 'Noto Sans Thai',
                 fontWeight: FontWeight.w400,
               ),
+              minFontSize: 14,
+              maxLines: 1,
             ),
             const SizedBox(
               height: 40,
