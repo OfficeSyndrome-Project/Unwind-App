@@ -53,6 +53,18 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
         .toList();
   }
 
+  bool isAllStoredOptionsTrue(List<int> allIdCategory) {
+    for (var idCategory in allIdCategory) {
+      var storedOption = allStoredOptions[idCategory];
+      var listStoredOptions = storedOption!.values.toList();
+      if (listStoredOptions.contains(false) ||
+          listStoredOptions.contains(null)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (allStoredOptions.isEmpty) {
@@ -87,33 +99,77 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
           const SizedBox(
             height: 16,
           ),
-          Expanded(
-            child: NotificationListener<OverscrollIndicatorNotification>(
-                onNotification: (notification) {
-                  notification.disallowIndicator();
-                  return true;
-                },
-                child: ListView.separated(
-                    itemBuilder: (context, index) =>
-                        filteredOptionsQuestions(allIdCategory[index]).isEmpty
-                            ? const SizedBox()
-                            : CategoryErgBoxWidget(
-                                idCategory: allIdCategory[index],
-                                type: QuestionService.getTypeByIdCategory(
-                                    allIdCategory[index]),
-                                questions: filteredOptionsQuestions(
-                                    allIdCategory[index]),
+          isAllStoredOptionsTrue(allIdCategory)
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.only(bottom: 8),
+                      decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          color: Colors.white,
+                          shadows: const [
+                            BoxShadow(
+                              color: Color(0x19000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 1),
+                              spreadRadius: 0,
+                            )
+                          ]),
+                      child: AutoSizeText(
+                        'ยินดีด้วยคุณไม่มีปัญหากับท่าทางการนั่งในการทำงาน',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF484D56),
+                        ),
+                        minFontSize: 14,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    AutoSizeText(
+                      'คุณสามารถกลับมาทำแบบทดสอบนี้ใหม่ได้ในอนาคต',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xFF7F8795)),
+                      maxLines: 1,
+                      minFontSize: 12,
+                    )
+                  ],
+                )
+              : Expanded(
+                  child: NotificationListener<OverscrollIndicatorNotification>(
+                      onNotification: (notification) {
+                        notification.disallowIndicator();
+                        return true;
+                      },
+                      child: ListView.separated(
+                          itemBuilder: (context, index) =>
+                              filteredOptionsQuestions(allIdCategory[index])
+                                      .isEmpty
+                                  ? SizedBox()
+                                  : CategoryErgBoxWidget(
+                                      idCategory: allIdCategory[index],
+                                      type: QuestionService.getTypeByIdCategory(
+                                          allIdCategory[index]),
+                                      questions: filteredOptionsQuestions(
+                                          allIdCategory[index]),
+                                    ),
+                          separatorBuilder: (context, index) => SizedBox(
+                                height: filteredOptionsQuestions(
+                                            allIdCategory[index])
+                                        .isEmpty
+                                    ? 0
+                                    : 16,
                               ),
-                    separatorBuilder: (context, index) =>
-                        filteredOptionsQuestions(allIdCategory[index]).isEmpty
-                            ? const SizedBox(
-                                height: 0,
-                              )
-                            : const SizedBox(
-                                height: 16,
-                              ),
-                    itemCount: allIdCategory.length)),
-          ),
+                          itemCount: allIdCategory.length)),
+                ),
           const SizedBox(
             height: 16,
           ),
