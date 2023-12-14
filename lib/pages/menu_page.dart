@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 
@@ -15,12 +15,12 @@ class MenuWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          Container(
             width: double.infinity,
-            height: 148,
+            margin: EdgeInsets.only(bottom: 8),
             // color: Colors.black,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -33,7 +33,10 @@ class MenuWidget extends StatelessWidget {
                   },
                   child: Container(
                     width: double.infinity,
-                    height: 116,
+                    height: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? 116
+                        : 136,
+                    margin: EdgeInsets.only(bottom: 8),
                     decoration: ShapeDecoration(
                       color: Colors.black,
                       image: const DecorationImage(
@@ -46,25 +49,21 @@ class MenuWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                AutoSizeText(
+                Text(
                   'ปรับสภาพแวดล้อมการทำงาน',
-                  style: Theme.of(context).textTheme.titleMedium,
-                  maxFontSize: 16,
-                  minFontSize: 14,
-                  maxLines: 1,
+                  style: ResponsiveCheckWidget.isSmallMobile(context)
+                      ? TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF484D56),
+                        )
+                      : Theme.of(context).textTheme.titleMedium,
                 )
               ],
             ),
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          SizedBox(
+          Container(
             width: double.infinity,
-            height: 148,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -79,7 +78,10 @@ class MenuWidget extends StatelessWidget {
                   },
                   child: Container(
                     width: double.infinity,
-                    height: 116,
+                    height: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? 116
+                        : 136,
+                    margin: EdgeInsets.only(bottom: 8),
                     decoration: ShapeDecoration(
                       color: Colors.black,
                       image: const DecorationImage(
@@ -92,15 +94,15 @@ class MenuWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                AutoSizeText(
+                Text(
                   'นาฬิกาจับเวลา',
-                  style: Theme.of(context).textTheme.titleMedium,
-                  maxFontSize: 16,
-                  minFontSize: 14,
-                  maxLines: 1,
+                  style: ResponsiveCheckWidget.isSmallMobile(context)
+                      ? TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF484D56),
+                        )
+                      : Theme.of(context).textTheme.titleMedium,
                 )
               ],
             ),

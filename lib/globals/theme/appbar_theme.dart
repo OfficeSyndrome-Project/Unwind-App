@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class AppbarTheme extends StatelessWidget {
   final String? text;
@@ -19,7 +19,6 @@ class AppbarTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     final defaulColor = Theme.of(context).colorScheme.primary;
     final defaultStyle = Theme.of(context).textTheme.displayMedium;
-
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       width: double.infinity,
@@ -39,13 +38,18 @@ class AppbarTheme extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildIconButtonStart(iconButtonStart),
-          AutoSizeText(
-            text ?? '',
-            style: style ?? defaultStyle,
-            maxFontSize: 18,
-            minFontSize: 16,
-            maxLines: 1,
-          ),
+          ResponsiveCheckWidget.isSmallMobile(context)
+              ? Text(text ?? '',
+                  style: style ??
+                      TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFFebedf0),
+                      ))
+              : Text(
+                  text ?? '',
+                  style: style ?? defaultStyle,
+                ),
           _buildIconButtonEnd(
             iconButtonEnd,
           )

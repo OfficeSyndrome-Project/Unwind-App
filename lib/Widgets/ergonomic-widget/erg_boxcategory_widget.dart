@@ -1,6 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/ergonomic-widget/erg_boxresult_widget.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/ergonomic-data/ergonomic_model.dart';
 
 class CategoryErgBoxWidget extends StatelessWidget {
@@ -29,11 +29,15 @@ class CategoryErgBoxWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AutoSizeText(
+          Text(
             'ส่วนที่ $idCategory $type',
-            style: Theme.of(context).textTheme.titleMedium,
-            maxFontSize: 16,
-            minFontSize: 14,
+            style: ResponsiveCheckWidget.isSmallMobile(context)
+                ? TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF484D56),
+                  )
+                : Theme.of(context).textTheme.titleMedium,
           ),
           ListView.separated(
             shrinkWrap: true,

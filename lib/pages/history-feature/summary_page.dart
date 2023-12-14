@@ -1,10 +1,10 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/history-widget/score_average_widget.dart';
-import 'package:unwind_app/Widgets/topic_widget.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -88,24 +88,35 @@ class SummaryPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Center(
-                  child: AutoSizeText(
+                  child: Text(
                     //day - day Month year
                     '${keepscores.map((data) => data.dateTime.day).first.toString()} - ${keepscores.map((data) => data.dateTime.day).last.toString()} ${changeMonthIntToString(keepscores).toString()} ${keepscores.map((data) => data.dateTime.year).first.toString()}',
-                    style: Theme.of(context).textTheme.titleLarge,
-                    maxFontSize: 18,
-                    minFontSize: 16,
-                    maxLines: 1,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF484D56),
+                          )
+                        : Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                TopicWidget(
-                    startIcon: Icon(
-                      Icons.directions_run_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    topicName: 'ชื่อชุดท่าบริหาร'),
+                TextWithStartIconWidget(
+                  startIcon: Icon(
+                    Icons.directions_run_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  topicName: 'ชื่อชุดท่าบริหาร',
+                  style: ResponsiveCheckWidget.isSmallMobile(context)
+                      ? TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF3B67CD),
+                        )
+                      : Theme.of(context).textTheme.bodySmall,
+                ),
                 Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -124,12 +135,16 @@ class SummaryPage extends StatelessWidget {
                             const SizedBox(
                               width: 8,
                             ),
-                            AutoSizeText(
+                            Text(
                               data,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              maxFontSize: 16,
-                              minFontSize: 14,
-                              maxLines: 1,
+                              style:
+                                  ResponsiveCheckWidget.isSmallMobile(context)
+                                      ? TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: const Color(0xFF484D56),
+                                        )
+                                      : Theme.of(context).textTheme.bodyLarge,
                             )
                           ],
                         ),
@@ -138,12 +153,20 @@ class SummaryPage extends StatelessWidget {
                 const SizedBox(
                   height: 4,
                 ),
-                TopicWidget(
-                    startIcon: Icon(
-                      Icons.analytics_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    topicName: 'ค่าความเจ็บปวด (ก่อน/หลัง)'),
+                TextWithStartIconWidget(
+                  startIcon: Icon(
+                    Icons.analytics_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  topicName: 'ค่าความเจ็บปวด (ก่อน/หลัง)',
+                  style: ResponsiveCheckWidget.isSmallMobile(context)
+                      ? TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF3B67CD),
+                        )
+                      : Theme.of(context).textTheme.bodySmall,
+                ),
                 const SizedBox(
                   height: 8,
                 ),

@@ -1,7 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class ScreeningQuestionBoxWidget extends StatefulWidget {
   final String? assetPath;
@@ -41,7 +41,6 @@ class _ScreeningQuestionBoxWidgetState
         mainAxisSize: MainAxisSize.min,
         children: [
           if (widget.assetPath != null) // Check if assetPath is not null
-
             SizedBox(
               width: 240,
               height: 240,
@@ -57,13 +56,9 @@ class _ScreeningQuestionBoxWidgetState
                 ),
               ),
             ),
-          // const SizedBox(
-          //   height: 16,
-          // ),
           Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
-              // margin: const EdgeInsets.only(bottom: 24),
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -81,6 +76,7 @@ class _ScreeningQuestionBoxWidgetState
               child: ListView.separated(
                 shrinkWrap: true,
                 itemCount: widget.questions.length,
+                physics: NeverScrollableScrollPhysics(),
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 16,
                 ),
@@ -119,11 +115,15 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AutoSizeText(
+        Text(
           questions,
-          style: Theme.of(context).textTheme.titleMedium,
-          maxFontSize: 16,
-          minFontSize: 14,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF484D56),
+                )
+              : Theme.of(context).textTheme.titleMedium,
         ),
         Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -150,11 +150,15 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         },
                         activeColor: Theme.of(context).colorScheme.primary,
                         inactiveColor: Theme.of(context).colorScheme.primary),
-                    AutoSizeText(
+                    Text(
                       'ใช่',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      maxFontSize: 16,
-                      minFontSize: 14,
+                      style: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF484D56),
+                            )
+                          : Theme.of(context).textTheme.bodyLarge,
                     ),
                   ]),
                   const SizedBox(
@@ -172,11 +176,15 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                           },
                           activeColor: Theme.of(context).colorScheme.primary,
                           inactiveColor: Theme.of(context).colorScheme.primary),
-                      AutoSizeText(
+                      Text(
                         'ไม่',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        maxFontSize: 16,
-                        minFontSize: 14,
+                        style: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF484D56),
+                              )
+                            : Theme.of(context).textTheme.bodyLarge,
                       )
                     ],
                   )

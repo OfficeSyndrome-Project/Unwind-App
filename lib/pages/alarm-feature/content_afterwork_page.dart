@@ -1,7 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
+
+import '../../Widgets/responsive_check_widget.dart';
 
 class ContentAfterWorkPage extends StatefulWidget {
   const ContentAfterWorkPage({super.key});
@@ -48,12 +49,16 @@ class _ContentAfterWorkPageState extends State<ContentAfterWorkPage> {
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: 24, bottom: 48),
-            child: AutoSizeText(
+            child: Text(
               "ตอนนี้คุณได้ทำงานครบตามเวลาที่ได้ตั้งไว้\nได้เวลาพักสายตาและยืดเส้นยืดสาย",
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleSmall,
-              minFontSize: 14,
-              maxLines: 2,
+              style: ResponsiveCheckWidget.isSmallMobile(context)
+                  ? TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF636A75),
+                    )
+                  : Theme.of(context).textTheme.titleSmall,
             ),
           ),
           ButtonWithoutIconWidget(

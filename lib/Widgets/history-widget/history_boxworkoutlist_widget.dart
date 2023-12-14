@@ -1,6 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
   HistoryWorkoutlistWidget({super.key});
@@ -11,7 +11,6 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 86,
       padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 18),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
@@ -35,19 +34,25 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AutoSizeText(
+              Text(
                 "name workout list",
-                style: Theme.of(context).textTheme.titleMedium,
-                maxFontSize: 16,
-                minFontSize: 14,
-                maxLines: 1,
+                style: ResponsiveCheckWidget.isSmallMobile(context)
+                    ? TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF484D56),
+                      )
+                    : Theme.of(context).textTheme.titleMedium,
               ),
-              AutoSizeText(
+              Text(
                 "date start and date end",
-                style: Theme.of(context).textTheme.bodyMedium,
-                maxFontSize: 14,
-                minFontSize: 12,
-                maxLines: 1,
+                style: ResponsiveCheckWidget.isSmallMobile(context)
+                    ? TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF636A75),
+                      )
+                    : Theme.of(context).textTheme.bodyMedium,
               )
             ],
           ),

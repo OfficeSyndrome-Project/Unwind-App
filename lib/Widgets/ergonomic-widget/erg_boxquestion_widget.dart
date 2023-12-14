@@ -1,6 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/radio_widget.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class QuestionEegonomicWidget extends StatelessWidget {
   final String question;
@@ -34,11 +34,15 @@ class QuestionEegonomicWidget extends StatelessWidget {
             },
             activeColor: Theme.of(context).colorScheme.primary,
             inactiveColor: Theme.of(context).colorScheme.primary),
-        AutoSizeText(
+        Text(
           'ใช่',
-          style: Theme.of(context).textTheme.bodyLarge,
-          maxFontSize: 16,
-          minFontSize: 14,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF484D56),
+                )
+              : Theme.of(context).textTheme.bodyLarge,
         ),
         const SizedBox(
           width: 16,
@@ -53,11 +57,15 @@ class QuestionEegonomicWidget extends StatelessWidget {
             },
             activeColor: Theme.of(context).colorScheme.primary,
             inactiveColor: Theme.of(context).colorScheme.primary),
-        AutoSizeText(
+        Text(
           'ไม่',
-          style: Theme.of(context).textTheme.bodyLarge,
-          maxFontSize: 16,
-          minFontSize: 14,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF484D56),
+                )
+              : Theme.of(context).textTheme.bodyLarge,
         )
       ],
     );
@@ -109,14 +117,18 @@ class QuestionEegonomicWidget extends StatelessWidget {
           ),
           SizedBox(
             width: 280,
-            child: AutoSizeText(
+            child: Text(
               question,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: ResponsiveCheckWidget.isSmallMobile(context)
+                  ? TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF484D56),
+                    )
+                  : Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
               softWrap: true,
               overflow: TextOverflow.clip,
-              maxFontSize: 16,
-              minFontSize: 14,
             ),
           ),
           const SizedBox(
