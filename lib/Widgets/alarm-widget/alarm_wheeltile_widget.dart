@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class WheelTile extends StatelessWidget {
   final String textstates;
@@ -10,9 +11,9 @@ class WheelTile extends StatelessWidget {
     return Center(
       child: Text(
         '$textstates นาที',
-        style: const TextStyle(
+        style: TextStyle(
           fontFamily: 'Noto Sans Thai',
-          fontSize: 16,
+          fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
           fontWeight: FontWeight.w600,
           color: Color(0xFF6285D7),
         ),

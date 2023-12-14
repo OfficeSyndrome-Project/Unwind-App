@@ -1,18 +1,19 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+
+import '../responsive_check_widget.dart';
 
 Widget btnCircle(BuildContext context, String text, Color color) {
   return SizedBox(
-    width: 88,
-    height: 88,
+    width: ResponsiveCheckWidget.isSmallMobile(context) ? 88 : 98,
+    height: ResponsiveCheckWidget.isSmallMobile(context) ? 88 : 98,
     child: Stack(
       children: [
         Positioned(
           left: 0,
           top: 0,
           child: Container(
-            width: 88,
-            height: 88,
+            width: ResponsiveCheckWidget.isSmallMobile(context) ? 88 : 98,
+            height: ResponsiveCheckWidget.isSmallMobile(context) ? 88 : 98,
             decoration: ShapeDecoration(
               shape: const CircleBorder(),
               color: color,
@@ -30,8 +31,10 @@ Widget btnCircle(BuildContext context, String text, Color color) {
         Positioned(
           child: Center(
             child: Container(
-              width: 78.57,
-              height: 78.57,
+              width:
+                  ResponsiveCheckWidget.isSmallMobile(context) ? 78.57 : 88.57,
+              height:
+                  ResponsiveCheckWidget.isSmallMobile(context) ? 78.57 : 88.57,
               decoration: const ShapeDecoration(
                 shape: CircleBorder(
                   side: BorderSide(
@@ -54,17 +57,15 @@ Widget btnCircle(BuildContext context, String text, Color color) {
         ),
         Positioned(
           child: Center(
-            child: AutoSizeText(
+            child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize:
+                    ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
                 fontFamily: 'Noto Sans Thai',
                 fontWeight: FontWeight.w600,
               ),
-              maxFontSize: 18,
-              minFontSize: 16,
-              maxLines: 1,
             ),
           ),
         ),

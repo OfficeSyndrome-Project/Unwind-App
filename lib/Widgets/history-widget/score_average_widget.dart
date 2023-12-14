@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class ScoreAverageWidget extends StatelessWidget {
   final int nrsScoreAverage;
@@ -16,10 +16,7 @@ class ScoreAverageWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           //pain score
-          AutoSizeText.rich(
-            maxFontSize: 16,
-            minFontSize: 14,
-            maxLines: 1,
+          Text.rich(
             textAlign: TextAlign.center,
             TextSpan(
               children: [
@@ -27,7 +24,9 @@ class ScoreAverageWidget extends StatelessWidget {
                     text: 'ความเจ็บปวดลดลง ',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
-                      fontSize: 16,
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 14
+                          : 16,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF484D56),
                     )),
@@ -35,7 +34,9 @@ class ScoreAverageWidget extends StatelessWidget {
                     text: '${nrsScoreAverage.toString()} ระดับ',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
-                      fontSize: 16,
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 14
+                          : 16,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF3B67CD),
                     )),

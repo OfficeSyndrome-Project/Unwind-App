@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class ButtonWithiconWidget extends StatelessWidget {
   final String text;
@@ -49,17 +49,16 @@ class ButtonWithiconWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: mainAxisAlignment == MainAxisAlignment.spaceBetween
                 ? <Widget>[
-                    AutoSizeText(
+                    Text(
                       text,
                       style: TextStyle(
                         fontFamily: "Noto Sans Thai",
-                        fontSize: 16,
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
                         fontWeight: FontWeight.w600,
                         color: colorText,
                       ),
-                      maxFontSize: 16,
-                      minFontSize: 14,
-                      maxLines: 1,
                     ),
                     Icon(
                       icon,
@@ -74,16 +73,15 @@ class ButtonWithiconWidget extends StatelessWidget {
                     const SizedBox(
                       width: 8,
                     ),
-                    AutoSizeText(
+                    Text(
                       text,
                       style: TextStyle(
-                        fontFamily: "Noto Sans Thai",
-                        fontWeight: FontWeight.w600,
-                        color: colorText,
-                      ),
-                      minFontSize: 14,
-                      maxFontSize: 16,
-                      maxLines: 1,
+                          fontFamily: "Noto Sans Thai",
+                          fontWeight: FontWeight.w600,
+                          color: colorText,
+                          fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? 14
+                              : 16),
                     )
                   ]),
       ),

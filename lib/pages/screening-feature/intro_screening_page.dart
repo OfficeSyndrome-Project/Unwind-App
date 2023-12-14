@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/intro_screening_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
@@ -51,11 +52,17 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPartOne> {
               },
               text: 'ถัดไป',
               radius: 32,
-              width: 345,
-              height: 52,
+              width: double.infinity,
+              height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
               color: Theme.of(context).colorScheme.primary,
               borderSide: BorderSide.none,
-              style: Theme.of(context).textTheme.displayMedium)
+              style: ResponsiveCheckWidget.isSmallMobile(context)
+                  ? TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFFFFFFFF),
+                    )
+                  : Theme.of(context).textTheme.headlineSmall)
         ]);
   }
 }
@@ -107,10 +114,16 @@ class _IntroScreeningPartTwoState extends State<IntroScreeningPartTwo> {
               text: 'ถัดไป',
               radius: 32,
               width: 345,
-              height: 52,
+              height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
               color: Theme.of(context).colorScheme.primary,
               borderSide: BorderSide.none,
-              style: Theme.of(context).textTheme.displayMedium)
+              style: ResponsiveCheckWidget.isSmallMobile(context)
+                  ? TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFFFFFFFF),
+                    )
+                  : Theme.of(context).textTheme.headlineSmall)
         ]);
   }
 }

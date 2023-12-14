@@ -1,9 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
-import 'package:unwind_app/Widgets/text_with_starticon_widget.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 import 'package:unwind_app/Widgets/alarm-widget/alarm_btncircle_widget.dart';
+import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
@@ -102,15 +102,21 @@ class _ClockPageState extends State<ClockPage> {
                         : MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      textIcon(
-                        context,
-                        "คุณต้องการทำงาน",
-                        const Color(0xFF636A75),
-                        Icon(
-                          Icons.computer_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
+                      TextWithStartIconWidget(
+                          startIcon: Icon(
+                            Icons.computer_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          topicName: 'คุณต้องการทำงาน',
+                          style: TextStyle(
+                            fontFamily: "Noto Sans Thai",
+                            fontSize:
+                                ResponsiveCheckWidget.isSmallMobile(context)
+                                    ? 14
+                                    : 16,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF636A75),
+                          )),
                       _worktoggle == true
                           ? const SizedBox()
                           : ButtonWithoutIconWidget(
@@ -123,7 +129,14 @@ class _ClockPageState extends State<ClockPage> {
                               height: 30,
                               color: Theme.of(context).colorScheme.primary,
                               borderSide: BorderSide.none,
-                              style: Theme.of(context).textTheme.headlineSmall)
+                              style: ResponsiveCheckWidget.isSmallMobile(
+                                      context)
+                                  ? TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: const Color(0xFFFFFFFF),
+                                    )
+                                  : Theme.of(context).textTheme.headlineSmall)
                     ],
                   ),
                 ),
@@ -149,16 +162,17 @@ class _ClockPageState extends State<ClockPage> {
                             children: [
                               Positioned(
                                 child: Center(
-                                  child: AutoSizeText(
+                                  child: Text(
                                     '$currentWorkState นาที',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         color: Color(0xFF6285D7),
-                                        fontSize: 16,
+                                        fontSize:
+                                            ResponsiveCheckWidget.isSmallMobile(
+                                                    context)
+                                                ? 14
+                                                : 16,
                                         fontFamily: 'Noto Sans Thai',
                                         fontWeight: FontWeight.w600),
-                                    maxFontSize: 16,
-                                    minFontSize: 14,
-                                    maxLines: 1,
                                   ),
                                 ),
                               ),
@@ -258,15 +272,21 @@ class _ClockPageState extends State<ClockPage> {
                         : MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      textIcon(
-                        context,
-                        'คุณต้องการพัก',
-                        const Color(0xFF636A75),
-                        Icon(
-                          Icons.coffee_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
+                      TextWithStartIconWidget(
+                          startIcon: Icon(
+                            Icons.coffee_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          topicName: 'คุณต้องการพัก',
+                          style: TextStyle(
+                            fontFamily: "Noto Sans Thai",
+                            fontSize:
+                                ResponsiveCheckWidget.isSmallMobile(context)
+                                    ? 14
+                                    : 16,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF636A75),
+                          )),
                       _breaktoggle == true
                           ? const SizedBox()
                           : ButtonWithoutIconWidget(
@@ -305,16 +325,17 @@ class _ClockPageState extends State<ClockPage> {
                             children: [
                               Positioned(
                                 child: Center(
-                                  child: AutoSizeText(
+                                  child: Text(
                                     '$currentBreakState นาที',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         color: Color(0xFF6285D7),
-                                        fontSize: 16,
+                                        fontSize:
+                                            ResponsiveCheckWidget.isSmallMobile(
+                                                    context)
+                                                ? 14
+                                                : 16,
                                         fontFamily: 'Noto Sans Thai',
                                         fontWeight: FontWeight.w600),
-                                    maxFontSize: 16,
-                                    minFontSize: 14,
-                                    maxLines: 1,
                                   ),
                                 ),
                               ),
@@ -425,12 +446,15 @@ class _ClockPageState extends State<ClockPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  AutoSizeText(
+                  Text(
                     'กดปุ่มเพื่อเริ่มการทำงาน',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    maxFontSize: 16,
-                    minFontSize: 14,
-                    maxLines: 1,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF484D56),
+                          )
+                        : Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(
                     height: 8,

@@ -1,11 +1,14 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-class TopicWidget extends StatelessWidget {
+class TextWithStartIconWidget extends StatelessWidget {
   final Icon startIcon;
   final String topicName;
-  const TopicWidget(
-      {super.key, required this.startIcon, required this.topicName});
+  final TextStyle? style;
+  const TextWithStartIconWidget(
+      {super.key,
+      required this.startIcon,
+      required this.topicName,
+      required this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +21,9 @@ class TopicWidget extends StatelessWidget {
         const SizedBox(
           width: 8,
         ),
-        AutoSizeText(
+        Text(
           topicName,
-          style: Theme.of(context).textTheme.bodySmall,
-          maxFontSize: 16,
-          minFontSize: 14,
-          maxLines: 1,
+          style: style,
         ),
       ],
     );

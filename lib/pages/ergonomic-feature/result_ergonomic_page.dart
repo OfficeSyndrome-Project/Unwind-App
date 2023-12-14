@@ -1,6 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/ergonomic-data/ergonomic_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
@@ -87,11 +87,15 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
               const SizedBox(
                 width: 8,
               ),
-              AutoSizeText(
+              Text(
                 "ผลลัพธ์",
-                style: Theme.of(context).textTheme.titleLarge,
-                maxFontSize: 16,
-                minFontSize: 14,
+                style: ResponsiveCheckWidget.isSmallMobile(context)
+                    ? TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF484D56),
+                      )
+                    : Theme.of(context).textTheme.titleLarge,
               )
             ],
           ),
@@ -119,26 +123,26 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
                               spreadRadius: 0,
                             )
                           ]),
-                      child: AutoSizeText(
+                      child: Text(
                         'ยินดีด้วยคุณไม่มีปัญหากับท่าทางการนั่งในการทำงาน',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? 14
+                              : 16,
                           fontWeight: FontWeight.w500,
                           color: const Color(0xFF484D56),
                         ),
-                        minFontSize: 14,
-                        maxLines: 1,
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    AutoSizeText(
+                    Text(
                       'คุณสามารถกลับมาทำแบบทดสอบนี้ใหม่ได้ในอนาคต',
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? 12
+                              : 14,
                           fontWeight: FontWeight.w400,
                           color: const Color(0xFF7F8795)),
-                      maxLines: 1,
-                      minFontSize: 12,
                     )
                   ],
                 )
