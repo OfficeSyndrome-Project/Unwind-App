@@ -1,8 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
+
+import '../../Widgets/responsive_check_widget.dart';
 
 class ErgonomicPage extends StatelessWidget {
   ErgonomicPage({super.key});
@@ -27,8 +28,8 @@ class ErgonomicPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: 200,
-          height: 200,
+          width: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
+          height: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
           child: AspectRatio(
             aspectRatio: 1 / 1,
             child: Container(
@@ -46,20 +47,28 @@ class ErgonomicPage extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        AutoSizeText(
+        Text(
           "รายการตรวจสอบการยศาสตร์",
-          style: Theme.of(context).textTheme.titleMedium,
-          maxFontSize: 18,
-          minFontSize: 16,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF484D56),
+                )
+              : Theme.of(context).textTheme.titleMedium,
         ),
         SizedBox(
           width: double.infinity,
-          child: AutoSizeText(
+          child: Text(
             "เป้าหมายของรายการนี้คือการช่วยให้คุณจัดท่าทาง\nการนั่งในการทำงานได้อย่างเหมาะสมที่สุดเพื่อ\nการทำงานที่มีประสิทธิภาพ โดยมีทั้งหมด 7 ส่วน",
-            style: Theme.of(context).textTheme.titleSmall,
+            style: ResponsiveCheckWidget.isSmallMobile(context)
+                ? TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFF636A75),
+                  )
+                : Theme.of(context).textTheme.titleSmall,
             textAlign: TextAlign.center,
-            maxFontSize: 16,
-            minFontSize: 14,
           ),
         ),
         const SizedBox(
@@ -73,7 +82,7 @@ class ErgonomicPage extends StatelessWidget {
             text: "ถัดไป",
             radius: 32,
             width: double.infinity,
-            height: 52,
+            height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
             color: Theme.of(context).colorScheme.primary,
             borderSide: BorderSide.none,
             style: Theme.of(context).textTheme.headlineSmall),

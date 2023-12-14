@@ -70,11 +70,7 @@ class _GeneralAnimatedCustomRadioState extends State<GeneralAnimatedCustomRadio>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // print(widget.value);
         widget.onChanged?.call(widget.value);
-        // print("onTap");
-        // print(widget.value);
-        // print(widget.groupValue);
       },
       child: Container(
         width: 24.0,

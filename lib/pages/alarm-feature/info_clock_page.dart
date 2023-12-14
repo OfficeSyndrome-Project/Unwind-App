@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class InfoErgonomicPage extends StatelessWidget {
@@ -27,17 +27,17 @@ class InfoErgonomicPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 24,
-            ),
-            SizedBox(
-              width: 250,
-              height: 250,
+            Container(
+              width: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
+              height: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
+              margin: EdgeInsets.only(top: 24, bottom: 8),
               child: AspectRatio(
                 aspectRatio: 1 / 1,
                 child: Container(
-                  width: 250,
-                  height: 250,
+                  width:
+                      ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
+                  height:
+                      ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image:
@@ -47,9 +47,6 @@ class InfoErgonomicPage extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
             ),
             Text(
               'หลักการทำงานของนาฬิกาจับเวลา',
@@ -65,29 +62,45 @@ class InfoErgonomicPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AutoSizeText(
+                  Text(
                     '1. เลือกจำนวนเวลาที่ต้องการทำงาน',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    minFontSize: 14,
-                    maxLines: 16,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF636A75),
+                          )
+                        : Theme.of(context).textTheme.titleSmall,
                   ),
-                  AutoSizeText(
+                  Text(
                     '2. เลือกจำนวนเวลาที่ต้องการพัก',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    minFontSize: 14,
-                    maxLines: 16,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF636A75),
+                          )
+                        : Theme.of(context).textTheme.titleSmall,
                   ),
-                  AutoSizeText(
+                  Text(
                     '3. นาฬิกาจะแจ้งเตือนเมื่อครบเวลาที่กำหนดไว้',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    minFontSize: 14,
-                    maxLines: 16,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF636A75),
+                          )
+                        : Theme.of(context).textTheme.titleSmall,
                   ),
-                  AutoSizeText(
+                  Text(
                     '4. เมื่อพักเสร็จสิ้น สามารถเลือกได้ว่าต้องการทำงานต่อหรือไม่',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    minFontSize: 14,
-                    maxLines: 16,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF636A75),
+                          )
+                        : Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
               ),

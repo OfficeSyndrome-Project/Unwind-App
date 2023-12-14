@@ -1,9 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/ergonomic-widget/erg_btn_widget.dart';
-import 'package:unwind_app/services/question_service.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/services/ergonomics-service/question_service.dart';
+import 'package:unwind_app/services/ergonomics-service/storedoptions_service.dart';
 import '../../Routes/routes_config.dart';
-import '../../services/storedoptions_service.dart';
 import '../../data/ergonomic-data/ergonomic_model.dart';
 import 'erg_boxquestion_widget.dart';
 import 'dart:async';
@@ -93,11 +93,15 @@ class _PageQuestionWidgetState extends State<PageQuestionWidget> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AutoSizeText(
+        Text(
           "ส่วนที่ ${widget.idCategory} ${widget.questions.first.category}",
-          style: Theme.of(context).textTheme.titleMedium,
-          maxFontSize: 16,
-          minFontSize: 14,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF484D56),
+                )
+              : Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(
           height: 8,

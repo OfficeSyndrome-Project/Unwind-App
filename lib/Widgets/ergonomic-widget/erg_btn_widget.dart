@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 import '../../Routes/routes_config.dart';
 import '../button_withouticon_widget.dart';
@@ -36,7 +37,7 @@ class DetectorButton extends StatelessWidget {
         text: "ถัดไป",
         radius: 32,
         width: double.infinity,
-        height: 52,
+        height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
         color: !disable
             ? Theme.of(context).colorScheme.primary
             : const Color(0xFF9BA4B5),

@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class ScreeningIntroToQuestionWidget extends StatelessWidget {
   final String assetPath;
@@ -35,22 +35,29 @@ class ScreeningIntroToQuestionWidget extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        AutoSizeText(
+        Text(
           titleLabel,
-          style: Theme.of(context).textTheme.titleLarge,
-          maxFontSize: 18,
-          minFontSize: 16,
-          maxLines: 1,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF484D56),
+                )
+              : Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(
           height: 8,
         ),
-        AutoSizeText(
+        Text(
           descriptionLabel,
-          style: Theme.of(context).textTheme.titleSmall,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF636A75),
+                )
+              : Theme.of(context).textTheme.titleSmall,
           textAlign: TextAlign.center,
-          maxFontSize: 16,
-          minFontSize: 12,
         ),
       ],
     );
