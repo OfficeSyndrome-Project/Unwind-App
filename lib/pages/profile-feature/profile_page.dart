@@ -66,17 +66,25 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                     //////////////แสดงข้อมูล//////////
                     SizedBox(
-                      height: 8,
+                      height: 16,
                     ),
                     ShowInfomation(headDetails: 'ชื่อ', detail: 'ณัฐวดี'),
+                    SizedBox(height: 2),
+                    ShowInfomation(headDetails: 'นามสกุล', detail: 'ลี'),
+                    SizedBox(height: 2),
                     ShowInfomation(headDetails: 'อายุ', detail: '21'),
+                    SizedBox(height: 2),
                     ShowInfomation(headDetails: 'เพศ', detail: 'หญิง'),
+                    SizedBox(height: 2),
                     ShowInfomation(headDetails: 'น้ำหนัก', detail: '40 กก.'),
+                    SizedBox(height: 2),
                     ShowInfomation(headDetails: 'ส่วนสูง', detail: '160 ซม.'),
+                    SizedBox(height: 2),
                     ShowInfomation(
                         headDetails: 'อาชีพ', detail: 'นักเรียน/นักศึกษา'),
+                    SizedBox(height: 2),
                     ShowInfomation(
-                        headDetails: 'อีเมลล์', detail: 'test@gmail.com'),
+                        headDetails: 'การประสบอุบัติเหตุ', detail: 'ไม่เคย'),
                   ],
                 ),
               ),

@@ -69,7 +69,7 @@ class ProfileTextFormState extends State<ProfileTextForm> {
           ),
           labelText: widget.formName,
           labelStyle: const TextStyle(
-            color: Color(0xFF9BA4B5),
+            color: Color(0xFF7F8795),
             fontSize: 16,
             fontWeight: FontWeight.w500,
             height: 0.09,
