@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
+import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class ScreeningQuestionBoxWidget extends StatefulWidget {
@@ -41,23 +42,13 @@ class _ScreeningQuestionBoxWidgetState
         mainAxisSize: MainAxisSize.min,
         children: [
           if (widget.assetPath != null) // Check if assetPath is not null
-            SizedBox(
-              width: 240,
-              height: 240,
-              child: AspectRatio(
-                aspectRatio: 1 / 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(widget.assetPath!),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            RatioImageoneToOne(assetName: widget.assetPath!),
           Container(
               width: double.infinity,
+              constraints: BoxConstraints(
+                  maxHeight: ResponsiveCheckWidget.isSmallMobile(context)
+                      ? MediaQuery.of(context).size.height * 0.7
+                      : MediaQuery.of(context).size.height), //70 % screen size
               padding: const EdgeInsets.all(16),
               decoration: ShapeDecoration(
                 color: Colors.white,
@@ -73,17 +64,25 @@ class _ScreeningQuestionBoxWidgetState
                   ),
                 ],
               ),
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount: widget.questions.length,
-                physics: NeverScrollableScrollPhysics(),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 16,
-                ),
-                itemBuilder: (context, index) => QuestionAndRadioButton(
-                    questions: widget.questions[index],
-                    questionId: index,
-                    questionPage: widget.currentPage),
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  bool isOverFlow = constraints.maxHeight <
+                      MediaQuery.of(context).size.height;
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: widget.questions.length,
+                    physics: isOverFlow
+                        ? ClampingScrollPhysics()
+                        : NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 16,
+                    ),
+                    itemBuilder: (context, index) => QuestionAndRadioButton(
+                        questions: widget.questions[index],
+                        questionId: index,
+                        questionPage: widget.currentPage),
+                  );
+                },
               ))
         ]);
   }

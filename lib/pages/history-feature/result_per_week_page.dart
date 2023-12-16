@@ -16,8 +16,6 @@ class ResultPerWeekPage extends StatefulWidget {
 
   ResultPerWeekPage({super.key, required this.summaryArr});
 
-  // static List<KeepScoreAndDateModel> keepData = [];
-
   @override
   State<ResultPerWeekPage> createState() => _ResultPerWeekPageState();
 }

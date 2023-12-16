@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
@@ -27,23 +28,7 @@ class ErgonomicPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          width: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-          height: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-          child: AspectRatio(
-            aspectRatio: 1 / 1,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('lib/assets/images/worker-ergonomic.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-        ),
+        RatioImageoneToOne(assetName: 'lib/assets/images/worker-ergonomic.png'),
         const SizedBox(
           height: 32,
         ),
