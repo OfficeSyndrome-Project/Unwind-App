@@ -38,8 +38,10 @@ class ProfileDropdownState extends State<ProfileDropdown> {
               value: value,
               child: Text(
                 value,
-                style: const TextStyle(
-                    color: Color(0xFF484D56),
+                style: TextStyle(
+                    color: value == _selectedValue
+                        ? Color(0xFF7F8795)
+                        : Color(0xFF484D56),
                     fontSize: 16,
                     fontWeight: FontWeight.w500),
               ));
