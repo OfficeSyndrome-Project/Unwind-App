@@ -95,7 +95,9 @@ class ProfilePageState extends State<ProfilePage> {
             child: TextButton(
               onPressed: () {
                 Navigator.push(
-                    context, pageRoutes.profile.editpage().route(context));
+                  context,
+                  pageRoutes.profile.editpage().route(context),
+                );
               },
               child: TextWithStartIconWidget(
                   startIcon: Icon(

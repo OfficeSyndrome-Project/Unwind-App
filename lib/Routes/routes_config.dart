@@ -76,8 +76,10 @@ class History {
 }
 
 class Profile {
-  PathRoute editpage() =>
-      PathRoute(title: "แก้ไขโปรไฟล์", widget: const EditProfile());
+  PathRoute editpage({String? name}) => PathRoute(
+        title: "แก้ไขโปรไฟล์",
+        widget: EditProfile(name: name),
+      );
 }
 
 class PathRoute {

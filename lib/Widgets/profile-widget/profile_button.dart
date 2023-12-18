@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ProfileButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
   const ProfileButton({
-    super.key,
-  });
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child: const Text(
         'ยืนยัน',
         style: TextStyle(

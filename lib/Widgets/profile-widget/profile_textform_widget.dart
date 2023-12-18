@@ -5,30 +5,37 @@ class ProfileTextForm extends StatefulWidget {
     required this.formName,
     this.inputType,
     this.formUnit,
+    this.controller,
     Key? key,
   }) : super(key: key);
 
   final String formName;
   final TextInputType? inputType;
   final String? formUnit;
+  final TextEditingController? controller;
 
   @override
   ProfileTextFormState createState() => ProfileTextFormState();
 }
 
 class ProfileTextFormState extends State<ProfileTextForm> {
-  final FocusNode _focusNode = FocusNode();
-  final TextEditingController _controller = TextEditingController();
+  late final FocusNode _focusNode;
+  late final TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
+    _focusNode = FocusNode();
+    _controller = widget.controller ?? TextEditingController();
     _focusNode.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
     super.dispose();
   }
 

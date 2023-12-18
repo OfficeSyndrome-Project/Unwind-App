@@ -7,7 +7,8 @@ import 'package:unwind_app/Widgets/profile-widget/profile_dropdown.dart';
 import '../../Routes/routes_config.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+  final String? name;
+  const EditProfile({Key? key, this.name}) : super(key: key);
   // PageRoutes pageRoutes = PageRoutes();
 
   @override
@@ -16,17 +17,14 @@ class EditProfile extends StatefulWidget {
 
 class EditProfileState extends State<EditProfile> {
   PageRoutes pageRoutes = PageRoutes();
-  TextEditingController controller = TextEditingController();
+  final _editcontroller = TextEditingController();
+  String name = "";
 
-  List<String> careerList = [
-    "นักเรียน/นักศึกษา",
-    "พนักงานออฟฟิศ",
-    "พนักงานโรงงาน",
-    "ตุ๊กแก",
-    "อื่น ๆ"
-  ];
-
-  bool displayCareerList = false;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _usernameController.text = widget.username;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,8 @@ class EditProfileState extends State<EditProfile> {
               child: ListView(
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  const ProfileTextForm(
+                  ProfileTextForm(
+                    controller: _editcontroller,
                     formName: 'ชื่อ',
                   ),
                   const SizedBox(height: 16),
@@ -108,7 +107,21 @@ class EditProfileState extends State<EditProfile> {
                   SizedBox(
                     height: 48,
                   ),
-                  ProfileButton(),
+                  ProfileButton(
+                    onPressed: () {
+                      setState(() {
+                        name = _editcontroller.text;
+                        print(name);
+
+                        Navigator.push(
+                          context,
+                          pageRoutes.profile
+                              .editpage(name: name)
+                              .route(context),
+                        );
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
