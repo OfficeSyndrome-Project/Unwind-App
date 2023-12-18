@@ -26,4 +26,22 @@ class GeneralStoredService {
     final SharedPreferences prefs = await _prefs;
     prefs.remove(getKey(pagename, id, index));
   }
+
+  static Future<bool> writeString(
+      String pagename, int id, int index, String value) async {
+    try {
+      final SharedPreferences prefs = await _prefs;
+      prefs.setString(getKey(pagename, id, index), value);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<String?> readString(String pagename, int id, int index) async {
+    final SharedPreferences prefs = await _prefs;
+
+    var value = prefs.getString(getKey(pagename, id, index));
+    return value;
+  }
 }

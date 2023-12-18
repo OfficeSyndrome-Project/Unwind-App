@@ -5,6 +5,7 @@ import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/services/profile-service/profile_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -17,6 +18,7 @@ class ProfilePageState extends State<ProfilePage> {
   PageRoutes pageRoutes = PageRoutes();
   @override
   Widget build(BuildContext context) {
+    ProfileService.writeName("กฤตศยา");
     return AppscreenTheme(
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.start,

@@ -3,6 +3,7 @@ import 'package:unwind_app/Widgets/profile-widget/profile_button.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_dropdown.dart';
+import 'package:unwind_app/services/profile-service/profile_service.dart';
 
 import '../../Routes/routes_config.dart';
 
@@ -20,11 +21,19 @@ class EditProfileState extends State<EditProfile> {
   final _editcontroller = TextEditingController();
   String name = "";
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _usernameController.text = widget.username;
-  // }
+  @override
+  void initState() {
+    super.initState();
+    initName();
+  }
+
+  void initName() async {
+    final String storageName = await ProfileService.getName();
+    setState(() {
+      name = storageName;
+      _editcontroller.text = name;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
