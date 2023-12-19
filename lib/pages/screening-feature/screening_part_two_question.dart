@@ -3,7 +3,6 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 // import 'package:unwind_app/services/screening-service/screening_service.dart';
-// import 'package:unwind_app/Widgets/test_widget.dart';
 
 //select point to check
 class ScreeningPartTwoQuestion extends StatefulWidget {
@@ -24,25 +23,6 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
 
   @override
   Widget build(BuildContext context) {
-    // List<Widget> questiosnWidgets =
-    //     ScreeningQuestionPartTwoService.getAllChoice()
-    //         .map((questionPage) => TestWidget(
-    //               title: questionPage.title,
-    //               assetPath: questionPage.assetPath,
-    //               currentPage: currentPage,
-    //               pageRoutes: pageRoutes,
-    //               controller: _controller,
-    //             ))
-    //         .toList();
-    //เอาคำถามออกมา
-    // List<Widget> questiosnWidgets2 =
-    //     ScreeningQuestionPartTwoService.getAllChoice()
-    //         .map((questionPage) => TestWidget2(
-    //               question: ScreeningQuestionPartTwoService.getQuestionsByTypeA(
-    //                   questionPage.questionType),
-    //             ))
-    //         // .first();
-    // //         .toList();
     // Widget questiosnWidgets2 = TestWidget2(
     //     question:
     //         ScreeningQuestionPartTwoService.getQuestionsBySelectedPart("คอ"));
@@ -80,26 +60,10 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                 currentPage = value;
               });
             },
-            children: [
-              // ...questiosnWidgets,
-              // ...questiosnWidgets2
-              Text("questions should appear here")
-            ],
+            children: [Text("questions should appear here")],
           )),
           ButtonWithoutIconWidget(
-            onTap: () {
-              // print("currentPage: $currentPage");
-              // currentPage < questiosnWidgets.length - 1
-              //     ? _controller.nextPage(
-              //         duration: const Duration(milliseconds: 300),
-              //         curve: Curves.easeOut,
-              //       )
-              //     : Navigator.push(
-              //         context,
-              //         pageRoutes.screening
-              //             .introscreeningpageparttwo()
-              //             .route(context));
-            },
+            onTap: () {},
             text: "ถัดไป",
             radius: 32,
             width: 345,

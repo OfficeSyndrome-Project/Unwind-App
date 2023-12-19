@@ -76,25 +76,6 @@ class ScreeningQuestionPartTwoService {
   static List<ScreeningPartTwoPostureModel> posture =
       ScreeningPartTwoPostureModel.getScreeningPartTwoPostureModel();
 
-  //get all page
-  static List<ScreeningPartTwoSelectPart> getAllChoice() {
-    var result = choices;
-    // print(result);
-    return result;
-  }
-
-  //get all question
-  static List<String> getQuestionsBySelectedPart(String selectedArea) {
-    String questionType = choices
-        .where((choice) => choice.title == selectedArea)
-        .first
-        .questionType;
-    var questions =
-        ScreeningPartTwoQuestionModel.getScreeningPartTwoQuestionModel()
-            .where((q) => q.questionType == questionType);
-    return questions.map((question) => question.question).toList();
-  }
-
   //get object
   static ScreeningPartTwoModel getScreeningPartTwoModelBySelectedPart(
       String selectedPart) {
