@@ -10,12 +10,14 @@ class AppscreenTheme extends StatelessWidget {
   final List<Widget> children;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
+  final double? vertical;
 
   const AppscreenTheme({
     super.key,
     this.textBar,
     this.textStyle,
     this.colorBar,
+    this.vertical,
     this.iconButtonStart,
     this.iconButtonEnd,
     required this.mainAxisAlignment,
@@ -25,6 +27,8 @@ class AppscreenTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double defaultVertical = 16;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -43,10 +47,10 @@ class AppscreenTheme extends StatelessWidget {
             Expanded(
               child: Container(
                 color: Colors.transparent,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: EdgeInsets.symmetric(
+                    horizontal: 24, vertical: vertical ?? defaultVertical),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: mainAxisAlignment,
                   crossAxisAlignment: crossAxisAlignment,
                   children: children,

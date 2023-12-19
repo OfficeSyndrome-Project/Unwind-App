@@ -1,7 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
+import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class ScreeningQuestionBoxWidget extends StatefulWidget {
   final String? assetPath;
@@ -41,29 +42,14 @@ class _ScreeningQuestionBoxWidgetState
         mainAxisSize: MainAxisSize.min,
         children: [
           if (widget.assetPath != null) // Check if assetPath is not null
-
-            SizedBox(
-              width: 240,
-              height: 240,
-              child: AspectRatio(
-                aspectRatio: 1 / 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(widget.assetPath!),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          // const SizedBox(
-          //   height: 16,
-          // ),
+            RatioImageoneToOne(assetName: widget.assetPath!),
           Container(
               width: double.infinity,
+              constraints: BoxConstraints(
+                  maxHeight: ResponsiveCheckWidget.isSmallMobile(context)
+                      ? MediaQuery.of(context).size.height * 0.7
+                      : MediaQuery.of(context).size.height), //70 % screen size
               padding: const EdgeInsets.all(16),
-              // margin: const EdgeInsets.only(bottom: 24),
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -78,16 +64,25 @@ class _ScreeningQuestionBoxWidgetState
                   ),
                 ],
               ),
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount: widget.questions.length,
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 16,
-                ),
-                itemBuilder: (context, index) => QuestionAndRadioButton(
-                    questions: widget.questions[index],
-                    questionId: index,
-                    questionPage: widget.currentPage),
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  bool isOverFlow = constraints.maxHeight <
+                      MediaQuery.of(context).size.height;
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: widget.questions.length,
+                    physics: isOverFlow
+                        ? ClampingScrollPhysics()
+                        : NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 16,
+                    ),
+                    itemBuilder: (context, index) => QuestionAndRadioButton(
+                        questions: widget.questions[index],
+                        questionId: index,
+                        questionPage: widget.currentPage),
+                  );
+                },
               ))
         ]);
   }
@@ -119,11 +114,15 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AutoSizeText(
+        Text(
           questions,
-          style: Theme.of(context).textTheme.titleMedium,
-          maxFontSize: 16,
-          minFontSize: 14,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF484D56),
+                )
+              : Theme.of(context).textTheme.titleMedium,
         ),
         Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -150,11 +149,15 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         },
                         activeColor: Theme.of(context).colorScheme.primary,
                         inactiveColor: Theme.of(context).colorScheme.primary),
-                    AutoSizeText(
+                    Text(
                       'ใช่',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      maxFontSize: 16,
-                      minFontSize: 14,
+                      style: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF484D56),
+                            )
+                          : Theme.of(context).textTheme.bodyLarge,
                     ),
                   ]),
                   const SizedBox(
@@ -172,11 +175,15 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                           },
                           activeColor: Theme.of(context).colorScheme.primary,
                           inactiveColor: Theme.of(context).colorScheme.primary),
-                      AutoSizeText(
+                      Text(
                         'ไม่',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        maxFontSize: 16,
-                        minFontSize: 14,
+                        style: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF484D56),
+                              )
+                            : Theme.of(context).textTheme.bodyLarge,
                       )
                     ],
                   )

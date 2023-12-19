@@ -66,7 +66,7 @@ TextTheme _textTheme(TextTheme base) => base.copyWith(
     titleMedium: base.titleMedium!.copyWith(
       //title widget
       fontFamily: "Noto Sans Thai",
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: FontWeight.w600,
       color: const Color(0xFF484D56),
     ),

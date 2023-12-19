@@ -1,5 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/ergonomic-data/ergonomic_model.dart';
 
 class ErgBoxresultWidget extends StatelessWidget {
@@ -13,11 +13,15 @@ class ErgBoxresultWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AutoSizeText(
+        Text(
           '${question.questionOrder}.${question.question}',
-          style: Theme.of(context).textTheme.bodyLarge,
-          maxFontSize: 16,
-          minFontSize: 14,
+          style: ResponsiveCheckWidget.isSmallMobile(context)
+              ? TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF484D56),
+                )
+              : Theme.of(context).textTheme.bodyLarge,
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -26,32 +30,48 @@ class ErgBoxresultWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AutoSizeText(
+              Text(
                 'คำแนะนำ :',
-                style: Theme.of(context).textTheme.bodySmall,
-                maxFontSize: 16,
-                minFontSize: 14,
+                style: ResponsiveCheckWidget.isSmallMobile(context)
+                    ? TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF3B67CD),
+                      )
+                    : Theme.of(context).textTheme.bodySmall,
               ),
-              AutoSizeText(
+              Text(
                 question.solution,
-                style: Theme.of(context).textTheme.bodyLarge,
-                maxFontSize: 16,
-                minFontSize: 14,
+                style: ResponsiveCheckWidget.isSmallMobile(context)
+                    ? TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF484D56),
+                      )
+                    : Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(
                 height: 8,
               ),
-              AutoSizeText(
+              Text(
                 'ป้องกัน :',
-                style: Theme.of(context).textTheme.bodySmall,
-                maxFontSize: 16,
-                minFontSize: 14,
+                style: ResponsiveCheckWidget.isSmallMobile(context)
+                    ? TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF3B67CD),
+                      )
+                    : Theme.of(context).textTheme.bodySmall,
               ),
-              AutoSizeText(
+              Text(
                 question.prevent,
-                style: Theme.of(context).textTheme.bodyLarge,
-                maxFontSize: 16,
-                minFontSize: 14,
+                style: ResponsiveCheckWidget.isSmallMobile(context)
+                    ? TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF484D56),
+                      )
+                    : Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),

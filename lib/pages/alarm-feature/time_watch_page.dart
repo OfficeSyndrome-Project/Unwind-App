@@ -2,11 +2,11 @@
 
 import 'dart:async';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/alarm-widget/alarm_btncircle_widget.dart';
-import 'package:unwind_app/Widgets/text_with_starticon_widget.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
@@ -213,59 +213,55 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
         ),
       ),
       children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            textIcon(
-                context,
-                timesObj.title,
-                const Color(0xFF636A75),
-                Icon(
-                  timesObj.iconData,
-                  color: Theme.of(context).colorScheme.primary,
-                )),
-            const SizedBox(
-              height: 24,
+        TextWithStartIconWidget(
+            startIcon: Icon(
+              timesObj.iconData,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            Text(
-              '${hours.toString().padLeft(2, '0')} : ${minutes.toString().padLeft(2, '0')} : ${seconds.toString().padLeft(2, '0')}',
-              style: const TextStyle(
-                color: Color(0xFF636A75),
-                fontSize: 56,
-                fontFamily: 'Noto Sans Thai',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            // buildSecondsTime(),
-            AutoSizeText(
-              'จาก ${timesObj.times} นาที',
-              style: const TextStyle(
-                color: Color(0xFFC3C8D2),
-                fontSize: 16,
-                fontFamily: 'Noto Sans Thai',
-                fontWeight: FontWeight.w400,
-              ),
-              minFontSize: 14,
-              maxLines: 1,
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            GestureDetector(
-                onTap: () {
-                  toggleTimer();
-                },
-                child: btnCircle(
-                  context,
-                  _stoptoggle == true ? "หยุด" : "เริ่ม",
-                  _stoptoggle == true
-                      ? const Color(0xFFC9635F)
-                      : const Color(0xFF40AD97),
-                )),
-          ],
+            topicName: timesObj.title,
+            style: TextStyle(
+              fontFamily: "Noto Sans Thai",
+              fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF636A75),
+            )),
+
+        const SizedBox(
+          height: 24,
         ),
+        Text(
+          '${hours.toString().padLeft(2, '0')} : ${minutes.toString().padLeft(2, '0')} : ${seconds.toString().padLeft(2, '0')}',
+          style: const TextStyle(
+            color: Color(0xFF636A75),
+            fontSize: 56,
+            fontFamily: 'Noto Sans Thai',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        // buildSecondsTime(),
+        Text(
+          'จาก ${timesObj.times} นาที',
+          style: TextStyle(
+            color: Color(0xFFC3C8D2),
+            fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+            fontFamily: 'Noto Sans Thai',
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+        GestureDetector(
+            onTap: () {
+              toggleTimer();
+            },
+            child: btnCircle(
+              context,
+              _stoptoggle == true ? "หยุด" : "เริ่ม",
+              _stoptoggle == true
+                  ? const Color(0xFFC9635F)
+                  : const Color(0xFF40AD97),
+            )),
       ],
     );
   }

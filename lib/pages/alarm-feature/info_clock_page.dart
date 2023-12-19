@@ -1,5 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class InfoErgonomicPage extends StatelessWidget {
@@ -27,30 +28,8 @@ class InfoErgonomicPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 24,
-            ),
-            SizedBox(
-              width: 250,
-              height: 250,
-              child: AspectRatio(
-                aspectRatio: 1 / 1,
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image:
-                          AssetImage('lib/assets/images/time-management.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
+            RatioImageoneToOne(
+                assetName: 'lib/assets/images/time-management.png'),
             Text(
               'หลักการทำงานของนาฬิกาจับเวลา',
               style: Theme.of(context).textTheme.titleMedium,
@@ -65,29 +44,45 @@ class InfoErgonomicPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AutoSizeText(
+                  Text(
                     '1. เลือกจำนวนเวลาที่ต้องการทำงาน',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    minFontSize: 14,
-                    maxLines: 16,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF636A75),
+                          )
+                        : Theme.of(context).textTheme.titleSmall,
                   ),
-                  AutoSizeText(
+                  Text(
                     '2. เลือกจำนวนเวลาที่ต้องการพัก',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    minFontSize: 14,
-                    maxLines: 16,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF636A75),
+                          )
+                        : Theme.of(context).textTheme.titleSmall,
                   ),
-                  AutoSizeText(
+                  Text(
                     '3. นาฬิกาจะแจ้งเตือนเมื่อครบเวลาที่กำหนดไว้',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    minFontSize: 14,
-                    maxLines: 16,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF636A75),
+                          )
+                        : Theme.of(context).textTheme.titleSmall,
                   ),
-                  AutoSizeText(
+                  Text(
                     '4. เมื่อพักเสร็จสิ้น สามารถเลือกได้ว่าต้องการทำงานต่อหรือไม่',
-                    style: Theme.of(context).textTheme.titleSmall,
-                    minFontSize: 14,
-                    maxLines: 16,
+                    style: ResponsiveCheckWidget.isSmallMobile(context)
+                        ? TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF636A75),
+                          )
+                        : Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
               ),

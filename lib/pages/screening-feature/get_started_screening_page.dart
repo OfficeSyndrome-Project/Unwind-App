@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/get_started_screening_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
@@ -24,6 +25,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
+        vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 16,
         iconButtonStart: (currentPage >= 1)
             ? IconButton(
                 onPressed: () {
@@ -47,8 +49,12 @@ class _ScreeningPageState extends State<ScreeningPage> {
         children: [
           Container(
             width: double.infinity,
-            height: 356,
-            margin: const EdgeInsets.only(bottom: 32),
+            height: ResponsiveCheckWidget.isSmallMobile(context) ? 350 : 356,
+            margin: EdgeInsets.only(
+                bottom: ResponsiveCheckWidget.isSmallMobile(context) == true
+                    ? 0
+                    : 32),
+            padding: EdgeInsets.zero,
             child: PageView(
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
@@ -103,17 +109,23 @@ class _ScreeningPageState extends State<ScreeningPage> {
               spacing: const EdgeInsets.all(4.0),
             ),
           ),
-          const SizedBox(
-            height: 32,
+          SizedBox(
+            height: ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 32,
           ),
           ButtonWithoutIconWidget(
               text: currentPage == 4 ? 'เริ่มประเมินอาการปวดของคุณ' : 'ถัดไป',
               radius: 32,
               width: 345,
-              height: 52,
+              height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
               color: Theme.of(context).colorScheme.primary,
               borderSide: BorderSide.none,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: ResponsiveCheckWidget.isSmallMobile(context)
+                  ? TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFFFFFFFF),
+                    )
+                  : Theme.of(context).textTheme.headlineSmall,
               onTap: () {
                 currentPage < 4
                     ? _controller.nextPage(
@@ -122,7 +134,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpagepartone()
+                            .introscreeningpage(0)
                             .route(context));
               }),
 

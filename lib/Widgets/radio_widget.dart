@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class AnimatedCustomRadio extends StatefulWidget {
   final bool value;
@@ -72,8 +73,9 @@ class _AnimatedCustomRadioState extends State<AnimatedCustomRadio>
         widget.onChanged?.call(widget.value);
       },
       child: Container(
-        width: 24.0,
-        height: 24.0,
+        width: ResponsiveCheckWidget.isSmallMobile(context) ? 20.0 : 24.0,
+        height: ResponsiveCheckWidget.isSmallMobile(context) ? 20.0 : 24.0,
+        alignment: Alignment.center,
         margin: const EdgeInsets.only(right: 4),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
@@ -86,8 +88,12 @@ class _AnimatedCustomRadioState extends State<AnimatedCustomRadio>
         child: widget.value == widget.groupValue
             ? Center(
                 child: Container(
-                  width: 15.0,
-                  height: 15.0,
+                  width: ResponsiveCheckWidget.isSmallMobile(context)
+                      ? 12.0
+                      : 15.0,
+                  height: ResponsiveCheckWidget.isSmallMobile(context)
+                      ? 12.0
+                      : 15.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _colorAnimation.value ??
