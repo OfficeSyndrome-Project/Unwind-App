@@ -24,10 +24,10 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
   @override
   Widget build(BuildContext context) {
     List<Widget> questionsWidgets =
-        ScreeningQuestionService.getAllQuestionPage()
+        ScreeningQuestionPartOneService.getAllQuestionPage()
             .map((questionPage) => ScreeningQuestionBoxWidget(
                   assetPath: questionPage.assetPath,
-                  questions: ScreeningQuestionService.getQuestionsByPage(
+                  questions: ScreeningQuestionPartOneService.getQuestionsByPage(
                       questionPage.questionPage),
                   currentPage: currentPage,
                   pageRoutes: pageRoutes,
