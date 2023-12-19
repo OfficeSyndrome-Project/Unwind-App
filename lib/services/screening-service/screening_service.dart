@@ -76,6 +76,31 @@ class ScreeningQuestionPartTwoService {
   static List<ScreeningPartTwoPostureModel> posture =
       ScreeningPartTwoPostureModel.getScreeningPartTwoPostureModel();
 
+  //get list of ScreeningPartTwoModel
+  static List<ScreeningPartTwoModel> getScreeningPartTwoModelByListOfParts(
+      List<String> parts) {
+    List<ScreeningPartTwoModel> result = [];
+    for (var part in parts) {
+      result.add(getScreeningPartTwoModelBySelectedPart(part));
+    }
+    return result;
+  }
+
+  //filter question by page
+  static List<ScreeningPartTwoQuestionModel> getQuestionsByPage(
+      List<ScreeningPartTwoQuestionModel> questions, int questionPage) {
+    return questions
+        .where((question) => question.questionPage == questionPage)
+        .toList();
+  }
+
+  static List<ScreeningPartTwoPostureModel> getPostureByPage(
+      List<ScreeningPartTwoPostureModel> questions, int questionPage) {
+    return questions
+        .where((posture) => posture.questionPage == questionPage)
+        .toList();
+  }
+
   //get object
   static ScreeningPartTwoModel getScreeningPartTwoModelBySelectedPart(
       String selectedPart) {
