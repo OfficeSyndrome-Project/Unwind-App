@@ -132,7 +132,7 @@ class EditProfileState extends State<EditProfile> {
                         Navigator.push(
                           context,
                           pageRoutes.profile
-                              .editpage(name: name)
+                              .profilepage(name: name)
                               .route(context),
                         );
                       });

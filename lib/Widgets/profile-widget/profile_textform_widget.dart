@@ -82,7 +82,7 @@ class ProfileTextFormState extends State<ProfileTextForm> {
         ),
         keyboardType: widget.inputType ?? TextInputType.text,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(bottom: 0, top: 0),
+            contentPadding: EdgeInsets.only(bottom: 0, top: 10),
             // errorText: errorTextShow.isEmpty ? null : errorTextShow,
             // errorStyle: TextStyle(
             //   fontSize: 12,

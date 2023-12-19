@@ -16,6 +16,9 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   PageRoutes pageRoutes = PageRoutes();
+  String Pname = 'กฤตศยา';
+  String PlastName = 'นทีมณฑล';
+
   @override
   Widget build(BuildContext context) {
     ProfileService.writeName("กฤตศยา");
@@ -71,9 +74,9 @@ class ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 16,
                     ),
-                    ShowInfomation(headDetails: 'ชื่อ', detail: 'ณัฐวดี'),
+                    ShowInfomation(headDetails: 'ชื่อ', detail: Pname),
                     SizedBox(height: 2),
-                    ShowInfomation(headDetails: 'นามสกุล', detail: 'ลี'),
+                    ShowInfomation(headDetails: 'นามสกุล', detail: PlastName),
                     SizedBox(height: 2),
                     ShowInfomation(headDetails: 'อายุ', detail: '21'),
                     SizedBox(height: 2),
