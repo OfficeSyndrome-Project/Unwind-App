@@ -102,6 +102,21 @@ flutter:
     - lib/assets/images/screeningPart/scr_part_three_2.png
     - lib/assets/images/screeningPart/scr_part_three_testpicture.png
     - lib/assets/images/blank_profile.png
+    - lib/assets/images/screeningPart/lower_back.png
+    - lib/assets/images/screeningPart/neck.png
+    - lib/assets/images/screeningPart/scapular.png
+    - lib/assets/images/screeningPart/shoulder.png
+    - lib/assets/images/screeningPart/ulnt_radial.png
+    - lib/assets/images/screeningPart/ulnt_ulnar.png
+    - lib/assets/images/screeningPart/ulnt1.png
+    - lib/assets/images/screeningPart/ulnt2.png
+    - lib/assets/images/screeningPart/upper_back.png
+    - lib/assets/images/screeningPart/back_plank.png
+    - lib/assets/images/screeningPart/back_turtle.png
+    - lib/assets/images/screeningPart/neck_bend_tilt.png
+    - lib/assets/images/screeningPart/neck_lean.png
+    - lib/assets/images/screeningPart/neck_turn_lr.png
+    - lib/assets/images/screeningPart/self_slumper.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
