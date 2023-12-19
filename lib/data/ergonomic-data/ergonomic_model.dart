@@ -28,7 +28,7 @@ class ErgonomicModel {
         solution:
             "คุณควรนั่งตัวตรง ไม่แอ่นหรือค่อมมากจนเกินไป ให้แผ่นหลังแนบชิดกับพนักพิง เพื่อให้น้ำหนักกระจายอย่างเหมาะสม ",
         prevent: "อาการปวดหลังส่วนล่าง",
-        imagepath: "lib/assets/images/w-1.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-1.png"));
     questions.add(ErgonomicModel(
         idCategory: 1,
         questionOrder: 2,
@@ -38,7 +38,7 @@ class ErgonomicModel {
         solution:
             "คุณควรนั่งให้ต้นขาของคุณขนานกับพื้น เพื่อให้น้ำหนักกระจายอย่างเหมาะสม",
         prevent: "อาการปวดบริเวณเชิงกราน",
-        imagepath: "lib/assets/images/w-2.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-2.png"));
     questions.add(ErgonomicModel(
         idCategory: 1,
         questionOrder: 3,
@@ -47,7 +47,7 @@ class ErgonomicModel {
         solution:
             "คุณควรวางเท้าราบกับพื้นในขณะนั่งหรือกรณีที่เก้าอี้สูงควรมีที่สำหรับพักเท้า",
         prevent: "การกดทับช่วงต้นขาและ เพิ่มการไหลเวียนเลือดส่วนล่างของร่างกาย",
-        imagepath: "lib/assets/images/w-3.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-3.png"));
     questions.add(ErgonomicModel(
         idCategory: 1,
         questionOrder: 4,
@@ -55,7 +55,7 @@ class ErgonomicModel {
         question: "มีช่องว่างระหว่างเบาะและหลังเข่าหรือไม่ ?",
         solution: "คุณควรนั่งให้ข้อพับเข่าชิดกับเบาะรองนั่ง ",
         prevent: "บาดเจ็บของเอ็นร้อยหวาย",
-        imagepath: "lib/assets/images/w-4.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-4.png"));
     questions.add(ErgonomicModel(
         idCategory: 1,
         questionOrder: 5,
@@ -63,7 +63,7 @@ class ErgonomicModel {
         question: "ไหล่ของคุณไม่โก่งหรือยกขึ้นขณะนั่งใช่หรือไม่ ?",
         solution: "ไหล่ของคุณไม่ควรยกขณะทำงาน เพื่อให้บริเวณหัวไหล่ได้ผ่อนคลาย",
         prevent: "อาการปวดหลังส่วนล่าง",
-        imagepath: "lib/assets/images/w-5.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-5.png"));
     questions.add(ErgonomicModel(
         idCategory: 2,
         questionOrder: 1,
@@ -73,7 +73,7 @@ class ErgonomicModel {
         solution:
             "คุณควรวางแป้นพิมพ์ เมาส์หรืออุปกรณ์อื่นๆที่ใช้งานด้วยมือให้อยู่ระดับเดียวข้อศอก เพื่อไม่ให้ไหล่/ข้อศอก/ข้อมือของคุณยกขึ้นขณะใช้งานอุปกรณ์เหล่านั้น",
         prevent: "อาการปวดตามจุดต่าง ๆ จากการเกร็งขณะทำงาน",
-        imagepath: "lib/assets/images/w-6.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-6.png"));
     questions.add(ErgonomicModel(
         idCategory: 2,
         questionOrder: 2,
@@ -81,7 +81,7 @@ class ErgonomicModel {
         question: "แขนของคุณวางขนานกับพื้นขณะพิมพ์ใช่หรือไม่ ?",
         solution: "คุณควรวางแขนบนขนานกับพื้น",
         prevent: "ข้อมืออักเสบ",
-        imagepath: "lib/assets/images/w-7.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-7.png"));
     questions.add(ErgonomicModel(
         idCategory: 2,
         questionOrder: 3,
@@ -89,7 +89,7 @@ class ErgonomicModel {
         question: "ข้อมือของคุณตั้งตรง (ไม่งอขึ้นหรือลง) ขณะพิมพ์ใช่หรือไม่ ?",
         solution: "คุณควรวางข้อมือให้ตั้งตรงไม่งอขึ้นหรือลง",
         prevent: "ข้อมืออักเสบ",
-        imagepath: "lib/assets/images/w-8.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-8.png"));
     questions.add(ErgonomicModel(
         idCategory: 2,
         questionOrder: 4,
@@ -98,7 +98,7 @@ class ErgonomicModel {
             "เมาส์ของคุณอยู่ในระดับเดียวกัน/ใกล้เคียงกันกับแป้นพิมพ์ ใช่หรือไม่ ?",
         solution: "ตำแหน่งของแป้นพิมพ์และเมาส์ ควรอยู่ในระดับเดียวกัน",
         prevent: "ข้อมืออักเสบ",
-        imagepath: "lib/assets/images/w-9.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-9.png"));
     questions.add(ErgonomicModel(
         idCategory: 2,
         questionOrder: 5,
@@ -107,7 +107,7 @@ class ErgonomicModel {
         solution:
             "คุณควรใช้หูฟัง หากต้องทำงานไปด้วยและใช้โทรศัพท์ร่วมด้วย การถือโทรศัพท์",
         prevent: "-",
-        imagepath: "lib/assets/images/w-10.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-10.png"));
     questions.add(ErgonomicModel(
         idCategory: 2,
         questionOrder: 6,
@@ -116,7 +116,7 @@ class ErgonomicModel {
         solution:
             "ควรใช้แป้นพิมพ์และเมาส์ขนาดfull-sized และหากต่อจอเพิ่มควรใช้ที่ตั้งเพื่อเพิ่มความสูงของจอให้พอดีกับระดับสายตา",
         prevent: "-",
-        imagepath: "lib/assets/images/w-11.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-11.png"));
     questions.add(ErgonomicModel(
         idCategory: 3,
         questionOrder: 1,
@@ -125,7 +125,7 @@ class ErgonomicModel {
         solution:
             "คุณควรวางหน้าจอให้อยู่ตรงหน้าของคุณพอดี เพื่อให้ศีรษะของคุณตั้งตรงให้ขณะทำงานไม่ยื่นหรือไม่เอียงไปด้านใดด้านหนึ่ง",
         prevent: "ปวดบริเวณคอ-บ่า",
-        imagepath: "lib/assets/images/w-12.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-12.png"));
     questions.add(ErgonomicModel(
         idCategory: 3,
         questionOrder: 2,
@@ -134,7 +134,7 @@ class ErgonomicModel {
         solution:
             "คุณควรวางหน้าจอห่างจากสายตาประมาณ 45 - 75 เซนติเมตร โดยจะมีความยาวเท่ากับหนึ่งช่วงแขนของคุณซึ่งมีความยาว 65 - 70 เซนติเมตร(ความยาวช่วงแขนของมนุษย์)",
         prevent: "อาการเมื่อยล้าและปวดตา",
-        imagepath: "lib/assets/images/w-13.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-13.png"));
     questions.add(ErgonomicModel(
         idCategory: 3,
         questionOrder: 3,
@@ -143,7 +143,7 @@ class ErgonomicModel {
         solution:
             "คุณควรวางหน้าจอให้พอดีหรืออยู่ต่ำกว่าระดับสายตาเล็กน้อย เพื่อให้สายตาขนานกับพื้นหากระดับความสูงของหน้าจอไม่เหมาะสมคุณอาจจะมีการยื่นคอไปด้านหน้าขณะทำงานแล้วทำให้มีอาการปวดบริเวณคอได้",
         prevent: "ปวดบริเวณคอ-บ่า",
-        imagepath: "lib/assets/images/w-14.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-14.png"));
     questions.add(ErgonomicModel(
         idCategory: 4,
         questionOrder: 1,
@@ -152,7 +152,7 @@ class ErgonomicModel {
         solution:
             "หากทำงานกับหน้าจอในสภาพแวดล้อมที่มีแสงสะท้อนและจอภาพมีความสว่างมากก็จะส่งผลเสียต่อดวงตา",
         prevent: "อาการปวดร้าวดวงตาและแสบตา",
-        imagepath: "lib/assets/images/w-15.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-15.png"));
     questions.add(ErgonomicModel(
         idCategory: 4,
         questionOrder: 2,
@@ -161,7 +161,7 @@ class ErgonomicModel {
         solution:
             "หากอ่านหรือเขียนในที่ที่แสงน้อย จะทำให้ทำให้กล้ามเนื้อรอบดวงตาและม่านตาทำงานหนักขึ้นได้ ดังนั้นจึงควรจัดแสงให้พอเหมาะกับการอ่านหรือเขียน",
         prevent: "อาการเมื่อยล้าและปวดตา",
-        imagepath: "lib/assets/images/w-16.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-16.png"));
     questions.add(ErgonomicModel(
         idCategory: 5,
         questionOrder: 1,
@@ -170,7 +170,7 @@ class ErgonomicModel {
         solution:
             "ควรหมั่นพักเบรค อย่างน้อยทุก 1 ชั่วโมงและยืดเส้นยืดสายระหว่างพัก เพื่อใช้งานกล้ามเนื้อ",
         prevent: "บาดเจ็บของกล้ามเนื้อ",
-        imagepath: "lib/assets/images/w-17.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-17.png"));
     questions.add(ErgonomicModel(
         idCategory: 5,
         questionOrder: 2,
@@ -179,7 +179,7 @@ class ErgonomicModel {
         solution:
             "แนะนำให้คุณละสายตาจากหน้าจอ หลังจากใช้หน้าจอไปประมาณ 20 นาที มองออกไปไกล ๆ เพื่อให้กล้ามเนื้อตาได้ผ่อยคลาย",
         prevent: "ปวดตา",
-        imagepath: "lib/assets/images/w-18.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-18.png"));
     questions.add(ErgonomicModel(
         idCategory: 6,
         questionOrder: 1,
@@ -188,7 +188,7 @@ class ErgonomicModel {
         solution:
             "ควรปรับให้อุปกรณ์ที่ใช้บ่อยมาอยู่บริเวณ Primary Zone หรืออยู่ในจุดที่แขนสามารถยืดออกไปโดยศอกยังวางอยู่ข้างตัวเพื่อลดการยืด เอนตัว ",
         prevent: "บาดเจ็บของกล้ามเนื้อ",
-        imagepath: "lib/assets/images/w-19.png"));
+        imagepath: "lib/assets/images/ergonomic-img/w-19.png"));
 
     return questions;
   }

@@ -5,6 +5,7 @@ import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
 import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
+import 'package:unwind_app/pages/screening-feature/question_after_part_two.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
@@ -37,6 +38,12 @@ class Screening {
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
   PathRoute screeningparttwoquestion() =>
       PathRoute(title: "", widget: const ScreeningPartTwoQuestion());
+  PathRoute questionafterscreeningparttwo(Map<int, bool> onSelectMap) =>
+      PathRoute(
+          title: "",
+          widget: QuestionAfterPartTwo(
+            onSelectMap: onSelectMap,
+          ));
 }
 
 class Home {

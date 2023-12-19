@@ -40,7 +40,8 @@ class MenuWidget extends StatelessWidget {
                     decoration: ShapeDecoration(
                       color: Colors.black,
                       image: const DecorationImage(
-                        image: AssetImage('lib/assets/images/ergonomic.jpg'),
+                        image: AssetImage(
+                            'lib/assets/images/ergonomic-img/ergonomic.jpg'),
                         fit: BoxFit.cover,
                       ),
                       shape: RoundedRectangleBorder(

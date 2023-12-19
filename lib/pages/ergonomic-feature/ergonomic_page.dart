@@ -28,7 +28,8 @@ class ErgonomicPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        RatioImageoneToOne(assetName: 'lib/assets/images/worker-ergonomic.png'),
+        RatioImageoneToOne(
+            assetName: 'lib/assets/images/ergonomic-img/worker-ergonomic.png'),
         const SizedBox(
           height: 32,
         ),
