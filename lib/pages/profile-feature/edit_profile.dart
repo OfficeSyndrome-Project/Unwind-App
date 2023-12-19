@@ -9,7 +9,8 @@ import '../../Routes/routes_config.dart';
 
 class EditProfile extends StatefulWidget {
   final String? name;
-  const EditProfile({Key? key, this.name}) : super(key: key);
+  final String? lastname;
+  const EditProfile({Key? key, this.name, this.lastname}) : super(key: key);
   // PageRoutes pageRoutes = PageRoutes();
 
   @override
@@ -19,7 +20,9 @@ class EditProfile extends StatefulWidget {
 class EditProfileState extends State<EditProfile> {
   PageRoutes pageRoutes = PageRoutes();
   final _editcontroller = TextEditingController();
+  final _lastnameController = TextEditingController();
   String name = "";
+  String lastname = "";
 
   @override
   void initState() {
@@ -29,9 +32,12 @@ class EditProfileState extends State<EditProfile> {
 
   void initName() async {
     final String storageName = await ProfileService.getName();
+    final String storageLastname = await ProfileService.getLastname();
     setState(() {
       name = storageName;
+      lastname = storageLastname;
       _editcontroller.text = name;
+      _lastnameController.text = lastname;
     });
   }
 
@@ -68,8 +74,9 @@ class EditProfileState extends State<EditProfile> {
                     formName: 'ชื่อ',
                   ),
                   const SizedBox(height: 16),
-                  const ProfileTextForm(
+                  ProfileTextForm(
                     formName: 'นามสกุล',
+                    controller: _lastnameController,
                   ),
                   const SizedBox(height: 16),
                   const ProfileTextForm(

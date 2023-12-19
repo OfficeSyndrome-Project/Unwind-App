@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:core';
+// import 'package:flutter/services.dart';
 
 class ProfileTextForm extends StatefulWidget {
   const ProfileTextForm({
@@ -21,6 +23,7 @@ class ProfileTextForm extends StatefulWidget {
 class ProfileTextFormState extends State<ProfileTextForm> {
   late final FocusNode _focusNode;
   late final TextEditingController _controller;
+  String errorTextShow = '';
 
   @override
   void initState() {
@@ -57,8 +60,18 @@ class ProfileTextFormState extends State<ProfileTextForm> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 46,
+      // height: 50,
       width: double.infinity,
       child: TextFormField(
+        onChanged: (value) {
+          setState(() {
+            if (value.contains(' ')) {
+              errorTextShow = 'ห้ามใช้ blank space';
+            } else {
+              errorTextShow = '';
+            }
+          });
+        },
         controller: _controller,
         focusNode: _focusNode,
         style: TextStyle(
@@ -69,32 +82,44 @@ class ProfileTextFormState extends State<ProfileTextForm> {
         ),
         keyboardType: widget.inputType ?? TextInputType.text,
         decoration: InputDecoration(
-          suffixText: widget.formUnit ?? ' ',
-          suffixStyle: const TextStyle(
-            color: Color(0xFF9BA4B5),
-            fontSize: 16,
-          ),
-          labelText: widget.formName,
-          labelStyle: const TextStyle(
-            color: Color(0xFF7F8795),
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            height: 0.09,
-          ),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
+            contentPadding: EdgeInsets.only(bottom: 0, top: 0),
+            // errorText: errorTextShow.isEmpty ? null : errorTextShow,
+            // errorStyle: TextStyle(
+            //   fontSize: 12,
+            //   fontWeight: FontWeight.w500,
+            // ),
+            suffixText: widget.formUnit ?? ' ',
+            suffixStyle: const TextStyle(
               color: Color(0xFF9BA4B5),
-              width: 1,
+              fontSize: 16,
             ),
-          ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xFF3B67CD),
-              width: 1,
+            labelText: widget.formName,
+            labelStyle: const TextStyle(
+              color: Color(0xFF7F8795),
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              height: 0.09,
             ),
-          ),
-          contentPadding: EdgeInsets.only(bottom: 0, top: 10),
-        ),
+            enabledBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Color(0xFF9BA4B5),
+                width: 1,
+              ),
+            ),
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Color(0xFF3B67CD),
+                width: 1,
+              ),
+            ),
+            errorBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.red,
+                width: 1,
+              ),
+            )
+            // contentPadding: EdgeInsets.only(bottom: 0, top: 10),
+            ),
       ),
     );
   }

@@ -19,6 +19,7 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     ProfileService.writeName("กฤตศยา");
+    ProfileService.writeLastname("นทีมณฑล");
     return AppscreenTheme(
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.start,
