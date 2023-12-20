@@ -23,7 +23,7 @@ class AfterBreakPage extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(top: 24, bottom: 48),
           child: Text(
-            'ตอนนี้คุณได้พักครบตามเวลาที่ได้ตั้งไว้\nคุณสนใจที่จะทำงานต่อหรือหยุดเพียงเท่านี้',
+            'ตอนนี้คุณได้พักครบตามเวลาที่ได้ตั้งไว้\nคุณสนใจที่จะหยุดการทำงานหรือทำงานต่อ',
             style: ResponsiveCheckWidget.isSmallMobile(context)
                 ? TextStyle(
                     fontSize: 14,

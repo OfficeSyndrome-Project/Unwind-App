@@ -4,7 +4,7 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 Widget getTextWidgets(BuildContext context) {
   List<Widget> list = [];
   for (var i = 0; i < 11; i++) {
-    list.add(new Text(
+    list.add(Text(
       i.toString(),
       style: TextStyle(
         color: Color(0xFFC3C8D2),
@@ -14,6 +14,5 @@ Widget getTextWidgets(BuildContext context) {
       ),
     ));
   }
-  return new Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: list);
+  return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: list);
 }
