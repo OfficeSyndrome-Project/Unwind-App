@@ -4,6 +4,7 @@ import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
+import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
@@ -77,8 +78,14 @@ class History {
 }
 
 class Profile {
-  PathRoute editpage() =>
-      PathRoute(title: "แก้ไขโปรไฟล์", widget: const EditProfile());
+  PathRoute editpage({String? name}) => PathRoute(
+        title: "แก้ไขโปรไฟล์",
+        widget: EditProfile(name: name),
+      );
+  PathRoute profilepage({String? name}) => PathRoute(
+        title: "โปรไฟล์",
+        widget: ProfilePage(),
+      );
 }
 
 class PathRoute {

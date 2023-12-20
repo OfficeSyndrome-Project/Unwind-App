@@ -5,6 +5,7 @@ import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/services/profile-service/profile_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,8 +16,13 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   PageRoutes pageRoutes = PageRoutes();
+  String Pname = 'กฤตศยา';
+  String PlastName = 'นทีมณฑล';
+
   @override
   Widget build(BuildContext context) {
+    ProfileService.writeName("กฤตศยา");
+    ProfileService.writeLastname("นทีมณฑล");
     return AppscreenTheme(
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -66,17 +72,25 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                     //////////////แสดงข้อมูล//////////
                     SizedBox(
-                      height: 8,
+                      height: 16,
                     ),
-                    ShowInfomation(headDetails: 'ชื่อ', detail: 'ณัฐวดี'),
+                    ShowInfomation(headDetails: 'ชื่อ', detail: Pname),
+                    SizedBox(height: 2),
+                    ShowInfomation(headDetails: 'นามสกุล', detail: PlastName),
+                    SizedBox(height: 2),
                     ShowInfomation(headDetails: 'อายุ', detail: '21'),
+                    SizedBox(height: 2),
                     ShowInfomation(headDetails: 'เพศ', detail: 'หญิง'),
+                    SizedBox(height: 2),
                     ShowInfomation(headDetails: 'น้ำหนัก', detail: '40 กก.'),
+                    SizedBox(height: 2),
                     ShowInfomation(headDetails: 'ส่วนสูง', detail: '160 ซม.'),
+                    SizedBox(height: 2),
                     ShowInfomation(
                         headDetails: 'อาชีพ', detail: 'นักเรียน/นักศึกษา'),
+                    SizedBox(height: 2),
                     ShowInfomation(
-                        headDetails: 'อีเมลล์', detail: 'test@gmail.com'),
+                        headDetails: 'การประสบอุบัติเหตุ', detail: 'ไม่เคย'),
                   ],
                 ),
               ),
@@ -87,7 +101,9 @@ class ProfilePageState extends State<ProfilePage> {
             child: TextButton(
               onPressed: () {
                 Navigator.push(
-                    context, pageRoutes.profile.editpage().route(context));
+                  context,
+                  pageRoutes.profile.editpage().route(context),
+                );
               },
               child: TextWithStartIconWidget(
                   startIcon: Icon(
