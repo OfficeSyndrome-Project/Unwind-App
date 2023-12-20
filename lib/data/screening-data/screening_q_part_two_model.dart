@@ -69,14 +69,14 @@ class ScreeningPartTwoQuestionModel {
                 topic: "ความบ่อย",
                 question:
                     "1. ท่านมีอาการปวดบริเวณดังกล่าวมากกว่า 1 ครั้งใน 1 วัน ?",
-                questionPage: 1,
+                questionPage: 0,
                 questionType: "a",
                 questionId: 1),
             ScreeningPartTwoQuestionModel(
                 topic: null,
                 question:
                     "2. อาการปวดของท่านไม่เปลี่ยนแปลง\nระดับความรุนแรงตามช่วงเวลาของวัน\nหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
-                questionPage: 1,
+                questionPage: 0,
                 questionType: "a",
                 questionId: 2),
             //type b (คำถาม 4 ข้อ)
@@ -84,28 +84,28 @@ class ScreeningPartTwoQuestionModel {
                 topic: "ความบ่อย",
                 question:
                     "1. ท่านมีอาการปวดบริเวณดังกล่าวมากกว่า 1 ครั้งใน 1 วัน ?",
-                questionPage: 1,
+                questionPage: 0,
                 questionType: "b",
                 questionId: 1),
             ScreeningPartTwoQuestionModel(
                 topic: null,
                 question:
                     "2. อาการปวดของท่านไม่เปลี่ยนแปลง\nระดับความรุนแรงตามช่วงเวลาของวัน\nหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
-                questionPage: 1,
+                questionPage: 0,
                 questionType: "b",
                 questionId: 2),
             ScreeningPartTwoQuestionModel(
                 topic: "อาการ/ความลึก",
                 question:
                     "3.ท่านมีอาการปวดลักษณะตื้อ ๆ ตึง ๆ ที่\nบริเวณดังกล่าวใช่หรือไม่ ?",
-                questionPage: 2,
+                questionPage: 1,
                 questionType: "b",
                 questionId: 3),
             ScreeningPartTwoQuestionModel(
                 topic: "อาการ/ความลึก",
                 question:
                     "4.อาการปวดของท่านมีลักษณะ\nใกล้เคียงกับข้อใดมากที่สุด ?",
-                questionPage: 3,
+                questionPage: 2,
                 questionType: "b",
                 questionId: 4),
           ];
@@ -143,7 +143,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/ulnt1.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 2,
+            questionPage: 1,
             questionType: "a",
             questionId: 3),
         ScreeningPartTwoPostureModel(
@@ -152,7 +152,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/ulnt2.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 3,
+            questionPage: 2,
             questionType: "a",
             questionId: 4),
         ScreeningPartTwoPostureModel(
@@ -161,7 +161,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/ulnt_ulnar.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 4,
+            questionPage: 3,
             questionType: "a",
             questionId: 5),
         ScreeningPartTwoPostureModel(
@@ -170,7 +170,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/ulnt_radial.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 5,
+            questionPage: 4,
             questionType: "a",
             questionId: 6),
         ScreeningPartTwoPostureModel(
@@ -179,7 +179,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/self_slumper.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 2,
+            questionPage: 1,
             questionType: "a",
             questionId: 3),
         ScreeningPartTwoPostureModel(
@@ -188,7 +188,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/self_slumper.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 2,
+            questionPage: 1,
             questionType: "a",
             questionId: 3),
       ];
