@@ -89,8 +89,8 @@ class ScreeningQuestionPartTwoService {
   //filter question by page
   static List<ScreeningPartTwoQuestionModel> getQuestionsByPage(
       List<ScreeningPartTwoQuestionModel> questions, int questionPage) {
-    print(
-        'object : ${questions.where((question) => question.questionPage == questionPage).toList()}');
+    // print(
+    //     'object : ${questions.where((question) => question.questionPage == questionPage).toList()}');
     return questions
         .where((question) => question.questionPage == questionPage)
         .toList();
