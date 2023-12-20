@@ -27,9 +27,6 @@ Widget TextWithEmoticonLabel(BuildContext context) {
         )
       ],
     ));
-    // if (i % 2 == 0 && i < 12) {
-    //   list.add(SizedBox(width: 16));
-    // }
   }
 
   return Row(
