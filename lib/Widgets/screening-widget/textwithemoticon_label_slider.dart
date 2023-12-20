@@ -7,7 +7,7 @@ Widget TextWithEmoticonLabel(BuildContext context) {
   List<Widget> list = [];
 
   for (var i = 0; i < scorelabel.length; i++) {
-    list.add(new Column(
+    list.add(Column(
       children: [
         Container(
           width: 25,
@@ -32,7 +32,7 @@ Widget TextWithEmoticonLabel(BuildContext context) {
     // }
   }
 
-  return new Row(
+  return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
