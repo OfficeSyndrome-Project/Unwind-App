@@ -3,11 +3,13 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/part_two_question_box_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/posture_widget.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 class QuestionAfterPartTwo extends StatefulWidget {
-  final Map<int, bool> onSelectMap;
+  final Map<String, bool> onSelectMap;
   const QuestionAfterPartTwo({super.key, required this.onSelectMap});
 
   @override
@@ -20,23 +22,44 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
+  late List<String> titleList;
+
   double oncurrentNRS = 0;
+  late List<MapEntry<String, bool>> typeList = widget.onSelectMap.entries
+      .where((element) => element.value == true)
+      .toList();
+  late ScreeningPartTwoModel servicePart =
+      ScreeningQuestionPartTwoService.getScreeningPartTwoModelBySelectedPart(
+          typeList.map((part) => part.key).first);
 
   @override
   Widget build(BuildContext context) {
-    print(widget.onSelectMap);
-    List<Widget> questionsWidgets =
-        ScreeningQuestionService.getAllQuestionPage()
-            .map((questionPage) => PartTwoQuestionBoxWidget(
-                  typePain: 'typePain',
-                  assetPath: questionPage.assetPath,
-                  questions: ScreeningQuestionService.getQuestionsByPage(
-                      questionPage.questionPage),
-                  currentPage: currentPage,
-                  pageRoutes: pageRoutes,
-                  controller: _controller,
-                ))
-            .toList();
+    print('servicePart : ${servicePart}');
+    print(
+        'servicePart.lenght : ${servicePart.questions.map((e) => e.questionPage).length}');
+    List<Widget> questionsWidgets = servicePart.questions
+        .map(
+          (data) => PartTwoQuestionBoxWidget(
+            typePain: servicePart.selectedPart.title,
+            assetPath: servicePart.selectedPart.assetPath,
+            questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
+                servicePart.questions, currentPage),
+            currentPage: currentPage,
+            pageRoutes: pageRoutes,
+            controller: _controller,
+            questionID: servicePart.questions.map((e) => e.questionId).toList(),
+          ),
+        )
+        .toList();
+    List<Widget> postureWidget = servicePart.postures
+        .map((data) => PostuerWidget(
+              questions: ScreeningQuestionPartTwoService.getPostureByPage(
+                  servicePart.postures, currentPage),
+              currentPage: currentPage,
+              pageRoutes: pageRoutes,
+              controller: _controller,
+            ))
+        .toList();
 
     return AppscreenTheme(
         colorBar: Colors.transparent,
@@ -65,10 +88,12 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                 onPageChanged: (value) {
                   setState(() {
                     currentPage = value;
+                    print('currentPage ${value}');
                   });
                 },
                 children: [
                   ...questionsWidgets,
+                  ...postureWidget,
                 ],
               ),
             ),
@@ -78,7 +103,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           ),
           ButtonWithoutIconWidget(
               onTap: () {
-                currentPage < questionsWidgets.length - 1
+                currentPage < servicePart.selectedPart.questionPage.length - 1
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeOut)

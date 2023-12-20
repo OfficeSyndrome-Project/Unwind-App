@@ -38,7 +38,7 @@ class Screening {
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
   PathRoute screeningparttwoquestion() =>
       PathRoute(title: "", widget: const ScreeningPartTwoQuestion());
-  PathRoute questionafterscreeningparttwo(Map<int, bool> onSelectMap) =>
+  PathRoute questionafterscreeningparttwo(Map<String, bool> onSelectMap) =>
       PathRoute(
           title: "",
           widget: QuestionAfterPartTwo(
