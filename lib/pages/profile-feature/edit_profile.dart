@@ -127,14 +127,12 @@ class EditProfileState extends State<EditProfile> {
                     onPressed: () {
                       setState(() {
                         name = _editcontroller.text;
-                        print(name);
-
-                        Navigator.push(
-                          context,
-                          pageRoutes.profile
-                              .profilepage(name: name)
-                              .route(context),
-                        );
+                        // print(name);
+                        Navigator.pop(context);
+                        // Navigator.push(
+                        //   context,
+                        //   pageRoutes.profile.profilepage().route(context),
+                        // );
                       });
                     },
                   ),
