@@ -29,12 +29,13 @@ class PageRoutes {
 }
 
 class Screening {
-  PathRoute introscreeningpagepartone() =>
-      PathRoute(title: "", widget: const IntroScreeningPartOne());
+  PathRoute introscreeningpage(int currentIndex) => PathRoute(
+      title: "",
+      widget: IntroScreeningPage(
+        currentIndex: currentIndex,
+      ));
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
-  PathRoute introscreeningpageparttwo() =>
-      PathRoute(title: "", widget: const IntroScreeningPartTwo());
   PathRoute screeningparttwoquestion() =>
       PathRoute(title: "", widget: const ScreeningPartTwoQuestion());
 }

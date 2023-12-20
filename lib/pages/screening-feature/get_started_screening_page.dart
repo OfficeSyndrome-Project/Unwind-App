@@ -134,7 +134,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpagepartone()
+                            .introscreeningpage(0)
                             .route(context));
               }),
 

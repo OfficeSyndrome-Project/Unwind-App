@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
@@ -18,23 +19,7 @@ class AfterBreakPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          width: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-          height: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-          child: AspectRatio(
-            aspectRatio: 1 / 1,
-            child: Container(
-              width: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-              height: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('lib/assets/images/working-rafiki.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-        ),
+        RatioImageoneToOne(assetName: 'lib/assets/images/working-rafiki.png'),
         Container(
           margin: EdgeInsets.only(top: 24, bottom: 48),
           child: Text(

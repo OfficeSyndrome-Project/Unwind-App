@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class ScreeningIntroToQuestionWidget extends StatelessWidget {
@@ -18,20 +19,7 @@ class ScreeningIntroToQuestionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-            width: 240,
-            height: 240,
-            child: AspectRatio(
-              aspectRatio: 1 / 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(assetPath),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            )),
+        RatioImageoneToOne(assetName: assetPath),
         const SizedBox(
           height: 32,
         ),

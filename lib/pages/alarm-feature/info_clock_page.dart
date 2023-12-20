@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
@@ -27,27 +28,8 @@ class InfoErgonomicPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-              height: ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-              margin: EdgeInsets.only(top: 24, bottom: 8),
-              child: AspectRatio(
-                aspectRatio: 1 / 1,
-                child: Container(
-                  width:
-                      ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-                  height:
-                      ResponsiveCheckWidget.isSmallMobile(context) ? 200 : 250,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image:
-                          AssetImage('lib/assets/images/time-management.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            RatioImageoneToOne(
+                assetName: 'lib/assets/images/time-management.png'),
             Text(
               'หลักการทำงานของนาฬิกาจับเวลา',
               style: Theme.of(context).textTheme.titleMedium,

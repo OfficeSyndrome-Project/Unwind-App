@@ -1,7 +1,9 @@
 import 'package:unwind_app/data/screening-data/screening_q_page.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 
-class ScreeningQuestionService {
+//screening part one
+class ScreeningQuestionPartOneService {
   static List<ScreeningPartOneModel> questions =
       ScreeningPartOneModel.getScreeningPartOneModel();
   static List<ScreeningQPage> pages = ScreeningQPage.getScreeningQPage();
@@ -25,7 +27,94 @@ class ScreeningQuestionService {
     // .toString();
     // print(result);
     return result;
+  }
+}
 
-    //get type of question
+///
+///  วิธีเล่น
+/// testServiceScreeningPartTwo();
+/// void testServiceScreeningPartTwo() {
+///   var selectedPart = "ไหล่";
+///   ScreeningPartTwoModel result = ScreeningQuestionPartTwoService.getScreeningPartTwoModelBySelectedPart(selectedPart);
+///   var selectPart = result.selectedPart;
+///   var postures = result.postures;
+///   var questions = result.questions;
+///
+///   print("---เลือกส่วนที่ต้องการตรวจ $selectedPart");
+///   print("assetPath: ${selectPart.assetPath}");
+///   print("questionPage: ${selectPart.questionPage}");
+///   print("questionType: ${selectPart.questionType}");
+///   print("title: ${selectPart.title}");
+///
+///   print("---มีคำถาม type a = ${questions.length} คำถาม");
+///   for(var question in questions) {
+///     print("  question: ${question.question}");
+///     print("  questionId: ${question.questionId}");
+///     print("  questionPage: ${question.questionPage}");
+///     print("  questionType: ${question.questionType}");
+///   }
+///
+///   print("---มีท่าเช็ค posture = ${postures.length} ท่า");
+///   for(var posture in postures) {
+///     print("  assetPath: ${posture.assetPath}");
+///     print("  postureName: ${posture.postureName}");
+///     print("  question: ${posture.question}");
+///     print("  questionId: ${posture.questionId}");
+///     print("  questionPage: ${posture.questionPage}");
+///     print("  questionType: ${posture.questionType}");
+///     print("  title: ${posture.title}");
+///   }
+//screening part two
+class ScreeningQuestionPartTwoService {
+  //all choice
+  static List<ScreeningPartTwoSelectPart> choices =
+      ScreeningPartTwoSelectPart.getTitleQPage();
+  //question data model
+  static List<ScreeningPartTwoQuestionModel> questions =
+      ScreeningPartTwoQuestionModel.getScreeningPartTwoQuestionModel();
+  //posture check data model
+  static List<ScreeningPartTwoPostureModel> posture =
+      ScreeningPartTwoPostureModel.getScreeningPartTwoPostureModel();
+
+  //get list of ScreeningPartTwoModel
+  static List<ScreeningPartTwoModel> getScreeningPartTwoModelByListOfParts(
+      List<String> parts) {
+    List<ScreeningPartTwoModel> result = [];
+    for (var part in parts) {
+      result.add(getScreeningPartTwoModelBySelectedPart(part));
+    }
+    return result;
+  }
+
+  //filter question by page
+  static List<ScreeningPartTwoQuestionModel> getQuestionsByPage(
+      List<ScreeningPartTwoQuestionModel> questions, int questionPage) {
+    return questions
+        .where((question) => question.questionPage == questionPage)
+        .toList();
+  }
+
+  static List<ScreeningPartTwoPostureModel> getPostureByPage(
+      List<ScreeningPartTwoPostureModel> questions, int questionPage) {
+    return questions
+        .where((posture) => posture.questionPage == questionPage)
+        .toList();
+  }
+
+  //get object
+  static ScreeningPartTwoModel getScreeningPartTwoModelBySelectedPart(
+      String selectedPart) {
+    ScreeningPartTwoSelectPart selectedChoice =
+        choices.where((choice) => choice.title == selectedPart).first;
+    var questions =
+        ScreeningPartTwoQuestionModel.getScreeningPartTwoQuestionModel()
+            .where((q) => q.questionType == selectedChoice.questionType)
+            .toList();
+    var postures =
+        ScreeningPartTwoPostureModel.getScreeningPartTwoPostureModel()
+            .where((p) => p.title == selectedChoice.title)
+            .toList();
+    return ScreeningPartTwoModel(
+        selectedPart: selectedChoice, questions: questions, postures: postures);
   }
 }
