@@ -9,9 +9,11 @@ import 'package:unwind_app/data/screening-data/typepain_screening.dart';
 =======
 >>>>>>> main
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_service.dart';
 // import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 //select point to check
+
 class ScreeningPartTwoQuestion extends StatefulWidget {
   const ScreeningPartTwoQuestion({super.key});
 
@@ -168,8 +170,8 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
             onTap: () {},
             text: "ถัดไป",
             radius: 32,
-            width: 345,
-            height: 52,
+            width: double.infinity,
+            height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
             color: Theme.of(context).colorScheme.primary,
             borderSide: BorderSide.none,
             style: Theme.of(context).textTheme.displayMedium,
