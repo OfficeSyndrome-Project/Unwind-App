@@ -4,11 +4,13 @@ class ScreeningPartTwoSelectPart {
   String assetPath;
   List<int> questionPage;
   String questionType;
+  int partOrder;
   ScreeningPartTwoSelectPart({
     required this.title,
     required this.assetPath,
     required this.questionPage,
     required this.questionType,
+    required this.partOrder,
   });
   static List<ScreeningPartTwoSelectPart> getTitleQPage() => [
         ScreeningPartTwoSelectPart(
@@ -16,30 +18,35 @@ class ScreeningPartTwoSelectPart {
           assetPath: 'lib/assets/images/screeningPart/neck.png',
           questionPage: [1, 2, 3, 4, 5],
           questionType: "a",
+          partOrder: 0,
         ),
         ScreeningPartTwoSelectPart(
           title: "บ่า",
           assetPath: 'lib/assets/images/screeningPart/scapular.png',
           questionPage: [1, 2, 3],
           questionType: "b",
+          partOrder: 1,
         ),
         ScreeningPartTwoSelectPart(
           title: "ไหล่",
           assetPath: 'lib/assets/images/screeningPart/shoulder.png',
           questionPage: [1, 2, 3],
           questionType: "b",
+          partOrder: 2,
         ),
         ScreeningPartTwoSelectPart(
           title: "หลังส่วนบน",
           assetPath: 'lib/assets/images/screeningPart/upper_back.png',
-          questionPage: [1, 2, 3],
+          questionPage: [1, 2],
           questionType: "a",
+          partOrder: 3,
         ),
         ScreeningPartTwoSelectPart(
           title: "หลังส่วนล่าง",
           assetPath: 'lib/assets/images/screeningPart/lower_back.png',
-          questionPage: [1, 2, 3],
+          questionPage: [1, 2],
           questionType: "a",
+          partOrder: 4,
         )
       ];
   @override
@@ -143,7 +150,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/ulnt1.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 1,
+            questionPage: 0,
             questionType: "a",
             questionId: 3),
         ScreeningPartTwoPostureModel(
@@ -152,7 +159,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/ulnt2.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 2,
+            questionPage: 1,
             questionType: "a",
             questionId: 4),
         ScreeningPartTwoPostureModel(
@@ -161,7 +168,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/ulnt_ulnar.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 3,
+            questionPage: 2,
             questionType: "a",
             questionId: 5),
         ScreeningPartTwoPostureModel(
@@ -170,7 +177,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/ulnt_radial.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 4,
+            questionPage: 3,
             questionType: "a",
             questionId: 6),
         ScreeningPartTwoPostureModel(
@@ -179,7 +186,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/self_slumper.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 1,
+            questionPage: 0,
             questionType: "a",
             questionId: 3),
         ScreeningPartTwoPostureModel(
@@ -188,7 +195,7 @@ class ScreeningPartTwoPostureModel {
             assetPath: "lib/assets/images/screeningPart/self_slumper.png",
             question:
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
-            questionPage: 1,
+            questionPage: 0,
             questionType: "a",
             questionId: 3),
       ];
@@ -212,5 +219,10 @@ class ScreeningPartTwoModel {
   @override
   String toString() {
     return "$selectedPart, $questions, $postures";
+  }
+
+  static void sortByPartOrder(List<ScreeningPartTwoModel> list) {
+    list.sort(
+        (a, b) => a.selectedPart.partOrder.compareTo(b.selectedPart.partOrder));
   }
 }
