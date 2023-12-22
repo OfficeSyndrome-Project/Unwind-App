@@ -31,7 +31,7 @@ class ErgBoxresultWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'คำแนะนำ :',
+                'คำแนะนำ',
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 14,
@@ -40,21 +40,44 @@ class ErgBoxresultWidget extends StatelessWidget {
                       )
                     : Theme.of(context).textTheme.bodySmall,
               ),
-              Text(
-                question.solution,
-                style: ResponsiveCheckWidget.isSmallMobile(context)
-                    ? TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF484D56),
-                      )
-                    : Theme.of(context).textTheme.bodyLarge,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      '\u2022',
+                      style: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF484D56),
+                            )
+                          : Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  Expanded(
+                      child: Container(
+                    child: Text(
+                      question.solution,
+                      style: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF484D56),
+                            )
+                          : Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ))
+                ],
               ),
               const SizedBox(
                 height: 8,
               ),
               Text(
-                'ป้องกัน :',
+                'ป้องกัน',
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 14,
@@ -63,15 +86,38 @@ class ErgBoxresultWidget extends StatelessWidget {
                       )
                     : Theme.of(context).textTheme.bodySmall,
               ),
-              Text(
-                question.prevent,
-                style: ResponsiveCheckWidget.isSmallMobile(context)
-                    ? TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xFF484D56),
-                      )
-                    : Theme.of(context).textTheme.bodyLarge,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      '\u2022',
+                      style: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF484D56),
+                            )
+                          : Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  Expanded(
+                      child: Container(
+                    child: Text(
+                      question.prevent,
+                      style: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF484D56),
+                            )
+                          : Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ))
+                ],
               ),
             ],
           ),

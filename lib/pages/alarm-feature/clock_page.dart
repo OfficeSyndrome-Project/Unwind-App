@@ -25,13 +25,15 @@ class ClockPage extends StatefulWidget {
 class _ClockPageState extends State<ClockPage> {
   //work
   bool _worktoggle = true;
-  List<WorkStates> workstates = [];
-  String currentWorkState = "15";
+  late List<WorkStates> workstates = [];
+  late String currentWorkState =
+      "${workstates.map((e) => e.worktimes).first.toString()}";
 
   //break
   bool _breaktoggle = true;
-  List<BreakStates> breakstates = [];
-  String currentBreakState = "15";
+  late List<BreakStates> breakstates = [];
+  late String currentBreakState =
+      "${breakstates.map((e) => e.breaktimes).first.toString()}";
   PageRoutes pageRoutes = PageRoutes();
 
   @override

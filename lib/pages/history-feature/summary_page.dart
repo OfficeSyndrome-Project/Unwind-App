@@ -17,7 +17,11 @@ class SummaryPage extends StatelessWidget {
 
   final PageRoutes pageRoutes = PageRoutes();
 
-  final List<String> nameWorkout = ['name 1', 'name 2', 'name 3'];
+  final List<String> nameWorkout = [
+    'ท่าหดคอ กดศีรษะ',
+    'ท่ามองรักแร้ กดศีรษะ',
+    'ท่าเงยหน้า เอนคอ'
+  ];
   //example data line chart
   static List<KeepScoreAndDateModel> keepscores =
       KeepScoreAndDateModel.getData();
