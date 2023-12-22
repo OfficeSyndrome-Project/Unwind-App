@@ -306,6 +306,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                       ],
                     )
                   : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
                           height: 8,
@@ -353,7 +356,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                                 inactiveColor:
                                     Theme.of(context).colorScheme.primary),
                             Text(
-                              'ไม่',
+                              'ไม่ใช่',
                               style:
                                   ResponsiveCheckWidget.isSmallMobile(context)
                                       ? TextStyle(

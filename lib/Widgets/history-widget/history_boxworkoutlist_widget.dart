@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
   HistoryWorkoutlistWidget({super.key});
 
   static List<ChartData> chartData = [ChartData(1, 10)];
+  static List<KeepScoreAndDateModel> keepscores =
+      KeepScoreAndDateModel.getData();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "name workout list",
+                keepscores.map((data) => data.name).first.toString(),
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 14,
@@ -45,7 +49,7 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
                     : Theme.of(context).textTheme.titleMedium,
               ),
               Text(
-                "date start and date end",
+                "วันที่ ${DateFormat("dd/MM/yy").format(keepscores.map((data) => data.dateTime).first)} ถึง ${DateFormat("dd/MM/yy").format(keepscores.map((data) => data.dateTime).last)}",
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 12,

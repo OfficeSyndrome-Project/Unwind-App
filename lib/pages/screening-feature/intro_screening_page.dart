@@ -48,12 +48,12 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ScreeningIntroToQuestionWidget(
-              assetPath: introArr[widget.currentIndex].assetPath,
-              titleLabel: introArr[widget.currentIndex].titleLabel,
-              descriptionLabel: introArr[widget.currentIndex].descriptionLabel),
-          const SizedBox(
-            height: 32,
+          Expanded(
+            child: ScreeningIntroToQuestionWidget(
+                assetPath: introArr[widget.currentIndex].assetPath,
+                titleLabel: introArr[widget.currentIndex].titleLabel,
+                descriptionLabel:
+                    introArr[widget.currentIndex].descriptionLabel),
           ),
           ButtonWithoutIconWidget(
               onTap: () {

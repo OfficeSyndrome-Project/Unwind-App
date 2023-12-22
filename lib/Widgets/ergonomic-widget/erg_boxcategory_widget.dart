@@ -19,7 +19,6 @@ class CategoryErgBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: ShapeDecoration(
           color: Colors.white,
           shape:
@@ -29,24 +28,36 @@ class CategoryErgBoxWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'ส่วนที่ $idCategory $type',
-            style: ResponsiveCheckWidget.isSmallMobile(context)
-                ? TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF484D56),
-                  )
-                : Theme.of(context).textTheme.titleMedium,
+          Container(
+            width: double.infinity,
+            decoration: ShapeDecoration(
+                color: Color(0xFF3B67CD),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8)))),
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(vertical: 6),
+            child: Text('ส่วนที่ $idCategory $type',
+                style: TextStyle(
+                  fontSize:
+                      ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center),
           ),
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: questions.length,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) =>
-                ErgBoxresultWidget(question: questions[index]),
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 8,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: questions.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) =>
+                  ErgBoxresultWidget(question: questions[index]),
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 8,
+              ),
             ),
           ),
         ],

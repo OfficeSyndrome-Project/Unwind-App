@@ -47,71 +47,81 @@ class _ScreeningPageState extends State<ScreeningPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            width: double.infinity,
-            height: ResponsiveCheckWidget.isSmallMobile(context) ? 350 : 356,
-            margin: EdgeInsets.only(
-                bottom: ResponsiveCheckWidget.isSmallMobile(context) == true
-                    ? 0
-                    : 32),
-            padding: EdgeInsets.zero,
-            child: PageView(
-              controller: _controller,
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              onPageChanged: (value) {
-                setState(() {
-                  currentPage = value;
-                });
-              },
-              children: const [
-                ScreeningBoxWidget(
-                    assetPath:
-                        'lib/assets/images/screeningPart/get_started_1.png',
-                    titleLabel: "ปวดเมื่อยจากการทำงานใช่ไหม ?",
-                    descriptionLabel:
-                        "หากการทำงานทำให้คุณรู้สึกปวดเมื่อยไม่สบายตัว\nส่งผลต่อสภาพจิตใจและร่างกายของคุณอยู่บ่อยครั้งให้ unwind ช่วยคุณ"),
-                ScreeningBoxWidget(
-                  assetPath:
-                      'lib/assets/images/screeningPart/get_started_2.png',
-                  titleLabel: "บรรเทาอาการเจ็บปวด",
-                  descriptionLabel:
-                      "บรรเทาอาการปวดเหล่านั้นกับ unwind\nด้วยวิธีการตรวจที่แม่นยำและให้ชุดท่าบริหารที่เหมาะสม\nซึ่งได้รับการยืนยันจากแพทย์ผู้เชี่ยวชาญ",
+          Expanded(
+              child: Column(
+            children: [
+              SizedBox(
+                height: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 32,
+              ),
+              Container(
+                width: double.infinity,
+                height:
+                    ResponsiveCheckWidget.isSmallMobile(context) ? 350 : 356,
+                margin: EdgeInsets.only(
+                    bottom: ResponsiveCheckWidget.isSmallMobile(context) == true
+                        ? 0
+                        : 32),
+                padding: EdgeInsets.zero,
+                child: PageView(
+                  controller: _controller,
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (value) {
+                    setState(() {
+                      currentPage = value;
+                    });
+                  },
+                  children: const [
+                    ScreeningBoxWidget(
+                        assetPath:
+                            'lib/assets/images/screeningPart/get_started_1.png',
+                        titleLabel: "ปวดเมื่อยจากการทำงานใช่ไหม ?",
+                        descriptionLabel:
+                            "หากการทำงานทำให้คุณรู้สึกปวดเมื่อยไม่สบายตัว\nส่งผลต่อสภาพจิตใจและร่างกายของคุณอยู่บ่อยครั้งให้ unwind ช่วยคุณ"),
+                    ScreeningBoxWidget(
+                      assetPath:
+                          'lib/assets/images/screeningPart/get_started_2.png',
+                      titleLabel: "บรรเทาอาการเจ็บปวด",
+                      descriptionLabel:
+                          "บรรเทาอาการปวดเหล่านั้นกับ unwind\nด้วยวิธีการตรวจที่แม่นยำและให้ชุดท่าบริหารที่เหมาะสม\nซึ่งได้รับการยืนยันจากแพทย์ผู้เชี่ยวชาญ",
+                    ),
+                    ScreeningBoxWidget(
+                        assetPath:
+                            'lib/assets/images/screeningPart/get_started_3.png',
+                        titleLabel: 'ติดตามผลอาการของคุณ',
+                        descriptionLabel:
+                            'unwind ติดตามผลอาการของคุณอย่างสม่ำเสมอ\nโดยคุณสามารถดูผลอาการของตนเองย้อนหลังได้'),
+                    ScreeningBoxWidget(
+                        assetPath:
+                            'lib/assets/images/screeningPart/get_started_4.png',
+                        titleLabel: 'ป้องกันอาการเจ็บปวด',
+                        descriptionLabel:
+                            'ป้องกันอาการเจ็บปวดจากการทำงานที่ต้นเหตุ\nunwind จะแนะนำการจัดสภาพแวดล้อมการทำงาน รวมถึงเวลาในการทำงานที่เหมาะให้กับคุณ'),
+                    ScreeningBoxWidget(
+                        assetPath:
+                            'lib/assets/images/screeningPart/get_started_1.png',
+                        titleLabel: 'ยินดีต้อนรับเข้าสู่ unwind ! ',
+                        descriptionLabel:
+                            'แอปพลิเคชันที่คุณสามารถรักษาอาการ\nออฟฟิศซินโดรมได้ด้วยตัวของคุณเอง '),
+                  ],
                 ),
-                ScreeningBoxWidget(
-                    assetPath:
-                        'lib/assets/images/screeningPart/get_started_3.png',
-                    titleLabel: 'ติดตามผลอาการของคุณ',
-                    descriptionLabel:
-                        'unwind ติดตามผลอาการของคุณอย่างสม่ำเสมอ\nโดยคุณสามารถดูผลอาการของตนเองย้อนหลังได้'),
-                ScreeningBoxWidget(
-                    assetPath:
-                        'lib/assets/images/screeningPart/get_started_4.png',
-                    titleLabel: 'ป้องกันอาการเจ็บปวด',
-                    descriptionLabel:
-                        'ป้องกันอาการเจ็บปวดจากการทำงานที่ต้นเหตุ\nunwind จะแนะนำการจัดสภาพแวดล้อมการทำงาน รวมถึงเวลาในการทำงานที่เหมาะให้กับคุณ'),
-                ScreeningBoxWidget(
-                    assetPath:
-                        'lib/assets/images/screeningPart/get_started_1.png',
-                    titleLabel: 'ยินดีต้อนรับเข้าสู่ unwind ! ',
-                    descriptionLabel:
-                        'แอปพลิเคชันที่คุณสามารถรักษาอาการ\nออฟฟิศซินโดรมได้ด้วยตัวของคุณเอง '),
-              ],
-            ),
-          ),
-          DotsIndicator(
-            dotsCount: 5,
-            position: currentPage.toDouble(),
-            decorator: DotsDecorator(
-              color: const Color(0xFFC3C8D2),
-              activeColor: Theme.of(context).colorScheme.primary,
-              size: const Size.square(8.0),
-              spacing: const EdgeInsets.all(4.0),
-            ),
-          ),
-          SizedBox(
-            height: ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 32,
-          ),
+              ),
+              DotsIndicator(
+                dotsCount: 5,
+                position: currentPage.toDouble(),
+                decorator: DotsDecorator(
+                  color: const Color(0xFFC3C8D2),
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  size: const Size.square(8.0),
+                  spacing: const EdgeInsets.all(4.0),
+                ),
+              ),
+            ],
+          )),
+
+          // SizedBox(
+          //   height: ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 32,
+          // ),
           ButtonWithoutIconWidget(
               text: currentPage == 4 ? 'เริ่มประเมินอาการปวดของคุณ' : 'ถัดไป',
               radius: 32,

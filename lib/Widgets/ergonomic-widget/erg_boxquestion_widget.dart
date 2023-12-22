@@ -58,7 +58,7 @@ class QuestionEegonomicWidget extends StatelessWidget {
             activeColor: Theme.of(context).colorScheme.primary,
             inactiveColor: Theme.of(context).colorScheme.primary),
         Text(
-          'ไม่',
+          'ไม่ใช่',
           style: ResponsiveCheckWidget.isSmallMobile(context)
               ? TextStyle(
                   fontSize: 14,

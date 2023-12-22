@@ -21,7 +21,7 @@ class ScreeningIntroToQuestionWidget extends StatelessWidget {
       children: [
         RatioImageoneToOne(assetName: assetPath),
         const SizedBox(
-          height: 32,
+          height: 64,
         ),
         Text(
           titleLabel,
