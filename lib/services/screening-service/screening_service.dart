@@ -1,5 +1,6 @@
 import 'package:unwind_app/data/screening-data/screening_q_page.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 
 //screening part one
@@ -118,5 +119,39 @@ class ScreeningQuestionPartTwoService {
             .toList();
     return ScreeningPartTwoModel(
         selectedPart: selectedChoice, questions: questions, postures: postures);
+  }
+}
+
+//screening part three
+class ScreeningPartThreeService {
+  //all choice
+  static List<ScreeningPartTwoSelectPart> choices =
+      ScreeningPartTwoSelectPart.getTitleQPage();
+  static List<ScreeningPartThreePostureModel> posture =
+      ScreeningPartThreePostureModel.getScreeningPartThreePostureModel();
+  static List<ScreeningPartThreeQuestionModel> question =
+      ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel();
+
+  //filter question by page
+  static List<ScreeningPartThreeQuestionModel> getQuestionsByPage(
+      List<ScreeningPartThreeQuestionModel> questions, int questionPage) {
+    return questions
+        .where((question) => question.questionPage == questionPage)
+        .toList();
+  }
+
+  //get object
+  static ScreeningPartThreeModel getScreeningPartThreeModelBySelectedPart(
+      String selectedPart) {
+    ScreeningPartTwoSelectPart selectedChoice =
+        choices.where((choice) => choice.title == selectedPart).first;
+
+    var postures =
+        ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
+            .where((q) => q.title == selectedChoice.title)
+            .toList();
+    var questions =
+        ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel();
+    return ScreeningPartThreeModel(questions: questions, postures: postures);
   }
 }
