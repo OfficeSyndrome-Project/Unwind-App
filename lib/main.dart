@@ -12,64 +12,32 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
   // testServiceScreeningPartTwo();
-  testServiceScreeningPartThree();
+  // testServiceScreeningPartThree();
   runApp(const MyApp());
 }
 
-void testServiceScreeningPartThree() {
-  var selectedPart = "หลังส่วนล่าง";
-  ScreeningPartThreeModel result = ScreeningQuestionPartThreeService
-      .getScreeningPartThreeModelBySelectedPart(selectedPart);
-  var posture = result.postures;
-  var question = result.questions;
-  print("---เลือกส่วนที่ต้องการตรวจ $selectedPart");
-  print("มีทั้งหมด : ${posture.length} ท่า");
-  for (var posture in posture) {
-    print("posture name : ${posture.postureName}");
-    print("   assetPath : ${posture.assetPath}");
-    print("  question: ${posture.question}");
-    print(" questionId: ${posture.questionId}");
-    print(" questionPage: ${posture.questionPage}");
-  }
-  print("--------------");
-  for (var question in question) {
-    // print("title: ${question.title}");
-    print("question : ${question.question}");
-    print("questionId : ${question.questionId}");
-    print("questionPage : ${question.questionPage}");
-  }
-}
-// void testServiceScreeningPartTwo() {
-//   var selectedPart = "ไหล่";
-//   ScreeningPartTwoModel result =
-//       ScreeningQuestionPartTwoService.getScreeningPartTwoModelBySelectedPart(
-//           selectedPart);
-//   var selectPart = result.selectedPart;
-//   var postures = result.postures;
-//   var questions = result.questions;
+//test service
+// void testServiceScreeningPartThree() {
+//   var selectedPart = "หลังส่วนล่าง";
+//   ScreeningPartThreeModel result = ScreeningQuestionPartThreeService
+//       .getScreeningPartThreeModelBySelectedPart(selectedPart);
+//   var posture = result.postures;
+//   var question = result.questions;
 //   print("---เลือกส่วนที่ต้องการตรวจ $selectedPart");
-//   print("assetPath: ${selectPart.assetPath}");
-//   print("questionPage: ${selectPart.questionPage}");
-//   print("questionType: ${selectPart.questionType}");
-//   print("title: ${selectPart.title}");
-
-//   print("---มีคำถาม type a = ${questions.length} คำถาม");
-//   for (var question in questions) {
-//     print("  question: ${question.question}");
-//     print("  questionId: ${question.questionId}");
-//     print("  questionPage: ${question.questionPage}");
-//     print("  questionType: ${question.questionType}");
-//   }
-
-//   print("---มีท่าเช็ค posture = ${postures.length} ท่า");
-//   for (var posture in postures) {
-//     print("  assetPath: ${posture.assetPath}");
-//     print("  postureName: ${posture.postureName}");
+//   print("มีทั้งหมด : ${posture.length} ท่า");
+//   for (var posture in posture) {
+//     print("posture name : ${posture.postureName}");
+//     print("   assetPath : ${posture.assetPath}");
 //     print("  question: ${posture.question}");
-//     print("  questionId: ${posture.questionId}");
-//     print("  questionPage: ${posture.questionPage}");
-//     print("  questionType: ${posture.questionType}");
-//     print("  title: ${posture.title}");
+//     print(" questionId: ${posture.questionId}");
+//     print(" questionPage: ${posture.questionPage}");
+//   }
+//   print("--------------");
+//   for (var question in question) {
+//     // print("title: ${question.title}");
+//     print("question : ${question.question}");
+//     print("questionId : ${question.questionId}");
+//     print("questionPage : ${question.questionPage}");
 //   }
 // }
 
