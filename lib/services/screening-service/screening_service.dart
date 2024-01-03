@@ -123,10 +123,10 @@ class ScreeningQuestionPartTwoService {
 }
 
 //screening part three
-class ScreeningPartThreeService {
-  //all choice
-  static List<ScreeningPartTwoSelectPart> choices =
-      ScreeningPartTwoSelectPart.getTitleQPage();
+class ScreeningQuestionPartThreeService {
+  // //all choice
+  // static List<ScreeningPartThreeSelectPart> choices =
+  //     ScreeningPartTwoSelectPart.getTitleQPage();
   static List<ScreeningPartThreePostureModel> posture =
       ScreeningPartThreePostureModel.getScreeningPartThreePostureModel();
   static List<ScreeningPartThreeQuestionModel> question =
@@ -143,15 +143,17 @@ class ScreeningPartThreeService {
   //get object
   static ScreeningPartThreeModel getScreeningPartThreeModelBySelectedPart(
       String selectedPart) {
-    ScreeningPartTwoSelectPart selectedChoice =
-        choices.where((choice) => choice.title == selectedPart).first;
+    ScreeningPartThreePostureModel selectedChoice =
+        posture.where((choice) => choice.title == selectedPart).first;
 
     var postures =
         ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
             .where((q) => q.title == selectedChoice.title)
             .toList();
     var questions =
-        ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel();
+        ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel()
+            .where((p) => p.questionType == selectedChoice.questionType)
+            .toList();
     return ScreeningPartThreeModel(questions: questions, postures: postures);
   }
 }
