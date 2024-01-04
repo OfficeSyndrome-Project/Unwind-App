@@ -132,6 +132,16 @@ class ScreeningQuestionPartThreeService {
   static List<ScreeningPartThreeQuestionModel> question =
       ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel();
 
+  //get list of ScreeningPartThreeModel
+  static List<ScreeningPartThreeModel> getScreeningPartThreeModelByListOfParts(
+      List<String> parts) {
+    List<ScreeningPartThreeModel> result = [];
+    for (var part in parts) {
+      result.add(getScreeningPartThreeModelBySelectedPart(part));
+    }
+    return result;
+  }
+
   //filter question by page
   static List<ScreeningPartThreeQuestionModel> getQuestionsByPage(
       List<ScreeningPartThreeQuestionModel> questions, int questionPage) {
