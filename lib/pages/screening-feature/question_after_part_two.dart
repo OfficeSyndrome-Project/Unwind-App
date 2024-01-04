@@ -22,8 +22,6 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
-  late List<String> titleList;
-
   double oncurrentNRS = 0;
   late List<MapEntry<String, bool>> typeList = widget.onSelectMap.entries
       .where((element) => element.value == true)
@@ -101,7 +99,6 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                 onPageChanged: (value) {
                   setState(() {
                     currentPage = value;
-                    print('currentPage ${value}');
                   });
                 },
                 children: [
@@ -122,7 +119,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(2)
+                            .introscreeningpage(2, typeList)
                             .route(context));
               },
               text: "ถัดไป",

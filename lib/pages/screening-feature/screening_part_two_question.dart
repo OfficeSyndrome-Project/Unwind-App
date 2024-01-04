@@ -35,7 +35,6 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
       } else {
         onSelectPart[titleType] = true;
       }
-      print(onSelectPart);
     });
   }
 

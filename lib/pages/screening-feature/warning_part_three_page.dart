@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class WarningPartThreePage extends StatelessWidget {
-  const WarningPartThreePage({Key? key}) : super(key: key);
+  final List<MapEntry<String, bool>> typeList;
+  WarningPartThreePage({super.key, required this.typeList});
+
+  final PageRoutes pageRoutes = PageRoutes();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +68,13 @@ class WarningPartThreePage extends StatelessWidget {
             ],
           )),
           ButtonWithoutIconWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    pageRoutes.screening
+                        .afterwarningpartthree(typeList)
+                        .route(context));
+              },
               text: 'ถัดไป',
               radius: 32,
               width: double.infinity,

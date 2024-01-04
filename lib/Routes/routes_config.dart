@@ -7,6 +7,7 @@ import 'package:unwind_app/pages/history-feature/summary_page.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/question_after_part_two.dart';
+import 'package:unwind_app/pages/screening-feature/question_after_warning_part_three.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/screening-feature/warning_part_three_page.dart';
@@ -32,11 +33,14 @@ class PageRoutes {
 }
 
 class Screening {
-  PathRoute introscreeningpage(int currentIndex) => PathRoute(
-      title: "",
-      widget: IntroScreeningPage(
-        currentIndex: currentIndex,
-      ));
+  PathRoute introscreeningpage(
+          int currentIndex, List<MapEntry<String, bool>> typeList) =>
+      PathRoute(
+          title: "",
+          widget: IntroScreeningPage(
+            currentIndex: currentIndex,
+            typeList: typeList,
+          ));
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
   PathRoute screeningparttwoquestion() =>
@@ -47,8 +51,18 @@ class Screening {
           widget: QuestionAfterPartTwo(
             onSelectMap: onSelectMap,
           ));
-  PathRoute warningpartthree() =>
-      PathRoute(title: "", widget: const WarningPartThreePage());
+  PathRoute warningpartthree(List<MapEntry<String, bool>> typeList) =>
+      PathRoute(
+          title: "",
+          widget: WarningPartThreePage(
+            typeList: typeList,
+          ));
+  PathRoute afterwarningpartthree(List<MapEntry<String, bool>> typeList) =>
+      PathRoute(
+          title: "",
+          widget: QuestionAfterWarningPartThree(
+            typeList: typeList,
+          ));
 }
 
 class Home {

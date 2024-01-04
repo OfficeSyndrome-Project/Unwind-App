@@ -11,7 +11,9 @@ import '../../Widgets/button_withouticon_widget.dart';
 //intro to part one
 class IntroScreeningPage extends StatefulWidget {
   final int currentIndex;
-  const IntroScreeningPage({super.key, required this.currentIndex});
+  final List<MapEntry<String, bool>> typeList;
+  const IntroScreeningPage(
+      {super.key, required this.currentIndex, required this.typeList});
   @override
   State<IntroScreeningPage> createState() => _IntroScreeningPartOneState();
 }
@@ -27,7 +29,9 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPage> {
     } else if (widget.currentIndex == 1) {
       return pageRoutes.screening.screeningparttwoquestion().route(context);
     } else if (widget.currentIndex == 2) {
-      return pageRoutes.screening.warningpartthree().route(context);
+      return pageRoutes.screening
+          .warningpartthree(widget.typeList)
+          .route(context);
     }
     return MaterialPageRoute<dynamic>(
       builder: (context) => LoadingPage(),

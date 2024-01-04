@@ -1,42 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
-import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
-import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:unwind_app/services/screening-service/screening_service.dart';
-import '../../Widgets/button_withouticon_widget.dart';
 
-class ScreeningPartOneQuestion extends StatefulWidget {
-  const ScreeningPartOneQuestion({super.key});
+import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+
+class QuestionAfterWarningPartThree extends StatefulWidget {
+  final List<MapEntry<String, bool>> typeList;
+  const QuestionAfterWarningPartThree({super.key, required this.typeList});
 
   @override
-  State<ScreeningPartOneQuestion> createState() =>
-      _ScreeningPartOneQuestionState();
+  State<QuestionAfterWarningPartThree> createState() =>
+      _QuestionAfterWarningPartThreeState();
 }
 
-class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
+class _QuestionAfterWarningPartThreeState
+    extends State<QuestionAfterWarningPartThree> {
   PageRoutes pageRoutes = PageRoutes();
-
   int currentPage = 0;
-
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
+  // late List<ScreeningPartThreeModel> archivePart = ScreeningQuestionPartThreeService.getScreeningPartThreeModelBySelectedPart(widget.typeList.map((e) => e.key).toString());
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> questionsWidgets =
-        ScreeningQuestionPartOneService.getAllQuestionPage()
-            .map((questionPage) => ScreeningQuestionBoxWidget(
-                  assetPath: questionPage.assetPath,
-                  questions: ScreeningQuestionPartOneService.getQuestionsByPage(
-                      questionPage.questionPage),
-                  currentPage: currentPage,
-                  pageRoutes: pageRoutes,
-                  controller: _controller,
-                ))
-            .toList();
+    print('selectPartInPartThree : ${widget.typeList}');
+
+    // print('archivePart : ${archivePart}');
 
     return AppscreenTheme(
+        colorBar: Colors.transparent,
         iconButtonStart: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
@@ -50,7 +44,6 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           padding: const EdgeInsets.all(0),
           color: Theme.of(context).colorScheme.primary,
         ),
-        colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -65,9 +58,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                     currentPage = value;
                   });
                 },
-                children: [
-                  ...questionsWidgets,
-                ],
+                children: [],
               ),
             ),
           ),
@@ -75,16 +66,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
             height: 16,
           ),
           ButtonWithoutIconWidget(
-              onTap: () {
-                currentPage < questionsWidgets.length - 1
-                    ? _controller.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut)
-                    : Navigator.push(
-                        context,
-                        pageRoutes.screening
-                            .introscreeningpage(1, []).route(context));
-              },
+              onTap: () {},
               text: "ถัดไป",
               radius: 32,
               width: double.infinity,
