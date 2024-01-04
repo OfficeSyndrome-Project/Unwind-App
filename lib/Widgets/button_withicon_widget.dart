@@ -13,31 +13,33 @@ class ButtonWithiconWidget extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final EdgeInsetsGeometry? padding;
   final Color? colorText;
+  final double? sizeIcon;
 
-  const ButtonWithiconWidget({
-    super.key,
-    required this.onTap,
-    required this.mainAxisAlignment,
-    this.padding,
-    required this.text,
-    this.colorText,
-    this.color,
-    this.shadows,
-    required this.radius,
-    required this.side,
-    this.icon,
-    this.iconcolor,
-  });
+  const ButtonWithiconWidget(
+      {super.key,
+      required this.onTap,
+      required this.mainAxisAlignment,
+      this.padding,
+      required this.text,
+      this.colorText,
+      this.color,
+      this.shadows,
+      required this.radius,
+      required this.side,
+      this.icon,
+      this.iconcolor,
+      this.sizeIcon});
 
   @override
   Widget build(BuildContext context) {
-    const defualtPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+    const defaultPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
+    const double? defaultSizeIcon = 24;
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: padding ?? defualtPadding,
+        padding: padding ?? defaultPadding,
         decoration: ShapeDecoration(
             shape: RoundedRectangleBorder(
                 side: side, borderRadius: BorderRadius.circular(radius)),
@@ -63,6 +65,7 @@ class ButtonWithiconWidget extends StatelessWidget {
                     Icon(
                       icon,
                       color: iconcolor,
+                      size: sizeIcon ?? defaultSizeIcon,
                     ),
                   ]
                 : <Widget>[

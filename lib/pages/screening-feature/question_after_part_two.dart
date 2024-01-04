@@ -28,27 +28,19 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
   late List<MapEntry<String, bool>> typeList = widget.onSelectMap.entries
       .where((element) => element.value == true)
       .toList();
-  // late ScreeningPartTwoModel servicePart =
-  //     ScreeningQuestionPartTwoService.getScreeningPartTwoModelBySelectedPart(
-  //         typeList.map((part) => part.key).first);
 
-  //new
   late List<ScreeningPartTwoModel> selectedParts =
       ScreeningQuestionPartTwoService.getScreeningPartTwoModelByListOfParts(
           typeList.map((part) => part.key).toList());
 
   @override
   Widget build(BuildContext context) {
-    // Planning questions widgets that should be presented on each pages, multiple parts
-
     List<Widget> questionsWidgets_ = [];
     int pageAmount = 0;
     ScreeningPartTwoModel.sortByPartOrder(selectedParts);
-    // print('selectedParts.length : ${selectedParts.length}');
-    // selectedParts.forEach((element) => print(element.selectedPart.partOrder));
+
     for (var part in selectedParts) {
       pageAmount += part.selectedPart.questionPage.length;
-      // Append each designated questions on the available pages
       var pageAmountOfQuestion =
           part.questions.map((e) => e.questionPage).toSet().length;
 
@@ -82,30 +74,6 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
         questionsWidgets_.add(postureWidget);
       }
     }
-    // List<Widget> questionsWidgets = servicePart.questions
-    //     .map(
-    //       (data) => PartTwoQuestionBoxWidget(
-    //         typePain: servicePart.selectedPart.title,
-    //         assetPath: servicePart.selectedPart.assetPath,
-    //         questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
-    //             servicePart.questions, currentPage),
-    //         currentPage: currentPage,
-    //         pageRoutes: pageRoutes,
-    //         controller: _controller,
-    //         questionID: servicePart.questions.map((e) => e.questionId).toList(),
-    //       ),
-    //     )
-    //     .toList();
-    // List<Widget> postureWidget = servicePart.postures
-    //     .map((data) => PostuerWidget(
-    //           questions: ScreeningQuestionPartTwoService.getPostureByPage(
-    //               servicePart.postures, currentPage),
-    //           currentPage: currentPage,
-    //           pageRoutes: pageRoutes,
-    //           controller: _controller,
-    //         ))
-    //     .toList();
-
     return AppscreenTheme(
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
@@ -137,9 +105,6 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                   });
                 },
                 children: [
-                  // ...questionsWidgetsTest,
-                  // ...questionsWidgets,
-                  // ...postureWidget,
                   ...questionsWidgets_,
                 ],
               ),
@@ -157,7 +122,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(1)
+                            .introscreeningpage(2)
                             .route(context));
               },
               text: "ถัดไป",
