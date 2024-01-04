@@ -142,11 +142,18 @@ class ScreeningQuestionPartThreeService {
     return result;
   }
 
-  //filter question by page
+  //filter posture,question by page
   static List<ScreeningPartThreeQuestionModel> getQuestionsByPage(
       List<ScreeningPartThreeQuestionModel> questions, int questionPage) {
     return questions
         .where((question) => question.questionPage == questionPage)
+        .toList();
+  }
+
+  static List<ScreeningPartThreePostureModel> getPostureByPage(
+      List<ScreeningPartThreePostureModel> postures, int questionPage) {
+    return postures
+        .where((posture) => posture.questionPage == questionPage)
         .toList();
   }
 
