@@ -133,8 +133,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                 width: 16,
               ),
               Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 4,
