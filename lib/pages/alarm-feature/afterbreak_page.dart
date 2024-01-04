@@ -19,7 +19,13 @@ class AfterBreakPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        RatioImageoneToOne(assetName: 'lib/assets/images/working-rafiki.png'),
+        RatioImageoneToOne(
+          assetName: 'lib/assets/images/working-rafiki.png',
+          smallWidth: 200,
+          largeWidth: 250,
+          smallHeight: 200,
+          largeHeight: 250,
+        ),
         Container(
           margin: EdgeInsets.only(top: 24, bottom: 48),
           child: Text(

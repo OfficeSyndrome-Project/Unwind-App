@@ -19,14 +19,10 @@ class ScreeningPartTwoQuestion extends StatefulWidget {
 }
 
 class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
-  // List<TypePainScreening> typelist = TypePainScreening.getData();
-
   List<ScreeningPartTwoSelectPart> typelist =
       ScreeningPartTwoSelectPart.getTitleQPage();
 
   PageRoutes pageRoutes = PageRoutes();
-  // late List<bool> onCurrentSelect =
-  //     List.generate(typelist.length, (index) => false);
   late Map<String, bool> onSelectPart = {};
   ScreeningQuestionPartTwoService serviceModel =
       ScreeningQuestionPartTwoService();

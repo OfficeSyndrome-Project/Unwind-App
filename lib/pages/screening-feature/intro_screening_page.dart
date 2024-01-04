@@ -26,6 +26,8 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPage> {
       return pageRoutes.screening.screeningpartonequestion().route(context);
     } else if (widget.currentIndex == 1) {
       return pageRoutes.screening.screeningparttwoquestion().route(context);
+    } else if (widget.currentIndex == 2) {
+      return pageRoutes.screening.warningpartthree().route(context);
     }
     return MaterialPageRoute<dynamic>(
       builder: (context) => LoadingPage(),

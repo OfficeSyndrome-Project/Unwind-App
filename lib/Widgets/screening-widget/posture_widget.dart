@@ -115,7 +115,13 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
             ),
           ),
         ),
-        RatioImageoneToOne(assetName: widget.assetName),
+        RatioImageoneToOne(
+          assetName: widget.assetName,
+          smallWidth: 200,
+          largeWidth: 250,
+          smallHeight: 200,
+          largeHeight: 250,
+        ),
         Container(
           margin: EdgeInsets.only(top: 32, bottom: 4),
           child: Text(

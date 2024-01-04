@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/history-widget/score_average_widget.dart';
+import 'package:unwind_app/Widgets/history-widget/score_chart_widget.dart';
+
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/data/history-data/week_score_mockup.dart';
 
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 import '../../data/history-data/keep_score_and_date_model.dart';
 import '../../data/history-data/summary_list_obj.dart';
@@ -25,6 +29,8 @@ class SummaryPage extends StatelessWidget {
   //example data line chart
   static List<KeepScoreAndDateModel> keepscores =
       KeepScoreAndDateModel.getData();
+
+  static List<WeekScoreMockup> weekscoremockup = WeekScoreMockup.getData();
 
   static List<List<KeepScoreAndDateModel>> divideListIntoWeeks(
       List<KeepScoreAndDateModel> data) {
@@ -54,7 +60,6 @@ class SummaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double? boxHeight = weeklyChunks.length + 0;
-    initializeDateFormatting('th');
 
     return AppscreenTheme(
         textBar: pageRoutes.history.summarypage().title,
@@ -173,6 +178,38 @@ class SummaryPage extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 8,
+                ),
+                ScoreChartWidget(
+                  height: 150,
+                  series: <ChartSeries<WeekScoreMockup, int>>[
+                    LineSeries(
+                      legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
+                      legendIconType: LegendIconType.rectangle,
+                      color: Color(0xFFb1c2eb),
+                      markerSettings: const MarkerSettings(
+                        isVisible: true,
+                        height: 6,
+                        width: 6,
+                      ),
+                      animationDuration: 0,
+                      dataSource: weekscoremockup,
+                      xValueMapper: (WeekScoreMockup score, _) => score.week,
+                      yValueMapper: (WeekScoreMockup score, _) =>
+                          score.beforeScore,
+                    ),
+                    LineSeries(
+                      legendItemText: 'ค่าความเจ็บปวด (หลัง)',
+                      legendIconType: LegendIconType.rectangle,
+                      color: Theme.of(context).colorScheme.primary,
+                      animationDuration: 0,
+                      markerSettings: const MarkerSettings(
+                          isVisible: true, height: 6, width: 6),
+                      dataSource: weekscoremockup,
+                      xValueMapper: (WeekScoreMockup score, _) => score.week,
+                      yValueMapper: (WeekScoreMockup score, _) =>
+                          score.afterScore,
+                    ),
+                  ],
                 ),
                 Container(
                   width: double.infinity,

@@ -24,6 +24,7 @@ class TextWithStartIconWidget extends StatelessWidget {
         Text(
           topicName,
           style: style,
+          textAlign: TextAlign.center,
         ),
       ],
     );
