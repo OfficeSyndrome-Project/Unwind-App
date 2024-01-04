@@ -29,13 +29,18 @@ class InfoErgonomicPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             RatioImageoneToOne(
-                assetName: 'lib/assets/images/time-management.png'),
-            Text(
-              'หลักการทำงานของนาฬิกาจับเวลา',
-              style: Theme.of(context).textTheme.titleMedium,
+              assetName: 'lib/assets/images/time-management.png',
+              smallWidth: 200,
+              largeWidth: 250,
+              smallHeight: 200,
+              largeHeight: 250,
             ),
-            const SizedBox(
-              height: 8,
+            Container(
+              margin: EdgeInsets.only(top: 8, bottom: 8),
+              child: Text(
+                'หลักการทำงานของนาฬิกาจับเวลา',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
             SizedBox(
               width: double.infinity,

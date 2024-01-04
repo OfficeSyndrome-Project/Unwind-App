@@ -55,10 +55,14 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
                     )
                   : Theme.of(context).textTheme.bodySmall),
           Container(
-            width: 120,
-            height: 150,
             margin: EdgeInsets.only(bottom: 16),
-            child: RatioImageoneToOne(assetName: widget.assetPath!),
+            child: RatioImageoneToOne(
+              assetName: widget.assetPath!,
+              smallWidth: 120,
+              largeWidth: 150,
+              smallHeight: 120,
+              largeHeight: 150,
+            ),
           ),
           Container(
             width: double.infinity,

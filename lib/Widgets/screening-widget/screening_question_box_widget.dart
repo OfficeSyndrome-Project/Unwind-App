@@ -42,7 +42,13 @@ class _ScreeningQuestionBoxWidgetState
         mainAxisSize: MainAxisSize.min,
         children: [
           if (widget.assetPath != null) // Check if assetPath is not null
-            RatioImageoneToOne(assetName: widget.assetPath!),
+            RatioImageoneToOne(
+              assetName: widget.assetPath!,
+              smallWidth: 200,
+              largeWidth: 250,
+              smallHeight: 200,
+              largeHeight: 250,
+            ),
           Container(
               width: double.infinity,
               constraints: BoxConstraints(
