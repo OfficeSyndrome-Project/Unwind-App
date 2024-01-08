@@ -23,7 +23,7 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
       ScreeningPartTwoSelectPart.getTitleQPage();
 
   PageRoutes pageRoutes = PageRoutes();
-  late Map<String, bool> onSelectPart = {};
+  final Map<String, bool> onSelectPart = {};
   ScreeningQuestionPartTwoService serviceModel =
       ScreeningQuestionPartTwoService();
 
@@ -49,6 +49,12 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         disable = value;
       }
     });
+  }
+
+  @override
+  void dispose() {
+    onSelectPart.clear();
+    super.dispose();
   }
 
   @override
@@ -81,6 +87,8 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         ),
         Expanded(
           child: ListView.separated(
+              clipBehavior: Clip.antiAlias,
+              padding: EdgeInsets.all(2),
               physics: ResponsiveCheckWidget.isSmallMobile(context)
                   ? ClampingScrollPhysics()
                   : NeverScrollableScrollPhysics(),
@@ -100,6 +108,9 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                     height: 8,
                   ),
               itemCount: typelist.length),
+        ),
+        SizedBox(
+          height: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 0,
         ),
         ButtonWithoutIconWidget(
             onTap: () {

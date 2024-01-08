@@ -47,8 +47,11 @@ class AppscreenTheme extends StatelessWidget {
             Expanded(
               child: Container(
                 color: Colors.transparent,
-                padding: EdgeInsets.symmetric(
-                    horizontal: 24, vertical: vertical ?? defaultVertical),
+                padding: EdgeInsets.only(
+                    left: 24,
+                    right: 24,
+                    top: vertical ?? defaultVertical,
+                    bottom: 16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: mainAxisAlignment,

@@ -1,3 +1,4 @@
 {
-    "bracketLens.debug": true
+    "bracketLens.debug": true,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
