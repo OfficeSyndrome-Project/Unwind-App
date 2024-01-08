@@ -3,11 +3,12 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class WarningPartThreePage extends StatelessWidget {
-  final List<MapEntry<String, bool>> typeList;
-  WarningPartThreePage({super.key, required this.typeList});
+  final List<ScreeningPartTwoModel> selectPart;
+  WarningPartThreePage({super.key, required this.selectPart});
 
   final PageRoutes pageRoutes = PageRoutes();
 
@@ -16,12 +17,11 @@ class WarningPartThreePage extends StatelessWidget {
     return AppscreenTheme(
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
+          highlightColor: Colors.transparent,
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             Navigator.pop(context);
           },
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(0),
           color: Theme.of(context).colorScheme.primary,
         ),
         mainAxisAlignment: MainAxisAlignment.start,
@@ -33,6 +33,9 @@ class WarningPartThreePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
+              SizedBox(
+                height: 32,
+              ),
               RatioImageoneToOne(
                 assetName:
                     'lib/assets/images/screeningPart/scr_part_three_2.png',
@@ -72,7 +75,7 @@ class WarningPartThreePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     pageRoutes.screening
-                        .afterwarningpartthree(typeList)
+                        .afterwarningpartthree(selectPart)
                         .route(context));
               },
               text: 'ถัดไป',

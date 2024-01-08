@@ -19,6 +19,9 @@ class ScreeningIntroToQuestionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
+        SizedBox(
+          height: 32,
+        ),
         RatioImageoneToOne(
           assetName: assetPath,
           smallWidth: 200,

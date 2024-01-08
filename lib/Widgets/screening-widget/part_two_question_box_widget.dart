@@ -46,22 +46,23 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(widget.typePain,
-              style: ResponsiveCheckWidget.isSmallMobile(context)
-                  ? TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF3B67CD),
-                    )
-                  : Theme.of(context).textTheme.bodySmall),
+          Text(
+            widget.typePain,
+            style: TextStyle(
+              fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF3B67CD),
+            ),
+            textAlign: TextAlign.center,
+          ),
           Container(
-            margin: EdgeInsets.only(bottom: 16),
+            margin: EdgeInsets.only(top: 16, bottom: 16),
             child: RatioImageoneToOne(
               assetName: widget.assetPath!,
               smallWidth: 120,
-              largeWidth: 150,
+              largeWidth: 140,
               smallHeight: 120,
-              largeHeight: 150,
+              largeHeight: 140,
             ),
           ),
           Container(

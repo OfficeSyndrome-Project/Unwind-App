@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
+import 'package:unwind_app/pages/screening-feature/form_after_screening.dart';
 import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/question_after_part_two.dart';
 import 'package:unwind_app/pages/screening-feature/question_after_warning_part_three.dart';
@@ -34,12 +36,12 @@ class PageRoutes {
 
 class Screening {
   PathRoute introscreeningpage(
-          int currentIndex, List<MapEntry<String, bool>> typeList) =>
+          int currentIndex, List<ScreeningPartTwoModel> selectPart) =>
       PathRoute(
           title: "",
           widget: IntroScreeningPage(
             currentIndex: currentIndex,
-            typeList: typeList,
+            selectPart: selectPart,
           ));
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
@@ -51,18 +53,20 @@ class Screening {
           widget: QuestionAfterPartTwo(
             onSelectMap: onSelectMap,
           ));
-  PathRoute warningpartthree(List<MapEntry<String, bool>> typeList) =>
+  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart) =>
       PathRoute(
           title: "",
           widget: WarningPartThreePage(
-            typeList: typeList,
+            selectPart: selectPart,
           ));
-  PathRoute afterwarningpartthree(List<MapEntry<String, bool>> typeList) =>
+  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart) =>
       PathRoute(
           title: "",
           widget: QuestionAfterWarningPartThree(
-            typeList: typeList,
+            selectPart: selectPart,
           ));
+  PathRoute formafterscreening() =>
+      PathRoute(title: "", widget: FormAfterScreening());
 }
 
 class Home {

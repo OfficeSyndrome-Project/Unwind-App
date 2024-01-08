@@ -27,13 +27,26 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
   ScreeningQuestionPartTwoService serviceModel =
       ScreeningQuestionPartTwoService();
 
+  bool disable = true;
+
   void selectContainer(int index) {
+    String titleType = typelist[index].title;
     setState(() {
-      String titleType = typelist[index].title;
       if (onSelectPart.containsKey(titleType)) {
         onSelectPart[titleType] = !onSelectPart[titleType]!;
       } else {
         onSelectPart[titleType] = true;
+      }
+      setDisable(false);
+    });
+  }
+
+  void setDisable(bool value) {
+    setState(() {
+      if (onSelectPart.values.every((element) => !element)) {
+        disable = !value;
+      } else {
+        disable = value;
       }
     });
   }
@@ -42,12 +55,11 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
   Widget build(BuildContext context) {
     return AppscreenTheme(
       iconButtonStart: IconButton(
+        highlightColor: Colors.transparent,
         icon: const Icon(Icons.arrow_back_ios_rounded),
         onPressed: () {
           Navigator.pop(context);
         },
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.all(0),
         color: Theme.of(context).colorScheme.primary,
       ),
       colorBar: Colors.transparent,
@@ -80,7 +92,6 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                   isSelect: onSelectPart.containsKey(typelist[index].title)
                       ? onSelectPart[typelist[index].title]!
                       : false,
-                  // isSelect: false,
                   assetName: typelist[index].assetPath,
                   typePain: typelist[index].title,
                 );
@@ -92,17 +103,21 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         ),
         ButtonWithoutIconWidget(
             onTap: () {
-              Navigator.push(
-                  context,
-                  pageRoutes.screening
-                      .questionafterscreeningparttwo(onSelectPart)
-                      .route(context));
+              if (!disable) {
+                Navigator.push(
+                    context,
+                    pageRoutes.screening
+                        .questionafterscreeningparttwo(onSelectPart)
+                        .route(context));
+              }
             },
             text: 'ถัดไป',
             radius: 32,
             width: double.infinity,
             height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-            color: Theme.of(context).colorScheme.primary,
+            color: !disable
+                ? Theme.of(context).colorScheme.primary
+                : const Color(0xFF9BA4B5),
             borderSide: BorderSide.none,
             style: ResponsiveCheckWidget.isSmallMobile(context)
                 ? TextStyle(

@@ -72,9 +72,11 @@ class _GeneralAnimatedCustomRadioState extends State<GeneralAnimatedCustomRadio>
       onTap: () {
         widget.onChanged?.call(widget.value);
       },
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       child: Container(
-        width: 24.0,
-        height: 24.0,
+        width: 22.0,
+        height: 22.0,
         margin: const EdgeInsets.only(right: 4),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
@@ -87,8 +89,8 @@ class _GeneralAnimatedCustomRadioState extends State<GeneralAnimatedCustomRadio>
         child: widget.value == widget.groupValue
             ? Center(
                 child: Container(
-                  width: 15.0,
-                  height: 15.0,
+                  width: 12.0,
+                  height: 12.0,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _colorAnimation.value ??

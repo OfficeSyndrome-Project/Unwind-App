@@ -132,10 +132,13 @@ class ScreeningQuestionPartThreeService {
   static List<ScreeningPartThreeQuestionModel> question =
       ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel();
 
+  static List<String> getAllPartTitle =
+      posture.map((part) => part.title).toSet().toList();
   //get list of ScreeningPartThreeModel
   static List<ScreeningPartThreeModel> getScreeningPartThreeModelByListOfParts(
       List<String> parts) {
     List<ScreeningPartThreeModel> result = [];
+
     for (var part in parts) {
       result.add(getScreeningPartThreeModelBySelectedPart(part));
     }
@@ -163,6 +166,7 @@ class ScreeningQuestionPartThreeService {
     ScreeningPartThreePostureModel selectedChoice =
         posture.where((choice) => choice.title == selectedPart).first;
 
+    print('selectedPart : ${selectedPart}');
     var postures =
         ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
             .where((q) => q.title == selectedChoice.title)

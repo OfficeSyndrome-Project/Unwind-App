@@ -181,7 +181,7 @@ class SummaryPage extends StatelessWidget {
                 ),
                 ScoreChartWidget(
                   height: 150,
-                  series: <ChartSeries<WeekScoreMockup, int>>[
+                  series: <LineSeries<WeekScoreMockup, int>>[
                     LineSeries(
                       legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
                       legendIconType: LegendIconType.rectangle,

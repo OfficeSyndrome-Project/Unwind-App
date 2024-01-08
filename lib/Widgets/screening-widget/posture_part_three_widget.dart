@@ -40,12 +40,12 @@ class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
+              margin: EdgeInsets.only(top: 32),
               width: double.infinity,
               constraints: BoxConstraints(
                   maxHeight: ResponsiveCheckWidget.isSmallMobile(context)
                       ? MediaQuery.of(context).size.height * 0.7
                       : MediaQuery.of(context).size.height), //70 % screen size
-
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   bool isOverFlow = constraints.maxHeight <
@@ -100,7 +100,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
@@ -109,7 +109,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
             widget.posture,
             style: TextStyle(
               fontFamily: "Noto Sans Thai",
-              fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+              fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
               fontWeight: FontWeight.w600,
               color: const Color(0xFF3B67CD),
             ),
@@ -118,9 +118,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
         RatioImageoneToOne(
           assetName: widget.assetName,
           smallWidth: 200,
-          largeWidth: 250,
+          largeWidth: 280,
           smallHeight: 200,
-          largeHeight: 250,
+          largeHeight: 280,
         ),
         Container(
           margin: EdgeInsets.only(top: 32, bottom: 4),

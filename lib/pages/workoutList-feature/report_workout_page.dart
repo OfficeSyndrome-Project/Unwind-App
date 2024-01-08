@@ -40,13 +40,12 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         iconButtonStart: IconButton(
+            highlightColor: Colors.transparent,
             icon: const Icon(Icons.arrow_back_ios_rounded),
             onPressed: () {
               Navigator.pop(context);
               defaultSelect = DateTime.now().weekday - 1;
             },
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.all(0),
             color: Colors.white),
         textBar: pageRoutes.home.reportworkoutpage().title,
         children: [

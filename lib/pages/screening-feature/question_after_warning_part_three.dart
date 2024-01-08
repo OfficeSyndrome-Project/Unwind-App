@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/box_nrs_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/part_three_question_box_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/posture_part_three_widget.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 class QuestionAfterWarningPartThree extends StatefulWidget {
-  final List<MapEntry<String, bool>> typeList;
-  const QuestionAfterWarningPartThree({super.key, required this.typeList});
+  final List<ScreeningPartTwoModel> selectPart;
+  const QuestionAfterWarningPartThree({super.key, required this.selectPart});
 
   @override
   State<QuestionAfterWarningPartThree> createState() =>
@@ -21,17 +27,52 @@ class _QuestionAfterWarningPartThreeState
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
-  // late List<ScreeningPartThreeModel> archivePart = ScreeningQuestionPartThreeService.getScreeningPartThreeModelBySelectedPart(widget.typeList.map((e) => e.key).toString());
+  late List<String> allPartTitle =
+      ScreeningQuestionPartThreeService.getAllPartTitle;
+
+  late List<ScreeningPartThreeModel> getPart =
+      ScreeningQuestionPartThreeService.getScreeningPartThreeModelByListOfParts(
+          allPartTitle
+              .where((element) => !widget.selectPart
+                  .any((select) => select.selectedPart.title == element))
+              .toList());
 
   @override
   Widget build(BuildContext context) {
-    print('selectPartInPartThree : ${widget.typeList}');
+    List<Widget> questionsWidgets_ = [];
+    int pageAmount = 0;
+    for (var part in getPart) {
+      pageAmount += getPart.length + part.postures.length;
+      List<int> pageNumberList =
+          part.postures.map((e) => e.questionPage).toSet().toList();
+      for (var pageNumber in pageNumberList) {
+        var postureWidget = PosturePartThreeWidget(
+            questions: ScreeningQuestionPartThreeService.getPostureByPage(
+                part.postures, pageNumber),
+            currentPage: currentPage,
+            pageRoutes: pageRoutes,
+            controller: _controller);
+        questionsWidgets_.add(postureWidget);
+      }
+      var questionWidget = PartThreeQuestionBoxWidget(
+        questions: part.questions,
+        currentPage: currentPage,
+        pageRoutes: pageRoutes,
+        controller: _controller,
+      );
+      questionsWidgets_.add(questionWidget);
+      //nrs here
+      var nrsWidget = BoxNrsWidget();
 
-    // print('archivePart : ${archivePart}');
+      questionsWidgets_.add(nrsWidget);
+    }
 
+    print('currentPage : ${currentPage}');
+    print('pageAmount : ${pageAmount}');
     return AppscreenTheme(
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
+          highlightColor: Colors.transparent,
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             currentPage >= 1
@@ -40,8 +81,6 @@ class _QuestionAfterWarningPartThreeState
                     curve: Curves.easeOut)
                 : Navigator.pop(context);
           },
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(0),
           color: Theme.of(context).colorScheme.primary,
         ),
         mainAxisAlignment: MainAxisAlignment.start,
@@ -58,7 +97,9 @@ class _QuestionAfterWarningPartThreeState
                     currentPage = value;
                   });
                 },
-                children: [],
+                children: [
+                  ...questionsWidgets_,
+                ],
               ),
             ),
           ),
@@ -66,7 +107,18 @@ class _QuestionAfterWarningPartThreeState
             height: 16,
           ),
           ButtonWithoutIconWidget(
-              onTap: () {},
+              onTap: () {
+                currentPage <
+                        (getPart.length == 2 ? pageAmount - 1 : pageAmount)
+                    ? _controller.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut)
+                    : Navigator.push(
+                        context,
+                        pageRoutes.screening
+                            .formafterscreening()
+                            .route(context));
+              },
               text: "ถัดไป",
               radius: 32,
               width: double.infinity,

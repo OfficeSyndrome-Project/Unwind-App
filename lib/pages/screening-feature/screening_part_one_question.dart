@@ -38,6 +38,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
 
     return AppscreenTheme(
         iconButtonStart: IconButton(
+          highlightColor: Colors.transparent,
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             currentPage >= 1
@@ -46,8 +47,6 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                     curve: Curves.easeOut)
                 : Navigator.pop(context);
           },
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(0),
           color: Theme.of(context).colorScheme.primary,
         ),
         colorBar: Colors.transparent,

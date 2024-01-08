@@ -64,18 +64,14 @@ class _ClockPageState extends State<ClockPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         textBar: pageRoutes.menu.clockpage().title,
         iconButtonStart: IconButton(
-            alignment: Alignment.centerLeft,
             onPressed: () {
               Navigator.pop(context);
             },
-            padding: const EdgeInsets.all(0),
             icon: const Icon(
               Icons.arrow_back_ios_rounded,
               color: Colors.white,
             )),
         iconButtonEnd: IconButton(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.all(0),
             onPressed: () {
               Navigator.of(context).push(_animationInfoRoute());
             },
