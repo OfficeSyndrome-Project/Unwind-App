@@ -13,11 +13,9 @@ class InfoErgonomicPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       textBar: "นาฬิกาจับเวลา",
       iconButtonStart: IconButton(
-          alignment: Alignment.centerLeft,
           onPressed: () {
             Navigator.pop(context);
           },
-          padding: const EdgeInsets.all(0),
           icon: const Icon(
             Icons.arrow_back_ios_rounded,
             color: Colors.white,

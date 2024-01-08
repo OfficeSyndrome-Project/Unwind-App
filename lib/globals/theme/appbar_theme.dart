@@ -65,13 +65,21 @@ Widget _buildIconButtonStart(IconButton? iconButtonStart) {
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
-      iconButtonStart ??
-          const IconButton(
-            alignment: Alignment.centerLeft,
-            onPressed: null,
-            padding: EdgeInsets.all(0),
-            icon: Icon(null),
-          ),
+      IconButtonTheme(
+        data: IconButtonThemeData(
+          style: ButtonStyle(
+              overlayColor: MaterialStatePropertyAll(Colors.transparent),
+              padding: MaterialStatePropertyAll(EdgeInsets.all(0)),
+              alignment: Alignment.centerLeft),
+        ),
+        child: iconButtonStart ??
+            const IconButton(
+              alignment: Alignment.centerLeft,
+              onPressed: null,
+              padding: EdgeInsets.all(0),
+              icon: Icon(null),
+            ),
+      )
     ],
   );
 }
@@ -82,13 +90,20 @@ Widget _buildIconButtonEnd(IconButton? iconButtonEnd) {
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: <Widget>[
-      iconButtonEnd ??
-          const IconButton(
-            alignment: Alignment.centerRight,
-            onPressed: null,
-            padding: EdgeInsets.all(0),
-            icon: Icon(null),
-          )
+      IconButtonTheme(
+          data: IconButtonThemeData(
+            style: ButtonStyle(
+                overlayColor: MaterialStatePropertyAll(Colors.transparent),
+                padding: MaterialStatePropertyAll(EdgeInsets.all(0)),
+                alignment: Alignment.centerRight),
+          ),
+          child: iconButtonEnd ??
+              const IconButton(
+                alignment: Alignment.centerRight,
+                onPressed: null,
+                padding: EdgeInsets.all(0),
+                icon: Icon(null),
+              ))
     ],
   );
 }

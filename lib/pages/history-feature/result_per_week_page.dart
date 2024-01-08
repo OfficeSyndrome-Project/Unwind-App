@@ -53,8 +53,6 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            padding: EdgeInsets.zero,
-            alignment: Alignment.centerLeft,
             icon:
                 const Icon(Icons.arrow_back_ios_rounded, color: Colors.white)),
         mainAxisAlignment: MainAxisAlignment.start,
@@ -151,8 +149,8 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                       ),
                       ScoreChartWidget(
                         height: 150,
-                        series: <ChartSeries<KeepScoreAndDateModel, int>>[
-                          LineSeries(
+                        series: <LineSeries<KeepScoreAndDateModel, int>>[
+                          LineSeries<KeepScoreAndDateModel, int>(
                             legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
                             legendIconType: LegendIconType.rectangle,
                             color: Color(0xFFb1c2eb),

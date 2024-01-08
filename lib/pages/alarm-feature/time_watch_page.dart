@@ -114,7 +114,6 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       textBar: "นาฬิกาจับเวลา",
       iconButtonStart: IconButton(
-        alignment: Alignment.centerLeft,
         onPressed: () => showDialog(
             context: context,
             barrierDismissible: false,
@@ -206,7 +205,6 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                     ),
                   ),
                 )),
-        padding: const EdgeInsets.all(0),
         icon: const Icon(
           Icons.arrow_back_ios_rounded,
           color: Colors.white,

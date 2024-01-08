@@ -49,8 +49,6 @@ class _QuestionErgonomicPageState extends State<QuestionErgonomicPage> {
             Icons.arrow_back_ios_rounded,
             color: Colors.white,
           ),
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(0),
         ),
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
