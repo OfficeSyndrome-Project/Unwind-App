@@ -44,28 +44,29 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         children: [
-          Text(widget.typePain,
-              style: ResponsiveCheckWidget.isSmallMobile(context)
-                  ? TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF3B67CD),
-                    )
-                  : Theme.of(context).textTheme.bodySmall),
-          Container(
-            width: 120,
-            height: 150,
-            margin: EdgeInsets.only(bottom: 16),
-            child: RatioImageoneToOne(assetName: widget.assetPath!),
+          Text(
+            widget.typePain,
+            style: TextStyle(
+              fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF3B67CD),
+            ),
+            textAlign: TextAlign.center,
           ),
           Container(
-            width: double.infinity,
-            constraints: BoxConstraints(
-                maxHeight: ResponsiveCheckWidget.isSmallMobile(context)
-                    ? MediaQuery.of(context).size.height * 0.7
-                    : MediaQuery.of(context).size.height), //70 % screen size
+            margin: EdgeInsets.only(top: 16, bottom: 16),
+            child: RatioImageoneToOne(
+              assetName: widget.assetPath!,
+              smallWidth: 120,
+              largeWidth: 140,
+              smallHeight: 120,
+              largeHeight: 140,
+            ),
+          ),
+          Container(
+            width: double.infinity, //70 % screen size
             padding: const EdgeInsets.all(16),
             decoration: ShapeDecoration(
               color: Colors.white,
@@ -81,36 +82,22 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
                 ),
               ],
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    bool isOverFlow = constraints.maxHeight <
-                        MediaQuery.of(context).size.height;
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: widget.questions.length,
-                      physics: isOverFlow
-                          ? ClampingScrollPhysics()
-                          : NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 16,
-                      ),
-                      itemBuilder: (context, index) => QuestionAndRadioButton(
-                        topic: widget.questions[index].topic,
-                        questions: widget.questions[index].question,
-                        questionId: widget.questions[index].questionId,
-                        questionPage: widget.currentPage,
-                      ),
-                    );
-                  },
-                )
-              ],
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: widget.questions.length,
+              physics: NeverScrollableScrollPhysics(),
+              clipBehavior: Clip.none,
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 16,
+              ),
+              itemBuilder: (context, index) => QuestionAndRadioButton(
+                topic: widget.questions[index].topic,
+                questions: widget.questions[index].question,
+                questionId: widget.questions[index].questionId,
+                questionPage: widget.currentPage,
+              ),
             ),
-          )
+          ),
         ]);
   }
 }
@@ -140,6 +127,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -306,6 +294,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                       ],
                     )
                   : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
                           height: 8,
@@ -353,7 +344,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                                 inactiveColor:
                                     Theme.of(context).colorScheme.primary),
                             Text(
-                              'ไม่',
+                              'ไม่ใช่',
                               style:
                                   ResponsiveCheckWidget.isSmallMobile(context)
                                       ? TextStyle(

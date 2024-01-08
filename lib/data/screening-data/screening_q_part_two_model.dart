@@ -15,35 +15,35 @@ class ScreeningPartTwoSelectPart {
   static List<ScreeningPartTwoSelectPart> getTitleQPage() => [
         ScreeningPartTwoSelectPart(
           title: "คอ",
-          assetPath: 'lib/assets/images/screeningPart/neck.png',
+          assetPath: 'lib/assets/images/screeningPart/select_pain_1.png',
           questionPage: [1, 2, 3, 4, 5],
           questionType: "a",
           partOrder: 0,
         ),
         ScreeningPartTwoSelectPart(
           title: "บ่า",
-          assetPath: 'lib/assets/images/screeningPart/scapular.png',
+          assetPath: 'lib/assets/images/screeningPart/select_pain_2.png',
           questionPage: [1, 2, 3],
           questionType: "b",
           partOrder: 1,
         ),
         ScreeningPartTwoSelectPart(
           title: "ไหล่",
-          assetPath: 'lib/assets/images/screeningPart/shoulder.png',
+          assetPath: 'lib/assets/images/screeningPart/select_pain_3.png',
           questionPage: [1, 2, 3],
           questionType: "b",
           partOrder: 2,
         ),
         ScreeningPartTwoSelectPart(
           title: "หลังส่วนบน",
-          assetPath: 'lib/assets/images/screeningPart/upper_back.png',
+          assetPath: 'lib/assets/images/screeningPart/select_pain_4.png',
           questionPage: [1, 2],
           questionType: "a",
           partOrder: 3,
         ),
         ScreeningPartTwoSelectPart(
           title: "หลังส่วนล่าง",
-          assetPath: 'lib/assets/images/screeningPart/lower_back.png',
+          assetPath: 'lib/assets/images/screeningPart/select_pain_5.png',
           questionPage: [1, 2],
           questionType: "a",
           partOrder: 4,
@@ -82,7 +82,7 @@ class ScreeningPartTwoQuestionModel {
             ScreeningPartTwoQuestionModel(
                 topic: null,
                 question:
-                    "2. อาการปวดของท่านไม่เปลี่ยนแปลง\nระดับความรุนแรงตามช่วงเวลาของวัน\nหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
+                    "2. อาการปวดของท่านไม่เปลี่ยนแปลงระดับความรุนแรงตามช่วงเวลาของวันหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
                 questionPage: 0,
                 questionType: "a",
                 questionId: 2),

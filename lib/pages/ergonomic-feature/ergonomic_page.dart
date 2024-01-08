@@ -22,14 +22,17 @@ class ErgonomicPage extends StatelessWidget {
           Icons.arrow_back_ios_rounded,
           color: Colors.white,
         ),
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.all(0),
       ),
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         RatioImageoneToOne(
-            assetName: 'lib/assets/images/ergonomic-img/worker-ergonomic.png'),
+          assetName: 'lib/assets/images/ergonomic-img/worker-ergonomic.png',
+          smallWidth: 200,
+          largeWidth: 250,
+          smallHeight: 200,
+          largeHeight: 250,
+        ),
         const SizedBox(
           height: 32,
         ),

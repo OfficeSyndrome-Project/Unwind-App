@@ -1,15 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
+// import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('th');
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  // testServiceScreeningPartTwo();
+  // testServiceScreeningPartThree();
   runApp(const MyApp());
 }
+
+//test service
+// void testServiceScreeningPartThree() {
+//   var selectedPart = "หลังส่วนล่าง";
+//   ScreeningPartThreeModel result = ScreeningQuestionPartThreeService
+//       .getScreeningPartThreeModelBySelectedPart(selectedPart);
+//   var posture = result.postures;
+//   var question = result.questions;
+//   print("---เลือกส่วนที่ต้องการตรวจ $selectedPart");
+//   print("มีทั้งหมด : ${posture.length} ท่า");
+//   for (var posture in posture) {
+//     print("posture name : ${posture.postureName}");
+//     print("   assetPath : ${posture.assetPath}");
+//     print("  question: ${posture.question}");
+//     print(" questionId: ${posture.questionId}");
+//     print(" questionPage: ${posture.questionPage}");
+//   }
+//   print("--------------");
+//   for (var question in question) {
+//     // print("title: ${question.title}");
+//     print("question : ${question.question}");
+//     print("questionId : ${question.questionId}");
+//     print("questionPage : ${question.questionPage}");
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

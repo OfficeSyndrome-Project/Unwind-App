@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class TypepainContainer extends StatelessWidget {
@@ -44,14 +45,12 @@ class TypepainContainer extends StatelessWidget {
                     )
                   : Theme.of(context).textTheme.bodySmall,
             ),
-            Container(
-              width: 60,
-              height: 60,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(assetName), fit: BoxFit.cover)),
-            ),
+            RatioImageoneToOne(
+                assetName: assetName,
+                smallWidth: 50,
+                largeWidth: 60,
+                smallHeight: 50,
+                largeHeight: 60)
           ],
         ),
       ),

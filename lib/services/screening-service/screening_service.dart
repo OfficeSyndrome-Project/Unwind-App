@@ -1,5 +1,6 @@
 import 'package:unwind_app/data/screening-data/screening_q_page.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 
 //screening part one
@@ -118,5 +119,62 @@ class ScreeningQuestionPartTwoService {
             .toList();
     return ScreeningPartTwoModel(
         selectedPart: selectedChoice, questions: questions, postures: postures);
+  }
+}
+
+//screening part three
+class ScreeningQuestionPartThreeService {
+  // //all choice
+  // static List<ScreeningPartThreeSelectPart> choices =
+  //     ScreeningPartTwoSelectPart.getTitleQPage();
+  static List<ScreeningPartThreePostureModel> posture =
+      ScreeningPartThreePostureModel.getScreeningPartThreePostureModel();
+  static List<ScreeningPartThreeQuestionModel> question =
+      ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel();
+
+  static List<String> getAllPartTitle =
+      posture.map((part) => part.title).toSet().toList();
+  //get list of ScreeningPartThreeModel
+  static List<ScreeningPartThreeModel> getScreeningPartThreeModelByListOfParts(
+      List<String> parts) {
+    List<ScreeningPartThreeModel> result = [];
+
+    for (var part in parts) {
+      result.add(getScreeningPartThreeModelBySelectedPart(part));
+    }
+    return result;
+  }
+
+  //filter posture,question by page
+  static List<ScreeningPartThreeQuestionModel> getQuestionsByPage(
+      List<ScreeningPartThreeQuestionModel> questions, int questionPage) {
+    return questions
+        .where((question) => question.questionPage == questionPage)
+        .toList();
+  }
+
+  static List<ScreeningPartThreePostureModel> getPostureByPage(
+      List<ScreeningPartThreePostureModel> postures, int questionPage) {
+    return postures
+        .where((posture) => posture.questionPage == questionPage)
+        .toList();
+  }
+
+  //get object
+  static ScreeningPartThreeModel getScreeningPartThreeModelBySelectedPart(
+      String selectedPart) {
+    ScreeningPartThreePostureModel selectedChoice =
+        posture.where((choice) => choice.title == selectedPart).first;
+
+    print('selectedPart : ${selectedPart}');
+    var postures =
+        ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
+            .where((q) => q.title == selectedChoice.title)
+            .toList();
+    var questions =
+        ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel()
+            .where((p) => p.questionType == selectedChoice.questionType)
+            .toList();
+    return ScreeningPartThreeModel(questions: questions, postures: postures);
   }
 }

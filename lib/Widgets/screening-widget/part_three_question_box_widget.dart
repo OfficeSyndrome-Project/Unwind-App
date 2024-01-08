@@ -1,96 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
-import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 
-class ScreeningQuestionBoxWidget extends StatefulWidget {
-  final String? assetPath;
-  final List<String> questions;
+class PartThreeQuestionBoxWidget extends StatefulWidget {
+  final List<ScreeningPartThreeQuestionModel> questions;
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
+
   // final ScreeningPartOneModel question;
 
-  const ScreeningQuestionBoxWidget(
-      {super.key,
-      required this.assetPath,
-      required this.questions,
-      required this.currentPage,
-      required this.pageRoutes,
-      required this.controller});
+  const PartThreeQuestionBoxWidget({
+    super.key,
+    required this.questions,
+    required this.currentPage,
+    required this.pageRoutes,
+    required this.controller,
+  });
 
   @override
-  State<ScreeningQuestionBoxWidget> createState() =>
-      _ScreeningQuestionBoxWidgetState();
+  State<PartThreeQuestionBoxWidget> createState() =>
+      _PartThreeQuestionBoxWidgettState();
 }
 
-class _ScreeningQuestionBoxWidgetState
-    extends State<ScreeningQuestionBoxWidget> {
-  void onCurrentOptionsChanged(bool bool) {
-    //here
-  }
+class _PartThreeQuestionBoxWidgettState
+    extends State<PartThreeQuestionBoxWidget> {
+  void onCurrentOptionsChanged(bool bool) {}
 
   int? currentOptions;
+  // int index = 0;
 
 //question box
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (widget.assetPath != null) // Check if assetPath is not null
-            RatioImageoneToOne(
-              assetName: widget.assetPath!,
-              smallWidth: 200,
-              largeWidth: 250,
-              smallHeight: 200,
-              largeHeight: 250,
+    return Container(
+        width: double.infinity,
+        constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height), //70 % screen size
+        padding: const EdgeInsets.all(16),
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          shadows: const [
+            BoxShadow(
+              color: Color(0x19000000),
+              blurRadius: 4,
+              offset: Offset(0, 1),
+              spreadRadius: 0,
             ),
-          Container(
-              width: double.infinity,
-              constraints: BoxConstraints(
-                  maxHeight: ResponsiveCheckWidget.isSmallMobile(context)
-                      ? MediaQuery.of(context).size.height * 0.7
-                      : MediaQuery.of(context).size.height), //70 % screen size
-              padding: const EdgeInsets.all(16),
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x19000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 1),
-                    spreadRadius: 0,
-                  ),
-                ],
-              ),
-              child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  bool isOverFlow = constraints.maxHeight <
-                      MediaQuery.of(context).size.height;
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: widget.questions.length,
-                    physics: isOverFlow
-                        ? ClampingScrollPhysics()
-                        : NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 16,
-                    ),
-                    itemBuilder: (context, index) => QuestionAndRadioButton(
-                        questions: widget.questions[index],
-                        questionId: index,
-                        questionPage: widget.currentPage),
-                  );
-                },
-              ))
-        ]);
+          ],
+        ),
+        child: ListView.separated(
+          shrinkWrap: true,
+          itemCount: widget.questions.length,
+          physics: NeverScrollableScrollPhysics(),
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 16,
+          ),
+          itemBuilder: (context, index) => QuestionAndRadioButton(
+            questions: widget.questions[index].question,
+            questionId: widget.questions[index].questionId,
+            questionPage: widget.currentPage,
+          ),
+        ));
   }
 }
 
@@ -121,7 +97,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          questions,
+          '${widget.questionId.toString()}. ' + questions,
           style: ResponsiveCheckWidget.isSmallMobile(context)
               ? TextStyle(
                   fontSize: 14,
@@ -144,9 +120,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 4,
+                    height: 8,
                   ),
-                  Row(children: [
+                  Row(mainAxisSize: MainAxisSize.min, children: [
                     GeneralAnimatedCustomRadio<int>(
                         value: 1,
                         groupValue: currentOptions,
@@ -170,7 +146,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                     ),
                   ]),
                   const SizedBox(
-                    height: 4,
+                    height: 8,
                   ),
                   Row(
                     children: [

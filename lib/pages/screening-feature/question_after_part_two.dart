@@ -22,49 +22,47 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
-  late List<String> titleList;
-
   double oncurrentNRS = 0;
   late List<MapEntry<String, bool>> typeList = widget.onSelectMap.entries
       .where((element) => element.value == true)
       .toList();
-  // late ScreeningPartTwoModel servicePart =
-  //     ScreeningQuestionPartTwoService.getScreeningPartTwoModelBySelectedPart(
-  //         typeList.map((part) => part.key).first);
 
-  //new
   late List<ScreeningPartTwoModel> selectedParts =
       ScreeningQuestionPartTwoService.getScreeningPartTwoModelByListOfParts(
           typeList.map((part) => part.key).toList());
 
   @override
   Widget build(BuildContext context) {
-    // Planning questions widgets that should be presented on each pages, multiple parts
-
     List<Widget> questionsWidgets_ = [];
     int pageAmount = 0;
     ScreeningPartTwoModel.sortByPartOrder(selectedParts);
-    // print('selectedParts.length : ${selectedParts.length}');
-    // selectedParts.forEach((element) => print(element.selectedPart.partOrder));
+
     for (var part in selectedParts) {
       pageAmount += part.selectedPart.questionPage.length;
-      // Append each designated questions on the available pages
       var pageAmountOfQuestion =
           part.questions.map((e) => e.questionPage).toSet().length;
 
       for (int pageNumber = 0;
           pageNumber < pageAmountOfQuestion;
           pageNumber++) {
-        var questionWidget = PartTwoQuestionBoxWidget(
-          typePain: part.selectedPart.title,
-          assetPath: part.selectedPart.assetPath,
-          questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
-              part.questions, pageNumber),
-          currentPage: currentPage,
-          pageRoutes: pageRoutes,
-          controller: _controller,
-          questionID: part.questions.map((e) => e.questionId).toList(),
-        );
+        var questionWidget = Container(
+            child: ListView(
+          physics: ClampingScrollPhysics(),
+          padding: EdgeInsets.all(2),
+          children: [
+            PartTwoQuestionBoxWidget(
+              typePain: part.selectedPart.title,
+              assetPath: part.selectedPart.assetPath,
+              questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
+                  part.questions, pageNumber),
+              currentPage: currentPage,
+              pageRoutes: pageRoutes,
+              controller: _controller,
+              questionID: part.questions.map((e) => e.questionId).toList(),
+            )
+          ],
+        ));
+
         questionsWidgets_.add(questionWidget);
       }
 
@@ -82,33 +80,11 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
         questionsWidgets_.add(postureWidget);
       }
     }
-    // List<Widget> questionsWidgets = servicePart.questions
-    //     .map(
-    //       (data) => PartTwoQuestionBoxWidget(
-    //         typePain: servicePart.selectedPart.title,
-    //         assetPath: servicePart.selectedPart.assetPath,
-    //         questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
-    //             servicePart.questions, currentPage),
-    //         currentPage: currentPage,
-    //         pageRoutes: pageRoutes,
-    //         controller: _controller,
-    //         questionID: servicePart.questions.map((e) => e.questionId).toList(),
-    //       ),
-    //     )
-    //     .toList();
-    // List<Widget> postureWidget = servicePart.postures
-    //     .map((data) => PostuerWidget(
-    //           questions: ScreeningQuestionPartTwoService.getPostureByPage(
-    //               servicePart.postures, currentPage),
-    //           currentPage: currentPage,
-    //           pageRoutes: pageRoutes,
-    //           controller: _controller,
-    //         ))
-    //     .toList();
-
     return AppscreenTheme(
+        vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 16,
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
+          highlightColor: Colors.transparent,
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             currentPage >= 1
@@ -117,34 +93,28 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                     curve: Curves.easeOut)
                 : Navigator.pop(context);
           },
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(0),
           color: Theme.of(context).colorScheme.primary,
         ),
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Container(
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (value) {
-                  setState(() {
-                    currentPage = value;
-                    print('currentPage ${value}');
-                  });
-                },
-                children: [
-                  // ...questionsWidgetsTest,
-                  // ...questionsWidgets,
-                  // ...postureWidget,
-                  ...questionsWidgets_,
-                ],
-              ),
+              child: Container(
+            child: PageView(
+              controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
+              clipBehavior: Clip.none,
+              scrollDirection: Axis.horizontal,
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              children: [
+                ...questionsWidgets_,
+              ],
             ),
-          ),
+          )),
           SizedBox(
             height: 16,
           ),
@@ -157,7 +127,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(1)
+                            .introscreeningpage(2, selectedParts)
                             .route(context));
               },
               text: "ถัดไป",

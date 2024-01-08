@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
+import 'package:unwind_app/pages/screening-feature/form_after_screening.dart';
 import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/question_after_part_two.dart';
+import 'package:unwind_app/pages/screening-feature/question_after_warning_part_three.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
+import 'package:unwind_app/pages/screening-feature/warning_part_three_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/report_workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 import '../data/alarm-data/timewatch_obj.dart';
 import '../data/history-data/summary_list_obj.dart';
@@ -30,11 +35,14 @@ class PageRoutes {
 }
 
 class Screening {
-  PathRoute introscreeningpage(int currentIndex) => PathRoute(
-      title: "",
-      widget: IntroScreeningPage(
-        currentIndex: currentIndex,
-      ));
+  PathRoute introscreeningpage(
+          int currentIndex, List<ScreeningPartTwoModel> selectPart) =>
+      PathRoute(
+          title: "",
+          widget: IntroScreeningPage(
+            currentIndex: currentIndex,
+            selectPart: selectPart,
+          ));
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
   PathRoute screeningparttwoquestion() =>
@@ -45,13 +53,28 @@ class Screening {
           widget: QuestionAfterPartTwo(
             onSelectMap: onSelectMap,
           ));
+  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart) =>
+      PathRoute(
+          title: "",
+          widget: WarningPartThreePage(
+            selectPart: selectPart,
+          ));
+  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart) =>
+      PathRoute(
+          title: "",
+          widget: QuestionAfterWarningPartThree(
+            selectPart: selectPart,
+          ));
+  PathRoute formafterscreening() =>
+      PathRoute(title: "", widget: FormAfterScreening());
 }
 
 class Home {
   PathRoute workoutlist() =>
       PathRoute(title: "ชุดท่าบริหาร", widget: const HomePage());
-  PathRoute screenpage() =>
-      PathRoute(title: "", widget: const WorkoutListPage());
+  PathRoute screenpage() => PathRoute(title: "", widget: WorkoutListPage());
+  PathRoute reportworkoutpage() =>
+      PathRoute(title: "ชุดท่าบริหาร", widget: const ReportWorkoutPage());
 }
 
 class Menu {

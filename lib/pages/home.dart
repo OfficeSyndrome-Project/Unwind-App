@@ -17,7 +17,7 @@ class _HomeState extends State<HomePage> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const ScreeningPage(),
-    const WorkoutListPage(),
+    WorkoutListPage(),
     const MenuWidget(),
     HistoryPage(),
     const ProfilePage(),

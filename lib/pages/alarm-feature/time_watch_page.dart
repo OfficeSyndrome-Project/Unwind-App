@@ -51,7 +51,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
 
   void startTimer() {
     timer = Timer.periodic(
-      const Duration(microseconds: 900),
+      const Duration(microseconds: 2000),
       (timer) async {
         if (remainingTimes > 0) {
           setState(() {
@@ -114,7 +114,6 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       textBar: "นาฬิกาจับเวลา",
       iconButtonStart: IconButton(
-        alignment: Alignment.centerLeft,
         onPressed: () => showDialog(
             context: context,
             barrierDismissible: false,
@@ -206,7 +205,6 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
                     ),
                   ),
                 )),
-        padding: const EdgeInsets.all(0),
         icon: const Icon(
           Icons.arrow_back_ios_rounded,
           color: Colors.white,

@@ -19,40 +19,53 @@ class ScreeningPartTwoQuestion extends StatefulWidget {
 }
 
 class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
-  // List<TypePainScreening> typelist = TypePainScreening.getData();
-
   List<ScreeningPartTwoSelectPart> typelist =
       ScreeningPartTwoSelectPart.getTitleQPage();
 
   PageRoutes pageRoutes = PageRoutes();
-  // late List<bool> onCurrentSelect =
-  //     List.generate(typelist.length, (index) => false);
-  late Map<String, bool> onSelectPart = {};
+  final Map<String, bool> onSelectPart = {};
   ScreeningQuestionPartTwoService serviceModel =
       ScreeningQuestionPartTwoService();
 
+  bool disable = true;
+
   void selectContainer(int index) {
+    String titleType = typelist[index].title;
     setState(() {
-      String titleType = typelist[index].title;
       if (onSelectPart.containsKey(titleType)) {
         onSelectPart[titleType] = !onSelectPart[titleType]!;
       } else {
         onSelectPart[titleType] = true;
       }
-      print(onSelectPart);
+      setDisable(false);
     });
+  }
+
+  void setDisable(bool value) {
+    setState(() {
+      if (onSelectPart.values.every((element) => !element)) {
+        disable = !value;
+      } else {
+        disable = value;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    onSelectPart.clear();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
       iconButtonStart: IconButton(
+        highlightColor: Colors.transparent,
         icon: const Icon(Icons.arrow_back_ios_rounded),
         onPressed: () {
           Navigator.pop(context);
         },
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.all(0),
         color: Theme.of(context).colorScheme.primary,
       ),
       colorBar: Colors.transparent,
@@ -74,6 +87,8 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         ),
         Expanded(
           child: ListView.separated(
+              clipBehavior: Clip.antiAlias,
+              padding: EdgeInsets.all(2),
               physics: ResponsiveCheckWidget.isSmallMobile(context)
                   ? ClampingScrollPhysics()
                   : NeverScrollableScrollPhysics(),
@@ -85,7 +100,6 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                   isSelect: onSelectPart.containsKey(typelist[index].title)
                       ? onSelectPart[typelist[index].title]!
                       : false,
-                  // isSelect: false,
                   assetName: typelist[index].assetPath,
                   typePain: typelist[index].title,
                 );
@@ -95,19 +109,26 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                   ),
               itemCount: typelist.length),
         ),
+        SizedBox(
+          height: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 0,
+        ),
         ButtonWithoutIconWidget(
             onTap: () {
-              Navigator.push(
-                  context,
-                  pageRoutes.screening
-                      .questionafterscreeningparttwo(onSelectPart)
-                      .route(context));
+              if (!disable) {
+                Navigator.push(
+                    context,
+                    pageRoutes.screening
+                        .questionafterscreeningparttwo(onSelectPart)
+                        .route(context));
+              }
             },
             text: 'ถัดไป',
             radius: 32,
             width: double.infinity,
             height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-            color: Theme.of(context).colorScheme.primary,
+            color: !disable
+                ? Theme.of(context).colorScheme.primary
+                : const Color(0xFF9BA4B5),
             borderSide: BorderSide.none,
             style: ResponsiveCheckWidget.isSmallMobile(context)
                 ? TextStyle(
