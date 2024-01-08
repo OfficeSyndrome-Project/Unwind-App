@@ -44,7 +44,7 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         children: [
           Text(
             widget.typePain,
@@ -66,11 +66,7 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
             ),
           ),
           Container(
-            width: double.infinity,
-            constraints: BoxConstraints(
-                maxHeight: ResponsiveCheckWidget.isSmallMobile(context)
-                    ? MediaQuery.of(context).size.height * 0.7
-                    : MediaQuery.of(context).size.height), //70 % screen size
+            width: double.infinity, //70 % screen size
             padding: const EdgeInsets.all(16),
             decoration: ShapeDecoration(
               color: Colors.white,
@@ -86,36 +82,22 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
                 ),
               ],
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    bool isOverFlow = constraints.maxHeight <
-                        MediaQuery.of(context).size.height;
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: widget.questions.length,
-                      physics: isOverFlow
-                          ? ClampingScrollPhysics()
-                          : NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 16,
-                      ),
-                      itemBuilder: (context, index) => QuestionAndRadioButton(
-                        topic: widget.questions[index].topic,
-                        questions: widget.questions[index].question,
-                        questionId: widget.questions[index].questionId,
-                        questionPage: widget.currentPage,
-                      ),
-                    );
-                  },
-                )
-              ],
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: widget.questions.length,
+              physics: NeverScrollableScrollPhysics(),
+              clipBehavior: Clip.none,
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 16,
+              ),
+              itemBuilder: (context, index) => QuestionAndRadioButton(
+                topic: widget.questions[index].topic,
+                questions: widget.questions[index].question,
+                questionId: widget.questions[index].questionId,
+                questionPage: widget.currentPage,
+              ),
             ),
-          )
+          ),
         ]);
   }
 }
@@ -145,6 +127,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

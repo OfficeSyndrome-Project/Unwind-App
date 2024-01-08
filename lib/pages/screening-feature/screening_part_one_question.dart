@@ -43,7 +43,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           onPressed: () {
             currentPage >= 1
                 ? _controller.previousPage(
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut)
                 : Navigator.pop(context);
           },
@@ -54,20 +54,20 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Container(
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (value) {
-                  setState(() {
-                    currentPage = value;
-                  });
-                },
-                children: [
-                  ...questionsWidgets,
-                ],
-              ),
+            child: PageView(
+              clipBehavior: Clip.none,
+              pageSnapping: true,
+              controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              children: [
+                ...questionsWidgets,
+              ],
             ),
           ),
           SizedBox(
