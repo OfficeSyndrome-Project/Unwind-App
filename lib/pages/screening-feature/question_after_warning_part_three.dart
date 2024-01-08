@@ -54,12 +54,20 @@ class _QuestionAfterWarningPartThreeState
             controller: _controller);
         questionsWidgets_.add(postureWidget);
       }
-      var questionWidget = PartThreeQuestionBoxWidget(
-        questions: part.questions,
-        currentPage: currentPage,
-        pageRoutes: pageRoutes,
-        controller: _controller,
-      );
+      var questionWidget = Container(
+          child: ListView(
+        padding: EdgeInsets.all(2),
+        physics: ClampingScrollPhysics(),
+        children: [
+          PartThreeQuestionBoxWidget(
+            questions: part.questions,
+            currentPage: currentPage,
+            pageRoutes: pageRoutes,
+            controller: _controller,
+          )
+        ],
+      ));
+
       questionsWidgets_.add(questionWidget);
       //nrs here
       var nrsWidget = BoxNrsWidget();

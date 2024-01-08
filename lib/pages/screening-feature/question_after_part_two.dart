@@ -45,16 +45,24 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
       for (int pageNumber = 0;
           pageNumber < pageAmountOfQuestion;
           pageNumber++) {
-        var questionWidget = PartTwoQuestionBoxWidget(
-          typePain: part.selectedPart.title,
-          assetPath: part.selectedPart.assetPath,
-          questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
-              part.questions, pageNumber),
-          currentPage: currentPage,
-          pageRoutes: pageRoutes,
-          controller: _controller,
-          questionID: part.questions.map((e) => e.questionId).toList(),
-        );
+        var questionWidget = Container(
+            child: ListView(
+          physics: ClampingScrollPhysics(),
+          padding: EdgeInsets.all(2),
+          children: [
+            PartTwoQuestionBoxWidget(
+              typePain: part.selectedPart.title,
+              assetPath: part.selectedPart.assetPath,
+              questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
+                  part.questions, pageNumber),
+              currentPage: currentPage,
+              pageRoutes: pageRoutes,
+              controller: _controller,
+              questionID: part.questions.map((e) => e.questionId).toList(),
+            )
+          ],
+        ));
+
         questionsWidgets_.add(questionWidget);
       }
 
@@ -73,6 +81,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
       }
     }
     return AppscreenTheme(
+        vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 16,
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
           highlightColor: Colors.transparent,
@@ -90,22 +99,22 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Container(
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (value) {
-                  setState(() {
-                    currentPage = value;
-                  });
-                },
-                children: [
-                  ...questionsWidgets_,
-                ],
-              ),
+              child: Container(
+            child: PageView(
+              controller: _controller,
+              physics: const NeverScrollableScrollPhysics(),
+              clipBehavior: Clip.none,
+              scrollDirection: Axis.horizontal,
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              children: [
+                ...questionsWidgets_,
+              ],
             ),
-          ),
+          )),
           SizedBox(
             height: 16,
           ),

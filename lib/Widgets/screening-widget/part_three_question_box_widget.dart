@@ -36,53 +36,37 @@ class _PartThreeQuestionBoxWidgettState
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height), //70 % screen size
-      padding: const EdgeInsets.all(16),
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x19000000),
-            blurRadius: 4,
-            offset: Offset(0, 1),
-            spreadRadius: 0,
+        width: double.infinity,
+        constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height), //70 % screen size
+        padding: const EdgeInsets.all(16),
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
           ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              bool isOverFlow =
-                  constraints.maxHeight < MediaQuery.of(context).size.height;
-              return ListView.separated(
-                shrinkWrap: true,
-                itemCount: widget.questions.length,
-                physics: isOverFlow
-                    ? ClampingScrollPhysics()
-                    : NeverScrollableScrollPhysics(),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 16,
-                ),
-                itemBuilder: (context, index) => QuestionAndRadioButton(
-                  questions: widget.questions[index].question,
-                  questionId: widget.questions[index].questionId,
-                  questionPage: widget.currentPage,
-                ),
-              );
-            },
-          )
-        ],
-      ),
-    );
+          shadows: const [
+            BoxShadow(
+              color: Color(0x19000000),
+              blurRadius: 4,
+              offset: Offset(0, 1),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: ListView.separated(
+          shrinkWrap: true,
+          itemCount: widget.questions.length,
+          physics: NeverScrollableScrollPhysics(),
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 16,
+          ),
+          itemBuilder: (context, index) => QuestionAndRadioButton(
+            questions: widget.questions[index].question,
+            questionId: widget.questions[index].questionId,
+            questionPage: widget.currentPage,
+          ),
+        ));
   }
 }
 
