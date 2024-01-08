@@ -149,14 +149,13 @@ class ScreeningQuestionPartThreeService {
         .where((question) => question.questionPage == questionPage)
         .toList();
   }
-
   static List<ScreeningPartThreePostureModel> getPostureByPage(
       List<ScreeningPartThreePostureModel> postures, int questionPage) {
     return postures
         .where((posture) => posture.questionPage == questionPage)
         .toList();
   }
-
+  
   //get object
   static ScreeningPartThreeModel getScreeningPartThreeModelBySelectedPart(
       String selectedPart) {
@@ -165,7 +164,7 @@ class ScreeningQuestionPartThreeService {
 
     var postures =
         ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
-            .where((q) => q.title == selectedChoice.title)
+            .where((q) => q.title != selectedChoice.title)
             .toList();
     var questions =
         ScreeningPartThreeQuestionModel.getScreeningPartThreeQuestionModel()

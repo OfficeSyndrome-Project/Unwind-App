@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
-// import 'package:unwind_app/services/screening-service/screening_service.dart';
+import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,9 +17,11 @@ void main() {
   runApp(const MyApp());
 }
 
-//test service
+// //test service
 // void testServiceScreeningPartThree() {
-//   var selectedPart = "หลังส่วนล่าง";
+//   var selectedPart = "บ่า";
+//   // print(selectedPart);
+
 //   ScreeningPartThreeModel result = ScreeningQuestionPartThreeService
 //       .getScreeningPartThreeModelBySelectedPart(selectedPart);
 //   var posture = result.postures;

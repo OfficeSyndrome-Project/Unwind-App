@@ -8,7 +8,7 @@ class ScreeningPartThreePostureModel {
   String questionType;
 
   ScreeningPartThreePostureModel({
-    required this.title,
+    required this.title,  
     required this.postureName,
     required this.question,
     required this.assetPath,
@@ -25,7 +25,8 @@ class ScreeningPartThreePostureModel {
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 7,
                 questionPage: 0,
-                questionType: "a"),
+                questionType: "a"
+                ),
             ScreeningPartThreePostureModel(
                 title: "คอ",
                 postureName: "ท่าหันซ้าย-ขวา",
@@ -33,31 +34,35 @@ class ScreeningPartThreePostureModel {
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 8,
                 questionPage: 1,
-                questionType: "a"),
+                questionType: "a"
+                ),
             ScreeningPartThreePostureModel(
                 title: "บ่า",
                 postureName: "ท่าเอนคอ",
                 assetPath: "lib/assets/images/screeningPart/neck_lean.png",
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 5,
-                questionPage: 2,
-                questionType: "a"),
+                questionPage: 0,
+                questionType: "a"
+                ),
             ScreeningPartThreePostureModel(
                 title: "หลังส่วนล่าง",
                 postureName: "ท่าเหยียดลำตัวไปด้านหลัง",
                 assetPath: "lib/assets/images/screeningPart/back_plank.png",
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 4,
-                questionPage: 3,
-                questionType: "a"),
+                questionPage: 0,
+                questionType: "a"
+                ),
             ScreeningPartThreePostureModel(
                 title: "หลังส่วนล่าง",
                 postureName: "ท่างอลำตัวมาด้านหน้า",
                 assetPath: "lib/assets/images/screeningPart/back_turtle.png",
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 4,
-                questionPage: 3,
-                questionType: "a"),
+                questionPage: 1,
+                questionType: "a"
+                ),
           ];
   @override
   String toString() {
@@ -86,35 +91,40 @@ class ScreeningPartThreeQuestionModel {
                 question: "คุณมีอาการปวดบริเวณนี้มาก่อนหรือไม่ ?",
                 questionId: 10,
                 questionPage: 1,
-                questionType: "a"),
+                questionType: "a"
+                ),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question:
                     "หลังจากทำท่าทางดังกล่าว\nท่านมีอาการเจ็บปวดคงอยู่จนถึงตอนนี้หรือไม่ ?",
                 questionId: 11,
                 questionPage: 1,
-                questionType: "a"),
+                questionType: "a"
+                ),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question:
                     "ท่านมีอาการชา และ/หรือ\nอาการปวดร้าวไปยังบริเวณอื่น\nอาทิเช่น ปวดร้าวลงแขนหรือไม่ ?",
                 questionId: 12,
                 questionPage: 1,
-                questionType: "a"),
+                questionType: "a"
+                ),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question:
                     "หลังจากทำท่าทางดังกล่าว\nท่านมีอาการปวด/ตึงเกิดขึ้น แต่อาการลดลงหรือ\nหายไปเมื่อหยุดพักใช่หรือไม่?",
                 questionId: 13,
                 questionPage: 1,
-                questionType: "a"),
+                questionType: "a"
+                ),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question:
                     "หลังจากทำท่าทางดังกล่าว\nท่านมีอาการเวียนหัว\nเวียนหน้าใช่หรือไม่ ?",
                 questionId: 14,
                 questionPage: 1,
-                questionType: "a"),
+                questionType: "a"
+                ),
           ];
   @override
   String toString() {
