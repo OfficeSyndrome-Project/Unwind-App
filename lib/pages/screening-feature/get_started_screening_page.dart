@@ -35,12 +35,11 @@ class _ScreeningPageState extends State<ScreeningPage> {
                           curve: Curves.easeOut)
                       : Navigator.pop(context);
                 },
+                highlightColor: Colors.transparent,
                 icon: Icon(
                   Icons.arrow_back_ios_rounded,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.all(0),
               )
             : null,
         colorBar: Colors.transparent,
@@ -108,7 +107,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
               ),
               DotsIndicator(
                 dotsCount: 5,
-                position: currentPage.toDouble(),
+                position: currentPage,
                 decorator: DotsDecorator(
                   color: const Color(0xFFC3C8D2),
                   activeColor: Theme.of(context).colorScheme.primary,
@@ -144,8 +143,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(0)
-                            .route(context));
+                            .introscreeningpage(0, []).route(context));
               }),
 
           // ),

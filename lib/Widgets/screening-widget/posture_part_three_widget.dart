@@ -3,16 +3,16 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
-import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 
-class PostuerWidget extends StatefulWidget {
-  final List<ScreeningPartTwoPostureModel> questions;
+class PosturePartThreeWidget extends StatefulWidget {
+  final List<ScreeningPartThreePostureModel> questions;
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
   // final ScreeningPartOneModel question;
 
-  const PostuerWidget({
+  const PosturePartThreeWidget({
     super.key,
     required this.questions,
     required this.currentPage,
@@ -21,10 +21,10 @@ class PostuerWidget extends StatefulWidget {
   });
 
   @override
-  State<PostuerWidget> createState() => _PostuerWidgetState();
+  State<PosturePartThreeWidget> createState() => _PosturePartThreeWidgetState();
 }
 
-class _PostuerWidgetState extends State<PostuerWidget> {
+class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget> {
   void onCurrentOptionsChanged(bool bool) {
     //here
   }
@@ -46,7 +46,6 @@ class _PostuerWidgetState extends State<PostuerWidget> {
                   maxHeight: ResponsiveCheckWidget.isSmallMobile(context)
                       ? MediaQuery.of(context).size.height * 0.7
                       : MediaQuery.of(context).size.height), //70 % screen size
-
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   bool isOverFlow = constraints.maxHeight <
@@ -101,7 +100,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(

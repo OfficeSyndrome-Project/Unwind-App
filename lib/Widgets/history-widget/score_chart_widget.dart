@@ -2,15 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
-class ScoreChartWidget extends StatelessWidget {
+class ScoreChartWidget extends StatefulWidget {
   final double height;
-  final dynamic series;
-  const ScoreChartWidget({super.key, required this.height, this.series});
+  final List<CartesianSeries<dynamic, dynamic>> series;
+  const ScoreChartWidget(
+      {super.key,
+      required this.height,
+      this.series = const <CartesianSeries>[]});
+
+  @override
+  State<ScoreChartWidget> createState() => _ScoreChartWidgetState();
+}
+
+class _ScoreChartWidgetState extends State<ScoreChartWidget> {
+  late TooltipBehavior _tooltipBehavior;
+
+  @override
+  void initState() {
+    _tooltipBehavior = TooltipBehavior(enable: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
+      height: widget.height,
       margin: const EdgeInsets.only(bottom: 4, top: 4),
       child: SfCartesianChart(
         legend: Legend(
@@ -56,8 +72,8 @@ class ScoreChartWidget extends StatelessWidget {
             ),
             interval: 1,
             axisLine: const AxisLine(color: Color(0xff233E7B), width: 2)),
-        tooltipBehavior: TooltipBehavior(enable: false),
-        series: series,
+        tooltipBehavior: _tooltipBehavior,
+        series: widget.series,
       ),
     );
   }

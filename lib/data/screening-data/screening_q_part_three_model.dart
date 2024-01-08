@@ -60,9 +60,8 @@ class ScreeningPartThreePostureModel {
                 assetPath: "lib/assets/images/screeningPart/back_turtle.png",
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 4,
-                questionPage: 1,
-                questionType: "a"
-                ),
+                questionPage: 4,
+                questionType: "a"),
           ];
   @override
   String toString() {
@@ -89,39 +88,39 @@ class ScreeningPartThreeQuestionModel {
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question: "คุณมีอาการปวดบริเวณนี้มาก่อนหรือไม่ ?",
-                questionId: 10,
+                questionId: 1,
                 questionPage: 1,
                 questionType: "a"
                 ),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question:
-                    "หลังจากทำท่าทางดังกล่าว\nท่านมีอาการเจ็บปวดคงอยู่จนถึงตอนนี้หรือไม่ ?",
-                questionId: 11,
+                    "หลังจากทำท่าทางดังกล่าว ท่านมีอาการเจ็บปวดคงอยู่จนถึงตอนนี้หรือไม่ ?",
+                questionId: 2,
                 questionPage: 1,
                 questionType: "a"
                 ),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question:
-                    "ท่านมีอาการชา และ/หรือ\nอาการปวดร้าวไปยังบริเวณอื่น\nอาทิเช่น ปวดร้าวลงแขนหรือไม่ ?",
-                questionId: 12,
+                    "ท่านมีอาการชา และ/หรืออาการปวดร้าวไปยังบริเวณอื่น อาทิเช่น ปวดร้าวลงแขนหรือไม่ ?",
+                questionId: 3,
                 questionPage: 1,
                 questionType: "a"
                 ),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question:
-                    "หลังจากทำท่าทางดังกล่าว\nท่านมีอาการปวด/ตึงเกิดขึ้น แต่อาการลดลงหรือ\nหายไปเมื่อหยุดพักใช่หรือไม่?",
-                questionId: 13,
+                    "หลังจากทำท่าทางดังกล่าว ท่านมีอาการปวด/ตึงเกิดขึ้น แต่อาการลดลงหรือหายไปเมื่อหยุดพักใช่หรือไม่?",
+                questionId: 4,
                 questionPage: 1,
                 questionType: "a"
                 ),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
                 question:
-                    "หลังจากทำท่าทางดังกล่าว\nท่านมีอาการเวียนหัว\nเวียนหน้าใช่หรือไม่ ?",
-                questionId: 14,
+                    "หลังจากทำท่าทางดังกล่าว ท่านมีอาการเวียนหัวเวียนหน้าใช่หรือไม่ ?",
+                questionId: 5,
                 questionPage: 1,
                 questionType: "a"
                 ),

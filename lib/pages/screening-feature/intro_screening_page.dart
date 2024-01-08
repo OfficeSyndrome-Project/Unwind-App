@@ -3,6 +3,7 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/intro_screening_box_widget.dart';
 import 'package:unwind_app/data/screening-data/intro_screening_data.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/loading_page.dart';
 
@@ -11,7 +12,9 @@ import '../../Widgets/button_withouticon_widget.dart';
 //intro to part one
 class IntroScreeningPage extends StatefulWidget {
   final int currentIndex;
-  const IntroScreeningPage({super.key, required this.currentIndex});
+  final List<ScreeningPartTwoModel> selectPart;
+  const IntroScreeningPage(
+      {super.key, required this.currentIndex, required this.selectPart});
   @override
   State<IntroScreeningPage> createState() => _IntroScreeningPartOneState();
 }
@@ -27,7 +30,9 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPage> {
     } else if (widget.currentIndex == 1) {
       return pageRoutes.screening.screeningparttwoquestion().route(context);
     } else if (widget.currentIndex == 2) {
-      return pageRoutes.screening.warningpartthree().route(context);
+      return pageRoutes.screening
+          .warningpartthree(widget.selectPart)
+          .route(context);
     }
     return MaterialPageRoute<dynamic>(
       builder: (context) => LoadingPage(),
@@ -38,12 +43,11 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPage> {
   Widget build(BuildContext context) {
     return AppscreenTheme(
         iconButtonStart: IconButton(
+          highlightColor: Colors.transparent,
           icon: const Icon(Icons.arrow_back_ios_rounded),
           onPressed: () {
             Navigator.pop(context);
           },
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(0),
           color: Theme.of(context).colorScheme.primary,
         ),
         colorBar: Colors.transparent,
