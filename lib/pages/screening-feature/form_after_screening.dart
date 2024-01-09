@@ -30,10 +30,6 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   }
 
   void initCreateUser() async {
-    // final User storageUser = await ProfileService.getUser();
-    // setState(() {
-    //   createUser = storageUser;
-    // });
     controllerFirstname.text = createUser.firstName;
     controllerLastname.text = createUser.lastName;
     controllerAge.text = createUser.age.toString();
