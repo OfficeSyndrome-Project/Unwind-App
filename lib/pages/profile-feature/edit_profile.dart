@@ -3,14 +3,16 @@ import 'package:unwind_app/Widgets/profile-widget/profile_button.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_dropdown.dart';
+import 'package:unwind_app/models/user.dart';
+import 'package:unwind_app/pages/loading_page.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
 
 import '../../Routes/routes_config.dart';
 
 class EditProfile extends StatefulWidget {
-  final String? name;
-  final String? lastname;
-  const EditProfile({Key? key, this.name, this.lastname}) : super(key: key);
+  const EditProfile({
+    Key? key,
+  }) : super(key: key);
   // PageRoutes pageRoutes = PageRoutes();
 
   @override
@@ -19,30 +21,51 @@ class EditProfile extends StatefulWidget {
 
 class EditProfileState extends State<EditProfile> {
   PageRoutes pageRoutes = PageRoutes();
-  final _editcontroller = TextEditingController();
-  final _lastnameController = TextEditingController();
-  String name = "";
-  String lastname = "";
+  final firstnameController = TextEditingController();
+  final lastnameController = TextEditingController();
+  final ageController = TextEditingController();
+  final heightController = TextEditingController();
+  final weightController = TextEditingController();
+  User _user = User();
+  bool loading = true;
 
   @override
   void initState() {
     super.initState();
-    initName();
+    // initName();
+    initUser();
   }
 
-  void initName() async {
-    final String storageName = await ProfileService.getName();
-    final String storageLastname = await ProfileService.getLastname();
+  // void initName() async {
+  //   final String storageName = await ProfileService.getName();
+  //   final String storageLastname = await ProfileService.getLastname();
+  //   setState(() {
+  //     name = storageName;
+  //     lastname = storageLastname;
+  //     _editcontroller.text = name;
+  //     _lastnameController.text = lastname;
+  //   });
+  // }
+
+  void initUser() async {
+    final User storageUser = await ProfileService.getUser();
     setState(() {
-      name = storageName;
-      lastname = storageLastname;
-      _editcontroller.text = name;
-      _lastnameController.text = lastname;
+      _user = storageUser;
+      loading = false;
     });
+    firstnameController.text = _user.firstName;
+    lastnameController.text = _user.lastName;
+    ageController.text = _user.age.toString();
+    heightController.text = _user.height.toString();
+    weightController.text = _user.weight.toString();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (loading)
+      return LoadingPage(
+        isShowNavbar: false,
+      );
     return AppscreenTheme(
         textBar: pageRoutes.profile.editpage().title,
         textStyle: const TextStyle(
@@ -70,16 +93,32 @@ class EditProfileState extends State<EditProfile> {
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   ProfileTextForm(
-                    controller: _editcontroller,
+                    onChange: (value) {
+                      setState(() {
+                        _user.firstName = value;
+                      });
+                    },
+                    controller: firstnameController,
                     formName: 'ชื่อ',
                   ),
                   const SizedBox(height: 16),
                   ProfileTextForm(
+                    onChange: (value) {
+                      setState(() {
+                        _user.lastName = value;
+                      });
+                    },
                     formName: 'นามสกุล',
-                    controller: _lastnameController,
+                    controller: lastnameController,
                   ),
                   const SizedBox(height: 16),
-                  const ProfileTextForm(
+                  ProfileTextForm(
+                    onChange: (value) {
+                      setState(() {
+                        _user.age = int.tryParse(value) ?? 0;
+                      });
+                    },
+                    controller: ageController,
                     formName: 'อายุ',
                     inputType: TextInputType.number,
                     formUnit: 'ปี',
@@ -88,15 +127,33 @@ class EditProfileState extends State<EditProfile> {
                   ProfileDropdown(
                     dropdownName: 'เพศ',
                     listSelection: ['ชาย', 'หญิง'],
+                    defaultValue: _user.sex,
+                    onSelect: (value) {
+                      setState(() {
+                        _user.sex = value;
+                      });
+                    },
                   ),
                   const SizedBox(height: 16),
-                  const ProfileTextForm(
+                  ProfileTextForm(
+                    onChange: (value) {
+                      setState(() {
+                        _user.height = int.tryParse(value) ?? 0;
+                      });
+                    },
+                    controller: heightController,
                     formName: 'ส่วนสูง',
                     inputType: TextInputType.number,
                     formUnit: 'ซม.',
                   ),
                   const SizedBox(height: 16),
-                  const ProfileTextForm(
+                  ProfileTextForm(
+                    onChange: (value) {
+                      setState(() {
+                        _user.weight = int.tryParse(value) ?? 0;
+                      });
+                    },
+                    controller: weightController,
                     formName: 'น้ำหนัก',
                     inputType: TextInputType.number,
                     formUnit: 'กก.',
@@ -114,11 +171,23 @@ class EditProfileState extends State<EditProfile> {
                       "นักกีฬา",
                       "อื่น ๆ"
                     ],
+                    defaultValue: _user.career,
+                    onSelect: (value) {
+                      setState(() {
+                        _user.career = value;
+                      });
+                    },
                   ),
                   const SizedBox(height: 16),
                   ProfileDropdown(
                     dropdownName: 'การประสบอุบัติเหตุ',
                     listSelection: ['เคย', 'ไม่เคย'],
+                    defaultValue: _user.accident,
+                    onSelect: (value) {
+                      setState(() {
+                        _user.accident = value;
+                      });
+                    },
                   ),
                   SizedBox(
                     height: 48,
@@ -126,9 +195,9 @@ class EditProfileState extends State<EditProfile> {
                   ProfileButton(
                     onPressed: () {
                       setState(() {
-                        name = _editcontroller.text;
-                        // print(name);
-                        Navigator.pop(context);
+                        ProfileService.writeUser(_user);
+                        // print("USER:" + _user.age.toString());
+                        Navigator.pop(context, _user);
                         // Navigator.push(
                         //   context,
                         //   pageRoutes.profile.profilepage().route(context),
