@@ -10,10 +10,10 @@ class User {
   User({
     this.firstName = "",
     this.lastName = "",
-    this.age = -1,
+    this.age = 0,
     this.sex = "",
-    this.height = -1,
-    this.weight = -1,
+    this.height = 0,
+    this.weight = 0,
     this.career = "",
     this.accident = "",
   });

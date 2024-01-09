@@ -25,7 +25,6 @@ class ProfileDropdownState extends State<ProfileDropdown> {
   void initState() {
     super.initState();
 
-    // ตั้งค่า _selectedCareer ตามความต้องการ
     _selectedValue = widget.listSelection.contains(widget.defaultValue)
         ? widget.defaultValue ??
             (widget.listSelection.isNotEmpty ? widget.listSelection[0] : null)
@@ -56,7 +55,10 @@ class ProfileDropdownState extends State<ProfileDropdown> {
           setState(() {
             _selectedValue = value;
           });
-          widget.onSelect?.call(value ?? "");
+          // widget.onSelect?.call(value ?? "");
+          if (_selectedValue != widget.defaultValue) {
+            widget.onSelect?.call(value ?? "");
+          }
         },
         value: _selectedValue,
         icon: const Icon(
