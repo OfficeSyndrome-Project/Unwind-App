@@ -18,7 +18,6 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   PageRoutes pageRoutes = PageRoutes();
-
   User user = User();
   bool loading = true;
 

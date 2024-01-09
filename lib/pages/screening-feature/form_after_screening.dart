@@ -5,6 +5,8 @@ import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/models/user.dart';
+import 'package:unwind_app/services/profile-service/profile_service.dart';
 
 class FormAfterScreening extends StatefulWidget {
   const FormAfterScreening({Key? key}) : super(key: key);
@@ -14,6 +16,31 @@ class FormAfterScreening extends StatefulWidget {
 }
 
 class _FormAfterScreeningState extends State<FormAfterScreening> {
+  final controllerFirstname = TextEditingController();
+  final controllerLastname = TextEditingController();
+  final controllerAge = TextEditingController();
+  final controllerHeight = TextEditingController();
+  final controllerWeight = TextEditingController();
+  User createUser = User();
+
+  @override
+  void initState() {
+    super.initState();
+    initCreateUser();
+  }
+
+  void initCreateUser() async {
+    // final User storageUser = await ProfileService.getUser();
+    // setState(() {
+    //   createUser = storageUser;
+    // });
+    controllerFirstname.text = createUser.firstName;
+    controllerLastname.text = createUser.lastName;
+    controllerAge.text = createUser.age.toString();
+    controllerHeight.text = createUser.height.toString();
+    controllerWeight.text = createUser.weight.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
@@ -58,33 +85,69 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                 ),
                 ProfileTextForm(
                   formName: 'ชื่อ',
+                  controller: controllerFirstname,
+                  onChange: (value) {
+                    setState(() {
+                      createUser.firstName = value;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16),
                 ProfileTextForm(
                   formName: 'นามสกุล',
+                  controller: controllerLastname,
+                  onChange: (value) {
+                    setState(() {
+                      createUser.lastName = value;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16),
-                const ProfileTextForm(
+                ProfileTextForm(
                   formName: 'อายุ',
                   inputType: TextInputType.number,
                   formUnit: 'ปี',
+                  controller: controllerAge,
+                  onChange: (value) {
+                    setState(() {
+                      createUser.age = int.tryParse(value) ?? 0;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16),
                 ProfileDropdown(
                   dropdownName: 'เพศ',
                   listSelection: ['ชาย', 'หญิง'],
+                  defaultValue: 'ชาย',
+                  onSelect: (value) {
+                    setState(() {
+                      createUser.sex = value;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16),
-                const ProfileTextForm(
+                ProfileTextForm(
                   formName: 'ส่วนสูง',
                   inputType: TextInputType.number,
                   formUnit: 'ซม.',
+                  controller: controllerHeight,
+                  onChange: (value) {
+                    setState(() {
+                      createUser.height = int.tryParse(value) ?? 0;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16),
-                const ProfileTextForm(
+                ProfileTextForm(
                   formName: 'น้ำหนัก',
                   inputType: TextInputType.number,
                   formUnit: 'กก.',
+                  controller: controllerWeight,
+                  onChange: (value) {
+                    setState(() {
+                      createUser.weight = int.tryParse(value) ?? 0;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16),
                 ProfileDropdown(
@@ -99,6 +162,23 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                     "นักกีฬา",
                     "อื่น ๆ"
                   ],
+                  defaultValue: 'นักเรียน/นักศึกษา',
+                  onSelect: (value) {
+                    setState(() {
+                      createUser.career = value;
+                    });
+                  },
+                ),
+                const SizedBox(height: 16),
+                ProfileDropdown(
+                  dropdownName: 'การประสบอุบัติเหตุ',
+                  listSelection: ['เคย', 'ไม่เคย'],
+                  defaultValue: 'ไม่เคย',
+                  onSelect: (value) {
+                    setState(() {
+                      createUser.accident = value;
+                    });
+                  },
                 ),
               ],
             ),
@@ -126,7 +206,24 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
             ])),
           ),
           ButtonWithoutIconWidget(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  if (createUser.sex == "") {
+                    createUser.sex =
+                        'ชาย'; // หรือให้ค่าเป็น defaultValue ที่ต้องการ
+                  }
+                  if (createUser.career == "") {
+                    createUser.career =
+                        'นักเรียน/นักศึกษา'; // หรือให้ค่าเป็น defaultValue ที่ต้องการ
+                  }
+                  if (createUser.accident == "") {
+                    createUser.accident =
+                        'ไม่เคย'; // หรือให้ค่าเป็น defaultValue ที่ต้องการ
+                  }
+
+                  ProfileService.writeUser(createUser);
+                });
+              },
               text: "สมัครสมาชิก",
               radius: 32,
               width: double.infinity,
