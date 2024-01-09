@@ -5,6 +5,8 @@ import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/models/user.dart';
+import 'package:unwind_app/pages/loading_page.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,13 +18,30 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   PageRoutes pageRoutes = PageRoutes();
-  String Pname = 'กฤตศยา';
-  String PlastName = 'นทีมณฑล';
+
+  User user = User();
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    initUser();
+  }
+
+  void initUser() async {
+    final User storageUser = await ProfileService.getUser();
+    setState(() {
+      user = storageUser;
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    ProfileService.writeName("กฤตศยา");
-    ProfileService.writeLastname("นทีมณฑล");
+    if (loading)
+      return LoadingPage(
+        isShowNavbar: false,
+      );
     return AppscreenTheme(
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -74,23 +93,30 @@ class ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 16,
                     ),
-                    ShowInfomation(headDetails: 'ชื่อ', detail: Pname),
-                    SizedBox(height: 2),
-                    ShowInfomation(headDetails: 'นามสกุล', detail: PlastName),
-                    SizedBox(height: 2),
-                    ShowInfomation(headDetails: 'อายุ', detail: '21'),
-                    SizedBox(height: 2),
-                    ShowInfomation(headDetails: 'เพศ', detail: 'หญิง'),
-                    SizedBox(height: 2),
-                    ShowInfomation(headDetails: 'น้ำหนัก', detail: '40 กก.'),
-                    SizedBox(height: 2),
-                    ShowInfomation(headDetails: 'ส่วนสูง', detail: '160 ซม.'),
+                    ShowInfomation(headDetails: 'ชื่อ', detail: user.firstName),
                     SizedBox(height: 2),
                     ShowInfomation(
-                        headDetails: 'อาชีพ', detail: 'นักเรียน/นักศึกษา'),
+                        headDetails: 'นามสกุล', detail: user.lastName),
                     SizedBox(height: 2),
                     ShowInfomation(
-                        headDetails: 'การประสบอุบัติเหตุ', detail: 'ไม่เคย'),
+                        headDetails: 'อายุ',
+                        detail: user.age.toString() + " ปี"),
+                    SizedBox(height: 2),
+                    ShowInfomation(headDetails: 'เพศ', detail: user.sex),
+                    SizedBox(height: 2),
+                    ShowInfomation(
+                        headDetails: 'น้ำหนัก',
+                        detail: user.weight.toString() + " กก."),
+                    SizedBox(height: 2),
+                    ShowInfomation(
+                        headDetails: 'ส่วนสูง',
+                        detail: user.height.toString() + " ซม."),
+                    SizedBox(height: 2),
+                    ShowInfomation(headDetails: 'อาชีพ', detail: user.career),
+                    SizedBox(height: 2),
+                    ShowInfomation(
+                        headDetails: 'การประสบอุบัติเหตุ',
+                        detail: user.accident),
                   ],
                 ),
               ),
@@ -100,10 +126,20 @@ class ProfilePageState extends State<ProfilePage> {
             alignment: Alignment.centerLeft,
             child: TextButton(
               onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   pageRoutes.profile.editpage().route(context),
+                // );
                 Navigator.push(
                   context,
                   pageRoutes.profile.editpage().route(context),
-                );
+                ).then((updatedUser) {
+                  if (updatedUser != null) {
+                    setState(() {
+                      user = updatedUser;
+                    });
+                  }
+                });
               },
               child: TextWithStartIconWidget(
                   startIcon: Icon(

@@ -8,6 +8,7 @@ class ProfileTextForm extends StatefulWidget {
     this.inputType,
     this.formUnit,
     this.controller,
+    this.onChange,
     Key? key,
   }) : super(key: key);
 
@@ -15,6 +16,7 @@ class ProfileTextForm extends StatefulWidget {
   final TextInputType? inputType;
   final String? formUnit;
   final TextEditingController? controller;
+  final void Function(String)? onChange;
 
   @override
   ProfileTextFormState createState() => ProfileTextFormState();
@@ -64,13 +66,7 @@ class ProfileTextFormState extends State<ProfileTextForm> {
       width: double.infinity,
       child: TextFormField(
         onChanged: (value) {
-          setState(() {
-            if (value.contains(' ')) {
-              errorTextShow = 'ห้ามใช้ blank space';
-            } else {
-              errorTextShow = '';
-            }
-          });
+          widget.onChange?.call(value);
         },
         controller: _controller,
         focusNode: _focusNode,
