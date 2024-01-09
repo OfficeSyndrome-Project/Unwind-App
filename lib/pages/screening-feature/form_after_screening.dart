@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_dropdown.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
@@ -16,6 +17,7 @@ class FormAfterScreening extends StatefulWidget {
 }
 
 class _FormAfterScreeningState extends State<FormAfterScreening> {
+
   final controllerFirstname = TextEditingController();
   final controllerLastname = TextEditingController();
   final controllerAge = TextEditingController();
@@ -36,6 +38,9 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
     controllerHeight.text = createUser.height.toString();
     controllerWeight.text = createUser.weight.toString();
   }
+
+
+  PageRoutes pageRoutes = PageRoutes();
 
   @override
   Widget build(BuildContext context) {
@@ -203,6 +208,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
           ),
           ButtonWithoutIconWidget(
               onTap: () {
+
                 setState(() {
                   if (createUser.sex == "") {
                     createUser.sex =
@@ -219,6 +225,10 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
 
                   ProfileService.writeUser(createUser);
                 });
+
+                Navigator.push(context,
+                    pageRoutes.screening.resultsworkout().route(context));
+
               },
               text: "สมัครสมาชิก",
               radius: 32,
