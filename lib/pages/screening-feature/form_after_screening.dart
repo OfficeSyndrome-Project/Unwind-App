@@ -17,7 +17,6 @@ class FormAfterScreening extends StatefulWidget {
 }
 
 class _FormAfterScreeningState extends State<FormAfterScreening> {
-
   final controllerFirstname = TextEditingController();
   final controllerLastname = TextEditingController();
   final controllerAge = TextEditingController();
@@ -38,7 +37,6 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
     controllerHeight.text = createUser.height.toString();
     controllerWeight.text = createUser.weight.toString();
   }
-
 
   PageRoutes pageRoutes = PageRoutes();
 
@@ -208,7 +206,6 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
           ),
           ButtonWithoutIconWidget(
               onTap: () {
-
                 setState(() {
                   if (createUser.sex == "") {
                     createUser.sex =
@@ -228,7 +225,6 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
 
                 Navigator.push(context,
                     pageRoutes.screening.resultsworkout().route(context));
-
               },
               text: "สมัครสมาชิก",
               radius: 32,
