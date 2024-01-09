@@ -10,6 +10,7 @@ import 'package:unwind_app/pages/screening-feature/form_after_screening.dart';
 import 'package:unwind_app/pages/screening-feature/intro_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/question_after_part_two.dart';
 import 'package:unwind_app/pages/screening-feature/question_after_warning_part_three.dart';
+import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/screening-feature/warning_part_three_page.dart';
@@ -67,11 +68,16 @@ class Screening {
           ));
   PathRoute formafterscreening() =>
       PathRoute(title: "", widget: FormAfterScreening());
+  PathRoute resultsworkout() =>
+      PathRoute(title: "", widget: ResultsWorkoutPage());
 }
 
 class Home {
-  PathRoute workoutlist() =>
-      PathRoute(title: "ชุดท่าบริหาร", widget: const HomePage());
+  PathRoute workoutlist() => PathRoute(
+      title: "ชุดท่าบริหาร",
+      widget: const HomePage(
+        selectedIndex: 1,
+      ));
   PathRoute screenpage() => PathRoute(title: "", widget: WorkoutListPage());
   PathRoute reportworkoutpage() =>
       PathRoute(title: "ชุดท่าบริหาร", widget: const ReportWorkoutPage());
