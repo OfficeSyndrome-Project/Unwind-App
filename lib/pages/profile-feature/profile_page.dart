@@ -18,8 +18,7 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   PageRoutes pageRoutes = PageRoutes();
-  String Pname = 'กฤตศยา';
-  String PlastName = 'นทีมณฑล';
+
   User user = User();
   bool loading = true;
 
@@ -127,10 +126,20 @@ class ProfilePageState extends State<ProfilePage> {
             alignment: Alignment.centerLeft,
             child: TextButton(
               onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   pageRoutes.profile.editpage().route(context),
+                // );
                 Navigator.push(
                   context,
                   pageRoutes.profile.editpage().route(context),
-                );
+                ).then((updatedUser) {
+                  if (updatedUser != null) {
+                    setState(() {
+                      user = updatedUser;
+                    });
+                  }
+                });
               },
               child: TextWithStartIconWidget(
                   startIcon: Icon(

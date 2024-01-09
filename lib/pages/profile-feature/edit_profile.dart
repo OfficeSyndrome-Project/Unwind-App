@@ -10,9 +10,9 @@ import 'package:unwind_app/services/profile-service/profile_service.dart';
 import '../../Routes/routes_config.dart';
 
 class EditProfile extends StatefulWidget {
-  final String? name;
-  final String? lastname;
-  const EditProfile({Key? key, this.name, this.lastname}) : super(key: key);
+  const EditProfile({
+    Key? key,
+  }) : super(key: key);
   // PageRoutes pageRoutes = PageRoutes();
 
   @override
@@ -21,35 +21,31 @@ class EditProfile extends StatefulWidget {
 
 class EditProfileState extends State<EditProfile> {
   PageRoutes pageRoutes = PageRoutes();
-  final _editcontroller = TextEditingController();
-  final _lastnameController = TextEditingController();
   final firstnameController = TextEditingController();
   final lastnameController = TextEditingController();
   final ageController = TextEditingController();
   final heightController = TextEditingController();
   final weightController = TextEditingController();
-  String name = "";
-  String lastname = "";
   User _user = User();
   bool loading = true;
 
   @override
   void initState() {
     super.initState();
-    initName();
+    // initName();
     initUser();
   }
 
-  void initName() async {
-    final String storageName = await ProfileService.getName();
-    final String storageLastname = await ProfileService.getLastname();
-    setState(() {
-      name = storageName;
-      lastname = storageLastname;
-      _editcontroller.text = name;
-      _lastnameController.text = lastname;
-    });
-  }
+  // void initName() async {
+  //   final String storageName = await ProfileService.getName();
+  //   final String storageLastname = await ProfileService.getLastname();
+  //   setState(() {
+  //     name = storageName;
+  //     lastname = storageLastname;
+  //     _editcontroller.text = name;
+  //     _lastnameController.text = lastname;
+  //   });
+  // }
 
   void initUser() async {
     final User storageUser = await ProfileService.getUser();
@@ -201,7 +197,7 @@ class EditProfileState extends State<EditProfile> {
                       setState(() {
                         ProfileService.writeUser(_user);
                         // print("USER:" + _user.age.toString());
-                        Navigator.pop(context);
+                        Navigator.pop(context, _user);
                         // Navigator.push(
                         //   context,
                         //   pageRoutes.profile.profilepage().route(context),

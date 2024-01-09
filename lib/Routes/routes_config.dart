@@ -110,7 +110,7 @@ class History {
 class Profile {
   PathRoute editpage({String? name}) => PathRoute(
         title: "แก้ไขโปรไฟล์",
-        widget: EditProfile(name: name),
+        widget: EditProfile(),
       );
   PathRoute profilepage({String? name}) => PathRoute(
         title: "โปรไฟล์",
