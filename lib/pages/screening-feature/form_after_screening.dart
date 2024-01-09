@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_dropdown.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
@@ -14,6 +15,7 @@ class FormAfterScreening extends StatefulWidget {
 }
 
 class _FormAfterScreeningState extends State<FormAfterScreening> {
+  PageRoutes pageRoutes = PageRoutes();
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
@@ -126,7 +128,10 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
             ])),
           ),
           ButtonWithoutIconWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    pageRoutes.screening.resultsworkout().route(context));
+              },
               text: "สมัครสมาชิก",
               radius: 32,
               width: double.infinity,
