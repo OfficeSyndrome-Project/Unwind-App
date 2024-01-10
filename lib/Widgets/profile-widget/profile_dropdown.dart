@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ProfileDropdown extends StatefulWidget {
-  final List<String>? listSelection;
+  final List<String> listSelection;
   final String dropdownName;
+  final String? defaultValue;
+  final void Function(String)? onSelect;
 
   ProfileDropdown({
     Key? key,
-    this.listSelection,
+    required this.listSelection,
     required this.dropdownName,
+    this.defaultValue,
+    this.onSelect,
   }) : super(key: key);
 
   @override
@@ -20,10 +24,11 @@ class ProfileDropdownState extends State<ProfileDropdown> {
   @override
   void initState() {
     super.initState();
-    // ตั้งค่า _selectedCareer ตามความต้องการ
-    _selectedValue = widget.listSelection?.isNotEmpty == true
-        ? widget.listSelection![0]
-        : null;
+
+    _selectedValue = widget.listSelection.contains(widget.defaultValue)
+        ? widget.defaultValue ??
+            (widget.listSelection.isNotEmpty ? widget.listSelection[0] : null)
+        : (widget.listSelection.isNotEmpty ? widget.listSelection[0] : null);
   }
 
   @override
@@ -33,7 +38,7 @@ class ProfileDropdownState extends State<ProfileDropdown> {
       width: double.infinity,
       child: DropdownButtonFormField(
         items:
-            widget.listSelection?.map<DropdownMenuItem<String>>((String value) {
+            widget.listSelection.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
               value: value,
               child: Text(
@@ -50,6 +55,10 @@ class ProfileDropdownState extends State<ProfileDropdown> {
           setState(() {
             _selectedValue = value;
           });
+          // widget.onSelect?.call(value ?? "");
+          if (_selectedValue != widget.defaultValue) {
+            widget.onSelect?.call(value ?? "");
+          }
         },
         value: _selectedValue,
         icon: const Icon(
