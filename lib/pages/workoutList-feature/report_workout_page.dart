@@ -47,7 +47,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
               defaultSelect = DateTime.now().weekday - 1;
             },
             color: Colors.white),
-        textBar: pageRoutes.home.reportworkoutpage().title,
+        textBar: pageRoutes.workout.reportworkoutpage().title,
         children: [
           Container(
             alignment: Alignment.center,
@@ -164,7 +164,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                       radius: 106,
                       lineWidth: 46,
                       circularStrokeCap: CircularStrokeCap.round,
-                      percent: dateMockup[currIndex].percent,
+                      percent: dataWorkout[currIndex].percent,
                       center: Container(
                         child: Text(
                           '${percentToIntCeli}%',
@@ -248,7 +248,10 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
           Container(
             margin: EdgeInsets.only(top: 16, bottom: 16),
             child: ButtonWithiconWidget(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      pageRoutes.workout.preparebeforeworkout().route(context));
+                },
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 color: Color(0xFFD7E0F5),
                 icon: Icons.arrow_right_rounded,

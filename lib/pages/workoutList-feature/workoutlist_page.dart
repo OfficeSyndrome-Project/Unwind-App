@@ -27,7 +27,7 @@ class WorkoutListPage extends StatelessWidget {
               WorkoutBoxWidget(
                   onTap: () {
                     Navigator.push(context,
-                        pageRoute.home.reportworkoutpage().route(context));
+                        pageRoute.workout.reportworkoutpage().route(context));
                   },
                   workoutName: 'ชุดท่าบริหารคอ',
                   numberWorkout: '4 ชุดท่า',

@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unwind_app/models/user.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
 
   group('Test create user', () {
