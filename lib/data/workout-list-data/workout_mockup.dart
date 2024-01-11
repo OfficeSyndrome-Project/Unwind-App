@@ -17,27 +17,27 @@ class WorkoutMockup {
         workoutDate: DateTime.utc(2024, 1, 3), //wed
         day: 1,
         isDone: true,
-        percent: 1.0));
+        percent: 0.1));
     workoutmockup.add(WorkoutMockup(
         workoutDate: DateTime.utc(2024, 1, 4),
         day: 2,
         isDone: true,
-        percent: 1.0));
+        percent: 0.2));
     workoutmockup.add(WorkoutMockup(
         workoutDate: DateTime.utc(2024, 1, 5),
         day: 3,
         isDone: true,
-        percent: 1.0));
+        percent: 0.3));
     workoutmockup.add(WorkoutMockup(
         workoutDate: DateTime.utc(2024, 1, 6),
         day: 4,
         isDone: false,
-        percent: 0.5));
+        percent: 0.4));
     workoutmockup.add(WorkoutMockup(
         workoutDate: DateTime.utc(2024, 1, 7),
         day: 5,
         isDone: false,
-        percent: 0.0));
+        percent: 0.5));
     workoutmockup.add(WorkoutMockup(
         workoutDate: DateTime.utc(2024, 1, 8),
         day: 6,

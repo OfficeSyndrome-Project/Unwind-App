@@ -60,7 +60,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                 Container(
                   alignment: Alignment.center,
                   child: RatioImageoneToOne(
-                      assetName: 'lib/assets/images/blank_profile.png',
+                      assetName: 'lib/assets/images/logo.png',
                       smallWidth: 88,
                       largeWidth: 100,
                       smallHeight: 88,
@@ -68,7 +68,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  margin: EdgeInsets.only(bottom: 24),
+                  margin: EdgeInsets.only(top: 8, bottom: 24),
                   child: Text(
                     'unwind',
                     style: TextStyle(
