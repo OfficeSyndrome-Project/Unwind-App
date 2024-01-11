@@ -128,6 +128,7 @@ flutter:
     - lib/assets/images/screeningPart/neck_lean.png
     - lib/assets/images/screeningPart/neck_turn_lr.png
     - lib/assets/images/screeningPart/self_slumper.png
+    - lib/assets/images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

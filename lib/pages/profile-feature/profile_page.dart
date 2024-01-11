@@ -92,7 +92,10 @@ class ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       height: 16,
                     ),
-                    ShowInfomation(headDetails: 'ชื่อ', detail: user.firstName),
+                    ShowInfomation(
+                      headDetails: 'ชื่อ',
+                      detail: user.firstName,
+                    ),
                     SizedBox(height: 2),
                     ShowInfomation(
                         headDetails: 'นามสกุล', detail: user.lastName),

@@ -13,7 +13,7 @@ class LoadingPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         LoadingAnimationWidget.inkDrop(
-            color: Theme.of(context).colorScheme.primary, size: 200),
+            color: Theme.of(context).colorScheme.primary, size: 50),
       ],
       colorBar: isShowNavbar == false ? Colors.transparent : null,
     );
