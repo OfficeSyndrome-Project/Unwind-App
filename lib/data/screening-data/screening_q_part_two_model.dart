@@ -4,12 +4,14 @@ class ScreeningPartTwoSelectPart {
   String assetPath;
   List<int> questionPage;
   String questionType;
+  int questionPart;
   int partOrder;
   ScreeningPartTwoSelectPart({
     required this.title,
     required this.assetPath,
     required this.questionPage,
     required this.questionType,
+    required this.questionPart,
     required this.partOrder,
   });
   static List<ScreeningPartTwoSelectPart> getTitleQPage() => [
@@ -18,6 +20,7 @@ class ScreeningPartTwoSelectPart {
           assetPath: 'lib/assets/images/screeningPart/select_pain_1.png',
           questionPage: [1, 2, 3, 4, 5],
           questionType: "a",
+          questionPart: 2,
           partOrder: 0,
         ),
         ScreeningPartTwoSelectPart(
@@ -25,6 +28,7 @@ class ScreeningPartTwoSelectPart {
           assetPath: 'lib/assets/images/screeningPart/select_pain_2.png',
           questionPage: [1, 2, 3],
           questionType: "b",
+          questionPart: 2,
           partOrder: 1,
         ),
         ScreeningPartTwoSelectPart(
@@ -32,6 +36,7 @@ class ScreeningPartTwoSelectPart {
           assetPath: 'lib/assets/images/screeningPart/select_pain_3.png',
           questionPage: [1, 2, 3],
           questionType: "b",
+          questionPart: 2,
           partOrder: 2,
         ),
         ScreeningPartTwoSelectPart(
@@ -39,6 +44,7 @@ class ScreeningPartTwoSelectPart {
           assetPath: 'lib/assets/images/screeningPart/select_pain_4.png',
           questionPage: [1, 2],
           questionType: "a",
+          questionPart: 2,
           partOrder: 3,
         ),
         ScreeningPartTwoSelectPart(
@@ -46,6 +52,7 @@ class ScreeningPartTwoSelectPart {
           assetPath: 'lib/assets/images/screeningPart/select_pain_5.png',
           questionPage: [1, 2],
           questionType: "a",
+          questionPart: 2,
           partOrder: 4,
         )
       ];
@@ -61,12 +68,15 @@ class ScreeningPartTwoQuestionModel {
   String question;
   int questionPage;
   String questionType;
+  int questionPart;
   int questionId;
+
   ScreeningPartTwoQuestionModel({
     required this.topic,
     required this.question,
     required this.questionPage,
     required this.questionType,
+    required this.questionPart,
     required this.questionId,
   });
   static List<ScreeningPartTwoQuestionModel>
@@ -78,6 +88,7 @@ class ScreeningPartTwoQuestionModel {
                     "1. ท่านมีอาการปวดบริเวณดังกล่าวมากกว่า 1 ครั้งใน 1 วัน ?",
                 questionPage: 0,
                 questionType: "a",
+                questionPart: 2,
                 questionId: 1),
             ScreeningPartTwoQuestionModel(
                 topic: null,
@@ -85,6 +96,7 @@ class ScreeningPartTwoQuestionModel {
                     "2. อาการปวดของท่านไม่เปลี่ยนแปลงระดับความรุนแรงตามช่วงเวลาของวันหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
                 questionPage: 0,
                 questionType: "a",
+                questionPart: 2,
                 questionId: 2),
             //type b (คำถาม 4 ข้อ)
             ScreeningPartTwoQuestionModel(
@@ -93,6 +105,7 @@ class ScreeningPartTwoQuestionModel {
                     "1. ท่านมีอาการปวดบริเวณดังกล่าวมากกว่า 1 ครั้งใน 1 วัน ?",
                 questionPage: 0,
                 questionType: "b",
+                questionPart: 2,
                 questionId: 1),
             ScreeningPartTwoQuestionModel(
                 topic: null,
@@ -100,6 +113,7 @@ class ScreeningPartTwoQuestionModel {
                     "2. อาการปวดของท่านไม่เปลี่ยนแปลง\nระดับความรุนแรงตามช่วงเวลาของวัน\nหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
                 questionPage: 0,
                 questionType: "b",
+                questionPart: 2,
                 questionId: 2),
             ScreeningPartTwoQuestionModel(
                 topic: "อาการ/ความลึก",
@@ -107,6 +121,7 @@ class ScreeningPartTwoQuestionModel {
                     "3.ท่านมีอาการปวดลักษณะตื้อ ๆ ตึง ๆ ที่\nบริเวณดังกล่าวใช่หรือไม่ ?",
                 questionPage: 1,
                 questionType: "b",
+                questionPart: 2,
                 questionId: 3),
             ScreeningPartTwoQuestionModel(
                 topic: "อาการ/ความลึก",
@@ -114,6 +129,7 @@ class ScreeningPartTwoQuestionModel {
                     "4.อาการปวดของท่านมีลักษณะ\nใกล้เคียงกับข้อใดมากที่สุด ?",
                 questionPage: 2,
                 questionType: "b",
+                questionPart: 2,
                 questionId: 4),
           ];
   @override
@@ -130,6 +146,7 @@ class ScreeningPartTwoPostureModel {
   String question;
   int questionPage;
   String questionType;
+  int questionPart;
   int questionId;
 
   ScreeningPartTwoPostureModel({
@@ -139,6 +156,7 @@ class ScreeningPartTwoPostureModel {
     required this.question,
     required this.questionPage,
     required this.questionType,
+    required this.questionPart,
     required this.questionId,
   });
 
@@ -152,6 +170,7 @@ class ScreeningPartTwoPostureModel {
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
             questionPage: 0,
             questionType: "a",
+            questionPart: 2,
             questionId: 3),
         ScreeningPartTwoPostureModel(
             title: "คอ",
@@ -161,6 +180,7 @@ class ScreeningPartTwoPostureModel {
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
             questionPage: 1,
             questionType: "a",
+            questionPart: 2,
             questionId: 4),
         ScreeningPartTwoPostureModel(
             title: "คอ",
@@ -170,6 +190,7 @@ class ScreeningPartTwoPostureModel {
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
             questionPage: 2,
             questionType: "a",
+            questionPart: 2,
             questionId: 5),
         ScreeningPartTwoPostureModel(
             title: "คอ",
@@ -179,6 +200,7 @@ class ScreeningPartTwoPostureModel {
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
             questionPage: 3,
             questionType: "a",
+            questionPart: 2,
             questionId: 6),
         ScreeningPartTwoPostureModel(
             title: "หลังส่วนบน",
@@ -188,6 +210,7 @@ class ScreeningPartTwoPostureModel {
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
             questionPage: 0,
             questionType: "a",
+            questionPart: 2,
             questionId: 3),
         ScreeningPartTwoPostureModel(
             title: "หลังส่วนล่าง",
@@ -197,6 +220,7 @@ class ScreeningPartTwoPostureModel {
                 "เมื่อท่านทำท่าทางดังกล่าว\nท่านมีอาการปวดเพิ่มขึ้น หรือปวดแสบร้อน หรือไม่ ?",
             questionPage: 0,
             questionType: "a",
+            questionPart: 2,
             questionId: 3),
       ];
   @override

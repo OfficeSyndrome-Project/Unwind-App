@@ -234,7 +234,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         Row(
                           children: [
                             GeneralAnimatedCustomRadio<int>(
-                                value: 2,
+                                value: 3,
                                 groupValue: currentOptions,
                                 onChanged: (value) {
                                   setState(() {
@@ -267,7 +267,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         Row(
                           children: [
                             GeneralAnimatedCustomRadio<int>(
-                                value: 2,
+                                value: 4,
                                 groupValue: currentOptions,
                                 onChanged: (value) {
                                   setState(() {

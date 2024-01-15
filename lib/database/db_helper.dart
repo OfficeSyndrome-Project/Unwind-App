@@ -43,7 +43,7 @@ class DatabaseHelper {
           db.execute('''
           CREATE TABLE ScreeningTest (
             t_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp TEXT
+            timestamp DATETIME
             );
           ''');
 
@@ -67,7 +67,7 @@ class DatabaseHelper {
             NRS_before INTEGER,
             NRS_after INTEGER,
             WOL_id INTEGER,
-            timestamp TEXT,
+            timestamp DATETIME,
             FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
           );
         ''');
@@ -76,7 +76,7 @@ class DatabaseHelper {
           db.execute('''
           CREATE TABLE WorkoutList (
             WOL_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            createAt TEXT,
+            createAt DATETIME,
             isActivate TEXT
           );
         ''');
