@@ -14,6 +14,7 @@ import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/screening-feature/warning_part_three_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/prepare_before_workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/report_workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 import '../data/alarm-data/timewatch_obj.dart';
@@ -33,6 +34,7 @@ class PageRoutes {
   History history = History();
   Profile profile = Profile();
   Screening screening = Screening();
+  Workout workout = Workout();
 }
 
 class Screening {
@@ -79,8 +81,6 @@ class Home {
         selectedIndex: 1,
       ));
   PathRoute screenpage() => PathRoute(title: "", widget: WorkoutListPage());
-  PathRoute reportworkoutpage() =>
-      PathRoute(title: "ชุดท่าบริหาร", widget: const ReportWorkoutPage());
 }
 
 class Menu {
@@ -122,6 +122,13 @@ class Profile {
         title: "โปรไฟล์",
         widget: ProfilePage(),
       );
+}
+
+class Workout {
+  PathRoute reportworkoutpage() =>
+      PathRoute(title: "ชุดท่าบริหาร", widget: const ReportWorkoutPage());
+  PathRoute preparebeforeworkout() =>
+      PathRoute(title: "ชุดท่าบริหาร", widget: PrepareBeforeWorkoutPage());
 }
 
 class PathRoute {
