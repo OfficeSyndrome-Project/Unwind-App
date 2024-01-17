@@ -77,27 +77,19 @@ class DatabaseHelper {
           CREATE TABLE WorkoutList (
             WOL_id INTEGER PRIMARY KEY AUTOINCREMENT,
             createAt DATETIME,
-            isActivate TEXT
+            isActivated INTEGER
           );
         ''');
 
-          // Create Have_workout table
-          db.execute('''
-          CREATE TABLE Have_workout (
-            HWOL_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            WOL_id INTEGER,
-            IsDone TEXT,
-            FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
-          );
-        ''');
-
-          // Create Workout table
           db.execute('''
           CREATE TABLE Workout (
-            w_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            type TEXT,
-            name TEXT,
-            image TEXT
+            WOL_id INTEGER,
+            w_id INTEGER PRIMARY KEY,
+            w_type TEXT,
+            w_name TEXT,
+            w_image TEXT,
+            Date DATETIME,
+            FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
           );
         ''');
         },

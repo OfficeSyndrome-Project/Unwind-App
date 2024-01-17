@@ -132,6 +132,21 @@ flutter:
     - lib/assets/images/screeningPart/neck_turn_lr.png
     - lib/assets/images/screeningPart/self_slumper.png
     - lib/assets/images/logo.png
+    - lib/assets/images/workout-thumbnail-img/back01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/back02_80x80.png
+    - lib/assets/images/workout-thumbnail-img/backth01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/nechch02_80x80.PNG
+    - lib/assets/images/workout-thumbnail-img/nechch03_80x80.PNG
+    - lib/assets/images/workout-thumbnail-img/neckch01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth02_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth03_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth04_80x80.PNG
+    - lib/assets/images/workout-thumbnail-img/neckth05_80x80.PNG
+    - lib/assets/images/workout-thumbnail-img/shoulder01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/shoulder02_80x80.png
+    - lib/assets/images/workout-thumbnail-img/shoulder03_80x80.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

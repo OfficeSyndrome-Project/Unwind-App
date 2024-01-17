@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:unwind_app/database/db_helper.dart';
-import 'package:unwind_app/model/user_model.dart';
+import 'package:unwind_app/models/user_model.dart';
 
 class UserDB{
   DatabaseHelper database;
