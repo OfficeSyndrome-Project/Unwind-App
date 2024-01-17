@@ -6,6 +6,7 @@ import 'package:unwind_app/database/screeningtest_db.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,18 @@ void main() async{
       DateTime.now()
   );
 
+  ScreeningDiagnoseService.diagnose(
+    [
+      Answer(QuestionPart: 2, title: "คอ", questionID: 2, answer: 1)
+    ],
+    {
+      ScreeningTitle.neck: 2,
+      ScreeningTitle.baa: 2,
+      ScreeningTitle.shoulder: 3,
+      ScreeningTitle.lowerback: 4,
+      ScreeningTitle.upperback: 8,
+    }
+  );
   runApp(const MyApp());
 }
 

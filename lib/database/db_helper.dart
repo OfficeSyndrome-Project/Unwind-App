@@ -28,16 +28,16 @@ class DatabaseHelper {
         },
         onCreate: (db, version) {
           //Create User table
-          db.execute('''
-          CREATE TABLE users(
-                u_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                name TEXT, age INTEGER, 
-                weight INTEGER, 
-                height INTEGER, 
-                sex TEXT, 
-                career TEXT, 
-                accident TEXT)
-          ''');
+          // db.execute('''
+          // CREATE TABLE users(
+          //       u_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+          //       name TEXT, age INTEGER, 
+          //       weight INTEGER, 
+          //       height INTEGER, 
+          //       sex TEXT, 
+          //       career TEXT, 
+          //       accident TEXT)
+          // ''');
 
           // Create ScreeningTest table
           db.execute('''
@@ -61,37 +61,28 @@ class DatabaseHelper {
         ''');
 
           // Create NRS table
-          db.execute('''
-          CREATE TABLE NRS (
-            NRS_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            NRS_before INTEGER,
-            NRS_after INTEGER,
-            WOL_id INTEGER,
-            timestamp DATETIME,
-            FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
-          );
-        ''');
+        //   db.execute('''
+        //   CREATE TABLE NRS (
+        //     NRS_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //     NRS_before INTEGER,
+        //     NRS_after INTEGER,
+        //     WOL_id INTEGER,
+        //     timestamp DATETIME,
+        //     FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
+        //   );
+        // ''');
 
           // Create WorkoutList table
           db.execute('''
           CREATE TABLE WorkoutList (
             WOL_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            createAt DATETIME,
-            isActivated INTEGER
+            date DATETIME,
+            WOL_title TEXT,
+            remaining_times INTEGER,
+            NRS_before INTEGER,
+            NRS_after INTEGER
           );
-        ''');
-
-          db.execute('''
-          CREATE TABLE Workout (
-            WOL_id INTEGER,
-            w_id INTEGER PRIMARY KEY,
-            w_type TEXT,
-            w_name TEXT,
-            w_image TEXT,
-            Date DATETIME,
-            FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
-          );
-        ''');
+          ''');
         },
         version: 1,
       ),

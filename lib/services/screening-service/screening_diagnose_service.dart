@@ -10,6 +10,11 @@ class Answer {
     required this.questionID,
     required this.answer,
   });
+
+  @override
+  String toString() {
+    return 'Answer{QuestionPart: $QuestionPart, title: $title, questionID: $questionID, answer: $answer}';
+  }
 }
 
 class ShowGoToDoctorPageService {
@@ -59,6 +64,78 @@ class ShowGoToDoctorPageService {
   }
 }
 
+enum ScreeningTitle { neck, baa, shoulder, lowerback, upperback }
+
+enum WorkoutlistTitle { neckbaa, shoulder, back }
+
 class ScreeningDiagnoseService {
-  
+  //function for check condition of nrs
+  static bool NRSlessthan8(int NRS) {
+    return NRS.abs() < 8;
+  }
+
+  //function to convert neck and baa to neckbaa, shoulder to shoulder, lowerback and upperback to back
+  static WorkoutlistTitle convertToWorkoutlistTittle(ScreeningTitle title) {
+    if (title == ScreeningTitle.neck || title == ScreeningTitle.baa) {
+      return WorkoutlistTitle.neckbaa;
+    }
+    if (title == ScreeningTitle.shoulder) {
+      return WorkoutlistTitle.shoulder;
+    }
+    if (title == ScreeningTitle.lowerback ||
+        title == ScreeningTitle.upperback) {
+      return WorkoutlistTitle.back;
+    }
+    throw Exception("title is not in ScreeningTitle");
+  }
+
+  static diagnose(List<Answer> answers, Map<ScreeningTitle, int?> nrs) {
+    //dictionary Title.part to thai string
+    final toThai = {
+      ScreeningTitle.neck: "คอ",
+      ScreeningTitle.baa: "บ่า",
+      ScreeningTitle.shoulder: "ไหล่",
+      ScreeningTitle.lowerback: "หลังส่วนล่าง",
+      ScreeningTitle.upperback: "หลังส่วนบน",
+    };
+
+    List<WorkoutlistTitle> workoutList = [];
+    //loop nrs ทีละอัน
+    nrs.forEach((key, value) {
+      //check if nrs is null then cancel this part
+      if (value == null) {
+        return;
+      }
+      //filter nrs by checkNRS (if nrs>=8 then cancel this part)
+      if (NRSlessthan8(value)) {
+        print("key : $key , value : $value");
+        //filter answers by title (which is nrs < 8)
+        final ans_of_title =
+            answers.where((element) => element.title == toThai[key]).toList();
+        print(ans_of_title);
+
+        ans_of_title.forEach((element) {
+          //filter gotodoctor
+          if (ShowGoToDoctorPageService.showGoToDoctorPage(element.QuestionPart,
+              element.title, element.questionID, element.answer)) {
+            print("key : $key , value : $value");
+            print("element : $element");
+            return;
+          }
+          //give workout list
+          workoutList.add(convertToWorkoutlistTittle(key));
+        });
+      }
+    });
+
+    // workoutList
+    //เขียนลง db , ใส่ timestamp  
+    //ดึง constant model ด้วย 1 ในคอลัมน์ของ db (workoutList title
+    //Date ชุดท่า times
+
+    //write workoutdata and timestamp to db (insert)
+  }
+
 }
+
+//เก็บคำตอบลง ่history

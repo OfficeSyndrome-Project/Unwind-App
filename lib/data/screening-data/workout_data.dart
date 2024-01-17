@@ -7,6 +7,10 @@ class WorkoutList{
     required this.titlePath,
     required this.workoutData,
   });
+  @override
+  String toString() {
+    return 'WorkoutList{title: $title, titlePath: $titlePath, workoutData: $workoutData}';
+  }
 }
 
 class WorkoutData {
@@ -27,6 +31,11 @@ class WorkoutData {
     required this.animationPaths,
   });
 
+  @override
+  String toString() {
+    return 'WorkoutData{title: $title, name: $name, detail: $detail, time: $time, thumbnailPath: $thumbnailPath, videoPath: $videoPath, animationPaths: $animationPaths}';
+  }
+  
   static List<WorkoutData> getWorkoutData() => [
     //คอ-บ่า
     //stretch
