@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:unwind_app/Routes/routes_config.dart';
-import 'package:unwind_app/data/screening-data/workout_data.dart';
-import 'package:unwind_app/database/db_helper.dart';
 import 'package:unwind_app/database/screeningtest_db.dart';
-import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/injection_container.dart';
-import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
@@ -67,18 +62,15 @@ void main() async {
   //     await wl.insertWorkoutList(wol);
   //   }
   // }
-  ScreeningDiagnoseService.diagnose(
-    [
-      Answer(QuestionPart: 2, title: "คอ", questionID: 2, answer: 2)
-    ],
-    {
-      ScreeningTitle.neck: 2,
-      ScreeningTitle.baa: 2,
-      ScreeningTitle.shoulder: 3,
-      ScreeningTitle.lowerback: 4,
-      ScreeningTitle.upperback: 8,
-    }
-  );
+  ScreeningDiagnoseService.diagnose([
+    Answer(QuestionPart: 2, title: "คอ", questionID: 2, answer: 2)
+  ], {
+    ScreeningTitle.neck: 2,
+    ScreeningTitle.baa: 2,
+    ScreeningTitle.shoulder: 3,
+    ScreeningTitle.lowerback: 4,
+    ScreeningTitle.upperback: 8,
+  });
   runApp(const MyApp());
 }
 

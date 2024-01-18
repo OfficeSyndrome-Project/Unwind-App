@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:unwind_app/database/db_helper.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 
-class WorkoutListDB{
+class WorkoutListDB {
   DatabaseHelper database;
   WorkoutListDB(this.database);
   //insert workoutlist
@@ -17,8 +17,8 @@ class WorkoutListDB{
   }
 
   //calculate percentage done
-  Future<double> calculatePercentageDone(DateTime date,String title) async {
-    final workoutlist = await getWorkoutListByDateAndTitle(date,title);
+  Future<double> calculatePercentageDone(DateTime date, String title) async {
+    final workoutlist = await getWorkoutListByDateAndTitle(date, title);
     if (workoutlist.isEmpty) {
       return 0;
     }
@@ -26,15 +26,15 @@ class WorkoutListDB{
     if (workout.remaining_times == null || workout.total_times == null) {
       return 0;
     }
-    final percentage = (100*workout.remaining_times!) / workout.total_times!;
+    final percentage = (100 * workout.remaining_times!) / workout.total_times!;
     return double.tryParse(percentage.toStringAsFixed(0)) ?? 0;
-    
   }
 
   //query all workoutlist
   Future<List<WorkoutListModel>> getallWorkoutList() async {
     Database db = await database.database;
-    final List<Map<String, dynamic>> maps = await db.query('WorkoutList',where: "deleted_at IS NULL");
+    final List<Map<String, dynamic>> maps =
+        await db.query('WorkoutList', where: "deleted_at IS NULL");
     return maps.map((e) => WorkoutListModel.fromJson(e)).toList();
   }
 
@@ -52,7 +52,8 @@ class WorkoutListDB{
   }
 
   //query workoutlist by date and title
-  Future<List<WorkoutListModel>> getWorkoutListByDateAndTitle(DateTime date, String title) async {
+  Future<List<WorkoutListModel>> getWorkoutListByDateAndTitle(
+      DateTime date, String title) async {
     final workoutlist = await getWorkoutListByDate(date);
     return workoutlist.where((element) => element.WOL_title == title).toList();
   }
@@ -69,11 +70,11 @@ class WorkoutListDB{
   }
 
   //function check if there is workoutlist titles
-  Future<bool> checkIfThereIsWorkoutListTitles(String workoutList) async{
+  Future<bool> checkIfThereIsWorkoutListTitles(String workoutList) async {
     final result_get_by_title = await getWorkoutListByTitle(workoutList);
     return result_get_by_title.isNotEmpty;
   }
-  
+
   //update NRS before
   Future<void> updateNRSbefore(int NRS, int WOL_id) async {
     Database db = await database.database;
@@ -95,7 +96,7 @@ class WorkoutListDB{
       whereArgs: [WOL_id],
     );
   }
-  
+
   //delete workoutlist
   Future<void> deleteWorkoutList(int WOL_id) async {
     Database db = await database.database;

@@ -2,11 +2,12 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:unwind_app/database/db_helper.dart';
 
-class ScreeningTestAnswerDB{
+class ScreeningTestAnswerDB {
   DatabaseHelper database;
   ScreeningTestAnswerDB(this.database);
 
-  Future<int> insertScreeningTestAnswer(int tId,int id, String type, String area, int qId, String ans) async {
+  Future<int> insertScreeningTestAnswer(
+      int tId, int id, String type, String area, int qId, String ans) async {
     Database db = await database.database;
     return await db.insert('ScreeningTest_answer', {
       't_id': tId,

@@ -46,8 +46,7 @@ class _QuestionAfterWarningPartThreeState
       List<int> pageNumberList =
           part.postures.map((e) => e.questionPage).toSet().toList();
       for (var pageNumber in pageNumberList) {
-        var postureWidget = 
-            PosturePartThreeWidget(
+        var postureWidget = PosturePartThreeWidget(
             questions: ScreeningQuestionPartThreeService.getPostureByPage(
                 part.postures, pageNumber),
             currentPage: currentPage,

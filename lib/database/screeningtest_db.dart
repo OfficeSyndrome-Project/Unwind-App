@@ -8,9 +8,13 @@ class ScreeningTestDB {
 
   Future<int> insertScreeningTest(DateTime timestamp) async {
     Database db = await database.database;
-    return await db.insert('ScreeningTest', {'created_at': timestamp.toIso8601String(),},);
+    return await db.insert(
+      'ScreeningTest',
+      {
+        'created_at': timestamp.toIso8601String(),
+      },
+    );
   }
-
 
   // Future<int> insertScreeningTest(Map<String, dynamic> screeningTest) async {
   //   Database db = await database.database;

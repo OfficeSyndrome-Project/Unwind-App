@@ -7,5 +7,6 @@ final serviceLocator = GetIt.instance;
 Future<void> init() async {
   //database helper
   serviceLocator.registerSingleton<DatabaseHelper>(DatabaseHelper());
-  serviceLocator.registerLazySingleton<WorkoutListDB>(() => WorkoutListDB(serviceLocator<DatabaseHelper>()));
+  serviceLocator.registerLazySingleton<WorkoutListDB>(
+      () => WorkoutListDB(serviceLocator<DatabaseHelper>()));
 }

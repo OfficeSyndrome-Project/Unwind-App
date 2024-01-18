@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:unwind_app/database/db_helper.dart';
 import 'package:unwind_app/models/user_model.dart';
 
-class UserDB{
+class UserDB {
   DatabaseHelper database;
   UserDB(this.database);
 
@@ -42,8 +42,8 @@ class UserDB{
       whereArgs: [id],
     );
   }
-  
-  Future<UserModel> getUser(int id) async{
+
+  Future<UserModel> getUser(int id) async {
     // Get a reference to the database.
     Database db = await database.database;
     // Query the table for all The Dogs.
@@ -52,7 +52,7 @@ class UserDB{
     return UserModel.fromJson(maps.first);
   }
 
-  Future<List<UserModel>> getAllUser() async{
+  Future<List<UserModel>> getAllUser() async {
     // Get a reference to the database.
     Database db = await database.database;
     // Query the table for all The Dogs.

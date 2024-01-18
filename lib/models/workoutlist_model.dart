@@ -49,7 +49,7 @@ class WorkoutListModel {
   // String toString() {
   //   return 'WorkoutListModel{WOL_id: $WOL_id, date: $date, WOL_title: $WOL_title, remaining_times: $remaining_times, total_times: $total_times, NRS_before: $NRS_before, NRS_after: $NRS_after, deleted_at: $deleted_at}';
   // }
-  
+
   //title and date
   @override
   String toString() {

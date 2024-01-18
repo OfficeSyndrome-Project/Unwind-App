@@ -30,12 +30,12 @@ class DatabaseHelper {
           //Create User table
           // db.execute('''
           // CREATE TABLE users(
-          //       u_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-          //       name TEXT, age INTEGER, 
-          //       weight INTEGER, 
-          //       height INTEGER, 
-          //       sex TEXT, 
-          //       career TEXT, 
+          //       u_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          //       name TEXT, age INTEGER,
+          //       weight INTEGER,
+          //       height INTEGER,
+          //       sex TEXT,
+          //       career TEXT,
           //       accident TEXT)
           // ''');
 
@@ -61,16 +61,16 @@ class DatabaseHelper {
         ''');
 
           // Create NRS table
-        //   db.execute('''
-        //   CREATE TABLE NRS (
-        //     NRS_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        //     NRS_before INTEGER,
-        //     NRS_after INTEGER,
-        //     WOL_id INTEGER,
-        //     timestamp DATETIME,
-        //     FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
-        //   );
-        // ''');
+          //   db.execute('''
+          //   CREATE TABLE NRS (
+          //     NRS_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          //     NRS_before INTEGER,
+          //     NRS_after INTEGER,
+          //     WOL_id INTEGER,
+          //     timestamp DATETIME,
+          //     FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
+          //   );
+          // ''');
 
           // Create WorkoutList table
           db.execute('''
