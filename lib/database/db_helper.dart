@@ -43,7 +43,7 @@ class DatabaseHelper {
           db.execute('''
           CREATE TABLE ScreeningTest (
             t_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp DATETIME
+            created_at DATETIME
             );
           ''');
 
@@ -54,7 +54,7 @@ class DatabaseHelper {
             t_id INTEGER,
             type TEXT,
             area TEXT,
-            qID INTEGER,
+            q_id INTEGER,
             ans TEXT,
             FOREIGN KEY (t_id) REFERENCES ScreeningTest(t_id)
           );
@@ -79,8 +79,10 @@ class DatabaseHelper {
             date DATETIME,
             WOL_title TEXT,
             remaining_times INTEGER,
+            total_times INTEGER,
             NRS_before INTEGER,
-            NRS_after INTEGER
+            NRS_after INTEGER,
+            deleted_at DATETIME
           );
           ''');
         },
