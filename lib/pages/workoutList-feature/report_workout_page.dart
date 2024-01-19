@@ -250,7 +250,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
             child: ButtonWithiconWidget(
                 onTap: () {
                   Navigator.push(context,
-                      pageRoutes.workout.preparebeforeworkout().route(context));
+                      pageRoutes.workout.infooflistworkout().route(context));
                 },
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 color: Color(0xFFD7E0F5),
@@ -261,7 +261,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                 radius: 16,
                 shadows: [
                   BoxShadow(
-                    color: Color(0x19000000),
+                    color: Color.fromARGB(24, 141, 52, 52),
                     blurRadius: 4,
                     offset: Offset(0, 1),
                     spreadRadius: 0,

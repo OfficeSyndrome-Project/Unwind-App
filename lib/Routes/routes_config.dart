@@ -14,7 +14,10 @@ import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/screening-feature/warning_part_three_page.dart';
-import 'package:unwind_app/pages/workoutList-feature/prepare_before_workout_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/info_set_workout_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/info_of_list_workout_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/report_workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 import '../data/alarm-data/timewatch_obj.dart';
@@ -127,8 +130,14 @@ class Profile {
 class Workout {
   PathRoute reportworkoutpage() =>
       PathRoute(title: "ชุดท่าบริหาร", widget: const ReportWorkoutPage());
-  PathRoute preparebeforeworkout() =>
-      PathRoute(title: "ชุดท่าบริหาร", widget: PrepareBeforeWorkoutPage());
+  PathRoute infooflistworkout() =>
+      PathRoute(title: "ดูชุดท่าทั้งหมด", widget: InfoOfListWorkoutPage());
+  PathRoute infoofsetworkout() =>
+      PathRoute(title: "คำอธิบายชุดท่า", widget: InfoSetWorkoutPage());
+  PathRoute nrsafterandbeforeworkout() =>
+      PathRoute(title: "ประเมินความเจ็บปวด", widget: NrsAfterAndBeforePage());
+  PathRoute preparebeforeworkout() => PathRoute(
+      title: "เตรียมพร้อมก่อนเริ่มออกกำลังกาย", widget: WorkoutPage());
 }
 
 class PathRoute {

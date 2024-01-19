@@ -41,7 +41,9 @@ dependencies:
   intl: ^0.18.1
   percent_indicator: ^4.2.3
   auto_size_text: ^3.0.0
-
+  circular_countdown_timer: ^0.2.3
+  image_sequence_animator: ^2.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -129,6 +131,17 @@ flutter:
     - lib/assets/images/screeningPart/neck_turn_lr.png
     - lib/assets/images/screeningPart/self_slumper.png
     - lib/assets/images/logo.png
+    - lib/assets/images/workout/prepare/prepare.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-1.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-2.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-3.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-4.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-5.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-6.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-7.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-8.png
+    - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-9.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
