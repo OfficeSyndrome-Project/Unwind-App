@@ -3,13 +3,15 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
 
 class ScreeningQuestionBoxWidget extends StatefulWidget {
   final String? assetPath;
-  final List<String> questions;
+  final List<ScreeningPartOneModel> questions;
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
+  final void Function(int,int) onChanged;
   // final ScreeningPartOneModel question;
 
   const ScreeningQuestionBoxWidget(
@@ -18,7 +20,9 @@ class ScreeningQuestionBoxWidget extends StatefulWidget {
       required this.questions,
       required this.currentPage,
       required this.pageRoutes,
-      required this.controller});
+      required this.controller,
+      required this.onChanged
+      });
 
   @override
   State<ScreeningQuestionBoxWidget> createState() =>
@@ -84,8 +88,11 @@ class _ScreeningQuestionBoxWidgetState
                       height: 16,
                     ),
                     itemBuilder: (context, index) => QuestionAndRadioButton(
-                        questions: widget.questions[index],
+                        questions: widget.questions[index].question,
                         questionId: index,
+                        onChanged: (value){
+                          widget.onChanged(widget.questions[index].questionId,value);
+                        },
                         questionPage: widget.currentPage),
                   );
                 },
@@ -99,12 +106,14 @@ class QuestionAndRadioButton extends StatefulWidget {
   final int questionPage;
   final int questionId;
   final String pagename = "screening";
+  final void Function(dynamic)? onChanged;
 
   const QuestionAndRadioButton({
     super.key,
     required this.questionPage,
     required this.questionId,
     required this.questions,
+     this.onChanged,
   });
 
   @override
@@ -151,10 +160,10 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         value: 1,
                         groupValue: currentOptions,
                         onChanged: (value) {
+                          widget.onChanged!(value);
                           setState(() {
                             currentOptions = value;
                           });
-                          // onCurrentOptionsChanged(true);
                         },
                         activeColor: Theme.of(context).colorScheme.primary,
                         inactiveColor: Theme.of(context).colorScheme.primary),
@@ -178,6 +187,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                           value: 2,
                           groupValue: currentOptions,
                           onChanged: (value) {
+                            widget.onChanged!(value);
                             setState(() {
                               currentOptions = value;
                             });

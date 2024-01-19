@@ -62,15 +62,15 @@ void main() async {
   //     await wl.insertWorkoutList(wol);
   //   }
   // }
-  ScreeningDiagnoseService.diagnose([
-    Answer(QuestionPart: 2, title: "คอ", questionID: 2, answer: 2)
-  ], {
-    ScreeningTitle.neck: 2,
-    ScreeningTitle.baa: 2,
-    ScreeningTitle.shoulder: 3,
-    ScreeningTitle.lowerback: 4,
-    ScreeningTitle.upperback: 8,
-  });
+  // ScreeningDiagnoseService.diagnose([
+  //   Answer(QuestionPart: 2, title: "คอ", questionID: 2, answer: 2)
+  // ], {
+  //   ScreeningTitle.neck: 2,
+  //   ScreeningTitle.baa: 2,
+  //   ScreeningTitle.shoulder: 3,
+  //   ScreeningTitle.lowerback: 4,
+  //   ScreeningTitle.upperback: 8,
+  // });
   runApp(const MyApp());
 }
 

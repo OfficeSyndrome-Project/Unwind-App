@@ -41,7 +41,7 @@ class WorkoutListModel {
       total_times: json['total_times'],
       NRS_before: json['NRS_before'],
       NRS_after: json['NRS_after'],
-      deleted_at: DateTime.tryParse(json['deleted_at']),
+      deleted_at: DateTime.tryParse(json['deleted_at']??''),
     );
   }
 

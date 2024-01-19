@@ -3,6 +3,7 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 import '../../Widgets/button_withouticon_widget.dart';
 
@@ -22,17 +23,30 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
+  List<Answer> answers = [];
+  void handleCurrentOptionsChanged(int questionID, int value) {
+    setState(() {
+      answers = Answer.updateAnswer(answers, Answer(
+        questionID: questionID,
+        answer: value,
+        questionPart: 1,
+        title: null,
+      ));
+    });
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> questionsWidgets =
         ScreeningQuestionPartOneService.getAllQuestionPage()
             .map((questionPage) => ScreeningQuestionBoxWidget(
                   assetPath: questionPage.assetPath,
-                  questions: ScreeningQuestionPartOneService.getQuestionsByPage(
-                      questionPage.questionPage),
+                  questions: ScreeningQuestionPartOneService.getQuestionsByPage(questionPage.questionPage),
                   currentPage: currentPage,
                   pageRoutes: pageRoutes,
                   controller: _controller,
+                  onChanged: handleCurrentOptionsChanged,
                 ))
             .toList();
 
@@ -75,6 +89,15 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           ),
           ButtonWithoutIconWidget(
               onTap: () {
+                print(answers);
+                // if (ShowGoToDoctorPageService.showGoToDoctorPage(
+                //     questionPart, title, questionID, answer))
+                //     {
+                //   Navigator.push(
+                //       context,
+                //       pageRoutes.screening
+                //           .introscreeningpage(1, []).route(context));
+                // }
                 currentPage < questionsWidgets.length - 1
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 300),

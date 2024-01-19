@@ -3,21 +3,44 @@ import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 
 class Answer {
-  final int QuestionPart;
+  final int questionPart;
   final String? title;
   final int questionID;
   final int answer;
 
   const Answer({
-    required this.QuestionPart,
+    required this.questionPart,
     required this.title,
     required this.questionID,
     required this.answer,
   });
 
+  static List<Answer> updateAnswer(List<Answer> answers, Answer answer) {
+    final index =
+        answers.indexWhere((element) => element.isSameQuestion(answer));
+    if (index == -1) {
+      answers.add(answer);
+      return answers;
+    }
+    answers[index] = answer;
+    return answers;
+  }
+
+  isSameQuestion(Answer o) =>
+      o.questionPart == questionPart &&
+      o.title == title &&
+      o.questionID == questionID;
+  @override
+  operator ==(o) =>
+      o is Answer &&
+      o.questionPart == questionPart &&
+      o.title == title &&
+      o.questionID == questionID &&
+      o.answer == answer;
+
   @override
   String toString() {
-    return 'Answer{QuestionPart: $QuestionPart, title: $title, questionID: $questionID, answer: $answer}';
+    return 'Answer{QuestionPart: $questionPart, title: $title, questionID: $questionID, answer: $answer}';
   }
 }
 
@@ -25,42 +48,42 @@ class ShowGoToDoctorPageService {
   static final List<Answer> shouldSeeDoctor = [
     //yes = 1 , no = 2
     //part 1
-    Answer(QuestionPart: 1, title: null, questionID: 1, answer: 2),
-    Answer(QuestionPart: 1, title: null, questionID: 2, answer: 1),
-    Answer(QuestionPart: 1, title: null, questionID: 3, answer: 1),
-    Answer(QuestionPart: 1, title: null, questionID: 4, answer: 1),
+    Answer(questionPart: 1, title: null, questionID: 1, answer: 2),
+    Answer(questionPart: 1, title: null, questionID: 2, answer: 1),
+    Answer(questionPart: 1, title: null, questionID: 3, answer: 1),
+    Answer(questionPart: 1, title: null, questionID: 4, answer: 1),
     //part 2
-    Answer(QuestionPart: 2, title: "คอ", questionID: 2, answer: 1),
-    Answer(QuestionPart: 2, title: "คอ", questionID: 3, answer: 1),
-    Answer(QuestionPart: 2, title: "คอ", questionID: 4, answer: 1),
-    Answer(QuestionPart: 2, title: "คอ", questionID: 5, answer: 1),
-    Answer(QuestionPart: 2, title: "คอ", questionID: 6, answer: 1),
-    Answer(QuestionPart: 2, title: "บ่า", questionID: 2, answer: 1),
-    Answer(QuestionPart: 2, title: "บ่า", questionID: 4, answer: 3),
-    Answer(QuestionPart: 2, title: "บ่า", questionID: 4, answer: 3),
-    Answer(QuestionPart: 2, title: "ไหล่", questionID: 2, answer: 1),
-    Answer(QuestionPart: 2, title: "ไหล่", questionID: 4, answer: 3),
-    Answer(QuestionPart: 2, title: "ไหล่", questionID: 4, answer: 3),
-    Answer(QuestionPart: 2, title: "หลังส่วนบน", questionID: 2, answer: 1),
-    Answer(QuestionPart: 2, title: "หลังส่วนบน", questionID: 3, answer: 1),
-    Answer(QuestionPart: 2, title: "หลังส่วนล่าง", questionID: 2, answer: 1),
-    Answer(QuestionPart: 2, title: "หลังส่วนล่าง", questionID: 3, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionID: 2, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionID: 3, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionID: 4, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionID: 5, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionID: 6, answer: 1),
+    Answer(questionPart: 2, title: "บ่า", questionID: 2, answer: 1),
+    Answer(questionPart: 2, title: "บ่า", questionID: 4, answer: 3),
+    Answer(questionPart: 2, title: "บ่า", questionID: 4, answer: 3),
+    Answer(questionPart: 2, title: "ไหล่", questionID: 2, answer: 1),
+    Answer(questionPart: 2, title: "ไหล่", questionID: 4, answer: 3),
+    Answer(questionPart: 2, title: "ไหล่", questionID: 4, answer: 3),
+    Answer(questionPart: 2, title: "หลังส่วนบน", questionID: 2, answer: 1),
+    Answer(questionPart: 2, title: "หลังส่วนบน", questionID: 3, answer: 1),
+    Answer(questionPart: 2, title: "หลังส่วนล่าง", questionID: 2, answer: 1),
+    Answer(questionPart: 2, title: "หลังส่วนล่าง", questionID: 3, answer: 1),
     //part 3
-    Answer(QuestionPart: 3, title: "คอ", questionID: 2, answer: 1),
-    Answer(QuestionPart: 3, title: "คอ", questionID: 3, answer: 1),
-    Answer(QuestionPart: 3, title: "คอ", questionID: 4, answer: 2),
-    Answer(QuestionPart: 3, title: "บ่า", questionID: 2, answer: 1),
-    Answer(QuestionPart: 3, title: "บ่า", questionID: 3, answer: 1),
-    Answer(QuestionPart: 3, title: "บ่า", questionID: 4, answer: 2),
-    Answer(QuestionPart: 3, title: "หลังส่วนบน", questionID: 2, answer: 1),
-    Answer(QuestionPart: 3, title: "หลังส่วนบน", questionID: 3, answer: 1),
-    Answer(QuestionPart: 3, title: "หลังส่วนบน", questionID: 4, answer: 2),
+    Answer(questionPart: 3, title: "คอ", questionID: 2, answer: 1),
+    Answer(questionPart: 3, title: "คอ", questionID: 3, answer: 1),
+    Answer(questionPart: 3, title: "คอ", questionID: 4, answer: 2),
+    Answer(questionPart: 3, title: "บ่า", questionID: 2, answer: 1),
+    Answer(questionPart: 3, title: "บ่า", questionID: 3, answer: 1),
+    Answer(questionPart: 3, title: "บ่า", questionID: 4, answer: 2),
+    Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 2, answer: 1),
+    Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 3, answer: 1),
+    Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 4, answer: 2),
   ];
 
   static bool showGoToDoctorPage(
       int questionPart, String? title, int questionID, int answer) {
     return shouldSeeDoctor
-        .where((element) => element.QuestionPart == questionPart)
+        .where((element) => element.questionPart == questionPart)
         .where((element) => element.title == title)
         .where((element) => element.questionID == questionID)
         .where((element) => element.answer == answer)
@@ -108,7 +131,7 @@ class ScreeningDiagnoseService {
 
         ans_of_title.forEach((element) {
           //filter gotodoctor
-          if (ShowGoToDoctorPageService.showGoToDoctorPage(element.QuestionPart,
+          if (ShowGoToDoctorPageService.showGoToDoctorPage(element.questionPart,
               element.title, element.questionID, element.answer)) {
             print("key : $key , value : $value");
             print("element : $element");
