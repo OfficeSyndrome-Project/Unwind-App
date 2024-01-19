@@ -130,6 +130,7 @@ flutter:
     - lib/assets/images/screeningPart/neck_lean.png
     - lib/assets/images/screeningPart/neck_turn_lr.png
     - lib/assets/images/screeningPart/self_slumper.png
+    - lib/assets/images/screeningPart/exception_screen.png
     - lib/assets/images/logo.png
     - lib/assets/images/workout/prepare/prepare.png
     - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-1.png
