@@ -43,6 +43,7 @@ dependencies:
   auto_size_text: ^3.0.0
   circular_countdown_timer: ^0.2.3
   image_sequence_animator: ^2.0.0
+  flutter_tts: ^3.8.5
   
 dev_dependencies:
   flutter_test:

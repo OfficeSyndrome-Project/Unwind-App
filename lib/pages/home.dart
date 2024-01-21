@@ -3,6 +3,7 @@ import 'package:unwind_app/pages/screening-feature/get_started_screening_page.da
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/menu_page.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
+import 'package:unwind_app/pages/testingtts_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomeState extends State<HomePage> {
   late int _selectedIndex = widget.selectedIndex;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const ScreeningPage(),
+    TestingTTFPage(),
     WorkoutListPage(),
     const MenuWidget(),
     HistoryPage(),
