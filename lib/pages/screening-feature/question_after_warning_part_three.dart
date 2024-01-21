@@ -71,7 +71,6 @@ class _QuestionAfterWarningPartThreeState
       questionsWidgets_.add(questionWidget);
       //nrs here
       var nrsWidget = BoxNrsWidget();
-
       questionsWidgets_.add(nrsWidget);
     }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:unwind_app/Routes/routes_config.dart';
+import 'package:unwind_app/Widgets/show_dialog_widget.dart';
 
 import 'package:unwind_app/Widgets/workoutlist-widget/circular_countdown_timer_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/next_workout_widget.dart';
@@ -17,25 +19,34 @@ class WorkoutPage extends StatefulWidget {
 
 class _WorkoutPageState extends State<WorkoutPage> {
   static bool isVolumn = true;
-  static final int _duration = 4;
+  static final int _duration = 10;
   static final CountDownController _controller = CountDownController();
-  static String textValue = '';
+
   static int index = 0;
 
   final PageRoutes pageRoutes = PageRoutes();
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  static bool onPressed = true;
 
-  void btnTime(bool isVolumn) {
-    if (isVolumn) {
-      _controller.resume();
-    } else if (!isVolumn) {
+  void btnTime(bool onPressed) {
+    if (onPressed) {
+      _controller.start();
+    } else if (!onPressed) {
       _controller.pause();
     }
   }
+
+  final List<String>? fullPaths = [
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-1.png',
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-2.png',
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-3.png',
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-4.png',
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-5.png',
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-6.png',
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-7.png',
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-8.png',
+    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-9.png',
+  ];
 
   Widget build(BuildContext context) {
     final List<Widget> _widgetOptions = <Widget>[
@@ -43,7 +54,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
           assetName: 'lib/assets/images/workout/prepare/prepare.png'),
       WorkoutWidget(
         name: 'ท่าเอนคอ',
-        assetName: 'lib/assets/images/workout/prepare/prepare.png',
+        fullPaths: fullPaths,
+        duration: _duration,
+        onReadyToPlay: (_imageSequenceAnimator) async {
+          if (_controller.isRestarted == true) {
+            await Future.delayed(Duration(seconds: 2));
+            _imageSequenceAnimator.play();
+          }
+        },
       ),
       NextWorkoutWidget(
         name: 'ท่าดันต้าน',
@@ -59,8 +77,23 @@ class _WorkoutPageState extends State<WorkoutPage> {
             highlightColor: Colors.transparent,
             icon: const Icon(Icons.arrow_back_ios_rounded),
             onPressed: () {
-              Navigator.pop(context);
-              _controller.reset();
+              setState(() {
+                onPressed = !onPressed;
+                btnTime(onPressed);
+              });
+              alertDialog.getshowDialog(context, 'ยกเลิกการบริหารใช่หรือไม่ ?',
+                  () {
+                Navigator.of(context).pop();
+                _controller.resume();
+                setState(() {
+                  onPressed = !onPressed;
+                });
+              }, () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                _controller.reset();
+                index = 0;
+              });
+              _controller.pause();
             },
             color: Theme.of(context).colorScheme.primary),
         iconButtonEnd: IconButton(
@@ -102,8 +135,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
               });
             },
             onChange: (String value) {
-              textValue = value;
-              debugPrint('Countdown Changed $textValue');
+              // speak(value);
+
+              debugPrint('Countdown Changed $value');
             },
           ),
         ]);
