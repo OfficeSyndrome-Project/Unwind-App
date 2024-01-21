@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class TestingTTFPage extends StatefulWidget {
+  const TestingTTFPage({super.key});
+
   @override
   _TestingTTFPageState createState() => _TestingTTFPageState();
 }
