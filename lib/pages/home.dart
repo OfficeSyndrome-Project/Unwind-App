@@ -1,33 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/menu_page.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 
 class HomePage extends StatefulWidget {
-  final int selectedIndex;
-  const HomePage({super.key, required this.selectedIndex});
+  final int? selectedIndex;
+  final Widget? devScreen;
+  const HomePage({super.key, this.selectedIndex, this.devScreen});
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<HomePage> {
-  late int _selectedIndex = widget.selectedIndex;
+  late int _selectedIndex = widget.selectedIndex ?? 0;
 
-  final List<Widget> _widgetOptions = <Widget>[
-    const ScreeningPage(),
+  late List<Widget> _widgetOptions = <Widget>[
     WorkoutListPage(),
     const MenuWidget(),
     HistoryPage(),
     const ProfilePage(),
   ];
 
+  late List<BottomNavigationBarItem> bottomNavigationBarItem =
+      <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      activeIcon: Icon(Icons.home),
+      icon: Icon(Icons.home_outlined),
+      label: 'หน้าแรก',
+      backgroundColor: Color(0xffebedf0),
+    ),
+    BottomNavigationBarItem(
+      activeIcon: Icon(Icons.widgets),
+      icon: Icon(Icons.widgets_outlined),
+      label: 'เมนู',
+      backgroundColor: Color(0xffebedf0),
+    ),
+    BottomNavigationBarItem(
+      activeIcon: Icon(Icons.assignment),
+      icon: Icon(Icons.assignment_outlined),
+      label: 'ประวัติ',
+      backgroundColor: Color(0xffebedf0),
+    ),
+    BottomNavigationBarItem(
+      activeIcon: Icon(Icons.person),
+      icon: Icon(Icons.person_outline),
+      label: 'โปรไฟล์',
+      backgroundColor: Color(0xffebedf0),
+    ),
+  ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.devScreen != null) {
+      final devWidget = widget.devScreen ?? Container();
+      setState(() {
+        _widgetOptions = [devWidget, ..._widgetOptions];
+        bottomNavigationBarItem = [
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.developer_mode),
+            icon: Icon(Icons.developer_mode_outlined),
+            label: 'กำลังพัฒนา',
+            backgroundColor: Color(0xffebedf0),
+          ),
+          ...bottomNavigationBarItem
+        ];
+      });
+    }
   }
 
   @override
@@ -42,38 +89,7 @@ class _HomeState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'screening',
-            backgroundColor: Color(0xffebedf0),
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'หน้าแรก',
-            backgroundColor: Color(0xffebedf0),
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.widgets),
-            icon: Icon(Icons.widgets_outlined),
-            label: 'เมนู',
-            backgroundColor: Color(0xffebedf0),
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.assignment),
-            icon: Icon(Icons.assignment_outlined),
-            label: 'ประวัติ',
-            backgroundColor: Color(0xffebedf0),
-          ),
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.person),
-            icon: Icon(Icons.person_outline),
-            label: 'โปรไฟล์',
-            backgroundColor: Color(0xffebedf0),
-          ),
-        ],
+        items: bottomNavigationBarItem,
         currentIndex: _selectedIndex,
         unselectedLabelStyle: const TextStyle(
           fontFamily: "Noto Sans Thai",
