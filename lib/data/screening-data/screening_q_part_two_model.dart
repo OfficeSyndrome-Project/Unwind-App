@@ -93,7 +93,7 @@ class ScreeningPartTwoQuestionModel {
             ScreeningPartTwoQuestionModel(
                 topic: null,
                 question:
-                    "2. อาการปวดของท่านไม่เปลี่ยนแปลงระดับความรุนแรงตามช่วงเวลาของวันหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
+                    "2. อาการปวดของท่านเปลี่ยนแปลงระดับความรุนแรงตามช่วงเวลาของวันหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
                 questionPage: 0,
                 questionType: "a",
                 questionPart: 2,
@@ -110,7 +110,7 @@ class ScreeningPartTwoQuestionModel {
             ScreeningPartTwoQuestionModel(
                 topic: null,
                 question:
-                    "2. อาการปวดของท่านไม่เปลี่ยนแปลง\nระดับความรุนแรงตามช่วงเวลาของวัน\nหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
+                    "2. อาการปวดของท่านเปลี่ยนแปลง\nระดับความรุนแรงตามช่วงเวลาของวัน\nหรือท่าทางการเคลื่อนไหว ใช่หรือไม่ ?",
                 questionPage: 0,
                 questionType: "b",
                 questionPart: 2,

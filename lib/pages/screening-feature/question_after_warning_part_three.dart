@@ -125,6 +125,30 @@ class _QuestionAfterWarningPartThreeState
           ),
           ButtonWithoutIconWidget(
               onTap: () {
+                bool show_go_to_doctor = false;
+                answers
+                    .where((element) => element.questionPart == 3)
+                    .toList()
+                    .forEach((element) {
+                      print(element);
+                  if (ShowGoToDoctorPageService.showGoToDoctorPage(
+                      element.questionPart,
+                      element.title,
+                      element.questionId,
+                      element.answer)) {
+                    show_go_to_doctor = true;
+                  }
+                });
+                if (show_go_to_doctor == true) {
+                  Navigator.push(
+                      context,
+                      pageRoutes.screening
+                          //แก้ตรงนี้จ้า
+                          .formafterscreening(answers)
+                          .route(context));
+                  // _controller.jumpToPage(pageAmount - 1);
+                  return;
+                }
                 currentPage <
                         questionsWidgets_.length - 1
                     ? _controller.nextPage(

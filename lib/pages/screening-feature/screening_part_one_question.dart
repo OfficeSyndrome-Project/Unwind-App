@@ -26,14 +26,15 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
   List<Answer> answers = [];
   void handleCurrentOptionsChanged(int questionID, int value) {
     setState(() {
-      answers = Answer.updateAnswer(answers, Answer(
-        questionID: questionID,
-        answer: value,
-        questionPart: 1,
-        title: null,
-      ));
+      answers = Answer.updateAnswer(
+          answers,
+          Answer(
+            questionId: questionID,
+            answer: value,
+            questionPart: 1,
+            title: null,
+          ));
     });
-    
   }
 
   @override
@@ -42,7 +43,8 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
         ScreeningQuestionPartOneService.getAllQuestionPage()
             .map((questionPage) => ScreeningQuestionBoxWidget(
                   assetPath: questionPage.assetPath,
-                  questions: ScreeningQuestionPartOneService.getQuestionsByPage(questionPage.questionPage),
+                  questions: ScreeningQuestionPartOneService.getQuestionsByPage(
+                      questionPage.questionPage),
                   currentPage: currentPage,
                   pageRoutes: pageRoutes,
                   controller: _controller,
@@ -90,14 +92,29 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           ButtonWithoutIconWidget(
               onTap: () {
                 print(answers);
-                // if (ShowGoToDoctorPageService.showGoToDoctorPage(
-                //     questionPart, title, questionID, answer))
-                //     {
-                //   Navigator.push(
-                //       context,
-                //       pageRoutes.screening
-                //           .introscreeningpage(1, []).route(context));
-                // }
+                bool show_go_to_doctor=false;
+                answers
+                    .where((element) => element.questionPart == 1)
+                    .toList()
+                    .forEach((element) {
+                  if (ShowGoToDoctorPageService.showGoToDoctorPage(
+                      element.questionPart,
+                      element.title,
+                      element.questionId,
+                      element.answer)) {
+                    show_go_to_doctor = true;
+                  }
+                });
+                if (show_go_to_doctor==true){
+                  Navigator.push(
+                      context,
+                      pageRoutes.screening
+                      //TODO route to doctor page
+                          .formafterscreening(answers)
+                          .route(context));
+                  return;
+                }
+
                 currentPage < questionsWidgets.length - 1
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 300),
@@ -105,7 +122,8 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(1, [],answers).route(context));
+                            .introscreeningpage(1, [], answers)
+                            .route(context));
               },
               text: "ถัดไป",
               radius: 32,

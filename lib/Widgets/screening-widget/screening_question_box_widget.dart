@@ -160,7 +160,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         value: 1,
                         groupValue: currentOptions,
                         onChanged: (value) {
-                          widget.onChanged!(value);
+                          if (widget.onChanged != null) {
+                                    widget.onChanged!(value);
+                                  }
                           setState(() {
                             currentOptions = value;
                           });
@@ -187,7 +189,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                           value: 2,
                           groupValue: currentOptions,
                           onChanged: (value) {
-                            widget.onChanged!(value);
+                            if (widget.onChanged != null) {
+                                    widget.onChanged!(value);
+                                  }
                             setState(() {
                               currentOptions = value;
                             });

@@ -28,6 +28,11 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
   }
 
   List<Answer> answers = [];
+  void handleCurrentAnswerChanged(Answer answer) {
+    setState(() {
+      answers = Answer.updateAnswer(answers, answer);
+    });
+  }
 
   PageRoutes pageRoutes = PageRoutes();
   int currentPage = 0;
@@ -63,7 +68,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           padding: EdgeInsets.all(2),
           children: [
             PartTwoQuestionBoxWidget(
-              typePain: part.selectedPart.title,
+              title: part.selectedPart.title,
               assetPath: part.selectedPart.assetPath,
               questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
                   part.questions, pageNumber),
@@ -71,6 +76,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
               pageRoutes: pageRoutes,
               controller: _controller,
               questionID: part.questions.map((e) => e.questionId).toList(),
+              onChanged: handleCurrentAnswerChanged,
             )
           ],
         ));
@@ -88,6 +94,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           currentPage: currentPage,
           pageRoutes: pageRoutes,
           controller: _controller,
+          onChanged: handleCurrentAnswerChanged,
         );
         questionsWidgets_.add(postureWidget);
       }
@@ -135,11 +142,48 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           ),
           ButtonWithoutIconWidget(
               onTap: () {
+                print(answers);
+                bool show_go_to_doctor = false;
+                //TODO
+                answers
+                    .where((element) => element.questionPart == 2)
+                    .toList()
+                    .forEach((element) {
+                  print(element);
+                  if (ShowGoToDoctorPageService.showGoToDoctorPage(
+                      element.questionPart,
+                      element.title,
+                      element.questionId,
+                      element.answer)) {
+                    show_go_to_doctor = true;
+                  }
+                });
+                if (show_go_to_doctor == true) {
+                  _controller.jumpToPage(pageAmount - 1);
+                }
                 //กรณีเลือกทั้งหมด จะไม่ไปต่อที่ part 3
-                if ((selectedParts.length == 5) && (currentPage == pageAmount - 1)) {
-                  Navigator.push(context,
-                      pageRoutes.screening.formafterscreening(answers).route(context));
-                      return;
+                if ((selectedParts.length == 5) &&
+                    (currentPage == pageAmount - 1)) {
+                  Navigator.push(
+                      context,
+                      pageRoutes.screening
+                          .formafterscreening(answers)
+                          .route(context));
+                  return;
+                }
+                //กรณีเลือก คอ บ่า หลังส่วนล่าง จะไปต่อที่ form ทันที ไม่ต้องทำ part 3
+                final selectedPartsTitle =
+                    selectedParts.map((e) => e.selectedPart.title);
+                if ((selectedPartsTitle.contains('คอ')) &&
+                    (selectedPartsTitle.contains('บ่า')) &&
+                    (selectedPartsTitle.contains('หลังส่วนล่าง')) &&
+                    (currentPage == pageAmount - 1)) {
+                  Navigator.push(
+                      context,
+                      pageRoutes.screening
+                          .formafterscreening(answers)
+                          .route(context));
+                  return;
                 }
                 currentPage < pageAmount - 1
                     ? _controller.nextPage(

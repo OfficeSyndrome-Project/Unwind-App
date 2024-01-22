@@ -71,6 +71,11 @@ void main() async {
   //   ScreeningTitle.lowerback: 4,
   //   ScreeningTitle.upperback: 8,
   // });
+  
+  // print(ShowGoToDoctorPageService.showGoToDoctorPage(1, null, 1, 1));
+  // print(ShowGoToDoctorPageService.showGoToDoctorPage(1, null, 1, 2));
+  
+  
   runApp(const MyApp());
 }
 

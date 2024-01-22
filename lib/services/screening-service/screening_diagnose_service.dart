@@ -5,13 +5,13 @@ import 'package:unwind_app/models/workoutlist_model.dart';
 class Answer {
   final int questionPart;
   final String? title;
-  final int questionID;
+  final int questionId;
   final int answer;
 
   const Answer({
     required this.questionPart,
     required this.title,
-    required this.questionID,
+    required this.questionId,
     required this.answer,
   });
 
@@ -29,26 +29,26 @@ class Answer {
   isSameQuestion(Answer o) =>
       o.questionPart == questionPart &&
       o.title == title &&
-      o.questionID == questionID;
+      o.questionId == questionId;
   
   @override
   operator ==(o) =>
       o is Answer &&
       o.questionPart == questionPart &&
       o.title == title &&
-      o.questionID == questionID &&
+      o.questionId == questionId &&
       o.answer == answer;
 
   @override
   int get hashCode =>
       questionPart.hashCode ^
       title.hashCode ^
-      questionID.hashCode ^
+      questionId.hashCode ^
       answer.hashCode;
 
   @override
   String toString() {
-    return 'Answer{QuestionPart: $questionPart, title: $title, questionID: $questionID, answer: $answer}';
+    return 'Answer{QuestionPart: $questionPart, title: $title, questionID: $questionId, answer: $answer}';
   }
 }
 
@@ -56,46 +56,41 @@ class ShowGoToDoctorPageService {
   static final Set<Answer> shouldSeeDoctor = {
     //yes = 1 , no = 2
     //part 1
-    Answer(questionPart: 1, title: null, questionID: 1, answer: 2),
-    Answer(questionPart: 1, title: null, questionID: 2, answer: 1),
-    Answer(questionPart: 1, title: null, questionID: 3, answer: 1),
-    Answer(questionPart: 1, title: null, questionID: 4, answer: 1),
+    Answer(questionPart: 1, title: null, questionId: 1, answer: 2),
+    Answer(questionPart: 1, title: null, questionId: 2, answer: 1),
+    Answer(questionPart: 1, title: null, questionId: 3, answer: 1),
+    Answer(questionPart: 1, title: null, questionId: 4, answer: 1),
     //part 2
-    Answer(questionPart: 2, title: "คอ", questionID: 2, answer: 1),
-    Answer(questionPart: 2, title: "คอ", questionID: 3, answer: 1),
-    Answer(questionPart: 2, title: "คอ", questionID: 4, answer: 1),
-    Answer(questionPart: 2, title: "คอ", questionID: 5, answer: 1),
-    Answer(questionPart: 2, title: "คอ", questionID: 6, answer: 1),
-    Answer(questionPart: 2, title: "บ่า", questionID: 2, answer: 1),
-    Answer(questionPart: 2, title: "บ่า", questionID: 4, answer: 3),
-    Answer(questionPart: 2, title: "บ่า", questionID: 4, answer: 3),
-    Answer(questionPart: 2, title: "ไหล่", questionID: 2, answer: 1),
-    Answer(questionPart: 2, title: "ไหล่", questionID: 4, answer: 3),
-    Answer(questionPart: 2, title: "ไหล่", questionID: 4, answer: 3),
-    Answer(questionPart: 2, title: "หลังส่วนบน", questionID: 2, answer: 1),
-    Answer(questionPart: 2, title: "หลังส่วนบน", questionID: 3, answer: 1),
-    Answer(questionPart: 2, title: "หลังส่วนล่าง", questionID: 2, answer: 1),
-    Answer(questionPart: 2, title: "หลังส่วนล่าง", questionID: 3, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionId: 2, answer: 2),
+    Answer(questionPart: 2, title: "คอ", questionId: 3, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionId: 4, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionId: 5, answer: 1),
+    Answer(questionPart: 2, title: "คอ", questionId: 6, answer: 1),
+    Answer(questionPart: 2, title: "บ่า", questionId: 2, answer: 2),
+    Answer(questionPart: 2, title: "บ่า", questionId: 4, answer: 3),
+    Answer(questionPart: 2, title: "บ่า", questionId: 4, answer: 3),
+    Answer(questionPart: 2, title: "ไหล่", questionId: 2, answer: 2),
+    Answer(questionPart: 2, title: "ไหล่", questionId: 4, answer: 3),
+    Answer(questionPart: 2, title: "ไหล่", questionId: 4, answer: 3),
+    Answer(questionPart: 2, title: "หลังส่วนบน", questionId: 2, answer: 2),
+    Answer(questionPart: 2, title: "หลังส่วนบน", questionId: 3, answer: 1),
+    Answer(questionPart: 2, title: "หลังส่วนล่าง", questionId: 2, answer: 2),
+    Answer(questionPart: 2, title: "หลังส่วนล่าง", questionId: 3, answer: 1),
     //part 3
-    Answer(questionPart: 3, title: "คอ", questionID: 2, answer: 1),
-    Answer(questionPart: 3, title: "คอ", questionID: 3, answer: 1),
-    Answer(questionPart: 3, title: "คอ", questionID: 4, answer: 2),
-    Answer(questionPart: 3, title: "บ่า", questionID: 2, answer: 1),
-    Answer(questionPart: 3, title: "บ่า", questionID: 3, answer: 1),
-    Answer(questionPart: 3, title: "บ่า", questionID: 4, answer: 2),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 2, answer: 1),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 3, answer: 1),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 4, answer: 2),
+    Answer(questionPart: 3, title: "คอ", questionId: 2, answer: 1),
+    Answer(questionPart: 3, title: "คอ", questionId: 3, answer: 1),
+    Answer(questionPart: 3, title: "คอ", questionId: 4, answer: 2),
+    Answer(questionPart: 3, title: "บ่า", questionId: 2, answer: 1),
+    Answer(questionPart: 3, title: "บ่า", questionId: 3, answer: 1),
+    Answer(questionPart: 3, title: "บ่า", questionId: 4, answer: 2),
+    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 2, answer: 1),
+    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 3, answer: 1),
+    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 4, answer: 2),
   };
 
   static bool showGoToDoctorPage(
       int questionPart, String? title, int questionID, int answer) {
-    return shouldSeeDoctor
-        .where((element) => element.questionPart == questionPart)
-        .where((element) => element.title == title)
-        .where((element) => element.questionID == questionID)
-        .where((element) => element.answer == answer)
-        .isNotEmpty;
+    return shouldSeeDoctor.contains(Answer(questionPart: questionPart, title: title, questionId: questionID, answer: answer));
   }
 }
 
@@ -111,7 +106,7 @@ class ScreeningDiagnoseService {
     return NRS.abs() < 8;
   }
 
-  static Future<void> diagnose(
+  static Future<List<WorkoutlistTitle>> diagnose(
       List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
     //dictionary Title.part to thai string
     final toThai = {
@@ -140,7 +135,7 @@ class ScreeningDiagnoseService {
         ans_of_title.forEach((element) {
           //filter gotodoctor
           if (ShowGoToDoctorPageService.showGoToDoctorPage(element.questionPart,
-              element.title, element.questionID, element.answer)) {
+              element.title, element.questionId, element.answer)) {
             print("key : $key , value : $value");
             print("element : $element");
             return;
@@ -166,6 +161,8 @@ class ScreeningDiagnoseService {
         wl_db.insertWorkoutList(workout);
       }
     }
+
+    return workoutList;
   }
 
   static workoutListsFromScreeningTitle(ScreeningTitle screeningTitle) {
