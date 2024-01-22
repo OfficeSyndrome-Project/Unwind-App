@@ -113,8 +113,8 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       textBar: "นาฬิกาจับเวลา",
       iconButtonStart: IconButton(
-        onPressed: () => alertDialog
-            .getshowDialog(context, 'ยืนยันที่จะหยุดจับเวลาใช่หรือไม่ ?', () {
+        onPressed: () => alertDialog.getshowDialog(
+            context, 'ยืนยันที่จะหยุดจับเวลาใช่หรือไม่ ?', null, () {
           Navigator.of(context).pop();
         }, () {
           Navigator.of(context).popUntil((route) => route.isFirst);

@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
 class alertDialog {
-  static void getshowDialog(BuildContext context, String headText,
-          void Function()? onNoTap, void Function()? onYesTap) =>
+  static void getshowDialog(
+          BuildContext context,
+          String headText,
+          String? subText,
+          void Function()? onNoTap,
+          void Function()? onYesTap) =>
       showDialog<String>(
           context: context,
           barrierDismissible: false,
@@ -39,6 +43,18 @@ class alertDialog {
                           decoration: TextDecoration.none,
                         ),
                       ),
+                      subText == null
+                          ? SizedBox()
+                          : Text(
+                              subText,
+                              style: TextStyle(
+                                color: Color(0xFF484D56),
+                                fontFamily: "Noto Sans Thai",
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                decoration: TextDecoration.none,
+                              ),
+                            ),
                       const SizedBox(
                         height: 8,
                       ),

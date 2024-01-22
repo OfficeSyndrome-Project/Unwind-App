@@ -1,4 +1,9 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/show_dialog_widget.dart';
@@ -17,6 +22,8 @@ class WorkoutPage extends StatefulWidget {
   State<WorkoutPage> createState() => _WorkoutPageState();
 }
 
+enum TtsState { playing, stopped, paused, continued }
+
 class _WorkoutPageState extends State<WorkoutPage> {
   static bool isVolumn = true;
   static final int _duration = 10;
@@ -25,12 +32,146 @@ class _WorkoutPageState extends State<WorkoutPage> {
   static int index = 0;
 
   final PageRoutes pageRoutes = PageRoutes();
-
   static bool onPressed = true;
+
+  late FlutterTts flutterTts;
+  String language = 'th-TH';
+  String? engine;
+  double volume = 0.5;
+  double pitch = 1.0;
+  double rate = 0.6;
+
+  String? _newVoiceText;
+
+  TtsState ttsState = TtsState.stopped;
+
+  get isPlaying => ttsState == TtsState.playing;
+  get isStopped => ttsState == TtsState.stopped;
+  get isPaused => ttsState == TtsState.paused;
+  get isContinued => ttsState == TtsState.continued;
+
+  bool get isIOS => !kIsWeb && Platform.isIOS;
+  bool get isAndroid => !kIsWeb && Platform.isAndroid;
+  bool get isWindows => !kIsWeb && Platform.isWindows;
+  bool get isWeb => kIsWeb;
+
+  @override
+  initState() {
+    super.initState();
+    initTts();
+  }
+
+  initTts() {
+    flutterTts = FlutterTts();
+
+    _setAwaitOptions();
+
+    if (isAndroid) {
+      _getDefaultEngine();
+      _getDefaultVoice();
+    }
+
+    flutterTts.setStartHandler(() {
+      setState(() {
+        print("Playing");
+        ttsState = TtsState.playing;
+      });
+    });
+
+    if (isAndroid) {
+      flutterTts.setInitHandler(() {
+        setState(() {
+          print("TTS Initialized");
+        });
+      });
+    }
+
+    flutterTts.setCompletionHandler(() {
+      setState(() {
+        print("Complete");
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    flutterTts.setCancelHandler(() {
+      setState(() {
+        print("Cancel");
+        ttsState = TtsState.stopped;
+      });
+    });
+
+    flutterTts.setPauseHandler(() {
+      setState(() {
+        print("Paused");
+        ttsState = TtsState.paused;
+      });
+    });
+
+    flutterTts.setContinueHandler(() {
+      setState(() {
+        print("Continued");
+        ttsState = TtsState.continued;
+      });
+    });
+
+    flutterTts.setErrorHandler((msg) {
+      setState(() {
+        print("error: $msg");
+        ttsState = TtsState.stopped;
+      });
+    });
+  }
+
+  Future _getDefaultEngine() async {
+    var engine = await flutterTts.getDefaultEngine;
+    if (engine != null) {
+      print(engine);
+    }
+  }
+
+  Future _getDefaultVoice() async {
+    var voice = await flutterTts.getDefaultVoice;
+    if (voice != null) {
+      print(voice);
+    }
+  }
+
+  Future _speak() async {
+    await flutterTts.setVolume(volume);
+    await flutterTts.setSpeechRate(rate);
+    await flutterTts.setPitch(pitch);
+    await flutterTts.setLanguage(language);
+
+    if (_newVoiceText != null) {
+      if (_newVoiceText!.isNotEmpty) {
+        await flutterTts.speak(_newVoiceText!);
+      }
+    }
+  }
+
+  Future _setAwaitOptions() async {
+    await flutterTts.awaitSpeakCompletion(true);
+  }
+
+  Future _stop() async {
+    var result = await flutterTts.stop();
+    if (result == 1) setState(() => ttsState = TtsState.stopped);
+  }
+
+  Future _pause() async {
+    var result = await flutterTts.pause();
+    if (result == 1) setState(() => ttsState = TtsState.paused);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    flutterTts.stop();
+  }
 
   void btnTime(bool onPressed) {
     if (onPressed) {
-      _controller.start();
+      _controller.resume();
     } else if (!onPressed) {
       _controller.pause();
     }
@@ -48,6 +189,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-9.png',
   ];
 
+  @override
   Widget build(BuildContext context) {
     final List<Widget> _widgetOptions = <Widget>[
       PrepareWorkoutWidget(
@@ -81,8 +223,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 onPressed = !onPressed;
                 btnTime(onPressed);
               });
-              alertDialog.getshowDialog(context, 'ยกเลิกการบริหารใช่หรือไม่ ?',
-                  () {
+              alertDialog.getshowDialog(
+                  context, 'ยกเลิกการบริหารใช่หรือไม่ ?', null, () {
                 Navigator.of(context).pop();
                 _controller.resume();
                 setState(() {
@@ -134,10 +276,11 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 _controller.restart(duration: _duration);
               });
             },
-            onChange: (String value) {
-              // speak(value);
-
-              debugPrint('Countdown Changed $value');
+            onChange: (value) {
+              if (_newVoiceText != value) {
+                _newVoiceText = value;
+                _speak();
+              }
             },
           ),
         ]);

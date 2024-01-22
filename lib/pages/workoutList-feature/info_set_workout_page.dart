@@ -4,6 +4,7 @@ import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/Widgets/workoutlist-widget/box_help_what_point_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class InfoSetWorkoutPage extends StatelessWidget {
@@ -101,22 +102,16 @@ class InfoSetWorkoutPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: TextWithStartIconWidget(
-                  startIcon: Icon(
-                    Icons.check_rounded,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  topicName: 'ช่วยอะไรบ้าง',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF636A75),
-                  ),
-                ),
+              Expanded(
+                child: ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return BoxHelpWhatPointWidget(helpPoint: 'ช่วยส่วนหลัง');
+                    },
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: 8,
+                        ),
+                    itemCount: 3),
               )
             ],
           )),

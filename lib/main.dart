@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
-import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,9 +25,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(
+      home: HomePage(
         selectedIndex: 0,
-        devScreen: ScreeningPage(),
+        devScreen: NrsAfterAndBeforePage(),
       ),
       theme: appTheme,
     );
