@@ -20,6 +20,7 @@ import 'package:unwind_app/pages/workoutList-feature/info_of_list_workout_page.d
 import 'package:unwind_app/pages/workoutList-feature/workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/report_workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import '../data/alarm-data/timewatch_obj.dart';
 import '../data/history-data/summary_list_obj.dart';
 
@@ -42,37 +43,41 @@ class PageRoutes {
 
 class Screening {
   PathRoute introscreeningpage(
-          int currentIndex, List<ScreeningPartTwoModel> selectPart) =>
+          int currentIndex, List<ScreeningPartTwoModel> selectPart,List<Answer>? answers) =>
       PathRoute(
           title: "",
           widget: IntroScreeningPage(
             currentIndex: currentIndex,
             selectPart: selectPart,
+            answers: answers,
           ));
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
-  PathRoute screeningparttwoquestion() =>
-      PathRoute(title: "", widget: const ScreeningPartTwoQuestion());
-  PathRoute questionafterscreeningparttwo(Map<String, bool> onSelectMap) =>
+  PathRoute screeningparttwoquestion(List<Answer>? answers) =>
+      PathRoute(title: "", widget:  ScreeningPartTwoQuestion(answers: answers));
+  PathRoute questionafterscreeningparttwo(Map<String, bool> onSelectMap,List<Answer>? answers ) =>
       PathRoute(
           title: "",
           widget: QuestionAfterPartTwo(
             onSelectMap: onSelectMap,
+            answers: answers,
           ));
-  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart) =>
+  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart, List<Answer>? answers) =>
       PathRoute(
           title: "",
           widget: WarningPartThreePage(
             selectPart: selectPart,
+            answers: answers,
           ));
-  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart) =>
+  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart, List<Answer>? answers) =>
       PathRoute(
           title: "",
           widget: QuestionAfterWarningPartThree(
             selectPart: selectPart,
+            answers: answers,
           ));
-  PathRoute formafterscreening() =>
-      PathRoute(title: "", widget: FormAfterScreening());
+  PathRoute formafterscreening(List<Answer>? answer) =>
+      PathRoute(title: "", widget: FormAfterScreening(answers: answer));
   PathRoute resultsworkout() =>
       PathRoute(title: "", widget: ResultsWorkoutPage());
 }

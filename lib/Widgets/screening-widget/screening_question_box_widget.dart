@@ -11,7 +11,7 @@ class ScreeningQuestionBoxWidget extends StatefulWidget {
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
-  final void Function(int,int) onChanged;
+  final void Function(int, int) onChanged;
   // final ScreeningPartOneModel question;
 
   const ScreeningQuestionBoxWidget(
@@ -21,8 +21,7 @@ class ScreeningQuestionBoxWidget extends StatefulWidget {
       required this.currentPage,
       required this.pageRoutes,
       required this.controller,
-      required this.onChanged
-      });
+      required this.onChanged});
 
   @override
   State<ScreeningQuestionBoxWidget> createState() =>
@@ -90,8 +89,9 @@ class _ScreeningQuestionBoxWidgetState
                     itemBuilder: (context, index) => QuestionAndRadioButton(
                         questions: widget.questions[index].question,
                         questionId: index,
-                        onChanged: (value){
-                          widget.onChanged(widget.questions[index].questionId,value);
+                        onChanged: (value) {
+                          widget.onChanged(
+                              widget.questions[index].questionId, value);
                         },
                         questionPage: widget.currentPage),
                   );
@@ -113,7 +113,7 @@ class QuestionAndRadioButton extends StatefulWidget {
     required this.questionPage,
     required this.questionId,
     required this.questions,
-     this.onChanged,
+    this.onChanged,
   });
 
   @override

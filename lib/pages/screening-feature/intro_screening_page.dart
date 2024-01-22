@@ -6,6 +6,7 @@ import 'package:unwind_app/data/screening-data/intro_screening_data.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/loading_page.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 import '../../Widgets/button_withouticon_widget.dart';
 
@@ -13,8 +14,9 @@ import '../../Widgets/button_withouticon_widget.dart';
 class IntroScreeningPage extends StatefulWidget {
   final int currentIndex;
   final List<ScreeningPartTwoModel> selectPart;
+  final List<Answer>? answers;
   const IntroScreeningPage(
-      {super.key, required this.currentIndex, required this.selectPart});
+      {super.key, required this.currentIndex, required this.selectPart, this.answers});
   @override
   State<IntroScreeningPage> createState() => _IntroScreeningPartOneState();
 }
@@ -28,10 +30,10 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPage> {
     if (widget.currentIndex == 0) {
       return pageRoutes.screening.screeningpartonequestion().route(context);
     } else if (widget.currentIndex == 1) {
-      return pageRoutes.screening.screeningparttwoquestion().route(context);
+      return pageRoutes.screening.screeningparttwoquestion(widget.answers).route(context);
     } else if (widget.currentIndex == 2) {
       return pageRoutes.screening
-          .warningpartthree(widget.selectPart)
+          .warningpartthree(widget.selectPart, widget.answers)
           .route(context);
     }
     return MaterialPageRoute<dynamic>(

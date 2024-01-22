@@ -8,9 +8,11 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/models/user.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class FormAfterScreening extends StatefulWidget {
-  const FormAfterScreening({Key? key}) : super(key: key);
+  const FormAfterScreening({Key? key, this.answers}) : super(key: key);
+  final List<Answer>? answers;
 
   @override
   State<FormAfterScreening> createState() => _FormAfterScreeningState();
@@ -23,6 +25,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   final controllerHeight = TextEditingController();
   final controllerWeight = TextEditingController();
   User createUser = User();
+  List<Answer> get answers => widget.answers ?? [];
 
   @override
   void initState() {
@@ -42,6 +45,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
 
   @override
   Widget build(BuildContext context) {
+    print("this is ${answers}");
     return AppscreenTheme(
         iconButtonStart: IconButton(
           onPressed: () {

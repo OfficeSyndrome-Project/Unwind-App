@@ -30,6 +30,7 @@ class Answer {
       o.questionPart == questionPart &&
       o.title == title &&
       o.questionID == questionID;
+  
   @override
   operator ==(o) =>
       o is Answer &&
@@ -39,13 +40,20 @@ class Answer {
       o.answer == answer;
 
   @override
+  int get hashCode =>
+      questionPart.hashCode ^
+      title.hashCode ^
+      questionID.hashCode ^
+      answer.hashCode;
+
+  @override
   String toString() {
     return 'Answer{QuestionPart: $questionPart, title: $title, questionID: $questionID, answer: $answer}';
   }
 }
 
 class ShowGoToDoctorPageService {
-  static final List<Answer> shouldSeeDoctor = [
+  static final Set<Answer> shouldSeeDoctor = {
     //yes = 1 , no = 2
     //part 1
     Answer(questionPart: 1, title: null, questionID: 1, answer: 2),
@@ -78,7 +86,7 @@ class ShowGoToDoctorPageService {
     Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 2, answer: 1),
     Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 3, answer: 1),
     Answer(questionPart: 3, title: "หลังส่วนบน", questionID: 4, answer: 2),
-  ];
+  };
 
   static bool showGoToDoctorPage(
       int questionPart, String? title, int questionID, int answer) {

@@ -6,12 +6,14 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/typepain_container.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 //select point to check
 
 class ScreeningPartTwoQuestion extends StatefulWidget {
-  const ScreeningPartTwoQuestion({super.key});
+  final List<Answer>? answers;
+  ScreeningPartTwoQuestion({super.key, this.answers});
 
   @override
   State<ScreeningPartTwoQuestion> createState() =>
@@ -28,6 +30,8 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
       ScreeningQuestionPartTwoService();
 
   bool disable = true;
+
+  List<Answer> get answers => widget.answers ?? [];
 
   void selectContainer(int index) {
     String titleType = typelist[index].title;
@@ -118,7 +122,7 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                 Navigator.push(
                     context,
                     pageRoutes.screening
-                        .questionafterscreeningparttwo(onSelectPart)
+                        .questionafterscreeningparttwo(onSelectPart, answers)
                         .route(context));
               }
             },

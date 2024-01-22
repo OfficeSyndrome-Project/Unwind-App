@@ -105,7 +105,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(1, []).route(context));
+                            .introscreeningpage(1, [],answers).route(context));
               },
               text: "ถัดไป",
               radius: 32,

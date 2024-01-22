@@ -31,7 +31,7 @@ class BoxNrsWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '6. ความรุนแรงของอาการ',
+                'ความรุนแรงของอาการ',
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 14,

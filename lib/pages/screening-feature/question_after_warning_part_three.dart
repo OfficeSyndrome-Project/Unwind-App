@@ -7,13 +7,15 @@ import 'package:unwind_app/Widgets/screening-widget/part_three_question_box_widg
 import 'package:unwind_app/Widgets/screening-widget/posture_part_three_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
-
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 class QuestionAfterWarningPartThree extends StatefulWidget {
   final List<ScreeningPartTwoModel> selectPart;
-  const QuestionAfterWarningPartThree({super.key, required this.selectPart});
+  final List<Answer>? answers;
+  const QuestionAfterWarningPartThree(
+      {super.key, required this.selectPart, this.answers});
 
   @override
   State<QuestionAfterWarningPartThree> createState() =>
@@ -24,6 +26,7 @@ class _QuestionAfterWarningPartThreeState
     extends State<QuestionAfterWarningPartThree> {
   PageRoutes pageRoutes = PageRoutes();
   int currentPage = 0;
+  List<Answer> answers = [];
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
@@ -36,6 +39,12 @@ class _QuestionAfterWarningPartThreeState
               .where((element) => !widget.selectPart
                   .any((select) => select.selectedPart.title == element))
               .toList());
+
+  initState() {
+    super.initState();
+    answers.addAll(widget.answers ?? []);
+    print(widget.answers);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +84,8 @@ class _QuestionAfterWarningPartThreeState
       questionsWidgets_.add(nrsWidget);
     }
 
-    print('currentPage : ${currentPage}');
-    print('pageAmount : ${pageAmount}');
+    // print('currentPage : ${currentPage}');
+    // print('pageAmount : ${pageAmount}');
     return AppscreenTheme(
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
@@ -117,14 +126,14 @@ class _QuestionAfterWarningPartThreeState
           ButtonWithoutIconWidget(
               onTap: () {
                 currentPage <
-                        (getPart.length == 2 ? pageAmount - 1 : pageAmount)
+                        questionsWidgets_.length - 1
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeOut)
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .formafterscreening()
+                            .formafterscreening(answers)
                             .route(context));
               },
               text: "ถัดไป",

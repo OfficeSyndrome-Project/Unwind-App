@@ -2,21 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/box_nrs_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/part_two_question_box_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/posture_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 class QuestionAfterPartTwo extends StatefulWidget {
   final Map<String, bool> onSelectMap;
-  const QuestionAfterPartTwo({super.key, required this.onSelectMap});
+  final List<Answer>? answers;
+  const QuestionAfterPartTwo(
+      {super.key, required this.onSelectMap, this.answers});
 
   @override
   State<QuestionAfterPartTwo> createState() => _QuestionAfterPartTwoState();
 }
 
 class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
+  initState() {
+    super.initState();
+    answers.addAll(widget.answers ?? []);
+    print(widget.answers);
+  }
+
+  List<Answer> answers = [];
+
   PageRoutes pageRoutes = PageRoutes();
   int currentPage = 0;
   final PageController _controller =
@@ -79,6 +91,9 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
         );
         questionsWidgets_.add(postureWidget);
       }
+      var nrsWidget = BoxNrsWidget();
+      questionsWidgets_.add(nrsWidget);
+      pageAmount += 1;
     }
     return AppscreenTheme(
         vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 16,
@@ -120,6 +135,12 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           ),
           ButtonWithoutIconWidget(
               onTap: () {
+                //กรณีเลือกทั้งหมด จะไม่ไปต่อที่ part 3
+                if ((selectedParts.length == 5) && (currentPage == pageAmount - 1)) {
+                  Navigator.push(context,
+                      pageRoutes.screening.formafterscreening(answers).route(context));
+                      return;
+                }
                 currentPage < pageAmount - 1
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 300),
@@ -127,7 +148,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(2, selectedParts)
+                            .introscreeningpage(2, selectedParts, answers)
                             .route(context));
               },
               text: "ถัดไป",
