@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/show_dialog_widget.dart';
+import 'package:unwind_app/Widgets/soud_widget.dart';
 
 import 'package:unwind_app/Widgets/workoutlist-widget/circular_countdown_timer_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/next_workout_widget.dart';
@@ -14,6 +12,7 @@ import 'package:unwind_app/Widgets/workoutlist-widget/prepare_workout_widget.dar
 import 'package:unwind_app/Widgets/workoutlist-widget/workout_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:unwind_app/pages/loading_page.dart';
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key});
@@ -22,151 +21,160 @@ class WorkoutPage extends StatefulWidget {
   State<WorkoutPage> createState() => _WorkoutPageState();
 }
 
-enum TtsState { playing, stopped, paused, continued }
+// enum TtsState { playing, stopped, paused, continued }
 
 class _WorkoutPageState extends State<WorkoutPage> {
   static bool isVolumn = true;
   static final int _duration = 10;
   static final CountDownController _controller = CountDownController();
+  late int duration = _duration;
 
   static int index = 0;
 
   final PageRoutes pageRoutes = PageRoutes();
   static bool onPressed = true;
 
-  late FlutterTts flutterTts;
-  String language = 'th-TH';
-  String? engine;
-  double volume = 0.5;
-  double pitch = 1.0;
-  double rate = 0.6;
-
   String? _newVoiceText;
+  late TtsManager ttsManager;
+  bool isLoding = true;
 
-  TtsState ttsState = TtsState.stopped;
+  // late FlutterTts flutterTts;
+  // String language = 'th-TH';
+  // String? engine;
+  // double volume = 0.5;
+  // double pitch = 1.0;
+  // double rate = 0.6;
 
-  get isPlaying => ttsState == TtsState.playing;
-  get isStopped => ttsState == TtsState.stopped;
-  get isPaused => ttsState == TtsState.paused;
-  get isContinued => ttsState == TtsState.continued;
+  // TtsState ttsState = TtsState.stopped;
 
-  bool get isIOS => !kIsWeb && Platform.isIOS;
-  bool get isAndroid => !kIsWeb && Platform.isAndroid;
-  bool get isWindows => !kIsWeb && Platform.isWindows;
-  bool get isWeb => kIsWeb;
+  // get isPlaying => ttsState == TtsState.playing;
+  // get isStopped => ttsState == TtsState.stopped;
+  // get isPaused => ttsState == TtsState.paused;
+  // get isContinued => ttsState == TtsState.continued;
+
+  // bool get isIOS => !kIsWeb && Platform.isIOS;
+  // bool get isAndroid => !kIsWeb && Platform.isAndroid;
+  // bool get isWindows => !kIsWeb && Platform.isWindows;
+  // bool get isWeb => kIsWeb;
 
   @override
   initState() {
     super.initState();
-    initTts();
+    init();
   }
 
-  initTts() {
-    flutterTts = FlutterTts();
-
-    _setAwaitOptions();
-
-    if (isAndroid) {
-      _getDefaultEngine();
-      _getDefaultVoice();
-    }
-
-    flutterTts.setStartHandler(() {
-      setState(() {
-        print("Playing");
-        ttsState = TtsState.playing;
-      });
-    });
-
-    if (isAndroid) {
-      flutterTts.setInitHandler(() {
-        setState(() {
-          print("TTS Initialized");
-        });
-      });
-    }
-
-    flutterTts.setCompletionHandler(() {
-      setState(() {
-        print("Complete");
-        ttsState = TtsState.stopped;
-      });
-    });
-
-    flutterTts.setCancelHandler(() {
-      setState(() {
-        print("Cancel");
-        ttsState = TtsState.stopped;
-      });
-    });
-
-    flutterTts.setPauseHandler(() {
-      setState(() {
-        print("Paused");
-        ttsState = TtsState.paused;
-      });
-    });
-
-    flutterTts.setContinueHandler(() {
-      setState(() {
-        print("Continued");
-        ttsState = TtsState.continued;
-      });
-    });
-
-    flutterTts.setErrorHandler((msg) {
-      setState(() {
-        print("error: $msg");
-        ttsState = TtsState.stopped;
-      });
+  void init() {
+    ttsManager = TtsManager();
+    setState(() {
+      isLoding = false;
     });
   }
 
-  Future _getDefaultEngine() async {
-    var engine = await flutterTts.getDefaultEngine;
-    if (engine != null) {
-      print(engine);
-    }
-  }
+  // initTts() {
+  //   flutterTts = FlutterTts();
 
-  Future _getDefaultVoice() async {
-    var voice = await flutterTts.getDefaultVoice;
-    if (voice != null) {
-      print(voice);
-    }
-  }
+  //   _setAwaitOptions();
 
-  Future _speak() async {
-    await flutterTts.setVolume(volume);
-    await flutterTts.setSpeechRate(rate);
-    await flutterTts.setPitch(pitch);
-    await flutterTts.setLanguage(language);
+  //   if (isAndroid) {
+  //     _getDefaultEngine();
+  //     _getDefaultVoice();
+  //   }
 
-    if (_newVoiceText != null) {
-      if (_newVoiceText!.isNotEmpty) {
-        await flutterTts.speak(_newVoiceText!);
-      }
-    }
-  }
+  //   flutterTts.setStartHandler(() {
+  //     setState(() {
+  //       print("Playing");
+  //       ttsState = TtsState.playing;
+  //     });
+  //   });
 
-  Future _setAwaitOptions() async {
-    await flutterTts.awaitSpeakCompletion(true);
-  }
+  //   if (isAndroid) {
+  //     flutterTts.setInitHandler(() {
+  //       setState(() {
+  //         print("TTS Initialized");
+  //       });
+  //     });
+  //   }
 
-  Future _stop() async {
-    var result = await flutterTts.stop();
-    if (result == 1) setState(() => ttsState = TtsState.stopped);
-  }
+  //   flutterTts.setCompletionHandler(() {
+  //     setState(() {
+  //       print("Complete");
+  //       ttsState = TtsState.stopped;
+  //     });
+  //   });
 
-  Future _pause() async {
-    var result = await flutterTts.pause();
-    if (result == 1) setState(() => ttsState = TtsState.paused);
-  }
+  //   flutterTts.setCancelHandler(() {
+  //     setState(() {
+  //       print("Cancel");
+  //       ttsState = TtsState.stopped;
+  //     });
+  //   });
+
+  //   flutterTts.setPauseHandler(() {
+  //     setState(() {
+  //       print("Paused");
+  //       ttsState = TtsState.paused;
+  //     });
+  //   });
+
+  //   flutterTts.setContinueHandler(() {
+  //     setState(() {
+  //       print("Continued");
+  //       ttsState = TtsState.continued;
+  //     });
+  //   });
+
+  //   flutterTts.setErrorHandler((msg) {
+  //     setState(() {
+  //       print("error: $msg");
+  //       ttsState = TtsState.stopped;
+  //     });
+  //   });
+  // }
+
+  // Future _getDefaultEngine() async {
+  //   var engine = await flutterTts.getDefaultEngine;
+  //   if (engine != null) {
+  //     print(engine);
+  //   }
+  // }
+
+  // Future _getDefaultVoice() async {
+  //   var voice = await flutterTts.getDefaultVoice;
+  //   if (voice != null) {
+  //     print(voice);
+  //   }
+  // }
+
+  // Future _speak() async {
+  //   await flutterTts.setVolume(volume);
+  //   await flutterTts.setSpeechRate(rate);
+  //   await flutterTts.setPitch(pitch);
+  //   await flutterTts.setLanguage(language);
+
+  //   if (_newVoiceText != null) {
+  //     if (_newVoiceText!.isNotEmpty) {
+  //       await flutterTts.speak(_newVoiceText!);
+  //     }
+  //   }
+  // }
+
+  // Future _setAwaitOptions() async {
+  //   await flutterTts.awaitSpeakCompletion(true);
+  // }
+
+  // Future _stop() async {
+  //   var result = await flutterTts.stop();
+  //   if (result == 1) setState(() => ttsState = TtsState.stopped);
+  // }
+
+  // Future _pause() async {
+  //   var result = await flutterTts.pause();
+  //   if (result == 1) setState(() => ttsState = TtsState.paused);
+  // }
 
   @override
   void dispose() {
     super.dispose();
-    flutterTts.stop();
   }
 
   void btnTime(bool onPressed) {
@@ -213,76 +221,80 @@ class _WorkoutPageState extends State<WorkoutPage> {
       ),
     ];
 
-    return AppscreenTheme(
-        colorBar: Colors.transparent,
-        iconButtonStart: IconButton(
-            highlightColor: Colors.transparent,
-            icon: const Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () {
-              setState(() {
-                onPressed = !onPressed;
-                btnTime(onPressed);
-              });
-              alertDialog.getshowDialog(
-                  context, 'ยกเลิกการบริหารใช่หรือไม่ ?', null, () {
-                Navigator.of(context).pop();
-                _controller.resume();
+    return isLoding
+        ? LoadingPage()
+        : AppscreenTheme(
+            colorBar: Colors.transparent,
+            iconButtonStart: IconButton(
+                highlightColor: Colors.transparent,
+                icon: const Icon(Icons.arrow_back_ios_rounded),
+                onPressed: () {
+                  setState(() {
+                    onPressed = !onPressed;
+                    btnTime(onPressed);
+                  });
+                  alertDialog.getshowDialog(
+                      context, 'ยกเลิกการบริหารใช่หรือไม่ ?', null, () {
+                    Navigator.of(context).pop();
+                    _controller.resume();
+                    setState(() {
+                      onPressed = !onPressed;
+                    });
+                  }, () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    _controller.reset();
+                    index = 0;
+                  });
+                  _controller.pause();
+                },
+                color: Theme.of(context).colorScheme.primary),
+            iconButtonEnd: IconButton(
+              onPressed: () {
                 setState(() {
-                  onPressed = !onPressed;
+                  isVolumn = !isVolumn;
+                  btnTime(isVolumn);
                 });
-              }, () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-                _controller.reset();
-                index = 0;
-              });
-              _controller.pause();
-            },
-            color: Theme.of(context).colorScheme.primary),
-        iconButtonEnd: IconButton(
-          onPressed: () {
-            setState(() {
-              isVolumn = !isVolumn;
-              btnTime(isVolumn);
-            });
-          },
-          icon: isVolumn
-              ? Icon(Icons.volume_up_rounded)
-              : Icon(Icons.volume_off_rounded),
-          color: Colors.white,
-          iconSize: 20,
-          alignment: Alignment.center,
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Color(0xFFD7DAE1)),
-              shape: MaterialStateProperty.all(OvalBorder()),
-              minimumSize: MaterialStateProperty.all(Size(30, 30))),
-        ),
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          IndexedStack(
-            index: index,
-            children: [..._widgetOptions],
-          ),
-          CircularCountdownTimerWidget(
-            duration: _duration,
-            controller: _controller,
-            onComplete: () {
-              setState(() {
-                if (index == _widgetOptions.length - 1) {
-                  index = 0;
-                } else {
-                  index += 1;
-                }
-                _controller.restart(duration: _duration);
-              });
-            },
-            onChange: (value) {
-              if (_newVoiceText != value) {
-                _newVoiceText = value;
-                _speak();
-              }
-            },
-          ),
-        ]);
+              },
+              icon: isVolumn
+                  ? Icon(Icons.volume_up_rounded)
+                  : Icon(Icons.volume_off_rounded),
+              color: Colors.white,
+              iconSize: 20,
+              alignment: Alignment.center,
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color(0xFFD7DAE1)),
+                  shape: MaterialStateProperty.all(OvalBorder()),
+                  minimumSize: MaterialStateProperty.all(Size(30, 30))),
+            ),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+                IndexedStack(
+                  index: index,
+                  children: [..._widgetOptions],
+                ),
+                CircularCountdownTimerWidget(
+                  duration: _duration,
+                  controller: _controller,
+                  onComplete: () {
+                    setState(() {
+                      if (index == _widgetOptions.length - 1) {
+                        index = 0;
+                      } else {
+                        index += 1;
+                      }
+                      _controller.restart(duration: _duration);
+                      duration = _duration;
+                    });
+                  },
+                  onChange: (value) {
+                    if (_newVoiceText != value) {
+                      _newVoiceText = value;
+                      ttsManager.speak(_newVoiceText);
+                      // _speak();
+                    }
+                  },
+                ),
+              ]);
   }
 }
