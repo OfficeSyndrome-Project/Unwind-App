@@ -1,7 +1,7 @@
 //select part to check
 class ScreeningPartTwoSelectPart {
   String title;
-  String assetPath;
+  String? assetPath;
   List<int> questionPage;
   String questionType;
   int questionPart;
@@ -54,7 +54,15 @@ class ScreeningPartTwoSelectPart {
           questionType: "a",
           questionPart: 2,
           partOrder: 4,
-        )
+        ),
+        ScreeningPartTwoSelectPart(
+          title: "ไม่แน่ใจ/ไม่อยู่ในตัวเลือก",
+          assetPath: null,
+          questionPage: [],
+          questionType: "a",
+          questionPart: 2,
+          partOrder: 5,
+        ),
       ];
   @override
   String toString() {

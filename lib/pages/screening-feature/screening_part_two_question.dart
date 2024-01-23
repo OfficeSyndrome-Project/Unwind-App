@@ -35,11 +35,25 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
 
   void selectContainer(int index) {
     String titleType = typelist[index].title;
+    // int partOrd = typelist[index].partOrder;
+
     setState(() {
+      if (index == 5 && onSelectPart.containsKey("ไม่แน่ใจ/ไม่อยู่ในตัวเลือก")) {
+        onSelectPart.clear();
+        setDisable(false);
+        return;
+      }
+      if (onSelectPart["ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"] ?? false) {
+        onSelectPart.clear();
+      }
       if (onSelectPart.containsKey(titleType)) {
         onSelectPart[titleType] = !onSelectPart[titleType]!;
       } else {
         onSelectPart[titleType] = true;
+      }
+      if (onSelectPart["ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"] ?? false) {
+        onSelectPart.clear();
+        onSelectPart["ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"] = true;
       }
       setDisable(false);
     });
@@ -47,6 +61,10 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
 
   void setDisable(bool value) {
     setState(() {
+      if (onSelectPart.isEmpty) {
+        disable = true;
+        return;
+      }
       if (onSelectPart.values.every((element) => !element)) {
         disable = !value;
       } else {
@@ -92,10 +110,10 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         Expanded(
           child: ListView.separated(
               clipBehavior: Clip.antiAlias,
-              padding: EdgeInsets.all(2),
+              padding: EdgeInsets.symmetric(vertical: 32, horizontal: 4),
               physics: ResponsiveCheckWidget.isSmallMobile(context)
                   ? ClampingScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
+                  : ClampingScrollPhysics(),
               itemBuilder: (context, index) {
                 return TypepainContainer(
                   onTap: () {
@@ -104,7 +122,7 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                   isSelect: onSelectPart.containsKey(typelist[index].title)
                       ? onSelectPart[typelist[index].title]!
                       : false,
-                  assetName: typelist[index].assetPath,
+                  assetName: typelist[index].assetPath ?? "",
                   typePain: typelist[index].title,
                 );
               },
