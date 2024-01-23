@@ -62,20 +62,32 @@ void main() async {
   //     await wl.insertWorkoutList(wol);
   //   }
   // }
-  // ScreeningDiagnoseService.diagnose([
-  //   Answer(QuestionPart: 2, title: "คอ", questionID: 2, answer: 2)
-  // ], {
-  //   ScreeningTitle.neck: 2,
-  //   ScreeningTitle.baa: 2,
-  //   ScreeningTitle.shoulder: 3,
-  //   ScreeningTitle.lowerback: 4,
-  //   ScreeningTitle.upperback: 8,
-  // });
-  
+  ScreeningDiagnoseService.diagnose([
+    Answer(questionPart: 2, title: "ไหล่", questionId: 2, answer: 2)
+  ], {
+    ScreeningTitle.neck: 8,
+    ScreeningTitle.baa: 2,
+    ScreeningTitle.shoulder: 3,
+    ScreeningTitle.lowerback: 4,
+    ScreeningTitle.upperback: 2,
+  });
+
+  print(ScreeningDiagnoseService.shouldGoToDoctorByParts([
+    Answer(questionPart: 2, title: "ไหล่", questionId: 2, answer: 2),
+    Answer(questionPart: 2, title: "คอ", questionId: 2, answer: 2),
+    Answer(questionPart: 2, title: "บ่า", questionId: 2, answer: 2),
+  ], [
+    ScreeningTitle.shoulder,
+    ScreeningTitle.baa,
+    ScreeningTitle.neck,
+  ]));
+
+  print(ScreeningDiagnoseService.shouldGoToDoctorByParts(
+      [Answer(questionPart: 2, title: "ไหล่", questionId: 2, answer: 2)],
+      [ScreeningTitle.baa]));
   // print(ShowGoToDoctorPageService.showGoToDoctorPage(1, null, 1, 1));
   // print(ShowGoToDoctorPageService.showGoToDoctorPage(1, null, 1, 2));
-  
-  
+
   runApp(const MyApp());
 }
 

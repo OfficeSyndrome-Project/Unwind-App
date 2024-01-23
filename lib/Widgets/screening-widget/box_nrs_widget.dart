@@ -3,7 +3,8 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/slider_nrs.dart';
 
 class BoxNrsWidget extends StatelessWidget {
-  const BoxNrsWidget({super.key});
+  final Function(double)? onChanged;
+  const BoxNrsWidget({super.key, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ class BoxNrsWidget extends StatelessWidget {
                       : Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              SliderNrs(),
+              SliderNrs(onChanged: onChanged),
             ],
           ),
         )

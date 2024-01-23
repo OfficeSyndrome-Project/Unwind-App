@@ -30,7 +30,7 @@ class Answer {
       o.questionPart == questionPart &&
       o.title == title &&
       o.questionId == questionId;
-  
+
   @override
   operator ==(o) =>
       o is Answer &&
@@ -90,7 +90,15 @@ class ShowGoToDoctorPageService {
 
   static bool showGoToDoctorPage(
       int questionPart, String? title, int questionID, int answer) {
-    return shouldSeeDoctor.contains(Answer(questionPart: questionPart, title: title, questionId: questionID, answer: answer));
+    return shouldSeeDoctor.contains(Answer(
+        questionPart: questionPart,
+        title: title,
+        questionId: questionID,
+        answer: answer));
+  }
+
+  static bool showGoToDoctorPageByAnswer(Answer answer) {
+    return shouldSeeDoctor.contains(answer);
   }
 }
 
@@ -99,25 +107,79 @@ enum ScreeningTitle { neck, baa, shoulder, lowerback, upperback }
 enum WorkoutlistTitle { neckbaa_ch, neckbaa_th, shoulder, back_ch, back_th }
 
 class ScreeningDiagnoseService {
+  static const nrsLimit = 8;
+
   //static day for workoutlist
   static const days_in_four_weeks = 28;
   //function for check condition of nrs
   static bool nrs_less_than_eigth(int NRS) {
-    return NRS.abs() < 8;
+    return NRS.abs() < nrsLimit;
+  }
+
+  static bool isExceedingNrsLimit(int NRS) {
+    return NRS.abs() >= nrsLimit;
+  }
+
+  // nrsExceedOf checks if any of the concerned titles has an NRS score of 8 or more
+  static bool nrsExceedOf(
+      List<ScreeningTitle> concernedTitles, Map<ScreeningTitle, int> nrs) {
+    final List<int> nrses =
+        concernedTitles.map((title) => nrs[title] ?? 0).toList();
+    return nrses.any((score) =>
+        ScreeningDiagnoseService.isExceedingNrsLimit(score));
+  }
+
+//dictionary Title.part to thai string
+  static Map<ScreeningTitle, String> toThai = {
+    ScreeningTitle.neck: "คอ",
+    ScreeningTitle.baa: "บ่า",
+    ScreeningTitle.shoulder: "ไหล่",
+    ScreeningTitle.lowerback: "หลังส่วนล่าง",
+    ScreeningTitle.upperback: "หลังส่วนบน",
+  };
+  static Map<String, ScreeningTitle> fromThai = {
+    "คอ": ScreeningTitle.neck,
+    "บ่า": ScreeningTitle.baa,
+    "ไหล่": ScreeningTitle.shoulder,
+    "หลังส่วนล่าง": ScreeningTitle.lowerback,
+    "หลังส่วนบน": ScreeningTitle.upperback,
+  };
+
+//function for test list of answer and nrs
+  static bool shouldGoToDoctorByParts(
+      List<Answer> answers, List<ScreeningTitle> titles) {
+    final focusParts = titles.map((element) => toThai[element]).toList();  // ['คอ', 'บ่า', 'ไหล่'];
+    final shouldSeeDoctorAnswers = ShowGoToDoctorPageService.shouldSeeDoctor
+        .where((element) => focusParts.contains(element.title))
+        .toList(); // [Answer] ที่ title อยู่ใน focusParts
+
+    for(var answer in answers) {
+      if (shouldSeeDoctorAnswers.contains(answer)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   static Future<List<WorkoutlistTitle>> diagnose(
       List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
-    //dictionary Title.part to thai string
-    final toThai = {
-      ScreeningTitle.neck: "คอ",
-      ScreeningTitle.baa: "บ่า",
-      ScreeningTitle.shoulder: "ไหล่",
-      ScreeningTitle.lowerback: "หลังส่วนล่าง",
-      ScreeningTitle.upperback: "หลังส่วนบน",
-    };
+    // filter answer ว่าเป็นคอบ่าไหล่ ที่ต้องหาหมอไหม
+    List<ScreeningTitle> titleNeckBaaShoulder = [ScreeningTitle.neck, ScreeningTitle.baa,ScreeningTitle.shoulder];
+    if (shouldGoToDoctorByParts(answers, titleNeckBaaShoulder)) {
+      nrs.remove(ScreeningTitle.neck);
+      nrs.remove(ScreeningTitle.baa);
+      nrs.remove(ScreeningTitle.shoulder);
+    }
 
-    List<WorkoutlistTitle> workoutList = [];
+    // filter answer ว่าเป็นหลังส่วนบน หลังส่วนล่าง ที่ต้องหาหมอไหม
+    List<ScreeningTitle> titleUpperbackLowerback = [ScreeningTitle.upperback, ScreeningTitle.lowerback];
+    if (shouldGoToDoctorByParts(answers, titleUpperbackLowerback)) {
+      nrs.remove(ScreeningTitle.upperback);
+      nrs.remove(ScreeningTitle.lowerback);
+    }
+
+    print(nrs);
+    final List<WorkoutlistTitle> workoutList = [];
     //loop nrs ทีละอัน
     nrs.forEach((key, value) {
       //check if nrs is null then cancel this part

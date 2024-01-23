@@ -43,7 +43,7 @@ class PageRoutes {
 
 class Screening {
   PathRoute introscreeningpage(
-          int currentIndex, List<ScreeningPartTwoModel> selectPart,List<Answer>? answers) =>
+          int currentIndex, List<ScreeningPartTwoModel> selectPart,List<Answer>? answers, Map<ScreeningTitle, int>? nrs) =>
       PathRoute(
           title: "",
           widget: IntroScreeningPage(

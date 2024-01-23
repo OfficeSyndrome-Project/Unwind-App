@@ -122,7 +122,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(1, [], answers)
+                            .introscreeningpage(1, [], answers, null)
                             .route(context));
               },
               text: "ถัดไป",
