@@ -1,6 +1,9 @@
 class ScreeningQPage {
   int questionPage;
   String? assetPath;
+  // String toString() {
+  //   return 'ScreeningQPage{questionPage: $questionPage, assetPath: $assetPath}';
+  // }
 
   ScreeningQPage({
     required this.questionPage,
