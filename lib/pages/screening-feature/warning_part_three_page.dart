@@ -10,7 +10,13 @@ import 'package:unwind_app/services/screening-service/screening_diagnose_service
 class WarningPartThreePage extends StatelessWidget {
   final List<ScreeningPartTwoModel> selectPart;
   final List<Answer>? answers;
-  WarningPartThreePage({super.key, required this.selectPart, this.answers});
+  final Map<ScreeningTitle, int>? nrs;
+  WarningPartThreePage({
+    super.key,
+    required this.selectPart,
+    this.answers,
+    this.nrs,
+  });
 
   final PageRoutes pageRoutes = PageRoutes();
 
@@ -77,7 +83,7 @@ class WarningPartThreePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     pageRoutes.screening
-                        .afterwarningpartthree(selectPart,answers)
+                        .afterwarningpartthree(selectPart, answers, nrs)
                         .route(context));
               },
               text: 'ถัดไป',

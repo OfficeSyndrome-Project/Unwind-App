@@ -52,6 +52,44 @@ class Answer {
   }
 }
 
+class PostureAnswer {
+  final String title;
+  final int questionId;
+  final int answer;
+  PostureAnswer({
+    required this.title,
+    required this.questionId,
+    required this.answer,
+  });
+
+  static List<PostureAnswer> updateAnswer(List<PostureAnswer> answers, PostureAnswer answer) {
+    final index = answers.indexWhere((element) =>  element == answer);
+    if (index == -1) {
+      answers.add(answer);
+      return answers;
+    }
+    answers[index] = answer;
+    return answers;
+  }
+
+  @override
+  operator ==(o) =>
+      o is PostureAnswer&&
+      o.title == title &&
+      o.questionId == questionId ;
+
+  @override
+  int get hashCode =>
+      title.hashCode ^
+      questionId.hashCode;
+
+
+  @override
+  String toString() =>
+      'PostureAnswer{title: $title, questionId: $questionId, answer: $answer}';
+
+}
+
 class ShowGoToDoctorPageService {
   static final Set<Answer> shouldSeeDoctor = {
     //yes = 1 , no = 2
@@ -125,8 +163,8 @@ class ScreeningDiagnoseService {
       List<ScreeningTitle> concernedTitles, Map<ScreeningTitle, int> nrs) {
     final List<int> nrses =
         concernedTitles.map((title) => nrs[title] ?? 0).toList();
-    return nrses.any((score) =>
-        ScreeningDiagnoseService.isExceedingNrsLimit(score));
+    return nrses
+        .any((score) => ScreeningDiagnoseService.isExceedingNrsLimit(score));
   }
 
 //dictionary Title.part to thai string
@@ -148,12 +186,14 @@ class ScreeningDiagnoseService {
 //function for test list of answer and nrs
   static bool shouldGoToDoctorByParts(
       List<Answer> answers, List<ScreeningTitle> titles) {
-    final focusParts = titles.map((element) => toThai[element]).toList();  // ['คอ', 'บ่า', 'ไหล่'];
+    final focusParts = titles
+        .map((element) => toThai[element])
+        .toList(); // ['คอ', 'บ่า', 'ไหล่'];
     final shouldSeeDoctorAnswers = ShowGoToDoctorPageService.shouldSeeDoctor
         .where((element) => focusParts.contains(element.title))
         .toList(); // [Answer] ที่ title อยู่ใน focusParts
 
-    for(var answer in answers) {
+    for (var answer in answers) {
       if (shouldSeeDoctorAnswers.contains(answer)) {
         return true;
       }
@@ -164,7 +204,11 @@ class ScreeningDiagnoseService {
   static Future<List<WorkoutlistTitle>> diagnose(
       List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
     // filter answer ว่าเป็นคอบ่าไหล่ ที่ต้องหาหมอไหม
-    List<ScreeningTitle> titleNeckBaaShoulder = [ScreeningTitle.neck, ScreeningTitle.baa,ScreeningTitle.shoulder];
+    List<ScreeningTitle> titleNeckBaaShoulder = [
+      ScreeningTitle.neck,
+      ScreeningTitle.baa,
+      ScreeningTitle.shoulder
+    ];
     if (shouldGoToDoctorByParts(answers, titleNeckBaaShoulder)) {
       nrs.remove(ScreeningTitle.neck);
       nrs.remove(ScreeningTitle.baa);
@@ -172,7 +216,10 @@ class ScreeningDiagnoseService {
     }
 
     // filter answer ว่าเป็นหลังส่วนบน หลังส่วนล่าง ที่ต้องหาหมอไหม
-    List<ScreeningTitle> titleUpperbackLowerback = [ScreeningTitle.upperback, ScreeningTitle.lowerback];
+    List<ScreeningTitle> titleUpperbackLowerback = [
+      ScreeningTitle.upperback,
+      ScreeningTitle.lowerback
+    ];
     if (shouldGoToDoctorByParts(answers, titleUpperbackLowerback)) {
       nrs.remove(ScreeningTitle.upperback);
       nrs.remove(ScreeningTitle.lowerback);

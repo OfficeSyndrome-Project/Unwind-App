@@ -20,6 +20,7 @@ class WorkoutData {
   int time;
   String thumbnailPath;
   String? videoPath;
+  String workoutType;
   List<String>? animationPaths;
   WorkoutData({
     required this.title,
@@ -29,6 +30,8 @@ class WorkoutData {
     required this.thumbnailPath,
     required this.videoPath,
     required this.animationPaths,
+    required this.workoutType,
+  
   });
 
   @override
@@ -48,6 +51,8 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/neckch01_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
+
         ),
         WorkoutData(
           title: "คอ-บ่า",
@@ -58,6 +63,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/neckth02_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
         ),
         WorkoutData(
           title: "คอ-บ่า",
@@ -68,6 +74,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/nechch03_80x80.PNG",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
         ),
         //strength
         WorkoutData(
@@ -79,6 +86,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/neckth01_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "strength"
         ),
         WorkoutData(
           title: "คอ-บ่า",
@@ -89,6 +97,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/neckth02_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "strength"
         ),
         WorkoutData(
           title: "คอ-บ่า",
@@ -99,6 +108,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/neckth03_80x80.PNG",
           videoPath: null,
           animationPaths: null,
+          workoutType: "strength"
         ),
         WorkoutData(
           title: "คอ-บ่า",
@@ -109,6 +119,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/neckth04_80x80.PNG",
           videoPath: null,
           animationPaths: null,
+          workoutType: "strength"
         ),
         WorkoutData(
           title: "คอ-บ่า",
@@ -119,6 +130,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/neckth05_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "strength"
         ),
 
         //ไหล่
@@ -132,6 +144,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/shoulder01_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
         ),
         WorkoutData(
           title: "ไหล่",
@@ -142,6 +155,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/shoulder02_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
         ),
         WorkoutData(
           title: "ไหล่",
@@ -152,6 +166,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/shoulder03_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
         ),
         //หลัง
         //stretch
@@ -164,6 +179,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/shoulder03_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
         ),
         WorkoutData(
           title: "หลัง",
@@ -174,6 +190,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/back01_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
         ),
         WorkoutData(
           title: "หลัง",
@@ -184,6 +201,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/back02_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "stretch"
         ),
         //strength
         WorkoutData(
@@ -195,6 +213,7 @@ class WorkoutData {
               "lib/assets/images/workout-thumbnail-img/backth01_80x80.png",
           videoPath: null,
           animationPaths: null,
+          workoutType: "strength"
         ),
       ];
 }

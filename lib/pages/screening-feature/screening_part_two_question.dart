@@ -33,17 +33,19 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
 
   List<Answer> get answers => widget.answers ?? [];
 
+  String notSureKey = "ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"; // Please set this string corresponding to the ScreeningPartTwoSelectPart.title
+
   void selectContainer(int index) {
     String titleType = typelist[index].title;
     // int partOrd = typelist[index].partOrder;
 
     setState(() {
-      if (index == 5 && onSelectPart.containsKey("ไม่แน่ใจ/ไม่อยู่ในตัวเลือก")) {
+      if (index == 5 && onSelectPart.containsKey(notSureKey)) {
         onSelectPart.clear();
         setDisable(false);
         return;
       }
-      if (onSelectPart["ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"] ?? false) {
+      if (onSelectPart[notSureKey] ?? false) {
         onSelectPart.clear();
       }
       if (onSelectPart.containsKey(titleType)) {
@@ -51,9 +53,9 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
       } else {
         onSelectPart[titleType] = true;
       }
-      if (onSelectPart["ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"] ?? false) {
+      if (onSelectPart[notSureKey] ?? false) {
         onSelectPart.clear();
-        onSelectPart["ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"] = true;
+        onSelectPart[notSureKey] = true;
       }
       setDisable(false);
     });
@@ -97,7 +99,7 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         Container(
           margin: EdgeInsets.only(bottom: 16),
           child: Text(
-            'กรุณาเลือกส่วนที่ท่านต้องการประเมิน\n(สามารถเลือกได้มากกว่า 1 จุด)',
+            'กรุณาเลือกส่วนที่ปวดมากที่สุด\n(สามารถเลือกได้มากกว่า 1 จุด)',
             style: ResponsiveCheckWidget.isSmallMobile(context)
                 ? TextStyle(
                     fontSize: 14,
@@ -137,6 +139,17 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         ButtonWithoutIconWidget(
             onTap: () {
               if (!disable) {
+                if (onSelectPart[notSureKey] ?? false) {
+                  print('not sure');
+                  onSelectPart.clear();
+                  Navigator.push(
+                      context,
+                      pageRoutes.screening
+                          .introscreeningpage(2,[], [], {})
+                          .route(context));
+                          return;
+                }
+                onSelectPart.remove(notSureKey);
                 Navigator.push(
                     context,
                     pageRoutes.screening

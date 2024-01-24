@@ -61,7 +61,7 @@ class ScreeningPartThreePostureModel {
                 postureName: "ท่างอลำตัวมาด้านหน้า",
                 assetPath: "lib/assets/images/screeningPart/back_turtle.png",
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
-                questionId: 4,
+                questionId: 5,
                 questionPage: 4,
                 questionPart: 3,
                 questionType: "a"),

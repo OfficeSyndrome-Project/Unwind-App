@@ -50,6 +50,7 @@ class Screening {
             currentIndex: currentIndex,
             selectPart: selectPart,
             answers: answers,
+            nrs: nrs,
           ));
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
@@ -62,19 +63,21 @@ class Screening {
             onSelectMap: onSelectMap,
             answers: answers,
           ));
-  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart, List<Answer>? answers) =>
+  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart, List<Answer>? answers, Map<ScreeningTitle,int>? nrs) =>
       PathRoute(
           title: "",
           widget: WarningPartThreePage(
             selectPart: selectPart,
             answers: answers,
+            nrs: nrs,
           ));
-  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart, List<Answer>? answers) =>
+  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart, List<Answer>? answers, Map<ScreeningTitle,int>? nrs) =>
       PathRoute(
           title: "",
           widget: QuestionAfterWarningPartThree(
             selectPart: selectPart,
             answers: answers,
+            nrs:nrs,
           ));
   PathRoute formafterscreening(List<Answer>? answer) =>
       PathRoute(title: "", widget: FormAfterScreening(answers: answer));

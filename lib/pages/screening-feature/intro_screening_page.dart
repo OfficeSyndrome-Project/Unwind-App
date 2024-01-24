@@ -15,8 +15,14 @@ class IntroScreeningPage extends StatefulWidget {
   final int currentIndex;
   final List<ScreeningPartTwoModel> selectPart;
   final List<Answer>? answers;
-  const IntroScreeningPage(
-      {super.key, required this.currentIndex, required this.selectPart, this.answers});
+  final Map<ScreeningTitle, int>? nrs;
+  const IntroScreeningPage({
+    super.key,
+    required this.currentIndex,
+    required this.selectPart,
+    this.answers,
+    this.nrs,
+  });
   @override
   State<IntroScreeningPage> createState() => _IntroScreeningPartOneState();
 }
@@ -30,10 +36,12 @@ class _IntroScreeningPartOneState extends State<IntroScreeningPage> {
     if (widget.currentIndex == 0) {
       return pageRoutes.screening.screeningpartonequestion().route(context);
     } else if (widget.currentIndex == 1) {
-      return pageRoutes.screening.screeningparttwoquestion(widget.answers).route(context);
+      return pageRoutes.screening
+          .screeningparttwoquestion(widget.answers)
+          .route(context);
     } else if (widget.currentIndex == 2) {
       return pageRoutes.screening
-          .warningpartthree(widget.selectPart, widget.answers)
+          .warningpartthree(widget.selectPart, widget.answers, widget.nrs)
           .route(context);
     }
     return MaterialPageRoute<dynamic>(
