@@ -28,7 +28,6 @@ class ScreeningQuestionPartOneService {
     // print(result);
     return result;
   }
-  
 }
 
 ///

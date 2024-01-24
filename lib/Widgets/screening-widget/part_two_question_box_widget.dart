@@ -27,7 +27,6 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
     required this.title,
     required this.questionID,
     required this.onChanged,
-
   });
 
   @override
@@ -191,8 +190,8 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                               groupValue: currentOptions,
                               onChanged: (value) {
                                 if (widget.onChanged != null) {
-                                    widget.onChanged!(value);
-                                  }
+                                  widget.onChanged!(value);
+                                }
                                 setState(() {
                                   currentOptions = value;
                                 });
@@ -331,8 +330,8 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                               groupValue: currentOptions,
                               onChanged: (value) {
                                 if (widget.onChanged != null) {
-                                    widget.onChanged!(value);
-                                  }
+                                  widget.onChanged!(value);
+                                }
                                 setState(() {
                                   currentOptions = value;
                                 });

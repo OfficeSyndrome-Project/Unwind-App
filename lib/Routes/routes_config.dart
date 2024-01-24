@@ -43,7 +43,10 @@ class PageRoutes {
 
 class Screening {
   PathRoute introscreeningpage(
-          int currentIndex, List<ScreeningPartTwoModel> selectPart,List<Answer>? answers, Map<ScreeningTitle, int>? nrs) =>
+          int currentIndex,
+          List<ScreeningPartTwoModel> selectPart,
+          List<Answer>? answers,
+          Map<ScreeningTitle, int>? nrs) =>
       PathRoute(
           title: "",
           widget: IntroScreeningPage(
@@ -55,15 +58,17 @@ class Screening {
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
   PathRoute screeningparttwoquestion(List<Answer>? answers) =>
-      PathRoute(title: "", widget:  ScreeningPartTwoQuestion(answers: answers));
-  PathRoute questionafterscreeningparttwo(Map<String, bool> onSelectMap,List<Answer>? answers ) =>
+      PathRoute(title: "", widget: ScreeningPartTwoQuestion(answers: answers));
+  PathRoute questionafterscreeningparttwo(
+          Map<String, bool> onSelectMap, List<Answer>? answers) =>
       PathRoute(
           title: "",
           widget: QuestionAfterPartTwo(
             onSelectMap: onSelectMap,
             answers: answers,
           ));
-  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart, List<Answer>? answers, Map<ScreeningTitle,int>? nrs) =>
+  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart,
+          List<Answer>? answers, Map<ScreeningTitle, int>? nrs) =>
       PathRoute(
           title: "",
           widget: WarningPartThreePage(
@@ -71,13 +76,14 @@ class Screening {
             answers: answers,
             nrs: nrs,
           ));
-  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart, List<Answer>? answers, Map<ScreeningTitle,int>? nrs) =>
+  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart,
+          List<Answer>? answers, Map<ScreeningTitle, int>? nrs) =>
       PathRoute(
           title: "",
           widget: QuestionAfterWarningPartThree(
             selectPart: selectPart,
             answers: answers,
-            nrs:nrs,
+            nrs: nrs,
           ));
   PathRoute formafterscreening(List<Answer>? answer) =>
       PathRoute(title: "", widget: FormAfterScreening(answers: answer));

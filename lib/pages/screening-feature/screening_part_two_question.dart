@@ -33,7 +33,8 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
 
   List<Answer> get answers => widget.answers ?? [];
 
-  String notSureKey = "ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"; // Please set this string corresponding to the ScreeningPartTwoSelectPart.title
+  String notSureKey =
+      "ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"; // Please set this string corresponding to the ScreeningPartTwoSelectPart.title
 
   void selectContainer(int index) {
     String titleType = typelist[index].title;
@@ -145,9 +146,8 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                   Navigator.push(
                       context,
                       pageRoutes.screening
-                          .introscreeningpage(2,[], [], {})
-                          .route(context));
-                          return;
+                          .introscreeningpage(2, [], [], {}).route(context));
+                  return;
                 }
                 onSelectPart.remove(notSureKey);
                 Navigator.push(

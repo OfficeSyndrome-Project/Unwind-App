@@ -92,7 +92,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           ButtonWithoutIconWidget(
               onTap: () {
                 print(answers);
-                bool show_go_to_doctor=false;
+                bool show_go_to_doctor = false;
                 answers
                     .where((element) => element.questionPart == 1)
                     .toList()
@@ -105,11 +105,11 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                     show_go_to_doctor = true;
                   }
                 });
-                if (show_go_to_doctor==true){
+                if (show_go_to_doctor == true) {
                   Navigator.push(
                       context,
                       pageRoutes.screening
-                      //TODO route to doctor page
+                          //TODO route to doctor page
                           .formafterscreening(answers)
                           .route(context));
                   return;

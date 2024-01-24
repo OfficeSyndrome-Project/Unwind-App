@@ -62,8 +62,9 @@ class PostureAnswer {
     required this.answer,
   });
 
-  static List<PostureAnswer> updateAnswer(List<PostureAnswer> answers, PostureAnswer answer) {
-    final index = answers.indexWhere((element) =>  element == answer);
+  static List<PostureAnswer> updateAnswer(
+      List<PostureAnswer> answers, PostureAnswer answer) {
+    final index = answers.indexWhere((element) => element == answer);
     if (index == -1) {
       answers.add(answer);
       return answers;
@@ -74,20 +75,14 @@ class PostureAnswer {
 
   @override
   operator ==(o) =>
-      o is PostureAnswer&&
-      o.title == title &&
-      o.questionId == questionId ;
+      o is PostureAnswer && o.title == title && o.questionId == questionId;
 
   @override
-  int get hashCode =>
-      title.hashCode ^
-      questionId.hashCode;
-
+  int get hashCode => title.hashCode ^ questionId.hashCode;
 
   @override
   String toString() =>
       'PostureAnswer{title: $title, questionId: $questionId, answer: $answer}';
-
 }
 
 class ShowGoToDoctorPageService {

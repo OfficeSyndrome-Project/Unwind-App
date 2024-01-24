@@ -5,7 +5,6 @@ import 'package:unwind_app/database/screeningtest_db.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
-import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

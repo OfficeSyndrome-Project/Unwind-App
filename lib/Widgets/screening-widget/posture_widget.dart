@@ -64,20 +64,19 @@ class _PostuerWidgetState extends State<PostuerWidget> {
                       height: 16,
                     ),
                     itemBuilder: (context, index) => QuestionAndRadioButton(
-                      questions: widget.questions[index].question,
-                      questionId: index,
-                      questionPage: widget.currentPage,
-                      posture: widget.questions[index].postureName,
-                      assetName: widget.questions[index].assetPath,
-                      onChanged: (value) {
-                        widget.onChanged(Answer(
-                          questionPart: 2,
-                          title: widget.questions[index].title,
-                          questionId: widget.questions[index].questionId,
-                          answer: value,
-                        ));
-                      }
-                    ),
+                        questions: widget.questions[index].question,
+                        questionId: index,
+                        questionPage: widget.currentPage,
+                        posture: widget.questions[index].postureName,
+                        assetName: widget.questions[index].assetPath,
+                        onChanged: (value) {
+                          widget.onChanged(Answer(
+                            questionPart: 2,
+                            title: widget.questions[index].title,
+                            questionId: widget.questions[index].questionId,
+                            answer: value,
+                          ));
+                        }),
                   );
                 },
               ))
