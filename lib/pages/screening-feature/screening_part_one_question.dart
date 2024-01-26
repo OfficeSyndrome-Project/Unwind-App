@@ -110,7 +110,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                       context,
                       pageRoutes.screening
                           //TODO route to doctor page
-                          .formafterscreening(answers)
+                          .formafterscreening(AnswerContext(answers: answers))
                           .route(context));
                   return;
                 }

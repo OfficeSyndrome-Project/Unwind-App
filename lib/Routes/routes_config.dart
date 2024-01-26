@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
@@ -85,10 +86,29 @@ class Screening {
             answers: answers,
             nrs: nrs,
           ));
-  PathRoute formafterscreening(List<Answer>? answer) =>
-      PathRoute(title: "", widget: FormAfterScreening(answers: answer));
-  PathRoute resultsworkout() =>
-      PathRoute(title: "", widget: ResultsWorkoutPage());
+  PathRoute formafterscreening(AnswerContext answerContext) => PathRoute(
+      title: "",
+      widget: FormAfterScreening(
+        answerContext: answerContext,
+      ));
+  PathRoute resultsworkout(List<WorkoutList> workoutList, String resultText) =>
+      PathRoute(
+          title: "",
+          widget: ResultsWorkoutPage(
+            workoutLists: workoutList,
+            resultText: resultText,
+          ));
+}
+
+class AnswerContext {
+  final List<ScreeningPartTwoModel>? selectedPart;
+  final List<Answer>? answers;
+  final Map<ScreeningTitle, int>? nrs;
+  const AnswerContext({
+    this.selectedPart,
+    this.answers,
+    this.nrs,
+  });
 }
 
 class Home {

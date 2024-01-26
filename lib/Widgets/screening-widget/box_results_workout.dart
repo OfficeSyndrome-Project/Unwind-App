@@ -3,8 +3,15 @@ import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class BoxResultsWorkout extends StatelessWidget {
-  final String name;
-  const BoxResultsWorkout({Key? key, required this.name}) : super(key: key);
+  final String? name;
+  final String? detail;
+  final Duration? time;
+  const BoxResultsWorkout({
+    Key? key,
+    required this.name,
+    required this.detail,
+    required this.time,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class BoxResultsWorkout extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'ชื่อท่าที่ ${name}',
+                '${name}',
                 style: TextStyle(
                   fontFamily: "Noto Sans Thai",
                   fontSize:
@@ -37,7 +44,7 @@ class BoxResultsWorkout extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 4),
                 child: Text(
-                  'รายละเอียดการทำ',
+                  detail??'',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:
@@ -48,7 +55,7 @@ class BoxResultsWorkout extends StatelessWidget {
                 ),
               ),
               Text(
-                '00 : 20',
+                '00 : ${time?.inSeconds.toString().padLeft(2, '0')}',
                 style: TextStyle(
                   fontFamily: "Noto Sans Thai",
                   fontSize:

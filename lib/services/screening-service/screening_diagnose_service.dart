@@ -1,3 +1,4 @@
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
@@ -196,7 +197,7 @@ class ScreeningDiagnoseService {
     return false;
   }
 
-  static Future<List<WorkoutlistTitle>> diagnose(
+  static Future<List<WorkoutList>> diagnose(
       List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
     // filter answer ว่าเป็นคอบ่าไหล่ ที่ต้องหาหมอไหม
     List<ScreeningTitle> titleNeckBaaShoulder = [
@@ -220,8 +221,8 @@ class ScreeningDiagnoseService {
       nrs.remove(ScreeningTitle.lowerback);
     }
 
-    print(nrs);
-    final List<WorkoutlistTitle> workoutList = [];
+    final List<WorkoutlistTitle> workoutListTitles = [];
+    print('----nrs : ${nrs}');
     //loop nrs ทีละอัน
     nrs.forEach((key, value) {
       //check if nrs is null then cancel this part
@@ -230,30 +231,26 @@ class ScreeningDiagnoseService {
       }
       //filter nrs by checkNRS (if nrs>=8 then cancel this part)
       if (nrs_less_than_eigth(value)) {
-        print("key : $key , value : $value");
         //filter answers by title (which is nrs < 8)
         final ans_of_title =
             answers.where((element) => element.title == toThai[key]).toList();
-        print(ans_of_title);
 
         ans_of_title.forEach((element) {
           //filter gotodoctor
           if (ShowGoToDoctorPageService.showGoToDoctorPage(element.questionPart,
               element.title, element.questionId, element.answer)) {
-            print("key : $key , value : $value");
-            print("element : $element");
             return;
           }
           //give workout list
           // workoutList.add(convertToWorkoutlistTittle(key));
-          workoutList.addAll(workoutListsFromScreeningTitle(key));
+          workoutListTitles.addAll(workoutListsFromScreeningTitle(key));
         });
       }
-      workoutList.toSet().toList();
     });
-
+    final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
+    print("----list : ${uniqueWorkoutListTitles} ${workoutListTitles}");
     //insert workoutlist to db
-    final workout_days = Give_Workoutlist_Per_Day(workoutList);
+    final workout_days = Give_Workoutlist_Per_Day(uniqueWorkoutListTitles);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
     for (var workoutlist_title in workout_days.entries) {
       final there_is_workoutlist = await wl_db
@@ -265,8 +262,14 @@ class ScreeningDiagnoseService {
         wl_db.insertWorkoutList(workout);
       }
     }
+    // Get workout list data
+    List<WorkoutList> acquiredWorkoutList = uniqueWorkoutListTitles
+        .map((title) => WorkoutList.workoutListFromTitle[title]!)
+        .toList();
+    //TODO resume (กรณีตรวจใหม่ได้ชุดท่าเดิม)
+    print("workout list : ${acquiredWorkoutList}");
 
-    return workoutList;
+    return acquiredWorkoutList;
   }
 
   static workoutListsFromScreeningTitle(ScreeningTitle screeningTitle) {

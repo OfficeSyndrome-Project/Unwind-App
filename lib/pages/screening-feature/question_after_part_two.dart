@@ -249,6 +249,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                 if (isDoctoringOnUpperBackOrLowerBack ||
                     isNrsExceedingOnUpperBackOrLowerBack) {
                   if (isDoctoringOnUpperBackOrLowerBack) {
+                    //TODO ใส่หน้าให้ไปหาหมอ เนื่องจากมีอาการที่ไม่ใช่ออฟฟิศ
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -257,6 +258,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                   }
 
                   if (isNrsExceedingOnUpperBackOrLowerBack) {
+                    //TODO ใส่หน้าให้ไปหาหมอ เนื่องจาก nrs เกินกำหนด
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -269,10 +271,15 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                   final backSetToDoctor = isDoctoringOnUpperBackOrLowerBack ||
                       isNrsExceedingOnUpperBackOrLowerBack;
                   if (neckSetToDoctor && backSetToDoctor) {
+                    //TODO หน้า result ให้หาหมอ
                     await Navigator.push(
                         context,
                         pageRoutes.screening
-                            .formafterscreening(answers)
+                            .formafterscreening(AnswerContext(
+                              selectedPart: selectedParts,
+                              answers: answers,
+                              nrs: nrs,
+                            ))
                             .route(context));
                     return;
                   }
@@ -290,7 +297,11 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                   Navigator.push(
                       context,
                       pageRoutes.screening
-                          .formafterscreening(answers)
+                          .formafterscreening(AnswerContext(
+                            selectedPart: selectedParts,
+                            answers: answers,
+                            nrs: nrs,
+                          ))
                           .route(context));
                   return;
                 }
@@ -304,7 +315,11 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                   Navigator.push(
                       context,
                       pageRoutes.screening
-                          .formafterscreening(answers)
+                          .formafterscreening(AnswerContext(
+                            selectedPart: selectedParts,
+                            answers: answers,
+                            nrs: nrs,
+                          ))
                           .route(context));
                   return;
                 }

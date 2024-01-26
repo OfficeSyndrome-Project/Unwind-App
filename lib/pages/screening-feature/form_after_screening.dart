@@ -5,14 +5,18 @@ import 'package:unwind_app/Widgets/profile-widget/profile_dropdown.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/models/user.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class FormAfterScreening extends StatefulWidget {
-  const FormAfterScreening({Key? key, this.answers}) : super(key: key);
-  final List<Answer>? answers;
+  final AnswerContext? answerContext;
+  const FormAfterScreening({
+    Key? key,
+    this.answerContext,
+  }) : super(key: key);
 
   @override
   State<FormAfterScreening> createState() => _FormAfterScreeningState();
@@ -25,8 +29,8 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   final controllerHeight = TextEditingController();
   final controllerWeight = TextEditingController();
   User createUser = User();
-  List<Answer> get answers => widget.answers ?? [];
-
+  List<Answer> get answers => widget.answerContext?.answers ?? [];
+  Map<ScreeningTitle, int> get nrs => widget.answerContext?.nrs ?? {};
   @override
   void initState() {
     super.initState();
@@ -45,7 +49,6 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
 
   @override
   Widget build(BuildContext context) {
-    print("this is ${answers}");
     return AppscreenTheme(
         iconButtonStart: IconButton(
           onPressed: () {
@@ -209,7 +212,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
             ])),
           ),
           ButtonWithoutIconWidget(
-              onTap: () {
+              onTap: () async {
                 setState(() {
                   if (createUser.sex == "") {
                     createUser.sex =
@@ -227,8 +230,17 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                   ProfileService.writeUser(createUser);
                 });
 
-                Navigator.push(context,
-                    pageRoutes.screening.resultsworkout().route(context));
+                // call diagnose service here
+                final List<WorkoutList> workoutList =
+                    await ScreeningDiagnoseService.diagnose(answers, nrs);
+
+                final resultText = 'คุณมีอาการหนัก';
+                print("workoutList: ${workoutList.map((e) => e.workoutData.map((e) => e.name))}");
+                Navigator.push(
+                    context,
+                    pageRoutes.screening
+                        .resultsworkout(workoutList, resultText)
+                        .route(context));
               },
               text: "สมัครสมาชิก",
               radius: 32,

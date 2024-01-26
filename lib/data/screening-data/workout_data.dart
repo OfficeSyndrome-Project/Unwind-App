@@ -1,12 +1,83 @@
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
+
 class WorkoutList {
   String title;
+  String workoutType;
   String titlePath;
+  String description;
   List<WorkoutData> workoutData;
   WorkoutList({
     required this.title,
+    required this.workoutType,
     required this.titlePath,
     required this.workoutData,
+    required this.description,
   });
+
+  static List<String> get allWorkoutListTitles => ["คอ-บ่า", "ไหล่", "หลัง"];
+
+  static List<String> get allWorkoutTypes => ["stretch", "strength"];
+
+  static Map<String, String> get allWorkoutTitlePath => {
+        "คอ-บ่า": "lib/assets/images/screeningPart/select_pain_2.png",
+        "ไหล่": "lib/assets/images/screeningPart/select_pain_3.png",
+        "หลัง": "lib/assets/images/screeningPart/select_pain_5.png",
+      };
+
+  static Map<WorkoutlistTitle, WorkoutList> get workoutListFromTitle => {
+        WorkoutlistTitle.neckbaa_ch: WorkoutList(
+          title: "คอ-บ่า",
+          description: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
+          workoutType: "stretch",
+          titlePath: "lib/assets/images/screeningPart/select_pain_2.png",
+          workoutData: WorkoutData.getWorkoutData()
+              .where((element) =>
+                  element.title == "คอ-บ่า" && element.workoutType == "stretch")
+              .toList(),
+        ),
+        WorkoutlistTitle.neckbaa_th: WorkoutList(
+          title: "คอ-บ่า",
+          description: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
+          workoutType: "strength",
+          titlePath: "lib/assets/images/screeningPart/select_pain_2.png",
+          workoutData: WorkoutData.getWorkoutData()
+              .where((element) =>
+                  element.title == "คอ-บ่า" &&
+                  element.workoutType == "strength")
+              .toList(),
+        ),
+        WorkoutlistTitle.shoulder: WorkoutList(
+          title: "ไหล่",
+          description: "ชุดท่าบริหารไหล่เพิ่มความยืดหยุ่น",
+          workoutType: "stretch",
+          titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
+          workoutData: WorkoutData.getWorkoutData()
+              .where((element) =>
+                  element.title == "ไหล่" && element.workoutType == "stretch")
+              .toList(),
+        ),
+        WorkoutlistTitle.back_ch: WorkoutList(
+          title: "หลัง",
+          description: "ชุดท่าบริหารหลังเพิ่มความยืดหยุ่น",
+          workoutType: "stretch",
+          titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
+          workoutData: WorkoutData.getWorkoutData()
+              .where((element) =>
+                  element.title == "หลัง" && element.workoutType == "stretch")
+              .toList(),
+        ),
+        WorkoutlistTitle.back_th: WorkoutList(
+          title: "หลัง",
+          description: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
+          workoutType: "stretch",
+          titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
+          workoutData: WorkoutData.getWorkoutData()
+              .where((element) =>
+                  element.title == "หลัง" && element.workoutType == "strength")
+              .toList(),
+        ),
+      };
+
   @override
   String toString() {
     return 'WorkoutList{title: $title, titlePath: $titlePath, workoutData: $workoutData}';

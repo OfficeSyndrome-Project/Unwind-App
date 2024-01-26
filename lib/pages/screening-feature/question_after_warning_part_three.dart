@@ -246,6 +246,7 @@ class _QuestionAfterWarningPartThreeState
                   ScreeningTitle.shoulder,
                 ]);
                 if (isDoctoringOnNeckOrBaaOrShoulder) {
+                  //TODO หน้าหาหมอ เนื่องจากไม่ได้เปนออฟฟิศซฺินโดรม
                   // Show doctor page
                   print('showing doctor page');
                   // Jump to lower back if exists
@@ -266,6 +267,7 @@ class _QuestionAfterWarningPartThreeState
                   ScreeningTitle.shoulder,
                 ], nrs ?? {});
                 if (isNrsExceedingOnNeckOrBaaOrShoulder) {
+                  //TODO หน้าหาหมอ nrsเกิน
                   // Show doctor page, because nrs exceed
                   print('showing doctor page');
                   // Jump to lower back if exists
@@ -283,13 +285,18 @@ class _QuestionAfterWarningPartThreeState
                   ScreeningTitle.lowerback,
                 ]);
                 if (isDoctoringOnUpperBackOrLowerBack) {
+                  //TODO ใส่หน้าหาหมอ เนื่องจากไม่ได้เปนออฟฟิศซฺินโดรม
                   // Show doctor page
                   print('showing doctor page');
                   // Jump to form
                   Navigator.push(
+                      //TODO result ให้หาหมอ
                       context,
                       pageRoutes.screening
-                          .formafterscreening(answers)
+                          .formafterscreening(AnswerContext(
+                            answers: answers,
+                            nrs: nrs,
+                          ))
                           .route(context));
                 }
                 final isNrsExceedingOnUpperBackOrLowerBack =
@@ -298,6 +305,7 @@ class _QuestionAfterWarningPartThreeState
                   ScreeningTitle.lowerback,
                 ], nrs ?? {});
                 if (isNrsExceedingOnUpperBackOrLowerBack) {
+                  //TODO ใส่หาหมอ nrsเกิน
                   // Show doctor page, because nrs exceed
                   print('showing doctor page');
                   // Jump to form, but not necessary because this is the last page
@@ -321,30 +329,6 @@ class _QuestionAfterWarningPartThreeState
                     currentPage,
                     _controller)(postureAnswers);
 
-                // bool show_go_to_doctor = false;
-                // answers
-                //     .where((element) => element.questionPart == 3)
-                //     .toList()
-                //     .forEach((element) {
-                //   print(element);
-                //   if (ShowGoToDoctorPageService.showGoToDoctorPage(
-                //       element.questionPart,
-                //       element.title,
-                //       element.questionId,
-                //       element.answer)) {
-                //     show_go_to_doctor = true;
-                //   }
-                // });
-                // if (show_go_to_doctor == true) {
-                //   Navigator.push(
-                //       context,
-                //       pageRoutes.screening
-                //           //แก้ตรงนี้จ้า
-                //           .formafterscreening(answers)
-                //           .route(context));
-                //   // _controller.jumpToPage(pageAmount - 1);
-                //   return;
-                // }
                 currentPage < questionsWidgets_.length - 1
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 300),
@@ -352,7 +336,10 @@ class _QuestionAfterWarningPartThreeState
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .formafterscreening(answers)
+                            .formafterscreening(AnswerContext(
+                              answers: answers,
+                              nrs: nrs,
+                            ))
                             .route(context));
               },
               text: "ถัดไป",
