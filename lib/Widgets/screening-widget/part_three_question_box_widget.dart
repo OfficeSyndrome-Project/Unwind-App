@@ -3,12 +3,15 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class PartThreeQuestionBoxWidget extends StatefulWidget {
   final List<ScreeningPartThreeQuestionModel> questions;
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
+  final String title;
+  final void Function(Answer)? onChanged;
 
   // final ScreeningPartOneModel question;
 
@@ -18,6 +21,8 @@ class PartThreeQuestionBoxWidget extends StatefulWidget {
     required this.currentPage,
     required this.pageRoutes,
     required this.controller,
+    required this.title,
+    this.onChanged,
   });
 
   @override
@@ -65,6 +70,8 @@ class _PartThreeQuestionBoxWidgettState
             questions: widget.questions[index].question,
             questionId: widget.questions[index].questionId,
             questionPage: widget.currentPage,
+            title: widget.title,
+            onChanged: widget.onChanged,
           ),
         ));
   }
@@ -75,12 +82,16 @@ class QuestionAndRadioButton extends StatefulWidget {
   final int questionPage;
   final int questionId;
   final String pagename = "screening";
+  final String title;
+  final void Function(Answer)? onChanged;
 
   const QuestionAndRadioButton({
     super.key,
     required this.questionPage,
     required this.questionId,
     required this.questions,
+    required this.title,
+    this.onChanged,
   });
 
   @override
@@ -128,6 +139,16 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         groupValue: currentOptions,
                         onChanged: (value) {
                           setState(() {
+                            if (widget.onChanged != null) {
+                              widget.onChanged!(
+                                Answer(
+                                  questionPart: 3,
+                                  title: widget.title,
+                                  questionId: widget.questionId,
+                                  answer: value,
+                                ),
+                              );
+                            }
                             currentOptions = value;
                           });
                           // onCurrentOptionsChanged(true);
@@ -155,6 +176,16 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                           groupValue: currentOptions,
                           onChanged: (value) {
                             setState(() {
+                              if (widget.onChanged != null) {
+                                widget.onChanged!(
+                                  Answer(
+                                    questionPart: 3,
+                                    title: widget.title,
+                                    questionId: widget.questionId,
+                                    answer: value,
+                                  ),
+                                );
+                              }
                               currentOptions = value;
                             });
                           },

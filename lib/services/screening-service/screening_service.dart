@@ -20,10 +20,9 @@ class ScreeningQuestionPartOneService {
   }
 
   //map question to page
-  static List<String> getQuestionsByPage(int questionPage) {
+  static List<ScreeningPartOneModel> getQuestionsByPage(int questionPage) {
     var result = questions
         .where((question) => question.questionPage == questionPage)
-        .map((question) => question.question)
         .toList();
     // .toString();
     // print(result);

@@ -10,6 +10,7 @@ class PosturePartThreeWidget extends StatefulWidget {
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
+  final void Function(int) Function(int)? onChanged;
   // final ScreeningPartOneModel question;
 
   const PosturePartThreeWidget({
@@ -18,6 +19,7 @@ class PosturePartThreeWidget extends StatefulWidget {
     required this.currentPage,
     required this.pageRoutes,
     required this.controller,
+    this.onChanged,
   });
 
   @override
@@ -65,6 +67,10 @@ class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget> {
                       questionPage: widget.currentPage,
                       posture: widget.questions[index].postureName,
                       assetName: widget.questions[index].assetPath,
+                      onChanged: (widget.onChanged != null)
+                          ? widget
+                              .onChanged!(widget.questions[index].questionId)
+                          : null,
                     ),
                   );
                 },
@@ -80,6 +86,7 @@ class QuestionAndRadioButton extends StatefulWidget {
   final String pagename = "screening";
   final String posture;
   final String assetName;
+  final void Function(int)? onChanged;
 
   const QuestionAndRadioButton({
     super.key,
@@ -88,6 +95,7 @@ class QuestionAndRadioButton extends StatefulWidget {
     required this.questions,
     required this.posture,
     required this.assetName,
+    this.onChanged,
   });
 
   @override
@@ -147,6 +155,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                     groupValue: currentOptions,
                     onChanged: (value) {
                       setState(() {
+                        if (widget.onChanged != null) {
+                          widget.onChanged!(value);
+                        }
                         currentOptions = value;
                       });
                       // onCurrentOptionsChanged(true);
@@ -174,6 +185,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                       groupValue: currentOptions,
                       onChanged: (value) {
                         setState(() {
+                          if (widget.onChanged != null) {
+                            widget.onChanged!(value);
+                          }
                           currentOptions = value;
                         });
                       },

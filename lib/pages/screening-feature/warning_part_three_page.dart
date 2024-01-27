@@ -5,10 +5,18 @@ import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class WarningPartThreePage extends StatelessWidget {
   final List<ScreeningPartTwoModel> selectPart;
-  WarningPartThreePage({super.key, required this.selectPart});
+  final List<Answer>? answers;
+  final Map<ScreeningTitle, int>? nrs;
+  WarningPartThreePage({
+    super.key,
+    required this.selectPart,
+    this.answers,
+    this.nrs,
+  });
 
   final PageRoutes pageRoutes = PageRoutes();
 
@@ -75,7 +83,7 @@ class WarningPartThreePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     pageRoutes.screening
-                        .afterwarningpartthree(selectPart)
+                        .afterwarningpartthree(selectPart, answers, nrs)
                         .route(context));
               },
               text: 'ถัดไป',

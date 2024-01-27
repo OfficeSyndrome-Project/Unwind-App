@@ -4,12 +4,14 @@ import 'package:unwind_app/Widgets/general_radio_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class PostuerWidget extends StatefulWidget {
   final List<ScreeningPartTwoPostureModel> questions;
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
+  final void Function(Answer) onChanged;
   // final ScreeningPartOneModel question;
 
   const PostuerWidget({
@@ -18,6 +20,7 @@ class PostuerWidget extends StatefulWidget {
     required this.currentPage,
     required this.pageRoutes,
     required this.controller,
+    required this.onChanged,
   });
 
   @override
@@ -61,12 +64,19 @@ class _PostuerWidgetState extends State<PostuerWidget> {
                       height: 16,
                     ),
                     itemBuilder: (context, index) => QuestionAndRadioButton(
-                      questions: widget.questions[index].question,
-                      questionId: index,
-                      questionPage: widget.currentPage,
-                      posture: widget.questions[index].postureName,
-                      assetName: widget.questions[index].assetPath,
-                    ),
+                        questions: widget.questions[index].question,
+                        questionId: index,
+                        questionPage: widget.currentPage,
+                        posture: widget.questions[index].postureName,
+                        assetName: widget.questions[index].assetPath,
+                        onChanged: (value) {
+                          widget.onChanged(Answer(
+                            questionPart: 2,
+                            title: widget.questions[index].title,
+                            questionId: widget.questions[index].questionId,
+                            answer: value,
+                          ));
+                        }),
                   );
                 },
               ))
@@ -81,6 +91,7 @@ class QuestionAndRadioButton extends StatefulWidget {
   final String pagename = "screening";
   final String posture;
   final String assetName;
+  final void Function(dynamic)? onChanged;
 
   const QuestionAndRadioButton({
     super.key,
@@ -89,6 +100,7 @@ class QuestionAndRadioButton extends StatefulWidget {
     required this.questions,
     required this.posture,
     required this.assetName,
+    this.onChanged,
   });
 
   @override
@@ -147,6 +159,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                     value: 1,
                     groupValue: currentOptions,
                     onChanged: (value) {
+                      if (widget.onChanged != null) {
+                        widget.onChanged!(value);
+                      }
                       setState(() {
                         currentOptions = value;
                       });
@@ -174,6 +189,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                       value: 2,
                       groupValue: currentOptions,
                       onChanged: (value) {
+                        if (widget.onChanged != null) {
+                          widget.onChanged!(value);
+                        }
                         setState(() {
                           currentOptions = value;
                         });
