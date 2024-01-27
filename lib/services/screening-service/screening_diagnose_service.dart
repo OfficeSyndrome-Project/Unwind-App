@@ -222,7 +222,6 @@ class ScreeningDiagnoseService {
     }
 
     final List<WorkoutlistTitle> workoutListTitles = [];
-    print('----nrs : ${nrs}');
     //loop nrs ทีละอัน
     nrs.forEach((key, value) {
       //check if nrs is null then cancel this part
@@ -248,7 +247,6 @@ class ScreeningDiagnoseService {
       }
     });
     final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
-    print("----list : ${uniqueWorkoutListTitles} ${workoutListTitles}");
     //insert workoutlist to db
     final workout_days = Give_Workoutlist_Per_Day(uniqueWorkoutListTitles);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
@@ -267,7 +265,6 @@ class ScreeningDiagnoseService {
         .map((title) => WorkoutList.workoutListFromTitle[title]!)
         .toList();
     //TODO resume (กรณีตรวจใหม่ได้ชุดท่าเดิม)
-    print("workout list : ${acquiredWorkoutList}");
 
     return acquiredWorkoutList;
   }

@@ -162,8 +162,10 @@ class Profile {
 }
 
 class Workout {
-  PathRoute reportworkoutpage() =>
-      PathRoute(title: "ชุดท่าบริหาร", widget: const ReportWorkoutPage());
+  PathRoute reportworkoutpage(WorkoutList? workoutList) =>
+      PathRoute(title: "ชุดท่าบริหาร", widget: ReportWorkoutPage(
+        workoutList: workoutList,
+      ));
   PathRoute infooflistworkout() =>
       PathRoute(title: "ดูชุดท่าทั้งหมด", widget: InfoOfListWorkoutPage());
   PathRoute infoofsetworkout() =>

@@ -69,10 +69,12 @@ class WorkoutListDB {
     return maps.map((e) => WorkoutListModel.fromJson(e)).toList();
   }
 
-  //function check if there is workoutlist titles
+  //function check if there is workoutlist titles and remaining times > 0
   Future<bool> checkIfThereIsWorkoutListTitles(String workoutList) async {
     final result_get_by_title = await getWorkoutListByTitle(workoutList);
-    return result_get_by_title.isNotEmpty;
+    return result_get_by_title
+        .where((workout) => (workout.remaining_times ?? 0) > 0)
+        .isNotEmpty;
   }
 
   //update NRS before
@@ -106,5 +108,19 @@ class WorkoutListDB {
       where: 'WOL_id = ?',
       whereArgs: [WOL_id],
     );
+  }
+
+  Future<List<String>> getAvailableWorkoutListTitles() async {
+    Database db = await database.database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'WorkoutList',
+      where: "deleted_at IS NULL AND remaining_times > ?",
+      whereArgs: [0],
+      groupBy: 'WOL_title',
+      columns: ['WOL_title'],
+    );
+
+    return maps.map((row) => row['WOL_title'].toString()).toList();
   }
 }

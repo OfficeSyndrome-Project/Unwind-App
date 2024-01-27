@@ -5,6 +5,7 @@ class WorkoutList {
   String workoutType;
   String titlePath;
   String description;
+  String titleCode;
   List<WorkoutData> workoutData;
   WorkoutList({
     required this.title,
@@ -12,6 +13,7 @@ class WorkoutList {
     required this.titlePath,
     required this.workoutData,
     required this.description,
+    required this.titleCode,
   });
 
   static List<String> get allWorkoutListTitles => ["คอ-บ่า", "ไหล่", "หลัง"];
@@ -24,12 +26,23 @@ class WorkoutList {
         "หลัง": "lib/assets/images/screeningPart/select_pain_5.png",
       };
 
+  // Use for converting from String such as 'neckbaa_ch' to WorkoutList
+  static Map<String, WorkoutList> get workoutListFromString => {
+        'neckbaa_ch': workoutListFromTitle[WorkoutlistTitle.neckbaa_ch]!,
+        'neckbaa_th': workoutListFromTitle[WorkoutlistTitle.neckbaa_th]!,
+        'shoulder': workoutListFromTitle[WorkoutlistTitle.shoulder]!,
+        'back_ch': workoutListFromTitle[WorkoutlistTitle.back_ch]!,
+        'back_th': workoutListFromTitle[WorkoutlistTitle.back_th]!,
+      };
+
+  // Use for converting from WorkoutlistTitle to WorkoutList
   static Map<WorkoutlistTitle, WorkoutList> get workoutListFromTitle => {
         WorkoutlistTitle.neckbaa_ch: WorkoutList(
           title: "คอ-บ่า",
           description: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
           workoutType: "stretch",
-          titlePath: "lib/assets/images/screeningPart/select_pain_2.png",
+          titlePath: "lib/assets/images/screeningPart/select_pain_1.png",
+          titleCode: "neckbaa_ch",
           workoutData: WorkoutData.getWorkoutData()
               .where((element) =>
                   element.title == "คอ-บ่า" && element.workoutType == "stretch")
@@ -39,7 +52,8 @@ class WorkoutList {
           title: "คอ-บ่า",
           description: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
           workoutType: "strength",
-          titlePath: "lib/assets/images/screeningPart/select_pain_2.png",
+          titlePath: "lib/assets/images/screeningPart/select_pain_1.png",
+          titleCode: "neckbaa_th",
           workoutData: WorkoutData.getWorkoutData()
               .where((element) =>
                   element.title == "คอ-บ่า" &&
@@ -51,6 +65,7 @@ class WorkoutList {
           description: "ชุดท่าบริหารไหล่เพิ่มความยืดหยุ่น",
           workoutType: "stretch",
           titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
+          titleCode: "shoulder",
           workoutData: WorkoutData.getWorkoutData()
               .where((element) =>
                   element.title == "ไหล่" && element.workoutType == "stretch")
@@ -60,7 +75,8 @@ class WorkoutList {
           title: "หลัง",
           description: "ชุดท่าบริหารหลังเพิ่มความยืดหยุ่น",
           workoutType: "stretch",
-          titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
+          titlePath: "lib/assets/images/screeningPart/select_pain_4.png",
+          titleCode: "back_ch",
           workoutData: WorkoutData.getWorkoutData()
               .where((element) =>
                   element.title == "หลัง" && element.workoutType == "stretch")
@@ -70,7 +86,8 @@ class WorkoutList {
           title: "หลัง",
           description: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
           workoutType: "stretch",
-          titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
+          titlePath: "lib/assets/images/screeningPart/select_pain_4.png",
+          titleCode: "back_th",
           workoutData: WorkoutData.getWorkoutData()
               .where((element) =>
                   element.title == "หลัง" && element.workoutType == "strength")

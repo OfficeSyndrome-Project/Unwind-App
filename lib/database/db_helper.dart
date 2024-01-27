@@ -20,7 +20,15 @@ class DatabaseHelper {
     var factoryWithLogs = SqfliteDatabaseFactoryLogger(databaseFactory,
         options:
             SqfliteLoggerOptions(type: SqfliteDatabaseFactoryLoggerType.all));
-    final database = factoryWithLogs.openDatabase(
+
+    String withLog = "no"; // to enable log, change to "yes"
+    var dbFactory = databaseFactory;
+    if (withLog == "yes") {
+      dbFactory = factoryWithLogs;
+    }
+    print('database path: ${join(await getDatabasesPath(), 'unwind_database.db')}');
+
+    final database = dbFactory.openDatabase(
       join(await getDatabasesPath(), 'unwind_database.db'),
       options: OpenDatabaseOptions(
         onConfigure: (db) async {

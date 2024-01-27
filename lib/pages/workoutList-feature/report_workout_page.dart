@@ -6,12 +6,14 @@ import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/date_circle_pick_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/data/workout-list-data/date_workout_mockup.dart';
 import 'package:unwind_app/data/workout-list-data/workout_mockup.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class ReportWorkoutPage extends StatefulWidget {
-  const ReportWorkoutPage({Key? key}) : super(key: key);
+  final WorkoutList? workoutList;
+  const ReportWorkoutPage({Key? key, this.workoutList}) : super(key: key);
 
   @override
   State<ReportWorkoutPage> createState() => _ReportWorkoutPageState();
@@ -47,7 +49,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
               defaultSelect = DateTime.now().weekday - 1;
             },
             color: Colors.white),
-        textBar: pageRoutes.workout.reportworkoutpage().title,
+        textBar: widget.workoutList?.description,
         children: [
           Container(
             alignment: Alignment.center,
