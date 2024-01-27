@@ -7,6 +7,7 @@ import 'package:unwind_app/Widgets/screening-widget/box_results_workout.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/globals/theme/theme_app.dart';
 
 class ResultsWorkoutPage extends StatelessWidget {
   final AnswerContext? answerContext;
@@ -56,10 +57,6 @@ class ResultsWorkoutPage extends StatelessWidget {
                 width: double.infinity,
                 padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(top: 8, bottom: 16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                    shape: BoxShape.rectangle),
                 child: Text(
                   'อาการ : $resultText',
                   style: TextStyle(
@@ -89,12 +86,12 @@ class ResultsWorkoutPage extends StatelessWidget {
                       color: const Color(0xFF484D56),
                     )),
               ),
-              SingleChildScrollView(
-                  child: Column(
-                children: workoutLists
-                    .map((element) => buildWorkoutData(element))
-                    .toList(),
-              )),
+              // SingleChildScrollView(
+              //     child: Column(
+              //   children: workoutLists
+              //       .map((element) => buildWorkoutData(element))
+              //       .toList(),
+              // )),
               // ListView.separated(
               //   itemBuilder: (context, index) =>
               //       buildWorkoutData(workoutLists[index]),
@@ -104,7 +101,26 @@ class ResultsWorkoutPage extends StatelessWidget {
               // ),
               SizedBox(
                 height: 16,
-              )
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.55,
+                child: ListView.separated(
+                    itemBuilder: (context, index) => Container(
+                          child: buildWorkoutData(context, workoutLists[index]),
+                          // decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(25),
+                          //     color: Colors.white,
+                          //     shape: BoxShape.rectangle),
+                        ),
+                    shrinkWrap: true,
+                    itemCount: workoutLists.length,
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: 16,
+                        )),
+              ),
+              SizedBox(
+                height: 16,
+              ),
             ],
           ),
           ButtonWithoutIconWidget(
@@ -122,25 +138,57 @@ class ResultsWorkoutPage extends StatelessWidget {
                   ? TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: const Color(0xFFFFFFFF),
+                      color: appTheme.colorScheme.onPrimary,
                     )
                   : Theme.of(context).textTheme.headlineSmall)
         ]);
   }
 
-  Widget buildWorkoutData(WorkoutList workoutList) {
-    return Column(children: [
-      ...workoutList.workoutData
-          .map((workoutData) => BoxResultsWorkout(
-              name: workoutData.title,
-              detail: workoutData.detail,
+  Widget buildWorkoutData(BuildContext context, WorkoutList workoutList) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8), shape: BoxShape.rectangle),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  workoutList.description,
+                  style: TextStyle(
+                    fontFamily: "Noto Sans Thai",
+                    fontSize:
+                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFFFFFFFF),
+                  ),
+                ),
+              ),
+            ),
+            color: appTheme.colorScheme.primary,
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => BoxResultsWorkout(
+              name: workoutList.workoutData[index].name,
+              detail: workoutList.workoutData[index].detail,
               time: Duration(
-                seconds: workoutData.time,
-              )))
-          .toList(),
-      SizedBox(
-        height: 50,
-      )
-    ]);
+                seconds: workoutList.workoutData[index].time,
+              ),
+              imagePath: workoutList.workoutData[index].thumbnailPath,
+            ),
+            itemCount: workoutList.workoutData.length,
+            separatorBuilder: (context, index) => Container(
+              height: 1,
+              color: Color(0xebf0fa),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

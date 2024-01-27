@@ -234,8 +234,9 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                 final List<WorkoutList> workoutList =
                     await ScreeningDiagnoseService.diagnose(answers, nrs);
 
-                final resultText = 'คุณมีอาการหนัก';
-                print("workoutList: ${workoutList.map((e) => e.workoutData.map((e) => e.name))}");
+                final resultText = 'คุณมีอาการออฟฟิศซินโดรม';
+                print(
+                    "workoutList: ${workoutList.map((e) => e.workoutData.map((e) => e.name))}");
                 Navigator.push(
                     context,
                     pageRoutes.screening

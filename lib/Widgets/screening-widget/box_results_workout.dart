@@ -6,11 +6,13 @@ class BoxResultsWorkout extends StatelessWidget {
   final String? name;
   final String? detail;
   final Duration? time;
+  final String? imagePath;
   const BoxResultsWorkout({
     Key? key,
     required this.name,
     required this.detail,
     required this.time,
+    required this.imagePath,
   }) : super(key: key);
 
   @override
@@ -19,9 +21,10 @@ class BoxResultsWorkout extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(8)),
+        color: Colors.white,
+        shape: BoxShape.rectangle,
+        // borderRadius: BorderRadius.circular(8),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,7 +47,7 @@ class BoxResultsWorkout extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 4),
                 child: Text(
-                  detail??'',
+                  detail ?? '',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:
@@ -67,7 +70,7 @@ class BoxResultsWorkout extends StatelessWidget {
             ],
           ),
           RatioImageoneToOne(
-              assetName: 'lib/assets/images/screeningPart/self_slumper.png',
+              assetName: imagePath ?? '',
               smallWidth: 60,
               largeWidth: 80,
               smallHeight: 60,
