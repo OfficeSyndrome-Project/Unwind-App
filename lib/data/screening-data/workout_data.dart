@@ -155,7 +155,7 @@ class WorkoutData {
             detail: "ท่าเตรียมตัว",
             time: 20,
             thumbnailPath:
-                "lib/assets/images/workout-thumbnail-img/nechch03_80x80.PNG",
+                "lib/assets/images/workout-thumbnail-img/nechch03_80x80.png",
             videoPath: null,
             animationPaths: null,
             workoutType: "stretch"),
@@ -186,7 +186,7 @@ class WorkoutData {
             detail: "ท่าเตรียมตัว",
             time: 20,
             thumbnailPath:
-                "lib/assets/images/workout-thumbnail-img/neckth03_80x80.PNG",
+                "lib/assets/images/workout-thumbnail-img/neckth03_80x80.png",
             videoPath: null,
             animationPaths: null,
             workoutType: "strength"),
@@ -196,7 +196,7 @@ class WorkoutData {
             detail: "ท่าเตรียมตัว",
             time: 20,
             thumbnailPath:
-                "lib/assets/images/workout-thumbnail-img/neckth04_80x80.PNG",
+                "lib/assets/images/workout-thumbnail-img/neckth04_80x80.png",
             videoPath: null,
             animationPaths: null,
             workoutType: "strength"),

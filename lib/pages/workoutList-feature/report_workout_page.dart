@@ -24,6 +24,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
   static List<DateWorkoutMockup> dateMockup = DateWorkoutMockup.getData();
   static List<WorkoutMockup> dataWorkout = WorkoutMockup.getData();
 
+  // calculate current week
   static int defaultSelect = DateTime.now().weekday - 1; // default on that day
   // static int lengthOfpercentNotEqualToZero =
   //     dateMockup.where((element) => element.percent != 0.0).length;
@@ -81,7 +82,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                   children: dateMockup.asMap().entries.map((entry) {
                     final index = entry.key;
                     final data = entry.value;
-                    final matchIndex = weekdays.indexOf(data.day);
+                    final matchIndex = weekdays.indexOf(data.day);  // 3
 
                     return DateCirclePickWidget(
                       date: DateFormat('E', 'th').format(data.dateTime),
