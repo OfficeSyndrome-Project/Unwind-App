@@ -82,7 +82,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                   children: dateMockup.asMap().entries.map((entry) {
                     final index = entry.key;
                     final data = entry.value;
-                    final matchIndex = weekdays.indexOf(data.day);  // 3
+                    final matchIndex = weekdays.indexOf(data.day); // 3
 
                     return DateCirclePickWidget(
                       date: DateFormat('E', 'th').format(data.dateTime),

@@ -31,19 +31,35 @@ class ResultsWorkoutPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         vertical: 0,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                child: TextWithStartIconWidget(
-                    startIcon: Icon(
-                      Icons.description_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    topicName: 'ผลลัพธ์',
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: TextWithStartIconWidget(
+                      startIcon: Icon(
+                        Icons.description_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      topicName: 'ผลลัพธ์',
+                      style: TextStyle(
+                        fontFamily: "Noto Sans Thai",
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF484D56),
+                      )),
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(8),
+                  margin: EdgeInsets.only(top: 8, bottom: 16),
+                  child: Text(
+                    'อาการ : $resultText',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -51,77 +67,65 @@ class ResultsWorkoutPage extends StatelessWidget {
                           : 16,
                       fontWeight: FontWeight.w600,
                       color: const Color(0xFF484D56),
-                    )),
-              ),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.only(top: 8, bottom: 16),
-                child: Text(
-                  'อาการ : $resultText',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF484D56),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(bottom: 8),
-                child: TextWithStartIconWidget(
-                    startIcon: Icon(
-                      Icons.directions_run,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    topicName: 'ชุดท่าที่ได้รับ',
-                    style: TextStyle(
-                      fontFamily: "Noto Sans Thai",
-                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                          ? 14
-                          : 16,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF484D56),
-                    )),
-              ),
-              // SingleChildScrollView(
-              //     child: Column(
-              //   children: workoutLists
-              //       .map((element) => buildWorkoutData(element))
-              //       .toList(),
-              // )),
-              // ListView.separated(
-              //   itemBuilder: (context, index) =>
-              //       buildWorkoutData(workoutLists[index]),
-              //   itemCount: workoutLists.length,
-              //   separatorBuilder: (context, index) => Text('$index'),
-              //   physics: NeverScrollableScrollPhysics(),
-              // ),
-              SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.55,
-                child: ListView.separated(
-                    itemBuilder: (context, index) => Container(
-                          child: buildWorkoutData(context, workoutLists[index]),
-                          // decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(25),
-                          //     color: Colors.white,
-                          //     shape: BoxShape.rectangle),
-                        ),
-                    shrinkWrap: true,
-                    itemCount: workoutLists.length,
-                    separatorBuilder: (context, index) => SizedBox(
-                          height: 16,
-                        )),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-            ],
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(bottom: 8),
+                  child: TextWithStartIconWidget(
+                      startIcon: Icon(
+                        Icons.directions_run,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      topicName: 'ชุดท่าที่ได้รับ',
+                      style: TextStyle(
+                        fontFamily: "Noto Sans Thai",
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF484D56),
+                      )),
+                ),
+                // SingleChildScrollView(
+                //     child: Column(
+                //   children: workoutLists
+                //       .map((element) => buildWorkoutData(element))
+                //       .toList(),
+                // )),
+                // ListView.separated(
+                //   itemBuilder: (context, index) =>
+                //       buildWorkoutData(workoutLists[index]),
+                //   itemCount: workoutLists.length,
+                //   separatorBuilder: (context, index) => Text('$index'),
+                //   physics: NeverScrollableScrollPhysics(),
+                // ),
+                SizedBox(
+                  height: 16,
+                ),
+                Expanded(
+                  // height: MediaQuery.of(context).size.height * 0.55,
+                  child: ListView.separated(
+                      itemBuilder: (context, index) => Container(
+                            child:
+                                buildWorkoutData(context, workoutLists[index]),
+                            // decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(25),
+                            //     color: Colors.white,
+                            //     shape: BoxShape.rectangle),
+                          ),
+                      shrinkWrap: true,
+                      itemCount: workoutLists.length,
+                      separatorBuilder: (context, index) => SizedBox(
+                            height: 16,
+                          )),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+              ],
+            ),
           ),
           ButtonWithoutIconWidget(
               onTap: () {

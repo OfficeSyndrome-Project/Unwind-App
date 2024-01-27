@@ -26,7 +26,8 @@ class DatabaseHelper {
     if (withLog == "yes") {
       dbFactory = factoryWithLogs;
     }
-    print('database path: ${join(await getDatabasesPath(), 'unwind_database.db')}');
+    print(
+        'database path: ${join(await getDatabasesPath(), 'unwind_database.db')}');
 
     final database = dbFactory.openDatabase(
       join(await getDatabasesPath(), 'unwind_database.db'),

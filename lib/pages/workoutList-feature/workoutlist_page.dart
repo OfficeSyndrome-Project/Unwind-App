@@ -37,69 +37,70 @@ class WorkoutListPage extends StatelessWidget {
                     .map((s) => WorkoutList.workoutListFromString[s]!)
                     .toList();
                 return ListView.separated(
-                  // mainAxisSize: MainAxisSize.min,
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  itemBuilder: (context, index) => WorkoutBoxWidget(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          pageRoute.workout
-                              .reportworkoutpage(workoutLists[index])
-                              .route(context));
-                    },
-                    workoutName: workoutLists[index].description,
-                    numberWorkout:
-                        workoutLists[index].workoutData.length.toString(),
-                    time: workoutLists[index].workoutData.isEmpty
-                        ? ''
-                        : workoutLists[index]
-                                .workoutData
-                                .map((e) => Duration(seconds: e.time))
-                                .reduce((value, element) => value + element)
-                                .inSeconds
-                                .toString() +
-                            ' วินาที',
-                    assetName: workoutLists[index].titlePath,
-                  ),
-                  itemCount: workoutLists.length,
-                  separatorBuilder: (context, index) => SizedBox(
-                    height: 16,
-                  )
-                  // children: workoutLists
-                  //     .map(
-                  //       (workoutList) => WorkoutBoxWidget(
-                  //         workoutName: workoutList.description,
-                  //         numberWorkout:
-                  //             workoutList.workoutData.length.toString(),
-                  //         time: workoutList.workoutData.isEmpty
-                  //             ? ''
-                  //             : workoutList.workoutData
-                  //                     .map((e) => Duration(seconds: e.time))
-                  //                     .reduce(
-                  //                         (value, element) => value + element)
-                  //                     .inSeconds
-                  //                     .toString() +
-                  //                 ' วินาที',
-                  //         assetName: workoutList.titlePath,
-                  //       ),
-                  //     )
-                  //     .toList(),
-                  // children: [
-                  //   WorkoutBoxWidget(
-                  //       onTap: () {
-                  //         Navigator.push(
-                  //             context,
-                  //             pageRoute.workout
-                  //                 .reportworkoutpage()
-                  //                 .route(context));
-                  //       },
-                  //       workoutName: 'ชุดท่าบริหารคอ',
-                  //       numberWorkout: '4 ชุดท่า',
-                  //       time: '',
-                  //       assetName: 'lib/assets/images/screeningPart/neck.png')
-                  // ],
-                );
+                    // mainAxisSize: MainAxisSize.min,
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    itemBuilder: (context, index) => WorkoutBoxWidget(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                pageRoute.workout
+                                    .reportworkoutpage(workoutLists[index])
+                                    .route(context));
+                          },
+                          workoutName: workoutLists[index].description,
+                          numberWorkout:
+                              workoutLists[index].workoutData.length.toString(),
+                          time: workoutLists[index].workoutData.isEmpty
+                              ? ''
+                              : workoutLists[index]
+                                      .workoutData
+                                      .map((e) => Duration(seconds: e.time))
+                                      .reduce(
+                                          (value, element) => value + element)
+                                      .inSeconds
+                                      .toString() +
+                                  ' วินาที',
+                          assetName: workoutLists[index].titlePath,
+                        ),
+                    itemCount: workoutLists.length,
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: 16,
+                        )
+                    // children: workoutLists
+                    //     .map(
+                    //       (workoutList) => WorkoutBoxWidget(
+                    //         workoutName: workoutList.description,
+                    //         numberWorkout:
+                    //             workoutList.workoutData.length.toString(),
+                    //         time: workoutList.workoutData.isEmpty
+                    //             ? ''
+                    //             : workoutList.workoutData
+                    //                     .map((e) => Duration(seconds: e.time))
+                    //                     .reduce(
+                    //                         (value, element) => value + element)
+                    //                     .inSeconds
+                    //                     .toString() +
+                    //                 ' วินาที',
+                    //         assetName: workoutList.titlePath,
+                    //       ),
+                    //     )
+                    //     .toList(),
+                    // children: [
+                    //   WorkoutBoxWidget(
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //             context,
+                    //             pageRoute.workout
+                    //                 .reportworkoutpage()
+                    //                 .route(context));
+                    //       },
+                    //       workoutName: 'ชุดท่าบริหารคอ',
+                    //       numberWorkout: '4 ชุดท่า',
+                    //       time: '',
+                    //       assetName: 'lib/assets/images/screeningPart/neck.png')
+                    // ],
+                    );
               }
               return Center(
                 child: CircularProgressIndicator(),
