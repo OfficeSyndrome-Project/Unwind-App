@@ -149,9 +149,9 @@ flutter:
     - lib/assets/images/workout-thumbnail-img/back01_80x80.png
     - lib/assets/images/workout-thumbnail-img/back02_80x80.png
     - lib/assets/images/workout-thumbnail-img/backth01_80x80.png
-    - lib/assets/images/workout-thumbnail-img/nechch02_80x80.png
-    - lib/assets/images/workout-thumbnail-img/nechch03_80x80.png
     - lib/assets/images/workout-thumbnail-img/neckch01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckch02_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckch03_80x80.png
     - lib/assets/images/workout-thumbnail-img/neckth01_80x80.png
     - lib/assets/images/workout-thumbnail-img/neckth02_80x80.png
     - lib/assets/images/workout-thumbnail-img/neckth03_80x80.png
