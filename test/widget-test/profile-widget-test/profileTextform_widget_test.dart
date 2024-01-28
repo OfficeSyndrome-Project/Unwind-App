@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
 
 void main() {
-  testWidgets('ProfileTextForm work correctly', (WidgetTester tester) async {
+  testWidgets('test ProfileTextForm widget', (WidgetTester tester) async {
     final TextEditingController controller = TextEditingController();
     String? onChangedValue;
 
@@ -30,7 +30,7 @@ void main() {
     expect(onChangedValue, 'Kridsaya');
     // Assert
     expect(find.text('TestForm'), findsOneWidget);
-    print(tester.widget<Text>(find.text('TestForm')).style?.color);
+    // print(tester.widget<Text>(find.text('TestForm')).style?.color);
 
     // ตรวจสอบสีของ Text เมื่อไม่มีการ Focus
     // expect(tester.widget<Text>(find.text('TestForm')).style?.color,
@@ -39,7 +39,7 @@ void main() {
     // แตะที่ TextFormField เพื่อให้เกิดการ Focus
     await tester.tap(find.byType(TextFormField));
     await tester.pump();
-    print(tester.widget<Text>(find.text('TestForm')).style?.color);
+    // print(tester.widget<Text>(find.text('TestForm')).style?.color);
 
     // ตรวจสอบสีของ Text เมื่อมีการ Focus
     // expect(tester.widget<Text>(find.text('TestForm')).style?.color,

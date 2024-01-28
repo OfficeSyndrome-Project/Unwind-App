@@ -86,6 +86,7 @@ void main() {
           question: "การทำงานของ getQuestionsByPage ถูกต้องหรือไม่ ?",
           questionPage: 1,
           questionType: "a",
+          questionPart: 2,
           questionId: 1,
         ),
       ];
@@ -106,6 +107,7 @@ void main() {
             question: "การทำงานของ getPostureByPage ถูกต้องหรือไม่ ?",
             questionPage: 1,
             questionType: "a",
+            questionPart: 2,
             questionId: 1),
         ScreeningPartTwoPostureModel(
             title: "ทดสอบ",
@@ -114,6 +116,7 @@ void main() {
             question: "การทำงานของ getPostureByPage ถูกต้องหรือไม่ ?",
             questionPage: 2,
             questionType: "a",
+            questionPart: 2,
             questionId: 2),
       ];
       var questionPage = 2;
@@ -160,6 +163,7 @@ void main() {
             question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
             questionId: 7,
             questionPage: 0,
+            questionPart: 2,
             questionType: "a"),
         ScreeningPartThreePostureModel(
             title: "คอ",
@@ -168,6 +172,7 @@ void main() {
             question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
             questionId: 8,
             questionPage: 1,
+            questionPart: 2,
             questionType: "a"),
         ScreeningPartThreePostureModel(
             title: "บ่า",
@@ -176,6 +181,7 @@ void main() {
             question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
             questionId: 5,
             questionPage: 2,
+            questionPart: 2,
             questionType: "a"),
         ScreeningPartThreePostureModel(
             title: "หลังส่วนล่าง",
@@ -184,6 +190,7 @@ void main() {
             question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
             questionId: 4,
             questionPage: 3,
+            questionPart: 2,
             questionType: "a"),
         ScreeningPartThreePostureModel(
             title: "หลังส่วนล่าง",
@@ -192,6 +199,7 @@ void main() {
             question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
             questionId: 4,
             questionPage: 4,
+            questionPart: 2,
             questionType: "a"),
       ];
       var result = ScreeningQuestionPartThreeService.getAllPartTitle;
@@ -217,6 +225,7 @@ void main() {
           question: "คุณมีอาการปวดบริเวณนี้มาก่อนหรือไม่ ?",
           questionId: 1,
           questionPage: 1,
+          questionPart: 2,
           questionType: "a",
         ),
       ];
@@ -237,6 +246,7 @@ void main() {
           question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
           questionId: 7,
           questionPage: 0,
+          questionPart: 2,
           questionType: "a",
         ),
       ];
@@ -250,19 +260,21 @@ void main() {
 
     test('get model by part', () {
       var selectedPart = "คอ";
-      var result = ScreeningQuestionPartThreeService
+      var results = ScreeningQuestionPartThreeService
           .getScreeningPartThreeModelBySelectedPart(selectedPart);
-      expect(result, isA<ScreeningPartThreeModel>());
-      expect(result.questions, isA<List<ScreeningPartThreeQuestionModel>>());
-      expect(result.postures, isA<List<ScreeningPartThreePostureModel>>());
-      expect(result.questions.isNotEmpty, isTrue);
-      expect(result.postures.isNotEmpty, isTrue);
+      expect(results, isA<ScreeningPartThreeModel>());
+      expect(results.questions, isA<List<ScreeningPartThreeQuestionModel>>());
+      expect(results.postures, isA<List<ScreeningPartThreePostureModel>>());
+      expect(results.questions.isNotEmpty, isTrue);
+      expect(results.postures.isNotEmpty, isTrue);
       expect(
-          result.questions
+          results.questions
               .every((question) => question.title.contains(selectedPart)),
           isTrue);
-      expect(result.postures.every((posture) => posture.title == selectedPart),
+      expect(results.postures.every((posture) => posture.title == selectedPart),
           isTrue);
     });
   });
 }
+
+//// print ค่า selectedPart : ทำให้ test ไม่ผ่าน แต่รันแยก ผ่านแล้ว
