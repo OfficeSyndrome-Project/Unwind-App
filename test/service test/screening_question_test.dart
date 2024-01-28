@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:unwind_app/data/screening-data/screening_q_page.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
+import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
@@ -140,6 +141,128 @@ void main() {
   });
 
   group('Test screening question (Part 3)', () {
-    /////ยังไม่เสร็จ/////
+    test('postures', () {
+      var result = ScreeningQuestionPartThreeService.posture;
+      expect(result, isA<List<ScreeningPartThreePostureModel>>());
+    });
+
+    test('questions', () {
+      var result = ScreeningQuestionPartThreeService.question;
+      expect(result, isA<List<ScreeningPartThreeQuestionModel>>());
+    });
+
+    test('get all part title', () {
+      var postures = [
+        ScreeningPartThreePostureModel(
+            title: "คอ",
+            postureName: "ท่าก้ม-เงยคอ",
+            assetPath: "lib/assets/images/screeningPart/neck_bend_tilt.png",
+            question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
+            questionId: 7,
+            questionPage: 0,
+            questionType: "a"),
+        ScreeningPartThreePostureModel(
+            title: "คอ",
+            postureName: "ท่าหันซ้าย-ขวา",
+            assetPath: "lib/assets/images/screeningPart/neck_turn_lr.png",
+            question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
+            questionId: 8,
+            questionPage: 1,
+            questionType: "a"),
+        ScreeningPartThreePostureModel(
+            title: "บ่า",
+            postureName: "ท่าเอนคอ",
+            assetPath: "lib/assets/images/screeningPart/neck_lean.png",
+            question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
+            questionId: 5,
+            questionPage: 2,
+            questionType: "a"),
+        ScreeningPartThreePostureModel(
+            title: "หลังส่วนล่าง",
+            postureName: "ท่าเหยียดลำตัวไปด้านหลัง",
+            assetPath: "lib/assets/images/screeningPart/back_plank.png",
+            question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
+            questionId: 4,
+            questionPage: 3,
+            questionType: "a"),
+        ScreeningPartThreePostureModel(
+            title: "หลังส่วนล่าง",
+            postureName: "ท่างอลำตัวมาด้านหน้า",
+            assetPath: "lib/assets/images/screeningPart/back_turtle.png",
+            question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
+            questionId: 4,
+            questionPage: 4,
+            questionType: "a"),
+      ];
+      var result = ScreeningQuestionPartThreeService.getAllPartTitle;
+      expect(result, isA<List<String>>());
+      expect(result.isNotEmpty, isTrue);
+      expect(
+          result, equals(postures.map((part) => part.title).toSet().toList()));
+    });
+
+    test('get models by list of part', () {
+      var parts = ["คอ", "บ่า", "หลังส่วนล่าง"]; // Example input
+      var result = ScreeningQuestionPartThreeService
+          .getScreeningPartThreeModelByListOfParts(parts);
+      expect(result, isA<List<ScreeningPartThreeModel>>());
+      expect(result.isNotEmpty, isTrue);
+      expect(result.length, parts.length);
+    });
+
+    test('get questions by page', () {
+      var questions = [
+        ScreeningPartThreeQuestionModel(
+          title: ["คอ", "บ่า", "หลังส่วนล่าง"],
+          question: "คุณมีอาการปวดบริเวณนี้มาก่อนหรือไม่ ?",
+          questionId: 1,
+          questionPage: 1,
+          questionType: "a",
+        ),
+      ];
+      var questionPage = 1;
+      var result = ScreeningQuestionPartThreeService.getQuestionsByPage(
+          questions, questionPage);
+      expect(result.length, greaterThan(0));
+      expect(result.every((question) => question.questionPage == questionPage),
+          isTrue);
+    });
+
+    test('get posture by page', () {
+      var postures = [
+        ScreeningPartThreePostureModel(
+          title: "คอ",
+          postureName: "ท่าก้ม-เงยคอ",
+          assetPath: "lib/assets/images/screeningPart/neck_bend_tilt.png",
+          question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
+          questionId: 7,
+          questionPage: 0,
+          questionType: "a",
+        ),
+      ];
+      var questionPage = 0;
+      var result = ScreeningQuestionPartThreeService.getPostureByPage(
+          postures, questionPage);
+      expect(result.length, greaterThan(0));
+      expect(result.every((posture) => posture.questionPage == questionPage),
+          isTrue);
+    });
+
+    test('get model by part', () {
+      var selectedPart = "คอ";
+      var result = ScreeningQuestionPartThreeService
+          .getScreeningPartThreeModelBySelectedPart(selectedPart);
+      expect(result, isA<ScreeningPartThreeModel>());
+      expect(result.questions, isA<List<ScreeningPartThreeQuestionModel>>());
+      expect(result.postures, isA<List<ScreeningPartThreePostureModel>>());
+      expect(result.questions.isNotEmpty, isTrue);
+      expect(result.postures.isNotEmpty, isTrue);
+      expect(
+          result.questions
+              .every((question) => question.title.contains(selectedPart)),
+          isTrue);
+      expect(result.postures.every((posture) => posture.title == selectedPart),
+          isTrue);
+    });
   });
 }
