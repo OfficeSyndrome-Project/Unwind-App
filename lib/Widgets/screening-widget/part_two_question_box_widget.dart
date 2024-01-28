@@ -34,15 +34,19 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
       _PartTwoQuestionBoxWidgettState();
 }
 
-class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
+class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> with AutomaticKeepAliveClientMixin{
   void onCurrentOptionsChanged(bool bool) {}
 
   int? currentOptions;
   // int index = 0;
 
+  @override
+  bool get wantKeepAlive => true;
+
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -11,11 +11,15 @@ class SliderNrs extends StatefulWidget {
   State<SliderNrs> createState() => _SliderNrsState();
 }
 
-class _SliderNrsState extends State<SliderNrs> {
+class _SliderNrsState extends State<SliderNrs>  with AutomaticKeepAliveClientMixin{
   double oncurrentNRS = 0;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -67,4 +71,5 @@ class _SliderNrsState extends State<SliderNrs> {
       ],
     );
   }
+  
 }

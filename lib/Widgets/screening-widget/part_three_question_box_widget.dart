@@ -31,7 +31,9 @@ class PartThreeQuestionBoxWidget extends StatefulWidget {
 }
 
 class _PartThreeQuestionBoxWidgettState
-    extends State<PartThreeQuestionBoxWidget> {
+    extends State<PartThreeQuestionBoxWidget>
+    with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true;
   void onCurrentOptionsChanged(bool bool) {}
 
   int? currentOptions;
@@ -40,6 +42,7 @@ class _PartThreeQuestionBoxWidgettState
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
         width: double.infinity,
         constraints: BoxConstraints(

@@ -29,16 +29,20 @@ class ScreeningQuestionBoxWidget extends StatefulWidget {
 }
 
 class _ScreeningQuestionBoxWidgetState
-    extends State<ScreeningQuestionBoxWidget> {
+    extends State<ScreeningQuestionBoxWidget>  with AutomaticKeepAliveClientMixin{
   void onCurrentOptionsChanged(bool bool) {
     //here
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   int? currentOptions;
 
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,6 +103,7 @@ class _ScreeningQuestionBoxWidgetState
               ))
         ]);
   }
+  
 }
 
 class QuestionAndRadioButton extends StatefulWidget {

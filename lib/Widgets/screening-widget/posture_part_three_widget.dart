@@ -26,7 +26,8 @@ class PosturePartThreeWidget extends StatefulWidget {
   State<PosturePartThreeWidget> createState() => _PosturePartThreeWidgetState();
 }
 
-class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget> {
+class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget> with AutomaticKeepAliveClientMixin{
+  bool get wantKeepAlive => true;
   void onCurrentOptionsChanged(bool bool) {
     //here
   }
@@ -36,6 +37,7 @@ class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget> {
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
