@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
@@ -20,6 +21,7 @@ import 'package:unwind_app/pages/workoutList-feature/info_of_list_workout_page.d
 import 'package:unwind_app/pages/workoutList-feature/workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/report_workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import '../data/alarm-data/timewatch_obj.dart';
 import '../data/history-data/summary_list_obj.dart';
 
@@ -42,39 +44,71 @@ class PageRoutes {
 
 class Screening {
   PathRoute introscreeningpage(
-          int currentIndex, List<ScreeningPartTwoModel> selectPart) =>
+          int currentIndex,
+          List<ScreeningPartTwoModel> selectPart,
+          List<Answer>? answers,
+          Map<ScreeningTitle, int>? nrs) =>
       PathRoute(
           title: "",
           widget: IntroScreeningPage(
             currentIndex: currentIndex,
             selectPart: selectPart,
+            answers: answers,
+            nrs: nrs,
           ));
   PathRoute screeningpartonequestion() =>
       PathRoute(title: "", widget: const ScreeningPartOneQuestion());
-  PathRoute screeningparttwoquestion() =>
-      PathRoute(title: "", widget: const ScreeningPartTwoQuestion());
-  PathRoute questionafterscreeningparttwo(Map<String, bool> onSelectMap) =>
+  PathRoute screeningparttwoquestion(List<Answer>? answers) =>
+      PathRoute(title: "", widget: ScreeningPartTwoQuestion(answers: answers));
+  PathRoute questionafterscreeningparttwo(
+          Map<String, bool> onSelectMap, List<Answer>? answers) =>
       PathRoute(
           title: "",
           widget: QuestionAfterPartTwo(
             onSelectMap: onSelectMap,
+            answers: answers,
           ));
-  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart) =>
+  PathRoute warningpartthree(List<ScreeningPartTwoModel> selectPart,
+          List<Answer>? answers, Map<ScreeningTitle, int>? nrs) =>
       PathRoute(
           title: "",
           widget: WarningPartThreePage(
             selectPart: selectPart,
+            answers: answers,
+            nrs: nrs,
           ));
-  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart) =>
+  PathRoute afterwarningpartthree(List<ScreeningPartTwoModel> selectPart,
+          List<Answer>? answers, Map<ScreeningTitle, int>? nrs) =>
       PathRoute(
           title: "",
           widget: QuestionAfterWarningPartThree(
             selectPart: selectPart,
+            answers: answers,
+            nrs: nrs,
           ));
-  PathRoute formafterscreening() =>
-      PathRoute(title: "", widget: FormAfterScreening());
-  PathRoute resultsworkout() =>
-      PathRoute(title: "", widget: ResultsWorkoutPage());
+  PathRoute formafterscreening(AnswerContext answerContext) => PathRoute(
+      title: "",
+      widget: FormAfterScreening(
+        answerContext: answerContext,
+      ));
+  PathRoute resultsworkout(List<WorkoutList> workoutList, String resultText) =>
+      PathRoute(
+          title: "",
+          widget: ResultsWorkoutPage(
+            workoutLists: workoutList,
+            resultText: resultText,
+          ));
+}
+
+class AnswerContext {
+  final List<ScreeningPartTwoModel>? selectedPart;
+  final List<Answer>? answers;
+  final Map<ScreeningTitle, int>? nrs;
+  const AnswerContext({
+    this.selectedPart,
+    this.answers,
+    this.nrs,
+  });
 }
 
 class Home {
@@ -128,8 +162,11 @@ class Profile {
 }
 
 class Workout {
-  PathRoute reportworkoutpage() =>
-      PathRoute(title: "ชุดท่าบริหาร", widget: const ReportWorkoutPage());
+  PathRoute reportworkoutpage(WorkoutList? workoutList) => PathRoute(
+      title: "ชุดท่าบริหาร",
+      widget: ReportWorkoutPage(
+        workoutList: workoutList,
+      ));
   PathRoute infooflistworkout() =>
       PathRoute(title: "ดูชุดท่าทั้งหมด", widget: InfoOfListWorkoutPage());
   PathRoute infoofsetworkout() =>

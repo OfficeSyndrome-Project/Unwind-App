@@ -3,6 +3,7 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 import '../../Widgets/button_withouticon_widget.dart';
 
@@ -22,6 +23,20 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
+  List<Answer> answers = [];
+  void handleCurrentOptionsChanged(int questionID, int value) {
+    setState(() {
+      answers = Answer.updateAnswer(
+          answers,
+          Answer(
+            questionId: questionID,
+            answer: value,
+            questionPart: 1,
+            title: null,
+          ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> questionsWidgets =
@@ -33,6 +48,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                   currentPage: currentPage,
                   pageRoutes: pageRoutes,
                   controller: _controller,
+                  onChanged: handleCurrentOptionsChanged,
                 ))
             .toList();
 
@@ -75,6 +91,30 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           ),
           ButtonWithoutIconWidget(
               onTap: () {
+                print(answers);
+                bool show_go_to_doctor = false;
+                answers
+                    .where((element) => element.questionPart == 1)
+                    .toList()
+                    .forEach((element) {
+                  if (ShowGoToDoctorPageService.showGoToDoctorPage(
+                      element.questionPart,
+                      element.title,
+                      element.questionId,
+                      element.answer)) {
+                    show_go_to_doctor = true;
+                  }
+                });
+                if (show_go_to_doctor == true) {
+                  Navigator.push(
+                      context,
+                      pageRoutes.screening
+                          //TODO route to doctor page
+                          .formafterscreening(AnswerContext(answers: answers))
+                          .route(context));
+                  return;
+                }
+
                 currentPage < questionsWidgets.length - 1
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 300),
@@ -82,7 +122,8 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(1, []).route(context));
+                            .introscreeningpage(1, [], answers, null)
+                            .route(context));
               },
               text: "ถัดไป",
               radius: 32,

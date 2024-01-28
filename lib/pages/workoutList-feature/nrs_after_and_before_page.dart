@@ -79,7 +79,7 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SliderNrs()
+                SliderNrs(),
               ],
             ),
           ),
