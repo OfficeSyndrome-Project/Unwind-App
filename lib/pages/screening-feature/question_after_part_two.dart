@@ -7,6 +7,9 @@ import 'package:unwind_app/Widgets/screening-widget/part_two_question_box_widget
 import 'package:unwind_app/Widgets/screening-widget/posture_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
@@ -189,16 +192,16 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                       await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DoctorPageDummy(
-                                  text: 'คุณตอบคำถามผิด ไปหาหมอซะ')));
+                              builder: (context) =>
+                                  ExceptionPage(exceptionPart: 1)));
                     }
 
                     if (isNrsExceedingOnNeckOrBaaOrShoulder) {
                       await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DoctorPageDummy(
-                                  text: 'nrs เกินกำหนด คุณอาการหนัก $nrs')));
+                              builder: (context) =>
+                                  ExceptionPage(exceptionPart: 2)));
                     }
                     // go to part 3
                     Navigator.push(
@@ -216,17 +219,16 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DoctorPageDummy(
-                                    text: 'คุณตอบคำถามผิด ไปหาหมอซะ')));
+                                builder: (context) =>
+                                    ExceptionPage(exceptionPart: 1)));
                       }
 
                       if (isNrsExceedingOnNeckOrBaaOrShoulder) {
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DoctorPageDummy(
-                                    text:
-                                        'nrs เกินกำหนด : คุณอาการหนัก $nrs')));
+                                builder: (context) =>
+                                    ExceptionPage(exceptionPart: 2)));
                       }
 
                       _controller
@@ -249,38 +251,35 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                 if (isDoctoringOnUpperBackOrLowerBack ||
                     isNrsExceedingOnUpperBackOrLowerBack) {
                   if (isDoctoringOnUpperBackOrLowerBack) {
-                    //TODO ใส่หน้าให้ไปหาหมอ เนื่องจากมีอาการที่ไม่ใช่ออฟฟิศ
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoctorPageDummy(
-                                text: 'คุณตอบคำถามผิด ไปหาหมอซะ')));
+                            builder: (context) =>
+                                ExceptionPage(exceptionPart: 1)));
                   }
 
                   if (isNrsExceedingOnUpperBackOrLowerBack) {
-                    //TODO ใส่หน้าให้ไปหาหมอ เนื่องจาก nrs เกินกำหนด
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoctorPageDummy(
-                                text: 'nrs เกินกำหนด คุณอาการหนัก $nrs')));
+                            builder: (context) =>
+                                ExceptionPage(exceptionPart: 3)));
                   }
-                  // กรณี ไปหาหมอหรือ nrs เกินกำหนด ในส่วนของ (คอ, บ่า, ไหล่ ) && (หลังส่วนบน, หลังส่วนล่าง)
+                  // กรณี ไปหาหมอหรือ nrs เกินกำหนด ในส่วนของ (คอ, บ่า, ไหล่ ) && (หลังส่วนบน, หลังส่วนล่าง) (หาหมอ)
                   final neckSetToDoctor = isDoctoringOnNeckOrBaaOrShoulder ||
                       isNrsExceedingOnNeckOrBaaOrShoulder;
                   final backSetToDoctor = isDoctoringOnUpperBackOrLowerBack ||
                       isNrsExceedingOnUpperBackOrLowerBack;
                   if (neckSetToDoctor && backSetToDoctor) {
-                    //TODO หน้า result ให้หาหมอ
+                    
                     await Navigator.push(
                         context,
-                        pageRoutes.screening
-                            .formafterscreening(AnswerContext(
-                              selectedPart: selectedParts,
-                              answers: answers,
-                              nrs: nrs,
-                            ))
-                            .route(context));
+                        MaterialPageRoute(
+                            builder: (context) => ResultsWorkoutPage(
+                                  workoutLists: [],
+                                  resultText: "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
+                                  nextPage:  const ScreeningPage(),
+                                )));
                     return;
                   }
                   // go to part 3
@@ -305,7 +304,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                           .route(context));
                   return;
                 }
-                //กรณีเลือก คอ บ่า หลังส่วนล่าง จะไปต่อที่ form ทันที ไม่ต้องทำ part 3
+                //กรณีเลือก คอ บ่า หลังส่วนล่าง จะไปต่อที่ form ทันที ไม่ต้องทำ part 3 (ไม่หาหมอ)
                 final selectedPartsTitle =
                     selectedParts.map((e) => e.selectedPart.title);
                 if ((selectedPartsTitle.contains('คอ')) &&

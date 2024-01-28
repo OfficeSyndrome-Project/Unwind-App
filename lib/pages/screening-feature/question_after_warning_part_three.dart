@@ -8,6 +8,9 @@ import 'package:unwind_app/Widgets/screening-widget/posture_part_three_widget.da
 import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
@@ -239,6 +242,7 @@ class _QuestionAfterWarningPartThreeState
                 print(
                     'currentPage : ${currentPage} lowerbackpage: ${lowerBackPage}');
 
+                //ถ้าคอบ่าไหล่หาหมอ
                 final isDoctoringOnNeckOrBaaOrShoulder =
                     ScreeningDiagnoseService.shouldGoToDoctorByParts(answers, [
                   ScreeningTitle.neck,
@@ -246,9 +250,18 @@ class _QuestionAfterWarningPartThreeState
                   ScreeningTitle.shoulder,
                 ]);
                 if (isDoctoringOnNeckOrBaaOrShoulder) {
-                  //TODO หน้าหาหมอ เนื่องจากไม่ได้เปนออฟฟิศซฺินโดรม
                   // Show doctor page
                   print('showing doctor page');
+                  if (lowerBackPage.isNotEmpty) {
+                    if (currentPage < lowerBackPage.first) {
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ExceptionPage(exceptionPart: 1)));
+                    }
+                  }
+
                   // Jump to lower back if exists
                   if (lowerBackPage.isNotEmpty) {
                     print('=== $currentPage, ${lowerBackPage.first}');
@@ -260,6 +273,7 @@ class _QuestionAfterWarningPartThreeState
                   }
                 }
 
+                //ถ้าคอบ่าไหล่ nrsเกิน ต้องไปหาหมอ
                 final isNrsExceedingOnNeckOrBaaOrShoulder =
                     ScreeningDiagnoseService.nrsExceedOf([
                   ScreeningTitle.neck,
@@ -270,6 +284,15 @@ class _QuestionAfterWarningPartThreeState
                   //TODO หน้าหาหมอ nrsเกิน
                   // Show doctor page, because nrs exceed
                   print('showing doctor page');
+                  if (lowerBackPage.isNotEmpty) {
+                    if (currentPage < lowerBackPage.first) {
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ExceptionPage(exceptionPart: 2)));
+                    }
+                  }
                   // Jump to lower back if exists
                   if (lowerBackPage.isNotEmpty) {
                     if (currentPage < lowerBackPage.first) {
@@ -278,25 +301,41 @@ class _QuestionAfterWarningPartThreeState
                     }
                   }
                 }
-
+                //ถ้าหลังไปหาหมอ
                 final isDoctoringOnUpperBackOrLowerBack =
                     ScreeningDiagnoseService.shouldGoToDoctorByParts(answers, [
                   ScreeningTitle.upperback,
                   ScreeningTitle.lowerback,
                 ]);
+
                 if (isDoctoringOnUpperBackOrLowerBack) {
-                  //TODO ใส่หน้าหาหมอ เนื่องจากไม่ได้เปนออฟฟิศซฺินโดรม
                   // Show doctor page
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ExceptionPage(exceptionPart: 1)));
                   print('showing doctor page');
-                  // Jump to form
+
+                  // if neck is also go to doctor, No workout list shall be given
+                  if (isNeckSetToDoctor(answers, nrs)) {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResultsWorkoutPage(
+                                  workoutLists: [],
+                                  resultText:
+                                      "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
+                                  nextPage: const ScreeningPage(),
+                                )));
+                  }
+
+                  // Jump to form, for protential workout list
                   Navigator.push(
                       //TODO result ให้หาหมอ
                       context,
                       pageRoutes.screening
-                          .formafterscreening(AnswerContext(
-                            answers: answers,
-                            nrs: nrs,
-                          ))
+                          .formafterscreening(AnswerContext(answers: answers))
                           .route(context));
                 }
                 final isNrsExceedingOnUpperBackOrLowerBack =
@@ -308,7 +347,26 @@ class _QuestionAfterWarningPartThreeState
                   //TODO ใส่หาหมอ nrsเกิน
                   // Show doctor page, because nrs exceed
                   print('showing doctor page');
-                  // Jump to form, but not necessary because this is the last page
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ExceptionPage(exceptionPart: 2)));
+
+                  // if neck is also go to doctor, No workout list shall be given
+                  if (isNeckSetToDoctor(answers, nrs)) {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResultsWorkoutPage(
+                                  workoutLists: [],
+                                  resultText:
+                                      "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
+                                  nextPage: const ScreeningPage(),
+                                )));
+                  }
+
+                  // For protential workout list ,Jump to form, but not necessary because this is the last page
                 }
 
                 // Posture Skipper
@@ -336,10 +394,7 @@ class _QuestionAfterWarningPartThreeState
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .formafterscreening(AnswerContext(
-                              answers: answers,
-                              nrs: nrs,
-                            ))
+                            .formafterscreening(AnswerContext(answers: answers))
                             .route(context));
               },
               text: "ถัดไป",

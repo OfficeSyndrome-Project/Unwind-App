@@ -13,12 +13,14 @@ class ResultsWorkoutPage extends StatelessWidget {
   final AnswerContext? answerContext;
   final String? resultText;
   final List<WorkoutList> workoutLists;
+  final Widget? nextPage;
 
   ResultsWorkoutPage({
     Key? key,
     required this.workoutLists,
     this.answerContext,
     this.resultText,
+    this.nextPage,
   }) : super(key: key);
 
   final PageRoutes pageRoutes = PageRoutes();
@@ -70,24 +72,27 @@ class ResultsWorkoutPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(bottom: 8),
-                  child: TextWithStartIconWidget(
-                      startIcon: Icon(
-                        Icons.directions_run,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      topicName: 'ชุดท่าที่ได้รับ',
-                      style: TextStyle(
-                        fontFamily: "Noto Sans Thai",
-                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                            ? 14
-                            : 16,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF484D56),
-                      )),
-                ),
+                workoutLists.isNotEmpty
+                    ? Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(bottom: 8),
+                        child: TextWithStartIconWidget(
+                            startIcon: Icon(
+                              Icons.directions_run,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            topicName: 'ชุดท่าที่ได้รับ',
+                            style: TextStyle(
+                              fontFamily: "Noto Sans Thai",
+                              fontSize:
+                                  ResponsiveCheckWidget.isSmallMobile(context)
+                                      ? 14
+                                      : 16,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF484D56),
+                            )),
+                      )
+                    : SizedBox(),
                 // SingleChildScrollView(
                 //     child: Column(
                 //   children: workoutLists
@@ -130,9 +135,12 @@ class ResultsWorkoutPage extends StatelessWidget {
           ButtonWithoutIconWidget(
               onTap: () {
                 Navigator.push(
-                    context, pageRoutes.home.workoutlist().route(context));
+                    context,
+                    nextPage == null
+                        ? pageRoutes.home.workoutlist().route(context)
+                        : MaterialPageRoute(builder: (context) => nextPage!));
               },
-              text: "ไปสู่ชุดท่าบริหาร",
+              text: "ดำเนินการต่อ",
               radius: 32,
               width: double.infinity,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,

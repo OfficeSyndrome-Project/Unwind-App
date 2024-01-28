@@ -3,6 +3,7 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/pages/screening-feature/exception_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 import '../../Widgets/button_withouticon_widget.dart';
@@ -37,21 +38,26 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
     });
   }
 
+  late List<Widget> questionsWidgets;
+
+  @override
+  void initState() {
+    super.initState();
+    questionsWidgets = ScreeningQuestionPartOneService.getAllQuestionPage()
+        .map((questionPage) => ScreeningQuestionBoxWidget(
+              assetPath: questionPage.assetPath,
+              questions: ScreeningQuestionPartOneService.getQuestionsByPage(
+                  questionPage.questionPage),
+              currentPage: currentPage,
+              pageRoutes: pageRoutes,
+              controller: _controller,
+              onChanged: handleCurrentOptionsChanged,
+            ))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Widget> questionsWidgets =
-        ScreeningQuestionPartOneService.getAllQuestionPage()
-            .map((questionPage) => ScreeningQuestionBoxWidget(
-                  assetPath: questionPage.assetPath,
-                  questions: ScreeningQuestionPartOneService.getQuestionsByPage(
-                      questionPage.questionPage),
-                  currentPage: currentPage,
-                  pageRoutes: pageRoutes,
-                  controller: _controller,
-                  onChanged: handleCurrentOptionsChanged,
-                ))
-            .toList();
-
     return AppscreenTheme(
         iconButtonStart: IconButton(
           highlightColor: Colors.transparent,
@@ -90,7 +96,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
             height: 16,
           ),
           ButtonWithoutIconWidget(
-              onTap: () {
+              onTap: () async {
                 print(answers);
                 bool show_go_to_doctor = false;
                 answers
@@ -106,12 +112,11 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                   }
                 });
                 if (show_go_to_doctor == true) {
-                  Navigator.push(
+                  await Navigator.push(
                       context,
-                      pageRoutes.screening
-                          //TODO route to doctor page
-                          .formafterscreening(AnswerContext(answers: answers))
-                          .route(context));
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ExceptionPage(exceptionPart: 0)));
                   return;
                 }
 

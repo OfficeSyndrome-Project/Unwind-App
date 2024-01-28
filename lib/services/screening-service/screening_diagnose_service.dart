@@ -117,9 +117,9 @@ class ShowGoToDoctorPageService {
     Answer(questionPart: 3, title: "บ่า", questionId: 2, answer: 1),
     Answer(questionPart: 3, title: "บ่า", questionId: 3, answer: 1),
     Answer(questionPart: 3, title: "บ่า", questionId: 4, answer: 2),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 2, answer: 1),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 3, answer: 1),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 4, answer: 2),
+    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 2, answer: 1),
+    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 3, answer: 1),
+    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 4, answer: 2),
   };
 
   static bool showGoToDoctorPage(
