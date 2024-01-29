@@ -4,6 +4,7 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/screening_question_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/screening-feature/question_button_state_service.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 import '../../Widgets/button_withouticon_widget.dart';
@@ -25,6 +26,10 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
       PageController(initialPage: 0, viewportFraction: 1);
 
   List<Answer> answers = [];
+
+  /// State of weather all questions in the page are answered
+  bool isButtonEnable = false;
+
   void handleCurrentOptionsChanged(int questionID, int value) {
     setState(() {
       answers = Answer.updateAnswer(
@@ -35,6 +40,10 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
             questionPart: 1,
             title: null,
           ));
+
+      // Update the state of the button
+      isButtonEnable =
+          isAllQuestionAnswered(ScreeningPart.one, currentPage, answers);
     });
   }
 
@@ -85,6 +94,8 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
               onPageChanged: (value) {
                 setState(() {
                   currentPage = value;
+                  isButtonEnable = isAllQuestionAnswered(
+                      ScreeningPart.one, currentPage, answers);
                 });
               },
               children: [
@@ -97,7 +108,9 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
           ),
           ButtonWithoutIconWidget(
               onTap: () async {
-                print(answers);
+                // If the button is not enabled, do nothing
+                if (!isButtonEnable && !alwaysUnlockButton) return;
+
                 bool show_go_to_doctor = false;
                 answers
                     .where((element) => element.questionPart == 1)
@@ -134,7 +147,9 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
               radius: 32,
               width: double.infinity,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-              color: Theme.of(context).colorScheme.primary,
+              color: isButtonEnable
+                  ? Theme.of(context).colorScheme.primary
+                  : const Color(0xFF9BA4B5),
               borderSide: BorderSide.none,
               style: ResponsiveCheckWidget.isSmallMobile(context)
                   ? TextStyle(
