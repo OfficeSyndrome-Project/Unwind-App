@@ -10,6 +10,7 @@ import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
 import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+import 'package:unwind_app/pages/screening-feature/question_button_state_service.dart';
 import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
@@ -40,6 +41,8 @@ class _QuestionAfterWarningPartThreeState
   final PageController _controller =
       PageController(initialPage: 0, viewportFraction: 1);
 
+  Set<int> pagesCompleted = {};
+
   late List<String> allPartTitle =
       ScreeningQuestionPartThreeService.getAllPartTitle;
 
@@ -51,6 +54,8 @@ class _QuestionAfterWarningPartThreeState
               .toList());
 
   late List<ScreeningPartThreeModel> availableParts;
+
+  bool isButtonEnable = false;
 
   // List<ScreeningPartThreeModel> getAvailableParts() => ScreeningQuestionPartThreeService.getScreeningPartThreeModelByListOfParts(
   //         allPartTitle
@@ -71,6 +76,20 @@ class _QuestionAfterWarningPartThreeState
             return;
           }
           nrs![screeningTitle] = value.toInt();
+
+          // Update the state of the button
+          final nrsValueInt = value.toInt();
+
+          // Update the state of the button, if the nrs score is zero, the button will be disabled
+          isButtonEnable = value != 0;
+          // if the nrs score is zero, remove the page from pagesCompleted
+          if (nrsValueInt == 0) {
+            if (pagesCompleted.contains(currentPage))
+              pagesCompleted.remove(currentPage);
+            return;
+          }
+          pagesCompleted.add(currentPage);
+          print(pagesCompleted);
         });
   }
 
@@ -89,6 +108,8 @@ class _QuestionAfterWarningPartThreeState
                   answer: value,
                   title: title,
                 ));
+            isButtonEnable = true;
+            pagesCompleted.add(currentPage);
           });
 
   initState() {
@@ -172,13 +193,17 @@ class _QuestionAfterWarningPartThreeState
         physics: ClampingScrollPhysics(),
         children: [
           PartThreeQuestionBoxWidget(
-            questions: part.questions,
-            currentPage: currentPage,
-            pageRoutes: pageRoutes,
-            controller: _controller,
-            title: part.postures.first.title,
-            onChanged: handleAnswerChanged,
-          )
+              questions: part.questions,
+              currentPage: currentPage,
+              pageRoutes: pageRoutes,
+              controller: _controller,
+              title: part.postures.first.title,
+              onChanged: handleAnswerChanged,
+              onCompleted: (isCompleted) {
+                // Update the pagesCompleted
+                isButtonEnable = isCompleted;
+                pagesCompleted.add(currentPage);
+              })
         ],
       ));
       moreIntenseQuestionsPages[part.postures.first.title] =
@@ -223,6 +248,9 @@ class _QuestionAfterWarningPartThreeState
                 onPageChanged: (value) {
                   setState(() {
                     currentPage = value;
+
+                    // Update the state of the button
+                    isButtonEnable = pagesCompleted.contains(currentPage);
                   });
                 },
                 children: [
@@ -241,6 +269,8 @@ class _QuestionAfterWarningPartThreeState
                 print('postureAnswer :${postureAnswers.join('\n')}');
                 print(
                     'currentPage : ${currentPage} lowerbackpage: ${lowerBackPage}');
+
+                if (!isButtonEnable && !alwaysUnlockButton) return;
 
                 //ถ้าคอบ่าไหล่หาหมอ
                 final isDoctoringOnNeckOrBaaOrShoulder =
@@ -401,7 +431,9 @@ class _QuestionAfterWarningPartThreeState
               radius: 32,
               width: double.infinity,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-              color: Theme.of(context).colorScheme.primary,
+              color: isButtonEnable
+                  ? Theme.of(context).colorScheme.primary
+                  : const Color(0xFF9BA4B5),
               borderSide: BorderSide.none,
               style: ResponsiveCheckWidget.isSmallMobile(context)
                   ? TextStyle(
