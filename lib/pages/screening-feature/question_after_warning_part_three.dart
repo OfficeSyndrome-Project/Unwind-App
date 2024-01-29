@@ -89,7 +89,6 @@ class _QuestionAfterWarningPartThreeState
             return;
           }
           pagesCompleted.add(currentPage);
-          print(pagesCompleted);
         });
   }
 
@@ -116,7 +115,6 @@ class _QuestionAfterWarningPartThreeState
     super.initState();
     answers.addAll(widget.answers ?? []);
     nrs = widget.nrs;
-    print(widget.answers);
 
     availableParts = getPart; // remove parts that are exposed to doctor
     if (isNeckSetToDoctor(answers, nrs)) {
@@ -265,7 +263,6 @@ class _QuestionAfterWarningPartThreeState
           ButtonWithoutIconWidget(
               onTap: () async {
                 print('answers : ${answers.join('\n')}');
-                print('nrs : ${nrs}');
                 print('postureAnswer :${postureAnswers.join('\n')}');
                 print(
                     'currentPage : ${currentPage} lowerbackpage: ${lowerBackPage}');
@@ -365,7 +362,8 @@ class _QuestionAfterWarningPartThreeState
                       //TODO result ให้หาหมอ
                       context,
                       pageRoutes.screening
-                          .formafterscreening(AnswerContext(answers: answers))
+                          .formafterscreening(
+                              AnswerContext(answers: answers, nrs: nrs))
                           .route(context));
                 }
                 final isNrsExceedingOnUpperBackOrLowerBack =
@@ -424,7 +422,8 @@ class _QuestionAfterWarningPartThreeState
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .formafterscreening(AnswerContext(answers: answers))
+                            .formafterscreening(
+                                AnswerContext(answers: answers, nrs: nrs))
                             .route(context));
               },
               text: "ถัดไป",
