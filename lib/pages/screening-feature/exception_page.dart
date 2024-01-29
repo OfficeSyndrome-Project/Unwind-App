@@ -10,7 +10,7 @@ import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 class ExceptionPage extends StatelessWidget {
   final int exceptionPart;
   const ExceptionPage({super.key, required this.exceptionPart});
-  
+
   static List<ExceptionData> exceptionArr = ExceptionData.getData();
 
   @override
@@ -41,7 +41,8 @@ class ExceptionPage extends StatelessWidget {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ResultsWorkoutPage(
                     workoutLists: [],
-                    resultText: "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
+                    resultText:
+                        "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
                     nextPage: const ScreeningPage(),
                   );
                 }));
@@ -50,7 +51,6 @@ class ExceptionPage extends StatelessWidget {
               }
             },
             text: 'ดำเนินการต่อ',
-
             radius: 32,
             width: double.infinity,
             height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,

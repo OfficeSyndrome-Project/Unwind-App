@@ -26,7 +26,8 @@ class PosturePartThreeWidget extends StatefulWidget {
   State<PosturePartThreeWidget> createState() => _PosturePartThreeWidgetState();
 }
 
-class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget> with AutomaticKeepAliveClientMixin{
+class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget>
+    with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
   void onCurrentOptionsChanged(bool bool) {
     //here

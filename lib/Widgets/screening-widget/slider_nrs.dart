@@ -11,7 +11,8 @@ class SliderNrs extends StatefulWidget {
   State<SliderNrs> createState() => _SliderNrsState();
 }
 
-class _SliderNrsState extends State<SliderNrs>  with AutomaticKeepAliveClientMixin{
+class _SliderNrsState extends State<SliderNrs>
+    with AutomaticKeepAliveClientMixin {
   double oncurrentNRS = 0;
 
   @override
@@ -71,5 +72,4 @@ class _SliderNrsState extends State<SliderNrs>  with AutomaticKeepAliveClientMix
       ],
     );
   }
-  
 }

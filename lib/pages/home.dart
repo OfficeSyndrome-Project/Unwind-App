@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/menu_page.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
+import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +17,8 @@ class _HomeState extends State<HomePage> {
   late int _selectedIndex = widget.selectedIndex;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const ScreeningPage(),
+    // const ScreeningPage(),
+    ScreeningPartTwoQuestion(),
     // const FormAfterScreening(
     //   answerContext: AnswerContext(),
     // ),

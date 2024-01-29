@@ -28,8 +28,8 @@ class ScreeningQuestionBoxWidget extends StatefulWidget {
       _ScreeningQuestionBoxWidgetState();
 }
 
-class _ScreeningQuestionBoxWidgetState
-    extends State<ScreeningQuestionBoxWidget>  with AutomaticKeepAliveClientMixin{
+class _ScreeningQuestionBoxWidgetState extends State<ScreeningQuestionBoxWidget>
+    with AutomaticKeepAliveClientMixin {
   void onCurrentOptionsChanged(bool bool) {
     //here
   }
@@ -103,7 +103,6 @@ class _ScreeningQuestionBoxWidgetState
               ))
         ]);
   }
-  
 }
 
 class QuestionAndRadioButton extends StatefulWidget {
