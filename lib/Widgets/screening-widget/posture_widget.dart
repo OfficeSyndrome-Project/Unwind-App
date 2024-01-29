@@ -107,11 +107,14 @@ class QuestionAndRadioButton extends StatefulWidget {
   State<QuestionAndRadioButton> createState() => _QuestionAndRadioButtonState();
 }
 
-class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
+class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton>
+    with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true;
   int? currentOptions;
   String get questions => widget.questions;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
