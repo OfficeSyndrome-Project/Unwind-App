@@ -8,6 +8,7 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
 
 class WorkoutListPage extends StatelessWidget {
   WorkoutListPage({super.key});
@@ -36,6 +37,11 @@ class WorkoutListPage extends StatelessWidget {
                 List<WorkoutList> workoutLists = data
                     .map((s) => WorkoutList.workoutListFromString[s]!)
                     .toList();
+                if (workoutLists.isEmpty) {
+                  return Center(
+                    child: Text('สุขภาพดีจังเลยน้า'),
+                  );
+                }
                 return ListView.separated(
                     // mainAxisSize: MainAxisSize.min,
                     // mainAxisAlignment: MainAxisAlignment.start,
@@ -124,7 +130,20 @@ class WorkoutListPage extends StatelessWidget {
             height: 16,
           ),
           ButtonWithiconWidget(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ScreeningPage(
+                          isFirstTime: false,
+                        )),
+              );
+            },
+            onLongPress: () async {
+              int count =
+                  await serviceLocator<WorkoutListDB>().deleteAllWorkoutList();
+              print('successfully deleted $count workouts');
+            },
             mainAxisAlignment: MainAxisAlignment.center,
             text: 'ตรวจอีกครั้ง',
             radius: 8,
