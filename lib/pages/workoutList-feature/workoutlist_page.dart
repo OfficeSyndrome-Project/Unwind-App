@@ -39,7 +39,7 @@ class WorkoutListPage extends StatelessWidget {
                     .toList();
                 if (workoutLists.isEmpty) {
                   return Center(
-                    child: Text('สุขภาพดีจังเลยน้า'),
+                    child: Text('คุณยังไม่มีชุดท่าออกกำลังกาย'),
                   );
                 }
                 return ListView.separated(

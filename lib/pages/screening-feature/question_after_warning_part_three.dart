@@ -308,7 +308,6 @@ class _QuestionAfterWarningPartThreeState
                   ScreeningTitle.shoulder,
                 ], nrs ?? {});
                 if (isNrsExceedingOnNeckOrBaaOrShoulder) {
-                  //TODO หน้าหาหมอ nrsเกิน
                   // Show doctor page, because nrs exceed
                   print('showing doctor page');
                   if (lowerBackPage.isNotEmpty) {
@@ -359,7 +358,6 @@ class _QuestionAfterWarningPartThreeState
 
                   // Jump to form, for protential workout list
                   Navigator.push(
-                      //TODO result ให้หาหมอ
                       context,
                       pageRoutes.screening
                           .formafterscreening(
@@ -372,7 +370,6 @@ class _QuestionAfterWarningPartThreeState
                   ScreeningTitle.lowerback,
                 ], nrs ?? {});
                 if (isNrsExceedingOnUpperBackOrLowerBack) {
-                  //TODO ใส่หาหมอ nrsเกิน
                   // Show doctor page, because nrs exceed
                   print('showing doctor page');
                   await Navigator.push(
