@@ -136,7 +136,7 @@ class ResultsWorkoutPage extends StatelessWidget {
           ButtonWithoutIconWidget(
               onTap: () async {
                 await GeneralStoredService.writeBoolean(
-                    "isFirtTime", 0, 0, false);
+                    GeneralStoredService.isFirstTime, 0, 0, false);
                 Navigator.push(
                     context,
                     nextPage == null
