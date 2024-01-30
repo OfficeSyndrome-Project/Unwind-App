@@ -8,6 +8,7 @@ import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
+import 'package:unwind_app/services/general_stored_service.dart';
 
 class ResultsWorkoutPage extends StatelessWidget {
   final AnswerContext? answerContext;
@@ -133,7 +134,9 @@ class ResultsWorkoutPage extends StatelessWidget {
             ),
           ),
           ButtonWithoutIconWidget(
-              onTap: () {
+              onTap: () async {
+                await GeneralStoredService.writeBoolean(
+                    "isFirtTime", 0, 0, false);
                 Navigator.push(
                     context,
                     nextPage == null

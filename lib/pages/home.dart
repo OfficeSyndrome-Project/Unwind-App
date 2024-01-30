@@ -17,7 +17,7 @@ class _HomeState extends State<HomePage> {
   late int _selectedIndex = widget.selectedIndex;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const ScreeningPage(),
+    // const ScreeningPage(),
     WorkoutListPage(),
     const MenuWidget(),
     HistoryPage(),
@@ -43,12 +43,6 @@ class _HomeState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'screening',
-            backgroundColor: Color(0xffebedf0),
-          ),
           BottomNavigationBarItem(
             activeIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
