@@ -110,6 +110,15 @@ class WorkoutListDB {
     );
   }
 
+  Future<int> deleteAllWorkoutList() async {
+    Database db = await database.database;
+    return await db.update(
+      'WorkoutList',
+      {'deleted_at': DateTime.now().toIso8601String()},
+      where: 'deleted_at IS NULL',
+    );
+  }
+
   Future<List<String>> getAvailableWorkoutListTitles() async {
     Database db = await database.database;
 

@@ -28,17 +28,21 @@ class ScreeningQuestionBoxWidget extends StatefulWidget {
       _ScreeningQuestionBoxWidgetState();
 }
 
-class _ScreeningQuestionBoxWidgetState
-    extends State<ScreeningQuestionBoxWidget> {
+class _ScreeningQuestionBoxWidgetState extends State<ScreeningQuestionBoxWidget>
+    with AutomaticKeepAliveClientMixin {
   void onCurrentOptionsChanged(bool bool) {
     //here
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   int? currentOptions;
 
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,

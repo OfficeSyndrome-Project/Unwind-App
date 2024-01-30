@@ -115,7 +115,7 @@ class Home {
   PathRoute workoutlist() => PathRoute(
       title: "ชุดท่าบริหาร",
       widget: const HomePage(
-        selectedIndex: 1,
+        selectedIndex: 0,
       ));
   PathRoute screenpage() => PathRoute(title: "", widget: WorkoutListPage());
 }

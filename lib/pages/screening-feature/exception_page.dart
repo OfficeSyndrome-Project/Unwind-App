@@ -4,6 +4,7 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/exception_widget.dart';
 import 'package:unwind_app/data/screening-data/exception_screening_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 
 class ExceptionPage extends StatelessWidget {
   final int exceptionPart;
@@ -34,7 +35,18 @@ class ExceptionPage extends StatelessWidget {
           ),
         ),
         ButtonWithoutIconWidget(
-            onTap: () {},
+            onTap: () {
+              if (exceptionPart == 0) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ResultsWorkoutPage(
+                      workoutLists: [],
+                      resultText:
+                          "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง");
+                }));
+              } else {
+                Navigator.pop(context);
+              }
+            },
             text: 'ดำเนินการต่อ',
             radius: 32,
             width: double.infinity,

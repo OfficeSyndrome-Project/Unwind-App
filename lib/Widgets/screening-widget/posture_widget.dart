@@ -12,6 +12,7 @@ class PostuerWidget extends StatefulWidget {
   final PageRoutes pageRoutes;
   final PageController controller;
   final void Function(Answer) onChanged;
+  final Function(bool)? onCompleted;
   // final ScreeningPartOneModel question;
 
   const PostuerWidget({
@@ -21,6 +22,7 @@ class PostuerWidget extends StatefulWidget {
     required this.pageRoutes,
     required this.controller,
     required this.onChanged,
+    this.onCompleted,
   });
 
   @override
@@ -33,6 +35,8 @@ class _PostuerWidgetState extends State<PostuerWidget> {
   }
 
   int? currentOptions;
+
+  List<Answer> answers = [];
 
 //question box
   @override
@@ -70,12 +74,20 @@ class _PostuerWidgetState extends State<PostuerWidget> {
                         posture: widget.questions[index].postureName,
                         assetName: widget.questions[index].assetPath,
                         onChanged: (value) {
-                          widget.onChanged(Answer(
+                          final answer = Answer(
                             questionPart: 2,
                             title: widget.questions[index].title,
                             questionId: widget.questions[index].questionId,
                             answer: value,
-                          ));
+                          );
+                          setState(() {
+                            answers = Answer.updateAnswer(answers, answer);
+                            if (widget.onCompleted != null) {
+                              widget.onCompleted!(
+                                  answers.length == widget.questions.length);
+                            }
+                          });
+                          widget.onChanged(answer);
                         }),
                   );
                 },
@@ -107,11 +119,14 @@ class QuestionAndRadioButton extends StatefulWidget {
   State<QuestionAndRadioButton> createState() => _QuestionAndRadioButtonState();
 }
 
-class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
+class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton>
+    with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true;
   int? currentOptions;
   String get questions => widget.questions;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,

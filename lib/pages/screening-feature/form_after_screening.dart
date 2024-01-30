@@ -234,7 +234,10 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                 final List<WorkoutList> workoutList =
                     await ScreeningDiagnoseService.diagnose(answers, nrs);
 
-                final resultText = 'คุณมีอาการออฟฟิศซินโดรม';
+                String resultText = 'คุณมีอาการออฟฟิศซินโดรม';
+                if (workoutList.isEmpty) {
+                  resultText = 'ยินดีด้วย! คุณไม่มีอาการ\nออฟฟิศซินโดรม';
+                }
                 print(
                     "workoutList: ${workoutList.map((e) => e.workoutData.map((e) => e.name))}");
                 Navigator.push(

@@ -12,6 +12,7 @@ class PartThreeQuestionBoxWidget extends StatefulWidget {
   final PageController controller;
   final String title;
   final void Function(Answer)? onChanged;
+  final Function(bool)? onCompleted;
 
   // final ScreeningPartOneModel question;
 
@@ -23,6 +24,7 @@ class PartThreeQuestionBoxWidget extends StatefulWidget {
     required this.controller,
     required this.title,
     this.onChanged,
+    this.onCompleted,
   });
 
   @override
@@ -31,15 +33,20 @@ class PartThreeQuestionBoxWidget extends StatefulWidget {
 }
 
 class _PartThreeQuestionBoxWidgettState
-    extends State<PartThreeQuestionBoxWidget> {
+    extends State<PartThreeQuestionBoxWidget>
+    with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true;
   void onCurrentOptionsChanged(bool bool) {}
 
   int? currentOptions;
   // int index = 0;
 
+  List<Answer> answers = [];
+
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
         width: double.infinity,
         constraints: BoxConstraints(
@@ -71,7 +78,21 @@ class _PartThreeQuestionBoxWidgettState
             questionId: widget.questions[index].questionId,
             questionPage: widget.currentPage,
             title: widget.title,
-            onChanged: widget.onChanged,
+            // onChanged: widget.onChanged,
+            onChanged: (answer) {
+              print(answer);
+              print(widget.questions[index].questionPage);
+              // Update the answers
+              answers = Answer.updateAnswer(answers, answer);
+
+              if (widget.onChanged != null) {
+                widget.onChanged!(answer);
+              }
+
+              if (widget.onCompleted != null) {
+                widget.onCompleted!(answers.length == widget.questions.length);
+              }
+            },
           ),
         ));
   }

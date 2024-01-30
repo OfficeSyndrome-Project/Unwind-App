@@ -97,17 +97,23 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(bottom: 16),
-          child: Text(
-            'กรุณาเลือกส่วนที่ปวดมากที่สุด\n(สามารถเลือกได้มากกว่า 1 จุด)',
-            style: ResponsiveCheckWidget.isSmallMobile(context)
-                ? TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF484D56))
-                : Theme.of(context).textTheme.titleMedium,
-            textAlign: TextAlign.center,
+        GestureDetector(
+          onTap: () {
+            List.generate(typelist.length, (index) => index).forEach(
+                (index) => (index != 5) ? selectContainer(index) : null);
+          },
+          child: Container(
+            margin: EdgeInsets.only(bottom: 16),
+            child: Text(
+              'กรุณาเลือกส่วนที่ปวดมากที่สุด\n(สามารถเลือกได้มากกว่า 1 จุด)',
+              style: ResponsiveCheckWidget.isSmallMobile(context)
+                  ? TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF484D56))
+                  : Theme.of(context).textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
         Expanded(
