@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
@@ -166,6 +167,7 @@ class Workout {
       title: "ชุดท่าบริหาร",
       widget: ReportWorkoutPage(
         workoutList: workoutList,
+        workoutListDB: serviceLocator(),
       ));
   PathRoute infooflistworkout() =>
       PathRoute(title: "ดูชุดท่าทั้งหมด", widget: InfoOfListWorkoutPage());

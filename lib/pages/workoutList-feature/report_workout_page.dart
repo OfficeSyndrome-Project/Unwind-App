@@ -7,37 +7,57 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/date_circle_pick_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
-import 'package:unwind_app/data/workout-list-data/date_workout_mockup.dart';
-import 'package:unwind_app/data/workout-list-data/workout_mockup.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
+import 'package:unwind_app/pages/workoutList-feature/report_workout_utils.dart';
 
 class ReportWorkoutPage extends StatefulWidget {
   final WorkoutList? workoutList;
-  const ReportWorkoutPage({Key? key, this.workoutList}) : super(key: key);
+  final WorkoutListDB workoutListDB;
+  const ReportWorkoutPage(
+      {Key? key, this.workoutList, required this.workoutListDB})
+      : super(key: key);
 
   @override
   State<ReportWorkoutPage> createState() => _ReportWorkoutPageState();
 }
 
 class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
-  static PageRoutes pageRoutes = PageRoutes();
-  static List<DateWorkoutMockup> dateMockup = DateWorkoutMockup.getData();
-  static List<WorkoutMockup> dataWorkout = WorkoutMockup.getData();
+  PageRoutes pageRoutes = PageRoutes();
+  // List<DateWorkoutMockup> dateMockup = DateWorkoutMockup.getData();
+  // List<WorkoutMockup> dataWorkout = WorkoutMockup.getData();
+  DateTime currentSelectingDate = DateTime.now();
+  int currentSelectionIndex = DateTime.now().weekday; // default browse today
+  int currentCircularDisplayIndex = 0;
 
-  // calculate current week
-  static int defaultSelect = DateTime.now().weekday - 1; // default on that day
+  List<WorkoutListModel>? loadedWorkoutListModels;
+
+  WorkoutListDB get workoutListDb => widget.workoutListDB;
+
   // static int lengthOfpercentNotEqualToZero =
   //     dateMockup.where((element) => element.percent != 0.0).length;
-  static List<int> weekdays =
-      dataWorkout.map((e) => e.workoutDate.weekday).toList();
-  int currIndex = 0;
+
+  // List<DateTime> getWeekDates(DateTime dateTime) {
+  //   final monday =
+  //       dateTime.subtract(Duration(days: dateTime.weekday - DateTime.monday));
+  //   return List.generate(7, (index) => monday.add(Duration(days: index)));
+  // }
+
+  // bool Function(DateTime) isSameDayWith(DateTime? dateTime) => dateTime == null
+  //     ? (date) => false
+  //     : (date) =>
+  //         date.year == dateTime.year &&
+  //         date.month == dateTime.month &&
+  //         date.day == dateTime.day;
+
+  List<WorkoutListModel>? getWorkoutListModelsCache;
+
   @override
   Widget build(BuildContext context) {
-    // double doubleToPercent = dateMockup[defaultSelect].percent * 100;
-
-    double doubleToPercent = dataWorkout[currIndex].percent * 100;
-    int percentToIntCeli = doubleToPercent.ceil();
-    // defaultSelect = currIndex;
+    // double doubleToPercent =
+    //     dataWorkout[currentCircularDisplayIndex].percent * 100;
+    // int percentToIntCeli = doubleToPercent.ceil();
 
     return AppscreenTheme(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -47,61 +67,113 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
             icon: const Icon(Icons.arrow_back_ios_rounded),
             onPressed: () {
               Navigator.pop(context);
-              defaultSelect = DateTime.now().weekday - 1;
+              currentSelectionIndex = DateTime.now().weekday - 1;
             },
             color: Colors.white),
         textBar: widget.workoutList?.description,
         children: [
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(bottom: 16),
-            child: Text(
-              DateFormat(
-                    'd MMMM พ.ศ. ',
-                    'th',
-                  ).format(dataWorkout[currIndex].workoutDate) +
-                  DateFormat('yyyy').format(DateTime.utc(
-                      dataWorkout[currIndex].workoutDate.year + 543)),
-              style: TextStyle(
-                fontFamily: "Noto Sans Thai",
-                fontSize:
-                    ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                fontWeight: FontWeight.w500,
-                color: const Color(0xFF484D56),
-              ),
-            ),
+          FutureBuilder(
+            future: getCircle(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    DateFormat(
+                          'd MMMM พ.ศ. ',
+                          'th',
+                        ).format(currentSelectingDate)
+                        // Fix this fall back
+                        +
+                        DateFormat('yyyy').format(
+                            DateTime.utc(currentSelectingDate.year + 543)),
+                    style: TextStyle(
+                      fontFamily: "Noto Sans Thai",
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 14
+                          : 16,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF484D56),
+                    ),
+                  ),
+                );
+              }
+              return Text('unhandled');
+            },
           ),
           Container(
               width: double.infinity,
               margin: EdgeInsets.only(bottom: 24),
               // height: 80,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: dateMockup.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final data = entry.value;
-                    final matchIndex = weekdays.indexOf(data.day); // 3
+              child: FutureBuilder(
+                future: getCircle(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final circleData =
+                        snapshot.data as Map<int?, WorkoutListModel?>;
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: createWeekDateList(currentSelectingDate)
+                          .asMap()
+                          .entries
+                          .map((entry) {
+                        final wol = circleData[entry.key];
+                        final date = entry.value;
+                        // print('from map---------');
+                        // print('circle : $circleData');
+                        // print('entry key : ${entry.key}');
+                        // print('wol : ${wol}');
+                        // print('remaining_times : ${wol?.remaining_times}');
+                        return DateCirclePickWidget(
+                          date: DateFormat('E', 'th').format(date),
+                          // percent: entry.value?.percent ?? 0.0,
+                          percent: percentageDone(wol),
+                          // percent: 1,
+                          onSelect:
+                              currentSelectingDate.weekday == date.weekday,
+                          isDone: wol?.remaining_times == 0,
+                          onTap: () {
+                            handleSelectDate(date);
+                            print('selecting : $currentSelectingDate');
+                          },
+                        );
+                      }).toList(),
+                      // children: dateMockup.asMap().entries.map((entry) {
+                      //   final dayPosition = entry.key;
+                      //   final data = entry.value;
+                      //   final matchIndex = dataWorkout
+                      //       .map((element) => element.workoutDate.weekday)
+                      //       .toList()
+                      //       .indexOf(data.date?.weekday ?? 0); // 3
 
-                    return DateCirclePickWidget(
-                      date: DateFormat('E', 'th').format(data.dateTime),
-                      percent: dataWorkout[matchIndex].percent,
-                      onSelect: dataWorkout[matchIndex].percent == 0.0
-                          ? false
-                          : index == defaultSelect,
-                      isDone: dataWorkout[matchIndex].isDone,
-                      onTap: () {
-                        setState(() {
-                          if (index != defaultSelect &&
-                              dataWorkout[matchIndex].percent != 0.0) {
-                            defaultSelect = index;
-                            currIndex = matchIndex;
-                          }
-                        });
-                      },
+                      //   return DateCirclePickWidget(
+                      //     date: DateFormat('E', 'th')
+                      //         .format(data.date ?? DateTime.now()),
+                      //     percent: dataWorkout[matchIndex].percent,
+                      //     onSelect: currentSelectionIndex == dayPosition,
+                      //     isDone: dataWorkout[matchIndex].isDone,
+                      //     onTap: () {
+                      //       setState(() {
+                      //         print('dayPosition: $dayPosition');
+                      //         print('matchIndex: $matchIndex');
+                      //         currentSelectionIndex = dayPosition;
+                      //         currentCircularDisplayIndex = matchIndex;
+                      //         // if (index != currentSelectionIndex) {
+                      //         //   currentSelectionIndex = index;
+                      //         //   currentCircularDisplayIndex = matchIndex;
+                      //         // }
+                      //       });
+                      //     },
+                      //   );
+                      // }).toList()
                     );
-                  }).toList())),
+                  }
+                  return Text('Error');
+                },
+              )),
           Container(
             alignment: Alignment.center,
             child: Text(
@@ -124,14 +196,10 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    setState(() {
-                      // if (defaultSelect == 0 &&
-                      //     dateMockup[defaultSelect].percent != 0.0) {
-                      //   defaultSelect = lengthOfpercentNotEqualToZero - 1;
-                      // } else {
-                      //   defaultSelect -= 1;
-                      // }
-                    });
+                    final sundayOfThePreviousWeek = createWeekDateList(
+                            currentSelectingDate.subtract(Duration(days: 7)))
+                        .last;
+                    handleSelectDate(sundayOfThePreviousWeek);
                   },
                   child: Container(
                     child: Column(
@@ -158,40 +226,48 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                     ),
                   ),
                 ), //previous
-                Container(
-                  width: 212,
-                  height: 212,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(top: 4),
-                  child: CircularPercentIndicator(
-                      radius: 106,
-                      lineWidth: 46,
-                      circularStrokeCap: CircularStrokeCap.round,
-                      percent: dataWorkout[currIndex].percent,
-                      center: Container(
-                        child: Text(
-                          '${percentToIntCeli}%',
-                          style: TextStyle(
-                            fontFamily: "Noto Sans Thai",
-                            fontSize: 32,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF636A75),
-                          ),
-                        ),
-                      ),
-                      animation: false,
-                      backgroundColor: Color(0xFFebedf0),
-                      progressColor: Color(0xff6285d7)),
+                FutureBuilder(
+                  future: getCircle(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final circleData =
+                          snapshot.data as Map<int?, WorkoutListModel?>;
+                      final wol = circleData[currentCircularDisplayIndex];
+                      return Container(
+                        width: 212,
+                        height: 212,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 4),
+                        child: CircularPercentIndicator(
+                            radius: 106,
+                            lineWidth: 46,
+                            circularStrokeCap: CircularStrokeCap.round,
+                            percent: percentageDone(wol),
+                            center: Container(
+                              child: Text(
+                                '${(100 * percentageDone(wol)).toStringAsFixed(0)}%',
+                                style: TextStyle(
+                                  fontFamily: "Noto Sans Thai",
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFF636A75),
+                                ),
+                              ),
+                            ),
+                            animation: false,
+                            backgroundColor: Color(0xFFebedf0),
+                            progressColor: Color(0xff6285d7)),
+                      );
+                    }
+                    return Text('loading...');
+                  },
                 ),
                 GestureDetector(
                   onTap: () {
-                    setState(() {
-                      // if (defaultSelect == lengthOfpercentNotEqualToZero - 1) {
-                      //   defaultSelect = 0;
-                      // } else {
-                      //   defaultSelect += 1;
-                      // }
-                    });
+                    final mondayOfTheNextWeek = createWeekDateList(
+                            currentSelectingDate.add(Duration(days: 7)))
+                        .first;
+                    handleSelectDate(mondayOfTheNextWeek);
                   },
                   child: Container(
                     child: Column(
@@ -302,5 +378,42 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
             ),
           )
         ]);
+  }
+
+  double percentageDone(WorkoutListModel? wol) => (wol == null ||
+          wol.total_times == 0 ||
+          wol.total_times == null)
+      ? 0.0
+      : (wol.total_times! - (wol.remaining_times ?? 0.0)) / wol.total_times!;
+
+  handleSelectDate(DateTime date) {
+    setState(() {
+      currentSelectingDate = date;
+      currentCircularDisplayIndex = indexOfWeek(date);
+    });
+  }
+
+  int indexOfWeek(DateTime? date) {
+    final week = createWeekDateList(date ?? DateTime.now());
+    return week
+            .where((element) => isSameDay(element, date ?? DateTime.now()))
+            .toList()
+            .first
+            .weekday -
+        1;
+  }
+
+  Future<Map<int?, WorkoutListModel?>> getCircle() async {
+    if (getWorkoutListModelsCache == null) {
+      print('fetching from db ${widget.workoutList?.titleCode}');
+      getWorkoutListModelsCache = await workoutListDb
+          .getWorkoutListByTitle(widget.workoutList?.titleCode ?? '');
+    }
+    final Map<int?, WorkoutListModel?> circle = mapWorkoutListForBrowsingWeek(
+        getWorkoutListModelsCache!)(currentSelectingDate);
+    print(circle.values.map((c) => c?.remaining_times).toList());
+    print(circle.values.map((c) => c?.total_times).toList());
+    print(circle.values.map((c) => percentageDone(c)).toList());
+    return circle;
   }
 }
