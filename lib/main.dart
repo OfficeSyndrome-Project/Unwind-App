@@ -14,10 +14,11 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   await init();
-  final isFirstTime =
-      await GeneralStoredService.readBoolean("isFirstTime", 0, 0);
+  final isFirstTime = await GeneralStoredService.readBoolean(
+      GeneralStoredService.isFirstTime, 0, 0);
   if (isFirstTime == null) {
-    await GeneralStoredService.writeBoolean("isFirstTime", 0, 0, true);
+    await GeneralStoredService.writeBoolean(
+        GeneralStoredService.isFirstTime, 0, 0, true);
   }
 
   runApp(MyApp(isFirstTime: isFirstTime ?? true));
