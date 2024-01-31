@@ -70,6 +70,9 @@ class InfoOfListWorkoutPage extends StatelessWidget {
               )
             ],
           )),
+          SizedBox(
+            height: 16,
+          ),
           ButtonWithoutIconWidget(
               onTap: () {
                 Navigator.push(

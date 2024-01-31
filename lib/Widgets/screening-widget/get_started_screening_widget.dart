@@ -52,17 +52,19 @@ class ScreeningBoxWidget extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Text(
-              descriptionLabel,
-              style: ResponsiveCheckWidget.isSmallMobile(context)
-                  ? TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF636A75),
-                    )
-                  : Theme.of(context).textTheme.titleSmall,
-              textAlign: TextAlign.center,
-            ),
+            Expanded(
+              child: Text(
+                descriptionLabel,
+                style: ResponsiveCheckWidget.isSmallMobile(context)
+                    ? TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF636A75),
+                      )
+                    : Theme.of(context).textTheme.titleSmall,
+                textAlign: TextAlign.center,
+              ),
+            )
           ],
         ));
   }

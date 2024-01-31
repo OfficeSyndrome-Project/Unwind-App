@@ -14,6 +14,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
+        vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : null,
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
             highlightColor: Colors.transparent,
@@ -26,39 +27,75 @@ class InfoSetWorkoutPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              RatioImageoneToOne(
-                  assetName: 'lib/assets/images/screeningPart/self_slumper.png',
-                  smallWidth: 240,
-                  largeWidth: 280,
-                  smallHeight: 240,
-                  largeHeight: 280),
-              Container(
-                margin: EdgeInsets.only(top: 16, bottom: 8),
-                child: Text(
-                  'ชื่อท่า',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF636A75),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RatioImageoneToOne(
+                    assetName:
+                        'lib/assets/images/screeningPart/self_slumper.png',
+                    smallWidth: 220,
+                    largeWidth: 280,
+                    smallHeight: 220,
+                    largeHeight: 280),
+                Container(
+                  margin: EdgeInsets.only(top: 16, bottom: 8),
+                  child: Text(
+                    'ชื่อท่า',
+                    style: TextStyle(
+                      fontFamily: "Noto Sans Thai",
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 16
+                          : 18,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF636A75),
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextWithStartIconWidget(
-                    startIcon: Icon(
-                      Icons.calendar_month_rounded,
-                      color: Theme.of(context).colorScheme.primary,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextWithStartIconWidget(
+                      startIcon: Icon(
+                        Icons.calendar_month_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      topicName: 'ทำวันเว้นวัน',
+                      style: TextStyle(
+                        fontFamily: "Noto Sans Thai",
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF636A75),
+                      ),
                     ),
-                    topicName: 'ทำวันเว้นวัน',
+                    SizedBox(
+                      width: 8,
+                    ),
+                    TextWithStartIconWidget(
+                      startIcon: Icon(
+                        Icons.access_time_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      topicName: '20 วินาทีต่อวัน',
+                      style: TextStyle(
+                        fontFamily: "Noto Sans Thai",
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF636A75),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    'รายละเอียดการทำ (ขั้นตอนการทำเช่น เงยคอค้างไว้ 20 วินาที)',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -68,53 +105,24 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       color: const Color(0xFF636A75),
                     ),
                   ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  TextWithStartIconWidget(
-                    startIcon: Icon(
-                      Icons.access_time_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    topicName: '20 วินาทีต่อวัน',
-                    style: TextStyle(
-                      fontFamily: "Noto Sans Thai",
-                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                          ? 14
-                          : 16,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF636A75),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'รายละเอียดการทำ (ขั้นตอนการทำเช่น เงยคอค้างไว้ 20 วินาที)',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF636A75),
-                  ),
                 ),
-              ),
-              Expanded(
-                child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return BoxHelpWhatPointWidget(helpPoint: 'ช่วยส่วนหลัง');
-                    },
-                    separatorBuilder: (context, index) => SizedBox(
-                          height: 8,
-                        ),
-                    itemCount: 3),
-              )
-            ],
-          )),
+                Expanded(
+                  child: ListView.separated(
+                      physics: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? ClampingScrollPhysics()
+                          : NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return BoxHelpWhatPointWidget(
+                            helpPoint: 'ช่วยส่วนหลัง');
+                      },
+                      separatorBuilder: (context, index) => SizedBox(
+                            height: 8,
+                          ),
+                      itemCount: 3),
+                )
+              ],
+            ),
+          ),
           ButtonWithoutIconWidget(
               onTap: () {
                 Navigator.push(

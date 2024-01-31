@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:image_sequence_animator/image_sequence_animator.dart';
+import 'package:unwind_app/Widgets/animate_sequence_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
-import 'package:unwind_app/Widgets/workoutlist-widget/frame_animation_widget.dart';
 
 class WorkoutWidget extends StatelessWidget {
   final String name;
-  final List<String>? fullPaths;
-  final int duration;
+  final List<String> fullPaths;
+  final int repeat;
+  final int eachSetDuration;
   final void Function(ImageSequenceAnimatorState)? onReadyToPlay;
   const WorkoutWidget(
       {super.key,
       required this.name,
       required this.fullPaths,
-      required this.duration,
-      this.onReadyToPlay});
+      required this.eachSetDuration,
+      this.onReadyToPlay,
+      required this.repeat});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +36,11 @@ class WorkoutWidget extends StatelessWidget {
               ),
             ),
           ),
-          FrameAnimation(
-            fullPaths: fullPaths,
-            duration: duration,
-            onReadyToPlay: onReadyToPlay,
-          ),
+          AnimateSequenceWidget(
+            listPath: fullPaths,
+            eachSetDuration: eachSetDuration,
+            repeat: repeat,
+          )
         ],
       ),
     );

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
-import 'package:unwind_app/pages/loading_page.dart';
 
 class CircularCountdownTimerWidget extends StatefulWidget {
   final int duration;
@@ -35,22 +34,22 @@ class _CircularCountdownTimerWidgetState
   @override
   void initState() {
     super.initState();
-    startTimer();
+    // startTimer();
   }
 
-  void startTimer() {
-    if (currentDuration > 0) {
-      widget.onChange!((currentDuration - 1).toString());
-      timer = Timer(Duration(seconds: 1), () {
-        setState(() {
-          currentDuration -= 1;
-        });
-        startTimer();
-      });
-    } else {
-      LoadingPage();
-    }
-  }
+  // void startTimer() {
+  //   if (currentDuration > 0) {
+  //     widget.onChange!((currentDuration - 1).toString());
+  //     timer = Timer(Duration(seconds: 1), () {
+  //       setState(() {
+  //         currentDuration -= 1;
+  //       });
+  //       startTimer();
+  //     });
+  //   } else {
+  //     LoadingPage();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +76,7 @@ class _CircularCountdownTimerWidgetState
         ),
         onComplete: widget.onComplete,
         onStart: widget.onStart,
+        onChange: (value) => widget.onChange!(value),
         timeFormatterFunction: widget.timeFormatterFunction,
       ),
     );

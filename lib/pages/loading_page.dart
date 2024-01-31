@@ -4,7 +4,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoadingPage extends StatelessWidget {
   final bool? isShowNavbar;
-  const LoadingPage({this.isShowNavbar = false, super.key});
+  const LoadingPage({this.isShowNavbar = true, super.key});
 
   @override
   Widget build(BuildContext context) {

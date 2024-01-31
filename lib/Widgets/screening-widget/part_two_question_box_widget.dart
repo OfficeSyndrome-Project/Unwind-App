@@ -246,7 +246,10 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                                 inactiveColor:
                                     Theme.of(context).colorScheme.primary),
                             Container(
-                              width: 230,
+                              width:
+                                  ResponsiveCheckWidget.isSmallMobile(context)
+                                      ? 180
+                                      : 230,
                               child: Text(
                                 'ปวดซ่าๆ ชาๆ จี๊ดๆ เหมือนโดนเข็มตำหรือผึ้งต่อย',
                                 style:
@@ -278,17 +281,23 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                                     Theme.of(context).colorScheme.primary,
                                 inactiveColor:
                                     Theme.of(context).colorScheme.primary),
-                            Text(
-                              'ปวดไหม้แสบร้อน เจ็บแปล็บขึ้นทันทีทันใด',
-                              style:
+                            Container(
+                              width:
                                   ResponsiveCheckWidget.isSmallMobile(context)
-                                      ? TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: const Color(0xFF484D56),
-                                        )
-                                      : Theme.of(context).textTheme.bodyLarge,
-                            )
+                                      ? 180
+                                      : 230,
+                              child: Text(
+                                'ปวดไหม้แสบร้อน เจ็บแปล็บขึ้นทันทีทันใด',
+                                style:
+                                    ResponsiveCheckWidget.isSmallMobile(context)
+                                        ? TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: const Color(0xFF484D56),
+                                          )
+                                        : Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
                           ],
                         )
                       ],
