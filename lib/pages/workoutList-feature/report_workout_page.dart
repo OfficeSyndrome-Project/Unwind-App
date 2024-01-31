@@ -196,10 +196,8 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    final sundayOfThePreviousWeek = createWeekDateList(
-                            currentSelectingDate.subtract(Duration(days: 7)))
-                        .last;
-                    handleSelectDate(sundayOfThePreviousWeek);
+                    handleSelectDate(
+                        currentSelectingDate.subtract(Duration(days: 1)));
                   },
                   child: Container(
                     child: Column(
@@ -264,10 +262,8 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    final mondayOfTheNextWeek = createWeekDateList(
-                            currentSelectingDate.add(Duration(days: 7)))
-                        .first;
-                    handleSelectDate(mondayOfTheNextWeek);
+                    handleSelectDate(
+                        currentSelectingDate.add(Duration(days: 1)));
                   },
                   child: Container(
                     child: Column(
@@ -297,19 +293,31 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
               ],
             ),
           ),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(bottom: 16),
-            child: Text(
-              'วันนี้คุณเหลือบริหารคออีก 2 ครั้ง',
-              style: TextStyle(
-                fontFamily: "Noto Sans Thai",
-                fontSize:
-                    ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                fontWeight: FontWeight.w400,
-                color: const Color(0xFF9BA4B5),
-              ),
-            ),
+          FutureBuilder(
+            future: getCircle(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final circleData =
+                    snapshot.data as Map<int?, WorkoutListModel?>;
+                final wol = circleData[currentCircularDisplayIndex];
+                return Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    'วันนี้คุณเหลือบริหารคออีก ${wol?.remaining_times} ครั้ง',
+                    style: TextStyle(
+                      fontFamily: "Noto Sans Thai",
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 14
+                          : 16,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF9BA4B5),
+                    ),
+                  ),
+                );
+              }
+              return Text('loading...');
+            },
           ),
           TextWithStartIconWidget(
               startIcon: Icon(
@@ -328,15 +336,18 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
             margin: EdgeInsets.only(top: 16, bottom: 16),
             child: ButtonWithiconWidget(
                 onTap: () {
-                  Navigator.push(context,
-                      pageRoutes.workout.infooflistworkout().route(context));
+                  Navigator.push(
+                      context,
+                      pageRoutes.workout
+                          .infooflistworkout(widget.workoutList)
+                          .route(context));
                 },
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 color: Color(0xFFD7E0F5),
                 icon: Icons.arrow_right_rounded,
                 colorText: Color(0xFF6285D7),
                 padding: EdgeInsets.symmetric(horizontal: 26, vertical: 12),
-                text: 'ชุดท่าที่ 1 บริหารคอ',
+                text: 'ชุดท่าที่ 1 บริหาร ${widget.workoutList?.titleCode}',
                 radius: 16,
                 shadows: [
                   BoxShadow(
@@ -405,15 +416,11 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
 
   Future<Map<int?, WorkoutListModel?>> getCircle() async {
     if (getWorkoutListModelsCache == null) {
-      print('fetching from db ${widget.workoutList?.titleCode}');
       getWorkoutListModelsCache = await workoutListDb
           .getWorkoutListByTitle(widget.workoutList?.titleCode ?? '');
     }
     final Map<int?, WorkoutListModel?> circle = mapWorkoutListForBrowsingWeek(
         getWorkoutListModelsCache!)(currentSelectingDate);
-    print(circle.values.map((c) => c?.remaining_times).toList());
-    print(circle.values.map((c) => c?.total_times).toList());
-    print(circle.values.map((c) => percentageDone(c)).toList());
     return circle;
   }
 }

@@ -2,16 +2,6 @@ import 'package:collection/collection.dart';
 
 import 'package:unwind_app/models/workoutlist_model.dart';
 
-class WorkoutListModelWithDate {
-  final DateTime date;
-  final WorkoutListModel workoutListModel;
-
-  WorkoutListModelWithDate({
-    required this.date,
-    required this.workoutListModel,
-  });
-}
-
 /// Given a list of [WorkoutListModel]s and a target [DateTime] date, this function
 /// generates a map where keys represent integers (possibly day indices within the week)
 /// and values are nullable [WorkoutListModel]s. The mapping is based on the workouts
@@ -21,16 +11,20 @@ class WorkoutListModelWithDate {
 /// a mapping of day indices to corresponding workout models within that week.
 ///
 /// Parameters:
-///   - `wol`: A list of [WorkoutListModel]s representing workout data.
-///   - `date`: The target [DateTime] date around which the browsing week is centered.
+///   - `workouts`: A list of [WorkoutListModel]s representing workout data.
+///   - `targetDate`: The target [DateTime] date around which the browsing week is centered.
 ///
 /// Returns:
 ///   A map where keys are integers (possibly day indices) and values are nullable
 ///   [WorkoutListModel]s representing workouts within the browsing week.
-Map<int?, WorkoutListModel?> Function(DateTime date)
-    mapWorkoutListForBrowsingWeek(List<WorkoutListModel> wol) =>
-        (date) => workoutListDateRangeMap(
-            filterWorkoutListByBrowsingWeek(wol)(createWeekDateList(date)));
+Map<int?, WorkoutListModel?> Function(DateTime targetDate)
+    mapWorkoutListForBrowsingWeek(List<WorkoutListModel> workouts) =>
+        (targetDate) {
+          final weekDates = createWeekDateList(targetDate);
+          final filteredWorkouts =
+              filterWorkoutListByBrowsingWeek(workouts)(weekDates);
+          return workoutListDateRangeMap(filteredWorkouts);
+        };
 
 /// Creates a map representing a mapping of day indices to [WorkoutListModel]s
 /// within a given list of workouts. (Circle Map)
@@ -53,7 +47,7 @@ Map<int?, WorkoutListModel?> workoutListDateRangeMap(
       List<int>.generate(7, (n) => n),
       key: (n) => n,
       value: (n) =>
-          workoutLists.firstWhereOrNull((wol) => wol.date?.weekday == n),
+          workoutLists.firstWhereOrNull((wol) => wol.date?.weekday == n + 1),
     );
 
 /// Filters a list of [WorkoutListModel]s based on a provided browsing window.
