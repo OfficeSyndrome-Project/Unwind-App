@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'dart:core';
 import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
 
 void main() {
@@ -24,24 +25,38 @@ void main() {
     );
 
     await tester.enterText(find.byType(TextFormField), 'Kridsaya');
-    // Test ป้อนข้อมูล
-    expect(controller.text, 'Kridsaya');
-    // Test ค่า onChanged
-    expect(onChangedValue, 'Kridsaya');
-    // Assert
-    expect(find.text('TestForm'), findsOneWidget);
-    // print(tester.widget<Text>(find.text('TestForm')).style?.color);
+    await tester.pump();
 
-    // ตรวจสอบสีของ Text เมื่อไม่มีการ Focus
+    expect(controller.text, 'Kridsaya');
+    expect(onChangedValue, 'Kridsaya');
+    expect(find.text('TestForm'), findsOneWidget);
+    expect(find.text('TestUnit'), findsOneWidget);
+
+    /////////////////NOTE//////////////////
+    /////////////Text Style has error///////////////
+
+    // final TextStyle unfocusedTextStyle = TextStyle(
+    //   color: Color(0xFF9BA4B5),
+    //   fontSize: 16,
+    //   fontWeight: FontWeight.w500,
+    // );
+
+    // expect(
+    //   (tester.widget(find.byType(TextFormField)) as TextFormField)
+    //       .decoration
+    //       ?.labelStyle,
+    //   equals(unfocusedTextStyle),
+    // );
+
+    // สี Text เมื่อไม่ Focus
     // expect(tester.widget<Text>(find.text('TestForm')).style?.color,
     //     Color(0xFF9BA4B5));
 
-    // แตะที่ TextFormField เพื่อให้เกิดการ Focus
-    await tester.tap(find.byType(TextFormField));
-    await tester.pump();
+    // await tester.tap(find.byType(TextFormField));
+    // await tester.pump();
     // print(tester.widget<Text>(find.text('TestForm')).style?.color);
 
-    // ตรวจสอบสีของ Text เมื่อมีการ Focus
+    // สี Text เมื่อมีการ Focus
     // expect(tester.widget<Text>(find.text('TestForm')).style?.color,
     //     Color(0xFF484D56));
   });
