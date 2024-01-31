@@ -1,3 +1,4 @@
+// import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:unwind_app/data/screening-data/screening_q_page.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
@@ -41,7 +42,9 @@ void main() {
           .map((question) => question.question)
           .toList();
       var actualQuestions =
-          ScreeningQuestionPartOneService.getQuestionsByPage(pageCheck);
+          ScreeningQuestionPartOneService.getQuestionsByPage(pageCheck)
+              .map((question) => question.question)
+              .toList();
       expect(actualQuestions, isList);
       expect(actualQuestions, expectedQuestions);
       // print(actualQuestions);
@@ -136,10 +139,10 @@ void main() {
       var selectedPart = 'คอ';
       var actualPart = ScreeningQuestionPartTwoService
           .getScreeningPartTwoModelBySelectedPart(selectedPart);
+      // debugPrint('selectedPart : $selectedPart');
       expect(actualPart.selectedPart.title, selectedPart);
       expect(actualPart.questions, isNotEmpty);
       expect(actualPart.postures, isNotEmpty);
-      // print(actualPart);
     });
   });
 
@@ -276,5 +279,3 @@ void main() {
     });
   });
 }
-
-//// print ค่า selectedPart : ทำให้ test ไม่ผ่าน แต่รันแยก ผ่านแล้ว
