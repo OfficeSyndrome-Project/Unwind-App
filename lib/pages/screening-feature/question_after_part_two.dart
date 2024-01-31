@@ -7,6 +7,10 @@ import 'package:unwind_app/Widgets/screening-widget/part_two_question_box_widget
 import 'package:unwind_app/Widgets/screening-widget/posture_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+import 'package:unwind_app/pages/screening-feature/question_button_state_service.dart';
+import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
@@ -21,6 +25,11 @@ class QuestionAfterPartTwo extends StatefulWidget {
 }
 
 class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
+  bool isButtonEnable = false;
+
+  /// Pages that has been completly answered
+  Set<int> pagesCompleted = {};
+
   initState() {
     super.initState();
     answers.addAll(widget.answers ?? []);
@@ -31,6 +40,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
   void handleCurrentAnswerChanged(Answer answer) {
     setState(() {
       answers = Answer.updateAnswer(answers, answer);
+      // isButtonEnable = isAllQuestionAnswered(ScreeningPart.two,currentPage, answers);
     });
   }
 
@@ -45,6 +55,18 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
     }
     return (double value) => setState(() {
           nrs[screeningTitle] = int.tryParse(value.toStringAsFixed(0)) ?? 0;
+
+          // Update the state of the button, if the nrs score is zero, the button will be disabled
+          isButtonEnable = value != 0;
+
+          // if the nrs score is zero, remove the page from pagesCompleted
+          if (value == 0) {
+            if (pagesCompleted.contains(currentPage))
+              pagesCompleted.remove(currentPage);
+            return;
+          }
+          pagesCompleted.add(currentPage);
+          print(pagesCompleted);
         });
   }
 
@@ -67,6 +89,8 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
     List<Widget> questionsWidgets_ = [];
     int pageAmount = 0;
     ScreeningPartTwoModel.sortByPartOrder(selectedParts);
+
+    /// Use for skip to backs section
     List<int> first_page_of_back_or_empty = [];
 
     for (var part in selectedParts) {
@@ -89,16 +113,19 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           padding: EdgeInsets.all(2),
           children: [
             PartTwoQuestionBoxWidget(
-              title: part.selectedPart.title,
-              assetPath: part.selectedPart.assetPath,
-              questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
-                  part.questions, pageNumber),
-              currentPage: currentPage,
-              pageRoutes: pageRoutes,
-              controller: _controller,
-              questionID: part.questions.map((e) => e.questionId).toList(),
-              onChanged: handleCurrentAnswerChanged,
-            )
+                title: part.selectedPart.title,
+                assetPath: part.selectedPart.assetPath,
+                questions: ScreeningQuestionPartTwoService.getQuestionsByPage(
+                    part.questions, pageNumber),
+                currentPage: currentPage,
+                pageRoutes: pageRoutes,
+                controller: _controller,
+                questionID: part.questions.map((e) => e.questionId).toList(),
+                onChanged: handleCurrentAnswerChanged,
+                onCompleted: (isCompleted) => setState(() {
+                      isButtonEnable = isCompleted;
+                      pagesCompleted.add(pageNumber);
+                    }))
           ],
         ));
 
@@ -116,6 +143,12 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           pageRoutes: pageRoutes,
           controller: _controller,
           onChanged: handleCurrentAnswerChanged,
+          onCompleted: (isCompleted) {
+            setState(() {
+              isButtonEnable = isCompleted;
+              pagesCompleted.add(pageNumber);
+            });
+          },
         );
         questionsWidgets_.add(postureWidget);
       }
@@ -152,6 +185,9 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
               onPageChanged: (value) {
                 setState(() {
                   currentPage = value;
+
+                  // Update the state of the button
+                  isButtonEnable = pagesCompleted.contains(currentPage);
                 });
               },
               children: [
@@ -167,6 +203,8 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                 print('nrs : $nrs');
                 print(answers);
                 print('current page :$currentPage');
+
+                if (!isButtonEnable && !alwaysUnlockButton) return;
 
                 final isDoctoringOnNeckOrBaaOrShoulder =
                     ScreeningDiagnoseService.shouldGoToDoctorByParts(answers, [
@@ -189,16 +227,16 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                       await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DoctorPageDummy(
-                                  text: 'คุณตอบคำถามผิด ไปหาหมอซะ')));
+                              builder: (context) =>
+                                  ExceptionPage(exceptionPart: 1)));
                     }
 
                     if (isNrsExceedingOnNeckOrBaaOrShoulder) {
                       await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DoctorPageDummy(
-                                  text: 'nrs เกินกำหนด คุณอาการหนัก $nrs')));
+                              builder: (context) =>
+                                  ExceptionPage(exceptionPart: 2)));
                     }
                     // go to part 3
                     Navigator.push(
@@ -216,17 +254,16 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DoctorPageDummy(
-                                    text: 'คุณตอบคำถามผิด ไปหาหมอซะ')));
+                                builder: (context) =>
+                                    ExceptionPage(exceptionPart: 1)));
                       }
 
                       if (isNrsExceedingOnNeckOrBaaOrShoulder) {
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DoctorPageDummy(
-                                    text:
-                                        'nrs เกินกำหนด : คุณอาการหนัก $nrs')));
+                                builder: (context) =>
+                                    ExceptionPage(exceptionPart: 2)));
                       }
 
                       _controller
@@ -249,38 +286,35 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                 if (isDoctoringOnUpperBackOrLowerBack ||
                     isNrsExceedingOnUpperBackOrLowerBack) {
                   if (isDoctoringOnUpperBackOrLowerBack) {
-                    //TODO ใส่หน้าให้ไปหาหมอ เนื่องจากมีอาการที่ไม่ใช่ออฟฟิศ
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoctorPageDummy(
-                                text: 'คุณตอบคำถามผิด ไปหาหมอซะ')));
+                            builder: (context) =>
+                                ExceptionPage(exceptionPart: 1)));
                   }
 
                   if (isNrsExceedingOnUpperBackOrLowerBack) {
-                    //TODO ใส่หน้าให้ไปหาหมอ เนื่องจาก nrs เกินกำหนด
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoctorPageDummy(
-                                text: 'nrs เกินกำหนด คุณอาการหนัก $nrs')));
+                            builder: (context) =>
+                                ExceptionPage(exceptionPart: 3)));
                   }
-                  // กรณี ไปหาหมอหรือ nrs เกินกำหนด ในส่วนของ (คอ, บ่า, ไหล่ ) && (หลังส่วนบน, หลังส่วนล่าง)
+                  // กรณี ไปหาหมอหรือ nrs เกินกำหนด ในส่วนของ (คอ, บ่า, ไหล่ ) && (หลังส่วนบน, หลังส่วนล่าง) (หาหมอ)
                   final neckSetToDoctor = isDoctoringOnNeckOrBaaOrShoulder ||
                       isNrsExceedingOnNeckOrBaaOrShoulder;
                   final backSetToDoctor = isDoctoringOnUpperBackOrLowerBack ||
                       isNrsExceedingOnUpperBackOrLowerBack;
                   if (neckSetToDoctor && backSetToDoctor) {
-                    //TODO หน้า result ให้หาหมอ
                     await Navigator.push(
                         context,
-                        pageRoutes.screening
-                            .formafterscreening(AnswerContext(
-                              selectedPart: selectedParts,
-                              answers: answers,
-                              nrs: nrs,
-                            ))
-                            .route(context));
+                        MaterialPageRoute(
+                            builder: (context) => ResultsWorkoutPage(
+                                  workoutLists: [],
+                                  resultText:
+                                      "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
+                                  nextPage: const ScreeningPage(),
+                                )));
                     return;
                   }
                   // go to part 3
@@ -305,7 +339,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                           .route(context));
                   return;
                 }
-                //กรณีเลือก คอ บ่า หลังส่วนล่าง จะไปต่อที่ form ทันที ไม่ต้องทำ part 3
+                //กรณีเลือก คอ บ่า หลังส่วนล่าง จะไปต่อที่ form ทันที ไม่ต้องทำ part 3 (ไม่หาหมอ)
                 final selectedPartsTitle =
                     selectedParts.map((e) => e.selectedPart.title);
                 if ((selectedPartsTitle.contains('คอ')) &&
@@ -337,7 +371,9 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
               radius: 32,
               width: double.infinity,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-              color: Theme.of(context).colorScheme.primary,
+              color: isButtonEnable
+                  ? Theme.of(context).colorScheme.primary
+                  : const Color(0xFF9BA4B5),
               borderSide: BorderSide.none,
               style: ResponsiveCheckWidget.isSmallMobile(context)
                   ? TextStyle(

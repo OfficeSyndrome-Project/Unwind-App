@@ -6,15 +6,17 @@ class ExceptionData {
 
   static List<ExceptionData> getData() {
     List<ExceptionData> exceptionmockup = [];
-
+    //0 ไม่ใช่ office syndrome
     exceptionmockup.add(ExceptionData(
         titleLabel: 'ดูเหมือนว่าคุณจะไม่ได้เป็นออฟฟิศซินโดรม',
         descriptionLabel:
             'ควรพบแพทย์เพื่อตรวจสอบสาเหตุของอาการเนื่องจากอาการดังกล่าวไม่ได้เกิดจากการทำงาน'));
+    //1
     exceptionmockup.add(ExceptionData(
         titleLabel: 'ดูเหมือนว่าคุณจะต้องรับการรักษา',
         descriptionLabel:
             'ควรพบแพทย์เพื่อตรวจสอบสาเหตุของอาการเนื่องจากอาการดังกล่าวไม่ได้เกิดจากการทำงาน'));
+    //2
     exceptionmockup.add(ExceptionData(
         titleLabel: 'ดูเหมือนว่าคุณจะต้องรับการรักษา',
         descriptionLabel:

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/menu_page.dart';
 import 'package:unwind_app/pages/profile-feature/profile_page.dart';
@@ -17,10 +16,7 @@ class _HomeState extends State<HomePage> {
   late int _selectedIndex = widget.selectedIndex;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const ScreeningPage(),
-    // const FormAfterScreening(
-    //   answerContext: AnswerContext(),
-    // ),
+    // const ScreeningPage(),
     WorkoutListPage(),
     const MenuWidget(),
     HistoryPage(),
@@ -46,12 +42,6 @@ class _HomeState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'screening',
-            backgroundColor: Color(0xffebedf0),
-          ),
           BottomNavigationBarItem(
             activeIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),

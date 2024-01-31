@@ -15,6 +15,7 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
   final String title;
   final List<int> questionID;
   final void Function(Answer) onChanged;
+  final Function(bool)? onCompleted;
   // final ScreeningPartOneModel question;
 
   const PartTwoQuestionBoxWidget({
@@ -27,6 +28,7 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
     required this.title,
     required this.questionID,
     required this.onChanged,
+    this.onCompleted,
   });
 
   @override
@@ -34,15 +36,22 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
       _PartTwoQuestionBoxWidgettState();
 }
 
-class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
+class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget>
+    with AutomaticKeepAliveClientMixin {
+  List<Answer> answers = [];
+
   void onCurrentOptionsChanged(bool bool) {}
 
   int? currentOptions;
   // int index = 0;
 
+  @override
+  bool get wantKeepAlive => true;
+
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,6 +107,24 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
                 questionId: widget.questions[index].questionId,
                 questionPage: widget.currentPage,
                 onChanged: (value) {
+                  // Set state
+
+                  answers = Answer.updateAnswer(
+                      answers,
+                      Answer(
+                        questionPart: widget.questions[index].questionPart,
+                        title: widget.title,
+                        questionId: widget.questions[index].questionId,
+                        answer: value,
+                      ));
+
+                  if (widget.onCompleted != null) {
+                    widget.onCompleted!(
+                        answers.length == widget.questions.length);
+                  }
+
+                  print(answers.length == widget.questions.length);
+
                   widget.onChanged(Answer(
                       questionPart: widget.questions[index].questionPart,
                       title: widget.title,

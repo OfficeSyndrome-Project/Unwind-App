@@ -117,9 +117,9 @@ class ShowGoToDoctorPageService {
     Answer(questionPart: 3, title: "บ่า", questionId: 2, answer: 1),
     Answer(questionPart: 3, title: "บ่า", questionId: 3, answer: 1),
     Answer(questionPart: 3, title: "บ่า", questionId: 4, answer: 2),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 2, answer: 1),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 3, answer: 1),
-    Answer(questionPart: 3, title: "หลังส่วนบน", questionId: 4, answer: 2),
+    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 2, answer: 1),
+    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 3, answer: 1),
+    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 4, answer: 2),
   };
 
   static bool showGoToDoctorPage(
@@ -199,6 +199,7 @@ class ScreeningDiagnoseService {
 
   static Future<List<WorkoutList>> diagnose(
       List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
+    print('----${nrs}');
     // filter answer ว่าเป็นคอบ่าไหล่ ที่ต้องหาหมอไหม
     List<ScreeningTitle> titleNeckBaaShoulder = [
       ScreeningTitle.neck,
@@ -247,12 +248,13 @@ class ScreeningDiagnoseService {
       }
     });
     final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
-    //insert workoutlist to db
+    // Insert workout list to database, if there is workoutlist then skip
     final workout_days = Give_Workoutlist_Per_Day(uniqueWorkoutListTitles);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
     for (var workoutlist_title in workout_days.entries) {
       final there_is_workoutlist = await wl_db
           .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
+      // if there is workoutlist then skip
       if (there_is_workoutlist) {
         continue;
       }

@@ -8,6 +8,8 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+import 'package:unwind_app/services/general_stored_service.dart';
 
 class WorkoutListPage extends StatelessWidget {
   WorkoutListPage({super.key});
@@ -36,6 +38,11 @@ class WorkoutListPage extends StatelessWidget {
                 List<WorkoutList> workoutLists = data
                     .map((s) => WorkoutList.workoutListFromString[s]!)
                     .toList();
+                if (workoutLists.isEmpty) {
+                  return Center(
+                    child: Text('คุณยังไม่มีชุดท่าออกกำลังกาย'),
+                  );
+                }
                 return ListView.separated(
                     // mainAxisSize: MainAxisSize.min,
                     // mainAxisAlignment: MainAxisAlignment.start,
@@ -107,24 +114,45 @@ class WorkoutListPage extends StatelessWidget {
               );
             },
           )),
-          TextWithStartIconWidget(
-              startIcon: Icon(
-                Icons.help_rounded,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              topicName: 'มีอาการปวดที่จุดอื่น',
-              style: TextStyle(
-                fontFamily: "Noto Sans Thai",
-                fontSize:
-                    ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                fontWeight: FontWeight.w600,
-                color: const Color(0xFF484D56),
-              )),
+          GestureDetector(
+            onLongPress: () async {
+              await GeneralStoredService.writeBoolean(
+                  "isFirstTime", 0, 0, true);
+              print(
+                  await GeneralStoredService.readBoolean("isFirstTime", 0, 0));
+            },
+            child: TextWithStartIconWidget(
+                startIcon: Icon(
+                  Icons.help_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                topicName: 'มีอาการปวดที่จุดอื่น',
+                style: TextStyle(
+                  fontFamily: "Noto Sans Thai",
+                  fontSize:
+                      ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF484D56),
+                )),
+          ),
           SizedBox(
             height: 16,
           ),
           ButtonWithiconWidget(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ScreeningPage(
+                          isFirstTime: false,
+                        )),
+              );
+            },
+            onLongPress: () async {
+              int count =
+                  await serviceLocator<WorkoutListDB>().deleteAllWorkoutList();
+              print('successfully deleted $count workouts');
+            },
             mainAxisAlignment: MainAxisAlignment.center,
             text: 'ตรวจอีกครั้ง',
             radius: 8,

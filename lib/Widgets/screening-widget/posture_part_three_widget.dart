@@ -4,6 +4,7 @@ import 'package:unwind_app/Widgets/general_radio_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class PosturePartThreeWidget extends StatefulWidget {
   final List<ScreeningPartThreePostureModel> questions;
@@ -11,6 +12,7 @@ class PosturePartThreeWidget extends StatefulWidget {
   final PageRoutes pageRoutes;
   final PageController controller;
   final void Function(int) Function(int)? onChanged;
+  final Function(bool)? onCompleted;
   // final ScreeningPartOneModel question;
 
   const PosturePartThreeWidget({
@@ -20,22 +22,30 @@ class PosturePartThreeWidget extends StatefulWidget {
     required this.pageRoutes,
     required this.controller,
     this.onChanged,
+    this.onCompleted,
   });
 
   @override
   State<PosturePartThreeWidget> createState() => _PosturePartThreeWidgetState();
 }
 
-class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget> {
+class _PosturePartThreeWidgetState extends State<PosturePartThreeWidget>
+    with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true;
   void onCurrentOptionsChanged(bool bool) {
     //here
   }
 
   int? currentOptions;
 
+  List<PostureAnswer> answers = [];
+
+  Set<int> completedPages = {};
+
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,

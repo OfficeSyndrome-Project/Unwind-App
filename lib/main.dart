@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:unwind_app/database/screeningtest_db.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
+import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+import 'package:unwind_app/services/general_stored_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,15 +14,19 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   await init();
+  final isFirstTime = await GeneralStoredService.readBoolean(
+      GeneralStoredService.isFirstTime, 0, 0);
+  if (isFirstTime == null) {
+    await GeneralStoredService.writeBoolean(
+        GeneralStoredService.isFirstTime, 0, 0, true);
+  }
 
-  final stdb = ScreeningTestDB(serviceLocator());
-  stdb.insertScreeningTest(DateTime.now());
-
-  runApp(const MyApp());
+  runApp(MyApp(isFirstTime: isFirstTime ?? true));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool? isFirstTime;
+  const MyApp({super.key, this.isFirstTime});
 
   // This widget is the root of your application.
 
@@ -29,7 +34,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(selectedIndex: 0),
+      home: isFirstTime ?? true
+          ? const ScreeningPage()
+          : const HomePage(selectedIndex: 0),
       theme: appTheme,
     );
   }
