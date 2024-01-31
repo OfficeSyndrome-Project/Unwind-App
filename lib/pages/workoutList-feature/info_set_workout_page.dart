@@ -4,12 +4,15 @@ import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class InfoSetWorkoutPage extends StatelessWidget {
-  InfoSetWorkoutPage({super.key});
+  InfoSetWorkoutPage({super.key, this.workoutData});
 
+  final WorkoutData? workoutData;
   final PageRoutes pageRoutes = PageRoutes();
+
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
@@ -30,7 +33,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RatioImageoneToOne(
-                  assetName: 'lib/assets/images/screeningPart/self_slumper.png',
+                  assetName: '${workoutData?.thumbnailPath}',
                   smallWidth: 240,
                   largeWidth: 280,
                   smallHeight: 240,
@@ -38,7 +41,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: 16, bottom: 8),
                 child: Text(
-                  'ชื่อท่า',
+                  '${workoutData?.name}',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:
@@ -75,7 +78,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       Icons.access_time_rounded,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: '20 วินาทีต่อวัน',
+                    topicName: '${workoutData?.time} วินาทีต่อวัน',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -91,7 +94,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 margin: EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  'รายละเอียดการทำ (ขั้นตอนการทำเช่น เงยคอค้างไว้ 20 วินาที)',
+                  'รายละเอียดการทำ ${workoutData?.detail}',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:

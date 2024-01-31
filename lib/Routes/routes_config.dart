@@ -169,10 +169,15 @@ class Workout {
         workoutList: workoutList,
         workoutListDB: serviceLocator(),
       ));
-  PathRoute infooflistworkout() =>
-      PathRoute(title: "ดูชุดท่าทั้งหมด", widget: InfoOfListWorkoutPage());
-  PathRoute infoofsetworkout() =>
-      PathRoute(title: "คำอธิบายชุดท่า", widget: InfoSetWorkoutPage());
+  PathRoute infooflistworkout(WorkoutList? workoutList) => PathRoute(
+      title: "ดูชุดท่าทั้งหมด",
+      widget: InfoOfListWorkoutPage(workoutList: workoutList));
+
+  PathRoute infoofsetworkout(WorkoutData? workoutData) => PathRoute(
+      title: "คำอธิบายชุดท่า",
+      widget: InfoSetWorkoutPage(
+        workoutData: workoutData,
+      ));
   PathRoute nrsafterandbeforeworkout() =>
       PathRoute(title: "ประเมินความเจ็บปวด", widget: NrsAfterAndBeforePage());
   PathRoute preparebeforeworkout() => PathRoute(

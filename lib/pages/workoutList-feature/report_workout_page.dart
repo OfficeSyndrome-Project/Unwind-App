@@ -303,17 +303,44 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                 return Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(bottom: 16),
-                  child: Text(
-                    'วันนี้คุณเหลือบริหารคออีก ${wol?.remaining_times} ครั้ง',
-                    style: TextStyle(
-                      fontFamily: "Noto Sans Thai",
-                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                          ? 14
-                          : 16,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xFF9BA4B5),
-                    ),
-                  ),
+                  child: (wol == null)
+                      ? Text(
+                          WorkoutReportRemainingTimesMessage.noWorkout,
+                          style: TextStyle(
+                            fontFamily: "Noto Sans Thai",
+                            fontSize:
+                                ResponsiveCheckWidget.isSmallMobile(context)
+                                    ? 14
+                                    : 16,
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xFF9BA4B5),
+                          ),
+                        )
+                      : (wol.remaining_times == 0)
+                          ? Text(
+                              WorkoutReportRemainingTimesMessage.congrads,
+                              style: TextStyle(
+                                fontFamily: "Noto Sans Thai",
+                                fontSize:
+                                    ResponsiveCheckWidget.isSmallMobile(context)
+                                        ? 14
+                                        : 16,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xFF9BA4B5),
+                              ),
+                            )
+                          : Text(
+                              'วันนี้คุณเหลือบริหารคออีก ${wol.remaining_times} ครั้ง',
+                              style: TextStyle(
+                                fontFamily: "Noto Sans Thai",
+                                fontSize:
+                                    ResponsiveCheckWidget.isSmallMobile(context)
+                                        ? 14
+                                        : 16,
+                                fontWeight: FontWeight.w400,
+                                color: const Color(0xFF9BA4B5),
+                              ),
+                            ),
                 );
               }
               return Text('loading...');
@@ -423,4 +450,9 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
         getWorkoutListModelsCache!)(currentSelectingDate);
     return circle;
   }
+}
+
+abstract class WorkoutReportRemainingTimesMessage {
+  static const String congrads = 'ยินดีด้วยคุณบริหารร่างกายเสร็จสิ้น';
+  static const String noWorkout = 'คุณไม่มีชุดท่าบริหารในวันนี้';
 }
