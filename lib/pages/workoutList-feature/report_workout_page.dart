@@ -31,7 +31,11 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
   int currentSelectionIndex = DateTime.now().weekday; // default browse today
   int currentCircularDisplayIndex = 0;
 
-  List<WorkoutListModel>? loadedWorkoutListModels;
+  @override
+  void initState() {
+    super.initState();
+    currentCircularDisplayIndex = indexOfWeek(currentSelectingDate);
+  }
 
   WorkoutListDB get workoutListDb => widget.workoutListDB;
 
