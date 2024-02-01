@@ -400,4 +400,39 @@ class ScreeningDiagnoseService {
             : <WorkoutListModel>[])
         .toList();
   }
+
+  static bool isNeckSetToDoctor(
+      List<Answer> answers, Map<ScreeningTitle, int>? nrs) {
+    final isDoctoringOnNeckOrBaaOrShoulder =
+        ScreeningDiagnoseService.shouldGoToDoctorByParts(answers, [
+      ScreeningTitle.neck,
+      ScreeningTitle.baa,
+      ScreeningTitle.shoulder,
+    ]);
+    final isNrsExceedingOnNeckOrBaaOrShoulder =
+        ScreeningDiagnoseService.nrsExceedOf([
+      ScreeningTitle.neck,
+      ScreeningTitle.baa,
+      ScreeningTitle.shoulder,
+    ], nrs ?? {});
+
+    return isDoctoringOnNeckOrBaaOrShoulder ||
+        isNrsExceedingOnNeckOrBaaOrShoulder;
+  }
+
+  static bool isBackSetToDoctor(
+      List<Answer> answers, Map<ScreeningTitle, int>? nrs) {
+    final isDoctoringOnUpperBackOrLowerBack =
+        ScreeningDiagnoseService.shouldGoToDoctorByParts(answers, [
+      ScreeningTitle.upperback,
+      ScreeningTitle.lowerback,
+    ]);
+    final isNrsExceedingOnUpperBackOrLowerBack =
+        ScreeningDiagnoseService.nrsExceedOf([
+      ScreeningTitle.upperback,
+      ScreeningTitle.lowerback,
+    ], nrs ?? {});
+    return isDoctoringOnUpperBackOrLowerBack ||
+        isNrsExceedingOnUpperBackOrLowerBack;
+  }
 }
