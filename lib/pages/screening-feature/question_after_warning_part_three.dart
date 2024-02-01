@@ -352,7 +352,6 @@ class _QuestionAfterWarningPartThreeState
                                   workoutLists: [],
                                   resultText:
                                       "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
-                                  nextPage: const ScreeningPage(),
                                 )));
                   }
 
@@ -387,7 +386,6 @@ class _QuestionAfterWarningPartThreeState
                                   workoutLists: [],
                                   resultText:
                                       "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
-                                  nextPage: const ScreeningPage(),
                                 )));
                   }
 
