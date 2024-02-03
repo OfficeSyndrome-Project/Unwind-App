@@ -36,7 +36,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: isFirstTime ?? true
           ? const ScreeningPage()
-          : const HomePage(selectedIndex: 0),
+          : HomePage(
+              selectedIndex: 0,
+            ),
       theme: appTheme,
     );
   }

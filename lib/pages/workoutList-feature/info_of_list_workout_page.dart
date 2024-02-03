@@ -3,6 +3,7 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/Widgets/show_dialog_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/set_box_workout_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
@@ -69,6 +70,9 @@ class InfoOfListWorkoutPage extends StatelessWidget {
               )
             ],
           )),
+          SizedBox(
+            height: 16,
+          ),
           ButtonWithoutIconWidget(
               onTap: () {
                 Navigator.push(
@@ -107,7 +111,19 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                 )),
           ),
           ButtonWithiconWidget(
-            onTap: () {},
+            onTap: () async {
+              final result = await alertDialog.getshowDialog(
+                  context,
+                  'ยกเลิกชุดท่าบริหารนี้ใช่หรือไม่ ?',
+                  '(ชุดท่านี้จะหายไปจากรายการ)', () {
+                Navigator.pop(context, false);
+              }, () {
+                Navigator.pop(context, true);
+              });
+              if (result == true) {
+                Navigator.pop(context);
+              }
+            },
             mainAxisAlignment: MainAxisAlignment.center,
             text: 'หยุดบริหาร',
             radius: 8,

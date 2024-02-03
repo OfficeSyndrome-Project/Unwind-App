@@ -23,17 +23,20 @@ class ClockPage extends StatefulWidget {
 }
 
 class _ClockPageState extends State<ClockPage> {
+  int currIndexWork = 0;
+  int curIndexBreak = 0;
   //work
   bool _worktoggle = true;
   late List<WorkStates> workstates = [];
-  late String currentWorkState =
-      "${workstates.map((e) => e.worktimes).first.toString()}";
+  late String currentWorkState = "${workstates[currIndexWork].worktimes}";
+
+  late FixedExtentScrollController _workController;
+  late FixedExtentScrollController _breakController;
 
   //break
   bool _breaktoggle = true;
   late List<BreakStates> breakstates = [];
-  late String currentBreakState =
-      "${breakstates.map((e) => e.breaktimes).first.toString()}";
+  late String currentBreakState = "${breakstates[curIndexBreak].breaktimes}";
   PageRoutes pageRoutes = PageRoutes();
 
   @override
@@ -41,6 +44,9 @@ class _ClockPageState extends State<ClockPage> {
     super.initState();
     workstates = allWorkStates();
     breakstates = allBreakStates();
+
+    _workController = FixedExtentScrollController(initialItem: currIndexWork);
+    _breakController = FixedExtentScrollController(initialItem: curIndexBreak);
   }
 
   void scrollWorkTimes() {
@@ -238,8 +244,10 @@ class _ClockPageState extends State<ClockPage> {
                                   diameterRatio: 1.6,
                                   physics: const FixedExtentScrollPhysics(),
                                   squeeze: 1.2,
+                                  controller: _workController,
                                   onSelectedItemChanged: (index) {
                                     setState(() {
+                                      currIndexWork = index;
                                       currentWorkState =
                                           workstates[index].worktimes!;
                                     });
@@ -401,8 +409,10 @@ class _ClockPageState extends State<ClockPage> {
                                   diameterRatio: 1.6,
                                   physics: const FixedExtentScrollPhysics(),
                                   squeeze: 1.2,
+                                  controller: _breakController,
                                   onSelectedItemChanged: (index) {
                                     setState(() {
+                                      curIndexBreak = index;
                                       currentBreakState =
                                           breakstates[index].breaktimes!;
                                     });

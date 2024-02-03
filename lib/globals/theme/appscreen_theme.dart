@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:unwind_app/globals/theme/appbar_theme.dart';
 
 class AppscreenTheme extends StatelessWidget {
@@ -11,6 +12,7 @@ class AppscreenTheme extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
   final double? vertical;
+  final bool? isShowNavbar;
 
   const AppscreenTheme({
     super.key,
@@ -23,6 +25,7 @@ class AppscreenTheme extends StatelessWidget {
     required this.mainAxisAlignment,
     required this.crossAxisAlignment,
     required this.children,
+    this.isShowNavbar = true,
   });
 
   @override
@@ -37,29 +40,31 @@ class AppscreenTheme extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            AppbarTheme(
-              color: colorBar,
-              text: textBar,
-              style: textStyle,
-              iconButtonStart: iconButtonStart,
-              iconButtonEnd: iconButtonEnd,
-            ),
+            isShowNavbar == false
+                ? SizedBox()
+                : AppbarTheme(
+                    color: colorBar,
+                    text: textBar,
+                    style: textStyle,
+                    iconButtonStart: iconButtonStart,
+                    iconButtonEnd: iconButtonEnd,
+                  ),
+
             Expanded(
-              child: Container(
-                color: Colors.transparent,
-                padding: EdgeInsets.only(
-                    left: 24,
-                    right: 24,
-                    top: vertical ?? defaultVertical,
-                    bottom: 16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: mainAxisAlignment,
-                  crossAxisAlignment: crossAxisAlignment,
-                  children: children,
-                ),
+                child: Container(
+              color: Colors.transparent,
+              padding: EdgeInsets.only(
+                  left: 24,
+                  right: 24,
+                  top: vertical ?? defaultVertical,
+                  bottom: 16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: mainAxisAlignment,
+                crossAxisAlignment: crossAxisAlignment,
+                children: children,
               ),
-            ),
+            )),
             // ),
           ],
         ),
