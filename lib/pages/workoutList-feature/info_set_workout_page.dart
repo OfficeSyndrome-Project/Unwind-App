@@ -28,9 +28,9 @@ class InfoSetWorkoutPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+              child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RatioImageoneToOne(
                   assetName: '${workoutData?.thumbnailPath}',
@@ -38,16 +38,19 @@ class InfoSetWorkoutPage extends StatelessWidget {
                   largeWidth: 280,
                   smallHeight: 240,
                   largeHeight: 280),
-              Container(
-                margin: EdgeInsets.only(top: 16, bottom: 8),
-                child: Text(
-                  '${workoutData?.name}',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF636A75),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(top: 16, bottom: 8),
+                  child: Text(
+                    '${workoutData?.name}',
+                    style: TextStyle(
+                      fontFamily: "Noto Sans Thai",
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 16
+                          : 18,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF636A75),
+                    ),
                   ),
                 ),
               ),
@@ -60,7 +63,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       Icons.calendar_month_rounded,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: 'ทำวันเว้นวัน',
+                    topicName: '${workoutData?.frequency}',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -78,7 +81,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       Icons.access_time_rounded,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: '${workoutData?.time} วินาทีต่อวัน',
+                    topicName: '${workoutData?.time} วินาทีต่อเซต',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -90,37 +93,46 @@ class InfoSetWorkoutPage extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'รายละเอียดการทำ ${workoutData?.detail}',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF636A75),
-                  ),
-                ),
+              SizedBox(
+                height: 8,
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: TextWithStartIconWidget(
-                  startIcon: Icon(
-                    Icons.check_rounded,
-                    color: Theme.of(context).colorScheme.primary,
+              Column(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      '${workoutData?.step}',
+                      style: TextStyle(
+                        fontFamily: "Noto Sans Thai",
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF636A75),
+                      ),
+                    ),
                   ),
-                  topicName: 'ช่วยอะไรบ้าง',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF636A75),
+                  SizedBox(
+                    height: 4,
                   ),
-                ),
-              )
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      'ข้อควรระวัง : ${workoutData?.caution}',
+                      style: TextStyle(
+                        fontFamily: "Noto Sans Thai",
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF636A75),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           )),
           ButtonWithoutIconWidget(

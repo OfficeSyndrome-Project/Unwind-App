@@ -333,18 +333,33 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                                 color: const Color(0xFF9BA4B5),
                               ),
                             )
-                          : Text(
-                              'วันนี้คุณเหลือบริหารคออีก ${wol.remaining_times} ครั้ง',
-                              style: TextStyle(
-                                fontFamily: "Noto Sans Thai",
-                                fontSize:
-                                    ResponsiveCheckWidget.isSmallMobile(context)
-                                        ? 14
-                                        : 16,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xFF9BA4B5),
-                              ),
-                            ),
+                          : isBeforeToday(wol.date)
+                              ? Text(
+                                  "ในวันนี้คุณทำไป ${(wol.total_times ?? 0) - (wol.remaining_times ?? 0)} ครั้ง",
+                                  style: TextStyle(
+                                    fontFamily: "Noto Sans Thai",
+                                    fontSize:
+                                        ResponsiveCheckWidget.isSmallMobile(
+                                                context)
+                                            ? 14
+                                            : 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xFF9BA4B5),
+                                  ),
+                                )
+                              : Text(
+                                  'วันนี้คุณเหลือบริหารอีก ${wol.remaining_times} ครั้ง',
+                                  style: TextStyle(
+                                    fontFamily: "Noto Sans Thai",
+                                    fontSize:
+                                        ResponsiveCheckWidget.isSmallMobile(
+                                                context)
+                                            ? 14
+                                            : 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xFF9BA4B5),
+                                  ),
+                                ),
                 );
               }
               return Text('loading...');
@@ -378,7 +393,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                 icon: Icons.arrow_right_rounded,
                 colorText: Color(0xFF6285D7),
                 padding: EdgeInsets.symmetric(horizontal: 26, vertical: 12),
-                text: 'ชุดท่าที่ 1 บริหาร ${widget.workoutList?.titleCode}',
+                text: 'บริหารทั้งหมด ${widget.workoutList?.totalTime}',
                 radius: 16,
                 shadows: [
                   BoxShadow(
@@ -453,6 +468,12 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
     final Map<int?, WorkoutListModel?> circle = mapWorkoutListForBrowsingWeek(
         getWorkoutListModelsCache!)(currentSelectingDate);
     return circle;
+  }
+
+  isBeforeToday(DateTime? date) {
+    if (date == null) return false;
+    final today = DateTime.now();
+    return date.isBefore(DateTime(today.year, today.month, today.day));
   }
 }
 

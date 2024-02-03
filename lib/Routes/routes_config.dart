@@ -170,7 +170,7 @@ class Workout {
         workoutListDB: serviceLocator(),
       ));
   PathRoute infooflistworkout(WorkoutList? workoutList) => PathRoute(
-      title: "ดูชุดท่าทั้งหมด",
+      title: "ชุดท่าบริหาร",
       widget: InfoOfListWorkoutPage(workoutList: workoutList));
 
   PathRoute infoofsetworkout(WorkoutData? workoutData) => PathRoute(
