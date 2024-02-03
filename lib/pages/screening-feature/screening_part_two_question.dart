@@ -6,12 +6,14 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/typepain_container.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 //select point to check
 
 class ScreeningPartTwoQuestion extends StatefulWidget {
-  const ScreeningPartTwoQuestion({super.key});
+  final List<Answer>? answers;
+  ScreeningPartTwoQuestion({super.key, this.answers});
 
   @override
   State<ScreeningPartTwoQuestion> createState() =>
@@ -29,13 +31,32 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
 
   bool disable = true;
 
+  List<Answer> get answers => widget.answers ?? [];
+
+  String notSureKey =
+      "ไม่แน่ใจ/ไม่อยู่ในตัวเลือก"; // Please set this string corresponding to the ScreeningPartTwoSelectPart.title
+
   void selectContainer(int index) {
     String titleType = typelist[index].title;
+    // int partOrd = typelist[index].partOrder;
+
     setState(() {
+      if (index == 5 && onSelectPart.containsKey(notSureKey)) {
+        onSelectPart.clear();
+        setDisable(false);
+        return;
+      }
+      if (onSelectPart[notSureKey] ?? false) {
+        onSelectPart.clear();
+      }
       if (onSelectPart.containsKey(titleType)) {
         onSelectPart[titleType] = !onSelectPart[titleType]!;
       } else {
         onSelectPart[titleType] = true;
+      }
+      if (onSelectPart[notSureKey] ?? false) {
+        onSelectPart.clear();
+        onSelectPart[notSureKey] = true;
       }
       setDisable(false);
     });
@@ -43,6 +64,10 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
 
   void setDisable(bool value) {
     setState(() {
+      if (onSelectPart.isEmpty) {
+        disable = true;
+        return;
+      }
       if (onSelectPart.values.every((element) => !element)) {
         disable = !value;
       } else {
@@ -72,26 +97,32 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(bottom: 16),
-          child: Text(
-            'กรุณาเลือกส่วนที่ท่านต้องการประเมิน\n(สามารถเลือกได้มากกว่า 1 จุด)',
-            style: ResponsiveCheckWidget.isSmallMobile(context)
-                ? TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF484D56))
-                : Theme.of(context).textTheme.titleMedium,
-            textAlign: TextAlign.center,
+        GestureDetector(
+          onTap: () {
+            List.generate(typelist.length, (index) => index).forEach(
+                (index) => (index != 5) ? selectContainer(index) : null);
+          },
+          child: Container(
+            margin: EdgeInsets.only(bottom: 16),
+            child: Text(
+              'กรุณาเลือกส่วนที่ปวดมากที่สุด\n(สามารถเลือกได้มากกว่า 1 จุด)',
+              style: ResponsiveCheckWidget.isSmallMobile(context)
+                  ? TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF484D56))
+                  : Theme.of(context).textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
         Expanded(
           child: ListView.separated(
               clipBehavior: Clip.antiAlias,
-              padding: EdgeInsets.all(2),
+              padding: EdgeInsets.symmetric(vertical: 32, horizontal: 4),
               physics: ResponsiveCheckWidget.isSmallMobile(context)
                   ? ClampingScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
+                  : ClampingScrollPhysics(),
               itemBuilder: (context, index) {
                 return TypepainContainer(
                   onTap: () {
@@ -100,7 +131,7 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
                   isSelect: onSelectPart.containsKey(typelist[index].title)
                       ? onSelectPart[typelist[index].title]!
                       : false,
-                  assetName: typelist[index].assetPath,
+                  assetName: typelist[index].assetPath ?? "",
                   typePain: typelist[index].title,
                 );
               },
@@ -115,10 +146,20 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         ButtonWithoutIconWidget(
             onTap: () {
               if (!disable) {
+                if (onSelectPart[notSureKey] ?? false) {
+                  print('not sure');
+                  onSelectPart.clear();
+                  Navigator.push(
+                      context,
+                      pageRoutes.screening
+                          .introscreeningpage(2, [], [], {}).route(context));
+                  return;
+                }
+                onSelectPart.remove(notSureKey);
                 Navigator.push(
                     context,
                     pageRoutes.screening
-                        .questionafterscreeningparttwo(onSelectPart)
+                        .questionafterscreeningparttwo(onSelectPart, answers)
                         .route(context));
               }
             },

@@ -8,7 +8,9 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import '../../Widgets/button_withouticon_widget.dart';
 
 class ScreeningPage extends StatefulWidget {
-  const ScreeningPage({super.key});
+  const ScreeningPage({super.key, this.isFirstTime});
+
+  final bool? isFirstTime;
 
   @override
   State<ScreeningPage> createState() => _ScreeningPageState();
@@ -26,7 +28,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
   Widget build(BuildContext context) {
     return AppscreenTheme(
         vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 16,
-        iconButtonStart: (currentPage >= 1)
+        iconButtonStart: (currentPage >= 1 || widget.isFirstTime == false)
             ? IconButton(
                 onPressed: () {
                   currentPage >= 1
@@ -143,7 +145,8 @@ class _ScreeningPageState extends State<ScreeningPage> {
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .introscreeningpage(0, []).route(context));
+                            .introscreeningpage(0, [], [], null)
+                            .route(context));
               }),
 
           // ),

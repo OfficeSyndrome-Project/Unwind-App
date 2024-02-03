@@ -4,17 +4,23 @@ import 'package:unwind_app/Widgets/screening-widget/textlabel_slider_widget.dart
 import 'package:unwind_app/Widgets/screening-widget/textwithemoticon_label_slider.dart';
 
 class SliderNrs extends StatefulWidget {
-  const SliderNrs({Key? key}) : super(key: key);
+  final Function(double)? onChanged;
+  const SliderNrs({Key? key, this.onChanged}) : super(key: key);
 
   @override
   State<SliderNrs> createState() => _SliderNrsState();
 }
 
-class _SliderNrsState extends State<SliderNrs> {
+class _SliderNrsState extends State<SliderNrs>
+    with AutomaticKeepAliveClientMixin {
   double oncurrentNRS = 0;
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -54,6 +60,9 @@ class _SliderNrsState extends State<SliderNrs> {
                   thumbColor: Color(0xff2F52A4),
                   allowedInteraction: SliderInteraction.tapAndSlide,
                   onChanged: (double value) {
+                    if (widget.onChanged != null) {
+                      widget.onChanged!(value);
+                    }
                     setState(() {
                       oncurrentNRS = value;
                     });

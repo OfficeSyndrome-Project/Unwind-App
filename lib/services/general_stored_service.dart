@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class GeneralStoredService {
   static final Future<SharedPreferences> _prefs =
       SharedPreferences.getInstance();
+  static String isFirstTime = "isFirstTime";
 
   static String getKey(String pagename, int id, int index) {
     return pagename + id.toString() + index.toString();

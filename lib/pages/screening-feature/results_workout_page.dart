@@ -7,10 +7,24 @@ import 'package:unwind_app/Widgets/screening-widget/box_result_syndrom_widget.da
 
 import 'package:unwind_app/Widgets/screening-widget/have_workout_list_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/globals/theme/theme_app.dart';
+import 'package:unwind_app/services/general_stored_service.dart';
 
 class ResultsWorkoutPage extends StatelessWidget {
-  ResultsWorkoutPage({Key? key}) : super(key: key);
+  final AnswerContext? answerContext;
+  final String? resultText;
+  final List<WorkoutList> workoutLists;
+  final Widget? nextPage;
+
+  ResultsWorkoutPage({
+    Key? key,
+    required this.workoutLists,
+    this.answerContext,
+    this.resultText,
+    this.nextPage,
+  }) : super(key: key);
 
   final PageRoutes pageRoutes = PageRoutes();
   final bool isSyndrom = true;
@@ -46,20 +60,93 @@ class ResultsWorkoutPage extends StatelessWidget {
                         color: const Color(0xFF484D56),
                       )),
                 ),
-                BoxResultSyndromWidget(result: 'คุณมีอาการออฟฟิศซินโดรม'),
-                isSyndrom == true ? HaveWorkoutListWidget() : SizedBox(),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(8),
+                  margin: EdgeInsets.only(top: 8, bottom: 16),
+                  child: Text(
+                    'อาการ : $resultText',
+                    style: TextStyle(
+                      fontFamily: "Noto Sans Thai",
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 14
+                          : 16,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF484D56),
+                    ),
+                  ),
+                ),
+                workoutLists.isNotEmpty
+                    ? Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(bottom: 8),
+                        child: TextWithStartIconWidget(
+                            startIcon: Icon(
+                              Icons.directions_run,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            topicName: 'ชุดท่าที่ได้รับ',
+                            style: TextStyle(
+                              fontFamily: "Noto Sans Thai",
+                              fontSize:
+                                  ResponsiveCheckWidget.isSmallMobile(context)
+                                      ? 14
+                                      : 16,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF484D56),
+                            )),
+                      )
+                    : SizedBox(),
+                // SingleChildScrollView(
+                //     child: Column(
+                //   children: workoutLists
+                //       .map((element) => buildWorkoutData(element))
+                //       .toList(),
+                // )),
+                // ListView.separated(
+                //   itemBuilder: (context, index) =>
+                //       buildWorkoutData(workoutLists[index]),
+                //   itemCount: workoutLists.length,
+                //   separatorBuilder: (context, index) => Text('$index'),
+                //   physics: NeverScrollableScrollPhysics(),
+                // ),
                 SizedBox(
                   height: 16,
-                )
+                ),
+                Expanded(
+                  // height: MediaQuery.of(context).size.height * 0.55,
+                  child: ListView.separated(
+                      itemBuilder: (context, index) => Container(
+                            child:
+                                buildWorkoutData(context, workoutLists[index]),
+                            // decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(25),
+                            //     color: Colors.white,
+                            //     shape: BoxShape.rectangle),
+                          ),
+                      shrinkWrap: true,
+                      itemCount: workoutLists.length,
+                      separatorBuilder: (context, index) => SizedBox(
+                            height: 16,
+                          )),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
               ],
             ),
           ),
           ButtonWithoutIconWidget(
-              onTap: () {
+              onTap: () async {
+                await GeneralStoredService.writeBoolean(
+                    GeneralStoredService.isFirstTime, 0, 0, false);
                 Navigator.push(
-                    context, pageRoutes.home.workoutlist().route(context));
+                    context,
+                    nextPage == null
+                        ? pageRoutes.home.workoutlist().route(context)
+                        : MaterialPageRoute(builder: (context) => nextPage!));
               },
-              text: isSyndrom == true ? "ไปสู่ชุดท่าบริหาร" : 'ตกลง',
+              text: "ดำเนินการต่อ",
               radius: 32,
               width: double.infinity,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
@@ -69,9 +156,57 @@ class ResultsWorkoutPage extends StatelessWidget {
                   ? TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: const Color(0xFFFFFFFF),
+                      color: appTheme.colorScheme.onPrimary,
                     )
                   : Theme.of(context).textTheme.headlineSmall)
         ]);
+  }
+
+  Widget buildWorkoutData(BuildContext context, WorkoutList workoutList) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8), shape: BoxShape.rectangle),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  workoutList.description,
+                  style: TextStyle(
+                    fontFamily: "Noto Sans Thai",
+                    fontSize:
+                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFFFFFFFF),
+                  ),
+                ),
+              ),
+            ),
+            color: appTheme.colorScheme.primary,
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => BoxResultsWorkout(
+              name: workoutList.workoutData[index].name,
+              detail: workoutList.workoutData[index].detail,
+              time: Duration(
+                seconds: workoutList.workoutData[index].time,
+              ),
+              imagePath: workoutList.workoutData[index].thumbnailPath,
+            ),
+            itemCount: workoutList.workoutData.length,
+            separatorBuilder: (context, index) => Container(
+              height: 1,
+              color: Color(0xebf0fa),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

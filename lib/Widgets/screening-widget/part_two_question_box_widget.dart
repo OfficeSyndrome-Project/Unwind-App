@@ -4,6 +4,7 @@ import 'package:unwind_app/Widgets/general_radio_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class PartTwoQuestionBoxWidget extends StatefulWidget {
   final String? assetPath;
@@ -11,9 +12,10 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
-  final String typePain;
+  final String title;
   final List<int> questionID;
-
+  final void Function(Answer) onChanged;
+  final Function(bool)? onCompleted;
   // final ScreeningPartOneModel question;
 
   const PartTwoQuestionBoxWidget({
@@ -23,8 +25,10 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
     required this.currentPage,
     required this.pageRoutes,
     required this.controller,
-    required this.typePain,
+    required this.title,
     required this.questionID,
+    required this.onChanged,
+    this.onCompleted,
   });
 
   @override
@@ -32,22 +36,29 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
       _PartTwoQuestionBoxWidgettState();
 }
 
-class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
+class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget>
+    with AutomaticKeepAliveClientMixin {
+  List<Answer> answers = [];
+
   void onCurrentOptionsChanged(bool bool) {}
 
   int? currentOptions;
   // int index = 0;
 
+  @override
+  bool get wantKeepAlive => true;
+
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            widget.typePain,
+            widget.title,
             style: TextStyle(
               fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
               fontWeight: FontWeight.w600,
@@ -95,6 +106,31 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget> {
                 questions: widget.questions[index].question,
                 questionId: widget.questions[index].questionId,
                 questionPage: widget.currentPage,
+                onChanged: (value) {
+                  // Set state
+
+                  answers = Answer.updateAnswer(
+                      answers,
+                      Answer(
+                        questionPart: widget.questions[index].questionPart,
+                        title: widget.title,
+                        questionId: widget.questions[index].questionId,
+                        answer: value,
+                      ));
+
+                  if (widget.onCompleted != null) {
+                    widget.onCompleted!(
+                        answers.length == widget.questions.length);
+                  }
+
+                  print(answers.length == widget.questions.length);
+
+                  widget.onChanged(Answer(
+                      questionPart: widget.questions[index].questionPart,
+                      title: widget.title,
+                      questionId: widget.questions[index].questionId,
+                      answer: value));
+                },
               ),
             ),
           ),
@@ -108,6 +144,7 @@ class QuestionAndRadioButton extends StatefulWidget {
   final int questionId;
   final String pagename = "screening";
   final String? topic;
+  final void Function(dynamic)? onChanged;
 
   const QuestionAndRadioButton({
     super.key,
@@ -115,6 +152,7 @@ class QuestionAndRadioButton extends StatefulWidget {
     required this.questionId,
     required this.questions,
     this.topic,
+    this.onChanged,
   });
 
   @override
@@ -178,6 +216,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                               value: 1,
                               groupValue: currentOptions,
                               onChanged: (value) {
+                                if (widget.onChanged != null) {
+                                  widget.onChanged!(value);
+                                }
                                 setState(() {
                                   currentOptions = value;
                                 });
@@ -207,6 +248,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                                 value: 2,
                                 groupValue: currentOptions,
                                 onChanged: (value) {
+                                  if (widget.onChanged != null) {
+                                    widget.onChanged!(value);
+                                  }
                                   setState(() {
                                     currentOptions = value;
                                   });
@@ -234,9 +278,12 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         Row(
                           children: [
                             GeneralAnimatedCustomRadio<int>(
-                                value: 2,
+                                value: 3,
                                 groupValue: currentOptions,
                                 onChanged: (value) {
+                                  if (widget.onChanged != null) {
+                                    widget.onChanged!(value);
+                                  }
                                   setState(() {
                                     currentOptions = value;
                                   });
@@ -270,9 +317,12 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         Row(
                           children: [
                             GeneralAnimatedCustomRadio<int>(
-                                value: 2,
+                                value: 4,
                                 groupValue: currentOptions,
                                 onChanged: (value) {
+                                  if (widget.onChanged != null) {
+                                    widget.onChanged!(value);
+                                  }
                                   setState(() {
                                     currentOptions = value;
                                   });
@@ -315,6 +365,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                               value: 1,
                               groupValue: currentOptions,
                               onChanged: (value) {
+                                if (widget.onChanged != null) {
+                                  widget.onChanged!(value);
+                                }
                                 setState(() {
                                   currentOptions = value;
                                 });
@@ -344,6 +397,9 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                                 value: 2,
                                 groupValue: currentOptions,
                                 onChanged: (value) {
+                                  if (widget.onChanged != null) {
+                                    widget.onChanged!(value);
+                                  }
                                   setState(() {
                                     currentOptions = value;
                                   });

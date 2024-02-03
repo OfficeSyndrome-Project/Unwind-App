@@ -14,6 +14,7 @@ class ButtonWithiconWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final Color? colorText;
   final double? sizeIcon;
+  final void Function()? onLongPress;
 
   const ButtonWithiconWidget(
       {super.key,
@@ -28,7 +29,8 @@ class ButtonWithiconWidget extends StatelessWidget {
       required this.side,
       this.icon,
       this.iconcolor,
-      this.sizeIcon});
+      this.sizeIcon,
+      this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class ButtonWithiconWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         width: double.infinity,
         padding: padding ?? defaultPadding,

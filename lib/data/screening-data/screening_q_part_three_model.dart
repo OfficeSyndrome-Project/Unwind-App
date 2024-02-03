@@ -5,6 +5,7 @@ class ScreeningPartThreePostureModel {
   String assetPath;
   int questionId;
   int questionPage;
+  int questionPart;
   String questionType;
 
   ScreeningPartThreePostureModel({
@@ -14,6 +15,7 @@ class ScreeningPartThreePostureModel {
     required this.assetPath,
     required this.questionId,
     required this.questionPage,
+    required this.questionPart,
     required this.questionType,
   });
   static List<ScreeningPartThreePostureModel>
@@ -25,6 +27,7 @@ class ScreeningPartThreePostureModel {
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 7,
                 questionPage: 0,
+                questionPart: 3,
                 questionType: "a"),
             ScreeningPartThreePostureModel(
                 title: "คอ",
@@ -33,6 +36,7 @@ class ScreeningPartThreePostureModel {
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 8,
                 questionPage: 1,
+                questionPart: 3,
                 questionType: "a"),
             ScreeningPartThreePostureModel(
                 title: "บ่า",
@@ -41,6 +45,7 @@ class ScreeningPartThreePostureModel {
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 5,
                 questionPage: 2,
+                questionPart: 3,
                 questionType: "a"),
             ScreeningPartThreePostureModel(
                 title: "หลังส่วนล่าง",
@@ -49,14 +54,16 @@ class ScreeningPartThreePostureModel {
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
                 questionId: 4,
                 questionPage: 3,
+                questionPart: 3,
                 questionType: "a"),
             ScreeningPartThreePostureModel(
                 title: "หลังส่วนล่าง",
                 postureName: "ท่างอลำตัวมาด้านหน้า",
                 assetPath: "lib/assets/images/screeningPart/back_turtle.png",
                 question: "ท่านมีอาการเจ็บ ปวด ชา ร้าว ระหว่างทำหรือไม่ ?",
-                questionId: 4,
+                questionId: 5,
                 questionPage: 4,
+                questionPart: 3,
                 questionType: "a"),
           ];
   @override
@@ -70,6 +77,7 @@ class ScreeningPartThreeQuestionModel {
   String question;
   int questionId;
   int questionPage;
+  int questionPart;
   String questionType;
 
   ScreeningPartThreeQuestionModel({
@@ -77,6 +85,7 @@ class ScreeningPartThreeQuestionModel {
     required this.question,
     required this.questionId,
     required this.questionPage,
+    required this.questionPart,
     required this.questionType,
   });
   static List<ScreeningPartThreeQuestionModel>
@@ -86,6 +95,7 @@ class ScreeningPartThreeQuestionModel {
                 question: "คุณมีอาการปวดบริเวณนี้มาก่อนหรือไม่ ?",
                 questionId: 1,
                 questionPage: 1,
+                questionPart: 3,
                 questionType: "a"),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
@@ -93,6 +103,7 @@ class ScreeningPartThreeQuestionModel {
                     "หลังจากทำท่าทางดังกล่าว ท่านมีอาการเจ็บปวดคงอยู่จนถึงตอนนี้หรือไม่ ?",
                 questionId: 2,
                 questionPage: 1,
+                questionPart: 3,
                 questionType: "a"),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
@@ -100,6 +111,7 @@ class ScreeningPartThreeQuestionModel {
                     "ท่านมีอาการชา และ/หรืออาการปวดร้าวไปยังบริเวณอื่น อาทิเช่น ปวดร้าวลงแขนหรือไม่ ?",
                 questionId: 3,
                 questionPage: 1,
+                questionPart: 3,
                 questionType: "a"),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
@@ -107,6 +119,7 @@ class ScreeningPartThreeQuestionModel {
                     "หลังจากทำท่าทางดังกล่าว ท่านมีอาการปวด/ตึงเกิดขึ้น แต่อาการลดลงหรือหายไปเมื่อหยุดพักใช่หรือไม่?",
                 questionId: 4,
                 questionPage: 1,
+                questionPart: 3,
                 questionType: "a"),
             ScreeningPartThreeQuestionModel(
                 title: ["คอ", "บ่า", "หลังส่วนล่าง"],
@@ -114,6 +127,7 @@ class ScreeningPartThreeQuestionModel {
                     "หลังจากทำท่าทางดังกล่าว ท่านมีอาการเวียนหัวเวียนหน้าใช่หรือไม่ ?",
                 questionId: 5,
                 questionPage: 1,
+                questionPart: 3,
                 questionType: "a"),
           ];
   @override

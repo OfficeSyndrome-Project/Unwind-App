@@ -6,12 +6,14 @@ import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/date_circle_pick_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/data/workout-list-data/date_workout_mockup.dart';
 import 'package:unwind_app/data/workout-list-data/workout_mockup.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class ReportWorkoutPage extends StatefulWidget {
-  const ReportWorkoutPage({Key? key}) : super(key: key);
+  final WorkoutList? workoutList;
+  const ReportWorkoutPage({Key? key, this.workoutList}) : super(key: key);
 
   @override
   State<ReportWorkoutPage> createState() => _ReportWorkoutPageState();
@@ -25,6 +27,8 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
 
   static int defaultSelect = 0; // default on that day
 
+  // calculate current week
+  static int defaultSelect = DateTime.now().weekday - 1; // default on that day
   // static int lengthOfpercentNotEqualToZero =
   //     dateMockup.where((element) => element.percent != 0.0).length;
   static List<int> weekdays =
@@ -42,55 +46,46 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         iconButtonStart: IconButton(
-          highlightColor: Colors.transparent,
-          icon: const Icon(Icons.arrow_back_ios_rounded),
-          onPressed: () {
-            Navigator.pop(context);
-            // defaultSelect = currIndex;
-            // defaultSelect = DateTime.now().weekday - 1;
-          },
-          color: Colors.white,
-        ),
-        textBar: pageRoutes.workout.reportworkoutpage().title,
+            highlightColor: Colors.transparent,
+            icon: const Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.pop(context);
+              defaultSelect = DateTime.now().weekday - 1;
+            },
+            color: Colors.white),
+        textBar: widget.workoutList?.description,
         children: [
-          Expanded(
-              child: ListView(
-            scrollDirection: Axis.vertical,
-            physics: ClampingScrollPhysics(),
-            children: [
-              Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(bottom: 16),
-                child: Text(
-                  DateFormat(
-                        'd MMMM พ.ศ. ',
-                        'th',
-                      ).format(dataWorkout[currIndex].workoutDate) +
-                      DateFormat('yyyy').format(DateTime.utc(
-                          dataWorkout[currIndex].workoutDate.year + 543)),
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF484D56),
-                  ),
-                ),
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(bottom: 16),
+            child: Text(
+              DateFormat(
+                    'd MMMM พ.ศ. ',
+                    'th',
+                  ).format(dataWorkout[currIndex].workoutDate) +
+                  DateFormat('yyyy').format(DateTime.utc(
+                      dataWorkout[currIndex].workoutDate.year + 543)),
+              style: TextStyle(
+                fontFamily: "Noto Sans Thai",
+                fontSize:
+                    ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+                fontWeight: FontWeight.w500,
+                color: const Color(0xFF484D56),
               ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(bottom: 24),
-                // height: 80,
-                child:
-                    // CircleWithDate(percent, onSelect, isDone, () { })
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: dateMockup.asMap().entries.map((entry) {
-                          final index = entry.key;
-                          final data = entry.value;
-                          final matchIndex = weekdays.indexOf(data.day);
+            ),
+          ),
+          Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 24),
+              // height: 80,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: dateMockup.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final data = entry.value;
+                    final matchIndex = weekdays.indexOf(data.day); // 3
 
                           return DateCirclePickWidget(
                             date: DateFormat('E', 'th').format(data.dateTime),

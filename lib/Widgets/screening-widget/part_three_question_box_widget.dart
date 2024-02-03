@@ -3,12 +3,16 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/general_radio_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class PartThreeQuestionBoxWidget extends StatefulWidget {
   final List<ScreeningPartThreeQuestionModel> questions;
   final int currentPage;
   final PageRoutes pageRoutes;
   final PageController controller;
+  final String title;
+  final void Function(Answer)? onChanged;
+  final Function(bool)? onCompleted;
 
   // final ScreeningPartOneModel question;
 
@@ -18,6 +22,9 @@ class PartThreeQuestionBoxWidget extends StatefulWidget {
     required this.currentPage,
     required this.pageRoutes,
     required this.controller,
+    required this.title,
+    this.onChanged,
+    this.onCompleted,
   });
 
   @override
@@ -26,15 +33,20 @@ class PartThreeQuestionBoxWidget extends StatefulWidget {
 }
 
 class _PartThreeQuestionBoxWidgettState
-    extends State<PartThreeQuestionBoxWidget> {
+    extends State<PartThreeQuestionBoxWidget>
+    with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true;
   void onCurrentOptionsChanged(bool bool) {}
 
   int? currentOptions;
   // int index = 0;
 
+  List<Answer> answers = [];
+
 //question box
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
         width: double.infinity,
         constraints: BoxConstraints(
@@ -65,6 +77,22 @@ class _PartThreeQuestionBoxWidgettState
             questions: widget.questions[index].question,
             questionId: widget.questions[index].questionId,
             questionPage: widget.currentPage,
+            title: widget.title,
+            // onChanged: widget.onChanged,
+            onChanged: (answer) {
+              print(answer);
+              print(widget.questions[index].questionPage);
+              // Update the answers
+              answers = Answer.updateAnswer(answers, answer);
+
+              if (widget.onChanged != null) {
+                widget.onChanged!(answer);
+              }
+
+              if (widget.onCompleted != null) {
+                widget.onCompleted!(answers.length == widget.questions.length);
+              }
+            },
           ),
         ));
   }
@@ -75,12 +103,16 @@ class QuestionAndRadioButton extends StatefulWidget {
   final int questionPage;
   final int questionId;
   final String pagename = "screening";
+  final String title;
+  final void Function(Answer)? onChanged;
 
   const QuestionAndRadioButton({
     super.key,
     required this.questionPage,
     required this.questionId,
     required this.questions,
+    required this.title,
+    this.onChanged,
   });
 
   @override
@@ -128,6 +160,16 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                         groupValue: currentOptions,
                         onChanged: (value) {
                           setState(() {
+                            if (widget.onChanged != null) {
+                              widget.onChanged!(
+                                Answer(
+                                  questionPart: 3,
+                                  title: widget.title,
+                                  questionId: widget.questionId,
+                                  answer: value,
+                                ),
+                              );
+                            }
                             currentOptions = value;
                           });
                           // onCurrentOptionsChanged(true);
@@ -155,6 +197,16 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                           groupValue: currentOptions,
                           onChanged: (value) {
                             setState(() {
+                              if (widget.onChanged != null) {
+                                widget.onChanged!(
+                                  Answer(
+                                    questionPart: 3,
+                                    title: widget.title,
+                                    questionId: widget.questionId,
+                                    answer: value,
+                                  ),
+                                );
+                              }
                               currentOptions = value;
                             });
                           },

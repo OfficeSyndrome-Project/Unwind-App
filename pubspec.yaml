@@ -45,7 +45,10 @@ dependencies:
   image_sequence_animator: ^2.0.0
   flutter_tts: ^3.8.5
   table_calendar: ^3.0.9
-  
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  get_it: ^7.6.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -144,6 +147,21 @@ flutter:
     - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-7.png
     - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-8.png
     - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-9.png
+
+    - lib/assets/images/workout-thumbnail-img/back01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/back02_80x80.png
+    - lib/assets/images/workout-thumbnail-img/backth01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckch01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckch02_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckch03_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth02_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth03_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth04_80x80.png
+    - lib/assets/images/workout-thumbnail-img/neckth05_80x80.png
+    - lib/assets/images/workout-thumbnail-img/shoulder01_80x80.png
+    - lib/assets/images/workout-thumbnail-img/shoulder02_80x80.png
+    - lib/assets/images/workout-thumbnail-img/shoulder03_80x80.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
