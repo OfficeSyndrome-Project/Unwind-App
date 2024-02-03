@@ -6,55 +6,55 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 class TableCalendarTheme {
   CalendarStyle calendarStyle(BuildContext context) {
     CalendarStyle _calendarStyle = CalendarStyle(
-      defaultTextStyle: TextStyle(
-        color: Color(0xFF2F52A4),
-        fontSize: 16,
-        fontFamily: 'Noto Sans Thai',
-        fontWeight: FontWeight.w500,
-      ),
-      weekendTextStyle: TextStyle(
-        color: Color(0xFF2F52A4),
-        fontSize: 16,
-        fontFamily: 'Noto Sans Thai',
-        fontWeight: FontWeight.w500,
-      ),
-      // Use `CalendarStyle` to customize the UI
-      outsideDaysVisible: true,
-      outsideTextStyle: TextStyle(
-        color: Color(0xFF9BA4B5),
-        fontSize: 16,
-        fontFamily: 'Noto Sans Thai',
-        fontWeight: FontWeight.w500,
-      ),
-      cellAlignment: Alignment.center,
-      selectedDecoration: ShapeDecoration(
-        shape: CircleBorder(),
-        color: Color(0xFFD7E0F5),
-      ),
-      selectedTextStyle: TextStyle(
-        color: Color(0xFF2F52A4),
-        fontSize: 16,
-        fontFamily: 'Noto Sans Thai',
-        fontWeight: FontWeight.w500,
-      ),
-      todayTextStyle: TextStyle(
-        color: Colors.white,
-        fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-        fontFamily: 'Noto Sans Thai',
-        fontWeight: FontWeight.w500,
-      ),
-      todayDecoration: ShapeDecoration(
-        shape: CircleBorder(),
-        color: Color(0xFF6285d7),
-      ),
-      tablePadding: EdgeInsets.symmetric(horizontal: 16),
-      canMarkersOverflow: false,
-      markerDecoration: ShapeDecoration(
-        shape: CircleBorder(),
-        color: Color(0xFF3BB3E3),
-      ),
-      markersAlignment: Alignment.center,
-    );
+        defaultTextStyle: TextStyle(
+          color: Color(0xFF2F52A4),
+          fontSize: 16,
+          fontFamily: 'Noto Sans Thai',
+          fontWeight: FontWeight.w500,
+        ),
+        weekendTextStyle: TextStyle(
+          color: Color(0xFF2F52A4),
+          fontSize: 16,
+          fontFamily: 'Noto Sans Thai',
+          fontWeight: FontWeight.w500,
+        ),
+        // Use `CalendarStyle` to customize the UI
+        outsideDaysVisible: true,
+        outsideTextStyle: TextStyle(
+          color: Color(0xFF9BA4B5),
+          fontSize: 16,
+          fontFamily: 'Noto Sans Thai',
+          fontWeight: FontWeight.w500,
+        ),
+        cellAlignment: Alignment.center,
+        selectedDecoration: ShapeDecoration(
+          shape: CircleBorder(),
+          color: Color(0xFFD7E0F5),
+        ),
+        selectedTextStyle: TextStyle(
+          color: Color(0xFF2F52A4),
+          fontSize: 16,
+          fontFamily: 'Noto Sans Thai',
+          fontWeight: FontWeight.w500,
+        ),
+        todayTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+          fontFamily: 'Noto Sans Thai',
+          fontWeight: FontWeight.w500,
+        ),
+        todayDecoration: ShapeDecoration(
+          shape: CircleBorder(),
+          color: Color(0xFF6285d7),
+        ),
+        tablePadding: EdgeInsets.symmetric(horizontal: 16),
+        canMarkersOverflow: false,
+        markerDecoration: ShapeDecoration(
+          shape: CircleBorder(),
+          color: Color(0xFF3BB3E3),
+        ),
+        markersAlignment: Alignment.center,
+        markersMaxCount: 4);
 
     return _calendarStyle;
   }

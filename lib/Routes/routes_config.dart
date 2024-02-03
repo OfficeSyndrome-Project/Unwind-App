@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 
@@ -144,8 +145,15 @@ class Workout {
       title: "เตรียมพร้อมก่อนเริ่มออกกำลังกาย", widget: WorkoutPage());
   PathRoute schdulepage() =>
       PathRoute(title: "การแจ้งเตือน", widget: SchedulePage());
-  PathRoute infoschedulepage() =>
-      PathRoute(title: "การแจ้งเตือน", widget: InfoSchedulePage());
+  PathRoute infoschedulepage(
+          int index, List<Event> value, DateTime selectedDay) =>
+      PathRoute(
+          title: "การแจ้งเตือน",
+          widget: InfoSchedulePage(
+            selectedDay: selectedDay,
+            index: index,
+            value: value,
+          ));
   PathRoute setschedulepage() =>
       PathRoute(title: "ตั้งเวลาแจ้งเตือน", widget: SetSchedulePage());
 }

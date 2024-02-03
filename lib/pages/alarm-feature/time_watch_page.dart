@@ -113,12 +113,17 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       textBar: "นาฬิกาจับเวลา",
       iconButtonStart: IconButton(
-        onPressed: () => alertDialog.getshowDialog(
-            context, 'ยืนยันที่จะหยุดจับเวลาใช่หรือไม่ ?', null, () {
-          Navigator.of(context).pop();
-        }, () {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        }),
+        onPressed: () async {
+          final result = await alertDialog.getshowDialog(
+              context, 'ยืนยันที่จะหยุดจับเวลาใช่หรือไม่ ?', null, () {
+            Navigator.pop(context, false);
+          }, () {
+            Navigator.pop(context, true);
+          });
+          if (result == true) {
+            Navigator.pop(context);
+          }
+        },
         icon: const Icon(
           Icons.arrow_back_ios_rounded,
           color: Colors.white,

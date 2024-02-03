@@ -8,8 +8,10 @@ import 'package:unwind_app/Widgets/workoutlist-widget/event_box_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:unwind_app/globals/theme/table_calender_theme.dart';
+import 'package:unwind_app/pages/loading_page.dart';
+import 'package:unwind_app/services/schedule-service/schedule_service.dart';
 
-import '../../Widgets/utils.dart';
+import '../../services/schedule-service/utils.dart';
 
 class SchedulePage extends StatefulWidget {
   SchedulePage({Key? key}) : super(key: key);
@@ -20,43 +22,58 @@ class SchedulePage extends StatefulWidget {
 
 class _SchedulePageState extends State<SchedulePage> {
   final PageRoutes pageRoutes = PageRoutes();
-  late ValueNotifier<List<Event>> _selectedEvents;
+  late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
-  DateTime _focusedDay = DateTime.now();
+  DateTime _focusedDay = getDateTimeToday();
   DateTime? _selectedDay;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
 
-    _selectedDay = _focusedDay;
+    _selectedDay = _focusedDay; //เปลี่ยนตรงนี้เป็น selectday จากวันที่เลือกมา
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    initKEvent();
+  }
+
+  void initKEvent() async {
+    await ScheduleService.loadkEvents();
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
-    return kEvents[day] ?? [];
+    return ScheduleService.kEvents[day] ?? [];
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    if (!isSameDay(_selectedDay, selectedDay)) {
-      setState(() {
-        _selectedDay = selectedDay;
-        _focusedDay = focusedDay;
-        _selectedEvents.value = _getEventsForDay(selectedDay);
-      });
-    }
+    setState(() {
+      _selectedDay = selectedDay;
+      _focusedDay = focusedDay;
+    });
+    updateSelectedEvents(selectedDay);
+  }
+
+  void updateSelectedEvents(DateTime selectedDay) {
+    _selectedEvents.value = _getEventsForDay(selectedDay);
   }
 
   @override
   void dispose() {
-    _selectedEvents.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading)
+      return LoadingPage(
+        isShowNavbar: false,
+      );
     return AppscreenTheme(
       iconButtonStart: IconButton(
           highlightColor: Colors.transparent,
@@ -69,9 +86,9 @@ class _SchedulePageState extends State<SchedulePage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TableCalendar(
-          firstDay: kFirstDay,
-          lastDay: kLastDay,
+        TableCalendar<Event>(
+          firstDay: ScheduleService.kFirstDay,
+          lastDay: ScheduleService.kLastDay,
           focusedDay: _focusedDay,
           selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
           calendarFormat: _calendarFormat,
@@ -80,13 +97,14 @@ class _SchedulePageState extends State<SchedulePage> {
           startingDayOfWeek: StartingDayOfWeek.monday,
           availableGestures: AvailableGestures.horizontalSwipe,
           locale: 'th_TH',
+          rowHeight: ResponsiveCheckWidget.isMediumMobile(context) ? 40 : 52,
           headerStyle: TableCalendarTheme().headerStyle(),
           daysOfWeekStyle: TableCalendarTheme().daysOfWeekStyle(),
           calendarStyle: TableCalendarTheme().calendarStyle(context),
           onDaySelected: _onDaySelected,
           onPageChanged: (focusedDay) {
             _focusedDay = focusedDay;
-            _selectedEvents.value = _getEventsForDay(_selectedDay!);
+            // _selectedEvents.value = _getEventsForDay(_selectedDay!);
           },
         ),
         const SizedBox(height: 16.0),
@@ -119,10 +137,13 @@ class _SchedulePageState extends State<SchedulePage> {
                     time: value[index].times.hour.toString().padLeft(2, '0') +
                         ':' +
                         value[index].times.minute.toString().padLeft(2, '0'),
-                    onTap: () {
-                      Navigator.push(context,
-                          pageRoutes.workout.infoschedulepage().route(context));
-                      print('${value[index]}');
+                    onTap: () async {
+                      await Navigator.push(
+                          context,
+                          pageRoutes.workout
+                              .infoschedulepage(index, value, _selectedDay!)
+                              .route(context));
+                      _onDaySelected(_selectedDay!, _focusedDay);
                     },
                   );
                 },
@@ -130,6 +151,7 @@ class _SchedulePageState extends State<SchedulePage> {
             },
           ),
         ),
+        SizedBox(height: 16.0),
         TextWithStartIconWidget(
           startIcon: Icon(
             Icons.access_alarm_rounded,
@@ -146,9 +168,45 @@ class _SchedulePageState extends State<SchedulePage> {
         Container(
           margin: EdgeInsets.only(top: 8),
           child: ButtonWithiconWidget(
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              final result = await Navigator.push(
                   context, pageRoutes.workout.setschedulepage().route(context));
+              if (result != null) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(
+                        Icons.check_circle_outline_rounded,
+                        color: Color(0xff40ad97),
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Text(
+                        'ตั้งแจ้งเตือนเสร็จสิ้น',
+                        style: TextStyle(
+                          fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? 14
+                              : 16,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xff484d56),
+                        ),
+                      )
+                    ],
+                  ),
+                  margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height - 150,
+                      left: 24,
+                      right: 24),
+                  duration: Duration(milliseconds: 2000),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  behavior: SnackBarBehavior.floating,
+                ));
+                _onDaySelected(result, result);
+              }
             },
             mainAxisAlignment: MainAxisAlignment.center,
             text: 'ตั้งเวลา',

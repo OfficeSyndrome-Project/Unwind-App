@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
-import 'package:unwind_app/Widgets/utils.dart';
+import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/list_dropdown_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/select_box_widget.dart';
 
@@ -15,6 +16,7 @@ import 'package:unwind_app/Widgets/workoutlist-widget/time_wheeltile_widget.dart
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/show_dialog_widget.dart';
 import 'package:unwind_app/globals/theme/table_calender_theme.dart';
+import 'package:unwind_app/services/schedule-service/schedule_service.dart';
 
 class SetSchedulePage extends StatefulWidget {
   const SetSchedulePage({
@@ -33,21 +35,21 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     'ชุดท่าบริหารหลังส่วนบน'
   ];
   String? selectWorkoutList;
-  final DateTime date = DateTime.now();
   bool isTapCalender = false;
   bool isTapTime = false;
 
-  DateTime _focusedDay = DateTime.now();
+  DateTime _focusedDay = getDateTimeToday();
   DateTime? _selectedDay;
-  // late final ValueNotifier<List<Event>> _selectedEvents;
+  late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
+  late Map<DateTime, List<Event>> events = {};
 
   @override
   void initState() {
     super.initState();
 
     _selectedDay = _focusedDay;
-    // _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
   int currentHour = 0;
@@ -78,10 +80,10 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     return parseM;
   }
 
-  // List<Event> _getEventsForDay(DateTime day) {
-  //   // Implementation example
-  //   return kEvents[day] ?? [];
-  // }
+  List<Event> _getEventsForDay(DateTime day) {
+    // Implementation example
+    return ScheduleService.kEvents[day] ?? [];
+  }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -89,7 +91,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
       });
-      // _selectedEvents.value = _getEventsForDay(selectedDay);
+      _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
@@ -100,19 +102,26 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     return _setSchedule;
   }
 
+  void onConfirm() {
+    List<Event> oldEvents = _getEventsForDay(_selectedDay!);
+    ScheduleService.kEvents.addAll({
+      _selectedDay!: [
+        ...oldEvents,
+        Event(selectWorkoutList ?? 'ไม่มีชื่อชุดท่า', setSchedule())
+      ]
+    });
+    ScheduleService.savekEvents();
+
+    Navigator.pop(context, _selectedDay);
+  }
+
   @override
   void dispose() {
-    // _selectedEvents.dispose();
-    // kEvents.clear();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(selectWorkoutList);
-    print(setSchedule());
-
-    // print(parseTime());
     return AppscreenTheme(
         isShowNavbar: false,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -124,15 +133,16 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               GestureDetector(
-                onTap: () {
-                  alertDialog.getshowDialog(
+                onTap: () async {
+                  final result = await alertDialog.getshowDialog(
                       context, 'ยกเลิกการตั้ง Schedule ใช่หรือไม่ ?', null, () {
-                    Navigator.of(context).pop();
+                    Navigator.pop(context, false);
                   }, () {
-                    Navigator.of(context).popUntil(
-                      (route) => route.isFirst,
-                    );
+                    Navigator.pop(context, true);
                   });
+                  if (result == true) {
+                    Navigator.pop(context);
+                  }
                 },
                 child: Container(
                   width: 72,
@@ -152,14 +162,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                 ),
               ),
               ButtonWithoutIconWidget(
-                  onTap: () {
-                    kEvents.addAll({
-                      setSchedule(): [Event(selectWorkoutList!, setSchedule())]
-                    });
-
-                    // _selectedEvents.value = _getEventsForDay(_selectedDay!);
-                    Navigator.pop(context);
-                  },
+                  onTap: onConfirm,
                   text: 'ยืนยัน',
                   radius: 4,
                   width: 72,
@@ -200,81 +203,137 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
               });
             },
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(
-                  flex: 2,
-                  fit: FlexFit.tight,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextWithStartIconWidget(
-                          startIcon: Icon(
-                            Icons.calendar_month_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          topicName: 'วันที่',
-                          style: TextStyle(
-                            color: Color(0xFF484D56),
-                            fontSize:
-                                ResponsiveCheckWidget.isSmallMobile(context)
-                                    ? 14
-                                    : 16,
-                            fontFamily: 'Noto Sans Thai',
-                            fontWeight: FontWeight.w600,
-                          )),
-                      SelectBoxWidget(
-                        name: DateFormat('dd MMMM ', 'th')
-                                .format(_selectedDay!) +
-                            DateFormat('yyyy', 'th')
-                                .format(DateTime.utc(_selectedDay!.year + 543)),
-                        width: double.infinity,
-                        isTap: isTapCalender,
-                        onTap: () {
-                          toggleCalender();
-                        },
-                      ),
-                    ],
-                  )),
-              SizedBox(
-                width: 8,
-              ),
-              Flexible(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextWithStartIconWidget(
-                          startIcon: Icon(
-                            Icons.alarm_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          topicName: 'เวลา',
-                          style: TextStyle(
-                            color: Color(0xFF484D56),
-                            fontSize:
-                                ResponsiveCheckWidget.isSmallMobile(context)
-                                    ? 14
-                                    : 16,
-                            fontFamily: 'Noto Sans Thai',
-                            fontWeight: FontWeight.w600,
-                          )),
-                      SelectBoxWidget(
-                        name: parseHoure() + ':' + parseMinute(),
-                        width: double.infinity,
-                        isTap: isTapTime,
-                        onTap: () {
-                          toggleTime();
-                        },
-                      )
-                    ],
-                  ))
-            ],
-          ),
+          ResponsiveCheckWidget.isSmallMobile(context)
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextWithStartIconWidget(
+                        startIcon: Icon(
+                          Icons.calendar_month_rounded,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        topicName: 'วันที่',
+                        style: TextStyle(
+                          color: Color(0xFF484D56),
+                          fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? 14
+                              : 16,
+                          fontFamily: 'Noto Sans Thai',
+                          fontWeight: FontWeight.w600,
+                        )),
+                    SelectBoxWidget(
+                      name: DateFormat('dd MMMM ', 'th').format(_selectedDay!) +
+                          DateFormat('yyyy', 'th')
+                              .format(DateTime.utc(_selectedDay!.year + 543)),
+                      width: double.infinity,
+                      isTap: isTapCalender,
+                      onTap: () {
+                        toggleCalender();
+                      },
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    TextWithStartIconWidget(
+                        startIcon: Icon(
+                          Icons.alarm_rounded,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        topicName: 'เวลา',
+                        style: TextStyle(
+                          color: Color(0xFF484D56),
+                          fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? 14
+                              : 16,
+                          fontFamily: 'Noto Sans Thai',
+                          fontWeight: FontWeight.w600,
+                        )),
+                    SelectBoxWidget(
+                      name: parseHoure() + ':' + parseMinute(),
+                      width: double.infinity,
+                      isTap: isTapTime,
+                      onTap: () {
+                        toggleTime();
+                      },
+                    )
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextWithStartIconWidget(
+                                startIcon: Icon(
+                                  Icons.calendar_month_rounded,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                topicName: 'วันที่',
+                                style: TextStyle(
+                                  color: Color(0xFF484D56),
+                                  fontSize: ResponsiveCheckWidget.isSmallMobile(
+                                          context)
+                                      ? 14
+                                      : 16,
+                                  fontFamily: 'Noto Sans Thai',
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            SelectBoxWidget(
+                              name: DateFormat('dd MMMM ', 'th')
+                                      .format(_selectedDay!) +
+                                  DateFormat('yyyy', 'th').format(
+                                      DateTime.utc(_selectedDay!.year + 543)),
+                              width: double.infinity,
+                              isTap: isTapCalender,
+                              onTap: () {
+                                toggleCalender();
+                              },
+                            ),
+                          ],
+                        )),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Flexible(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextWithStartIconWidget(
+                                startIcon: Icon(
+                                  Icons.alarm_rounded,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                topicName: 'เวลา',
+                                style: TextStyle(
+                                  color: Color(0xFF484D56),
+                                  fontSize: ResponsiveCheckWidget.isSmallMobile(
+                                          context)
+                                      ? 14
+                                      : 16,
+                                  fontFamily: 'Noto Sans Thai',
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            SelectBoxWidget(
+                              name: parseHoure() + ':' + parseMinute(),
+                              width: double.infinity,
+                              isTap: isTapTime,
+                              onTap: () {
+                                toggleTime();
+                              },
+                            )
+                          ],
+                        ))
+                  ],
+                ),
           SizedBox(
             height: 16,
           ),
@@ -295,8 +354,8 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                       ]),
                   child: TableCalendar(
                     focusedDay: _focusedDay,
-                    firstDay: kFirstDay,
-                    lastDay: kLastDay,
+                    firstDay: ScheduleService.kFirstDay,
+                    lastDay: ScheduleService.kLastDay,
                     selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
                     calendarFormat: _calendarFormat,
                     locale: 'th_TH',

@@ -130,23 +130,6 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                               : Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
-                      TextWithStartIconWidget(
-                        startIcon: Icon(
-                          Icons.analytics_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        topicName: 'ค่าความเจ็บปวด (ก่อน/หลัง)',
-                        style: ResponsiveCheckWidget.isSmallMobile(context)
-                            ? TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: const Color(0xFF3B67CD),
-                              )
-                            : Theme.of(context).textTheme.bodySmall,
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
                       ScoreChartWidget(
                         height: 150,
                         series: <LineSeries<KeepScoreAndDateModel, int>>[
@@ -182,6 +165,23 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                                 score.afterScore,
                           ),
                         ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 16, bottom: 8),
+                        child: TextWithStartIconWidget(
+                          startIcon: Icon(
+                            Icons.analytics_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          topicName: 'ค่าความเจ็บปวด (ก่อน/หลัง)',
+                          style: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFF3B67CD),
+                                )
+                              : Theme.of(context).textTheme.bodySmall,
+                        ),
                       ),
                       Column(
                           mainAxisSize: MainAxisSize.min,

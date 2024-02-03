@@ -111,15 +111,18 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                 )),
           ),
           ButtonWithiconWidget(
-            onTap: () {
-              alertDialog.getshowDialog(
+            onTap: () async {
+              final result = await alertDialog.getshowDialog(
                   context,
                   'ยกเลิกชุดท่าบริหารนี้ใช่หรือไม่ ?',
                   '(ชุดท่านี้จะหายไปจากรายการ)', () {
-                Navigator.of(context).pop();
+                Navigator.pop(context, false);
               }, () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.pop(context, true);
               });
+              if (result == true) {
+                Navigator.pop(context);
+              }
             },
             mainAxisAlignment: MainAxisAlignment.center,
             text: 'หยุดบริหาร',

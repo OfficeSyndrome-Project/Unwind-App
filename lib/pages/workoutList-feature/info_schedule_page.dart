@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/show_dialog_widget.dart';
+import 'package:unwind_app/services/schedule-service/schedule_service.dart';
 
 class InfoSchedulePage extends StatefulWidget {
-  const InfoSchedulePage({Key? key}) : super(key: key);
+  final int index;
+  final List<Event> value;
+  final DateTime selectedDay;
+  const InfoSchedulePage(
+      {super.key,
+      required this.index,
+      required this.value,
+      required this.selectedDay});
 
   @override
   _InfoSchedulePageState createState() => _InfoSchedulePageState();
@@ -27,7 +37,7 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
               Navigator.pop(context);
             },
             color: Colors.white),
-        textBar: pageRoutes.workout.infoschedulepage().title,
+        textBar: widget.value[widget.index].title,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,7 +54,7 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
                       Icons.directions_run,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: 'ท่าบริหารคอ',
+                    topicName: widget.value[widget.index].title,
                     style: TextStyle(
                       color: Color(0xFF484D56),
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -56,7 +66,14 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
                   ),
                 ),
                 Text(
-                  'วันพฤหัสที่ 9 สิงหาคม พ.ศ. 2566\nเวลา 19:00 -19:30',
+                  DateFormat('EEEEที่ d MMMM พ.ศ. ', 'th')
+                          .format(widget.value[widget.index].times) +
+                      DateFormat('yyyy', 'th').format(DateTime.utc(
+                          widget.value[widget.index].times.year + 543)) +
+                      '\n' +
+                      DateFormat('เวลา hh:mm', 'th')
+                          .format(widget.value[widget.index].times) +
+                      ' นาฬิกา',
                   style: TextStyle(
                     color: Color(0xFF636A75),
                     fontSize:
@@ -82,13 +99,23 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
           Container(
             margin: EdgeInsets.only(top: 16),
             child: ButtonWithiconWidget(
-              onTap: () {
-                alertDialog.getshowDialog(
+              onTap: () async {
+                final result = await alertDialog.getshowDialog(
                     context, 'ยืนยันลบการแจ้งเตือนใช่หรือไม่ ?', null, () {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context, false);
                 }, () {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  ScheduleService.kEvents[widget.selectedDay]
+                      ?.removeAt(widget.index);
+                  if (ScheduleService.kEvents[widget.selectedDay]?.length ==
+                      0) {
+                    ScheduleService.kEvents.remove(widget.selectedDay);
+                  }
+                  ScheduleService.removeEvent(widget.index, widget.selectedDay);
+                  Navigator.pop(context, true);
                 });
+                if (result == true) {
+                  Navigator.pop(context);
+                }
               },
               mainAxisAlignment: MainAxisAlignment.center,
               text: 'ลบแจ้งเตือนนี้',

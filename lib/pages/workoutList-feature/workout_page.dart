@@ -101,24 +101,27 @@ class _WorkoutPageState extends State<WorkoutPage> {
             iconButtonStart: IconButton(
                 highlightColor: Colors.transparent,
                 icon: const Icon(Icons.arrow_back_ios_rounded),
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     onPressed = !onPressed;
                     btnTime(onPressed);
                   });
-                  alertDialog.getshowDialog(
+                  final result = await alertDialog.getshowDialog(
                       context, 'ยกเลิกการบริหารใช่หรือไม่ ?', null, () {
-                    Navigator.of(context).pop();
+                    Navigator.pop(context, false);
                     _controller.resume();
                     setState(() {
                       onPressed = !onPressed;
                     });
                   }, () {
-                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.pop(context, true);
                     _controller.reset();
                     index = 0;
                   });
                   _controller.pause();
+                  if (result == true) {
+                    Navigator.pop(context);
+                  }
                 },
                 color: Theme.of(context).colorScheme.primary),
             iconButtonEnd: IconButton(
@@ -166,7 +169,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
                       // ttsManager.speak(_newVoiceText);
                       // _speak();
                     }
-                    print(value);
                   },
                 ),
               ]);

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
 class alertDialog {
-  static void getshowDialog(
+  static Future<bool?> getshowDialog(
           BuildContext context,
           String headText,
           String? subText,
           void Function()? onNoTap,
           void Function()? onYesTap) =>
-      showDialog<String>(
+      showDialog<bool>(
           context: context,
           barrierDismissible: false,
           barrierColor: const Color.fromARGB(122, 245, 245, 250),
