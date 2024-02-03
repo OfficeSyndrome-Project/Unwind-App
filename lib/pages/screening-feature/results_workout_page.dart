@@ -3,9 +3,9 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
-import 'package:unwind_app/Widgets/screening-widget/box_result_syndrom_widget.dart';
 
-import 'package:unwind_app/Widgets/screening-widget/have_workout_list_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/box_results_workout.dart';
+
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
