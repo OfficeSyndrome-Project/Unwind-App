@@ -4,16 +4,12 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
+
+import 'package:unwind_app/pages/workoutList-feature/schedule_page.dart';
 import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
 import 'package:unwind_app/services/general_stored_service.dart';
 
-<<<<<<< HEAD
-import 'package:unwind_app/pages/workoutList-feature/schedule_page.dart';
-
-void main() {
-=======
 void main() async {
->>>>>>> main
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting('th');
   SystemChrome.setPreferredOrientations([
@@ -40,16 +36,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
-      home: HomePage(
-        selectedIndex: 0,
-        devScreen: SchedulePage(),
-      ),
-=======
       home: isFirstTime ?? true
           ? const ScreeningPage()
-          : const HomePage(selectedIndex: 0),
->>>>>>> main
+          : HomePage(
+              selectedIndex: 0,
+              devScreen: SchedulePage(),
+            ),
       theme: appTheme,
     );
   }
