@@ -149,17 +149,24 @@ flutter:
 
     - lib/assets/images/workout-thumbnail-img/backch01.png
     - lib/assets/images/workout-thumbnail-img/backch02.png
-    - lib/assets/images/workout-thumbnail-img/backth01.png
+    - lib/assets/images/workout-thumbnail-img/backth01_l.png
+    - lib/assets/images/workout-thumbnail-img/backth01_r.png
     - lib/assets/images/workout-thumbnail-img/neckch01.png
-    - lib/assets/images/workout-thumbnail-img/neckch02.png
-    - lib/assets/images/workout-thumbnail-img/neckch03.png
+    - lib/assets/images/workout-thumbnail-img/neckch02_l.png
+    - lib/assets/images/workout-thumbnail-img/neckch02_r.png
+    - lib/assets/images/workout-thumbnail-img/neckch03_l.png
+    - lib/assets/images/workout-thumbnail-img/neckch03_r.png
     - lib/assets/images/workout-thumbnail-img/neckth01.png
     - lib/assets/images/workout-thumbnail-img/neckth02.png
-    - lib/assets/images/workout-thumbnail-img/neckth03.png
-    - lib/assets/images/workout-thumbnail-img/neckth04.png
+    - lib/assets/images/workout-thumbnail-img/neckth03_l.png
+    - lib/assets/images/workout-thumbnail-img/neckth03_r.png
+    - lib/assets/images/workout-thumbnail-img/neckth04_l.png
+    - lib/assets/images/workout-thumbnail-img/neckth04_r.png
     - lib/assets/images/workout-thumbnail-img/neckth05.png
-    - lib/assets/images/workout-thumbnail-img/shoulder01.png
-    - lib/assets/images/workout-thumbnail-img/shoulder02.png
+    - lib/assets/images/workout-thumbnail-img/shoulder01_l.png
+    - lib/assets/images/workout-thumbnail-img/shoulder01_r.png
+    - lib/assets/images/workout-thumbnail-img/shoulder02_l.png
+    - lib/assets/images/workout-thumbnail-img/shoulder02_r.png
     - lib/assets/images/workout-thumbnail-img/shoulder03.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

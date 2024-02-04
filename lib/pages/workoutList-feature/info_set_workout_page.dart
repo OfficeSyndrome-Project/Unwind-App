@@ -63,7 +63,8 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       Icons.calendar_month_rounded,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: '${workoutData?.frequency}',
+                    topicName:
+                        '${workoutData?.frequency} ${workoutData?.time} ครั้ง/เซต',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -93,9 +94,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 16,
-              ),
+              SizedBox(height: 8),
               Column(
                 children: [
                   Container(
@@ -113,23 +112,84 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
+                  (workoutData?.caution != null)
+                      ? Column(
+                          children: [
+                            SizedBox(height: 8),
+                            Divider(color: Color(0xFFD7DAE1), thickness: 1),
+                            SizedBox(height: 8),
+                          ],
+                        )
+                      : Container(),
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.symmetric(vertical: 8),
-                    child: Text(
-                      'ข้อควรระวัง : ${workoutData?.caution}',
-                      style: TextStyle(
-                        fontFamily: "Noto Sans Thai",
-                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                            ? 12
-                            : 14,
-                        fontWeight: FontWeight.w300,
-                        color: const Color(0xFF636A75),
-                      ),
-                    ),
+                    child: (workoutData?.caution != null)
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.warning_rounded,
+                                    color: const Color(0xFFFFCC00),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    'ข้อควรระวัง',
+                                    style: TextStyle(
+                                      fontFamily: "Noto Sans Thai",
+                                      fontSize:
+                                          ResponsiveCheckWidget.isSmallMobile(
+                                                  context)
+                                              ? 14
+                                              : 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: const Color(0xFF7F8795),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                '${workoutData?.caution}',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                                style: TextStyle(
+                                  fontFamily: "Noto Sans Thai",
+                                  fontSize: ResponsiveCheckWidget.isSmallMobile(
+                                          context)
+                                      ? 14
+                                      : 16,
+                                  fontWeight: FontWeight.w300,
+                                  color: const Color(0xFF7F8795),
+                                ),
+                              )
+                            ],
+                          )
+                        // ? TextWithStartIconWidget(
+                        //     startIcon: Icon(
+                        //       Icons.warning_rounded,
+                        //       color: Theme.of(context).colorScheme.primary,
+                        //     ),
+                        //     topicName: '${workoutData?.caution}',
+                        //     style: TextStyle(
+                        //       fontFamily: "Noto Sans Thai",
+                        //       fontSize: ResponsiveCheckWidget.isSmallMobile(
+                        //               context)
+                        //           ? 14
+                        //           : 16,
+                        //       fontWeight: FontWeight.w300,
+                        //       color: const Color(0xFF636A75),
+                        //     ),
+                        //   )
+                        : Container(),
                   ),
                 ],
               ),
