@@ -15,6 +15,14 @@ class BoxResultsWorkout extends StatelessWidget {
     required this.imagePath,
   }) : super(key: key);
 
+  String formattedTime(int timeInSecond) {
+    int sec = timeInSecond % 60;
+    int min = (timeInSecond / 60).floor();
+    String minute = min.toString().length <= 1 ? "0$min" : "$min";
+    String second = sec.toString().length <= 1 ? "0$sec" : "$sec";
+    return "$minute : $second";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,7 +66,7 @@ class BoxResultsWorkout extends StatelessWidget {
                 ),
               ),
               Text(
-                '00 : ${time?.inSeconds.toString().padLeft(2, '0')}',
+                (time == null) ? '' : formattedTime(time!.inSeconds),
                 style: TextStyle(
                   fontFamily: "Noto Sans Thai",
                   fontSize:
