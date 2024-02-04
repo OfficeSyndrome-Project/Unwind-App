@@ -16,6 +16,7 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
   final List<int> questionID;
   final void Function(Answer) onChanged;
   final Function(bool)? onCompleted;
+  final List<int>? page_for_four_choices;
   // final ScreeningPartOneModel question;
 
   const PartTwoQuestionBoxWidget({
@@ -29,6 +30,7 @@ class PartTwoQuestionBoxWidget extends StatefulWidget {
     required this.questionID,
     required this.onChanged,
     this.onCompleted,
+    this.page_for_four_choices,
   });
 
   @override
@@ -52,6 +54,8 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    print("title ${widget.title}");
+    print("id ${widget.questionID}");
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,9 +110,11 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget>
                 questions: widget.questions[index].question,
                 questionId: widget.questions[index].questionId,
                 questionPage: widget.currentPage,
+                is_four_choices: (widget.page_for_four_choices != null)
+                    ? widget.page_for_four_choices!.contains(widget.currentPage)
+                    : false,
                 onChanged: (value) {
                   // Set state
-
                   answers = Answer.updateAnswer(
                       answers,
                       Answer(
@@ -145,6 +151,7 @@ class QuestionAndRadioButton extends StatefulWidget {
   final String pagename = "screening";
   final String? topic;
   final void Function(dynamic)? onChanged;
+  final bool? is_four_choices;
 
   const QuestionAndRadioButton({
     super.key,
@@ -153,6 +160,7 @@ class QuestionAndRadioButton extends StatefulWidget {
     required this.questions,
     this.topic,
     this.onChanged,
+    this.is_four_choices,
   });
 
   @override
@@ -202,7 +210,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
               const SizedBox(
                 width: 16,
               ),
-              widget.questionPage == 2 && widget.questionId == 4
+              widget.is_four_choices == true
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
