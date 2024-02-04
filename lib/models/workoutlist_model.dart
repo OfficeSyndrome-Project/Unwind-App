@@ -53,6 +53,6 @@ class WorkoutListModel {
   //title and date
   @override
   String toString() {
-    return '$WOL_title,${date?.day}';
+    return '$WOL_title-${date?.day}';
   }
 }

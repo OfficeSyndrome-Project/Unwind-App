@@ -71,7 +71,7 @@ class WorkoutBoxWidget extends StatelessWidget {
                               Icons.directions_run_rounded,
                               color: Theme.of(context).colorScheme.primary,
                             ),
-                            topicName: numberWorkout,
+                            topicName: numberWorkout + " ชุดท่า",
                             style: TextStyle(
                               fontFamily: "Noto Sans Thai",
                               fontSize:

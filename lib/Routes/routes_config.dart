@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
 
 import 'package:unwind_app/pages/history-feature/history_page.dart';
@@ -171,11 +172,17 @@ class Workout {
       title: "ชุดท่าบริหาร",
       widget: ReportWorkoutPage(
         workoutList: workoutList,
+        workoutListDB: serviceLocator(),
       ));
-  PathRoute infooflistworkout() =>
-      PathRoute(title: "ดูชุดท่าทั้งหมด", widget: InfoOfListWorkoutPage());
-  PathRoute infoofsetworkout() =>
-      PathRoute(title: "คำอธิบายชุดท่า", widget: InfoSetWorkoutPage());
+  PathRoute infooflistworkout(WorkoutList? workoutList) => PathRoute(
+      title: "ชุดท่าบริหาร",
+      widget: InfoOfListWorkoutPage(workoutList: workoutList));
+
+  PathRoute infoofsetworkout(WorkoutData? workoutData) => PathRoute(
+      title: "คำอธิบายชุดท่า",
+      widget: InfoSetWorkoutPage(
+        workoutData: workoutData,
+      ));
   PathRoute nrsafterandbeforeworkout() =>
       PathRoute(title: "ประเมินความเจ็บปวด", widget: NrsAfterAndBeforePage());
   PathRoute preparebeforeworkout() => PathRoute(

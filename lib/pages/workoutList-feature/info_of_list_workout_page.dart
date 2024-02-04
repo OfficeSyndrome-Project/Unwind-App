@@ -6,10 +6,12 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/show_dialog_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/set_box_workout_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class InfoOfListWorkoutPage extends StatelessWidget {
-  InfoOfListWorkoutPage({super.key});
+  final WorkoutList? workoutList;
+  InfoOfListWorkoutPage({super.key, this.workoutList});
 
   final PageRoutes pageRoutes = PageRoutes();
 
@@ -25,7 +27,7 @@ class InfoOfListWorkoutPage extends StatelessWidget {
               Navigator.pop(context);
             },
             color: Colors.white),
-        textBar: pageRoutes.workout.infooflistworkout().title,
+        textBar: pageRoutes.workout.infooflistworkout(workoutList).title,
         children: [
           Expanded(
               child: Column(
@@ -54,19 +56,22 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                 child: ListView.separated(
                     padding: EdgeInsets.all(2),
                     itemBuilder: (context, index) => SetBoxWorkoutWidget(
-                          name: 'name',
+                          // name:
+                          //     'ชื่อท่าที่ ${index + 1} ${workoutList?.workoutData[index].name}',
+                          workoutData: workoutList?.workoutData[index],
                           onTap: () {
                             Navigator.push(
                                 context,
                                 pageRoutes.workout
-                                    .infoofsetworkout()
+                                    .infoofsetworkout(
+                                        workoutList?.workoutData[index])
                                     .route(context));
                           },
                         ),
                     separatorBuilder: (context, index) => SizedBox(
                           height: 8,
                         ),
-                    itemCount: 5),
+                    itemCount: workoutList?.workoutData.length ?? 0),
               )
             ],
           )),

@@ -148,22 +148,28 @@ flutter:
     - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-8.png
     - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-9.png
 
-    - lib/assets/images/workout-thumbnail-img/back01_80x80.png
-    - lib/assets/images/workout-thumbnail-img/back02_80x80.png
-    - lib/assets/images/workout-thumbnail-img/backth01_80x80.png
-    - lib/assets/images/workout-thumbnail-img/neckch01_80x80.png
-    - lib/assets/images/workout-thumbnail-img/neckch02_80x80.png
-    - lib/assets/images/workout-thumbnail-img/neckch03_80x80.png
-    - lib/assets/images/workout-thumbnail-img/neckth01_80x80.png
-    - lib/assets/images/workout-thumbnail-img/neckth02_80x80.png
-    - lib/assets/images/workout-thumbnail-img/neckth03_80x80.png
-    - lib/assets/images/workout-thumbnail-img/neckth04_80x80.png
-    - lib/assets/images/workout-thumbnail-img/neckth05_80x80.png
-    - lib/assets/images/workout-thumbnail-img/shoulder01_80x80.png
-    - lib/assets/images/workout-thumbnail-img/shoulder02_80x80.png
-    - lib/assets/images/workout-thumbnail-img/shoulder03_80x80.png
 
-
+    - lib/assets/images/workout-thumbnail-img/backch01.png
+    - lib/assets/images/workout-thumbnail-img/backch02.png
+    - lib/assets/images/workout-thumbnail-img/backth01_l.png
+    - lib/assets/images/workout-thumbnail-img/backth01_r.png
+    - lib/assets/images/workout-thumbnail-img/neckch01.png
+    - lib/assets/images/workout-thumbnail-img/neckch02_l.png
+    - lib/assets/images/workout-thumbnail-img/neckch02_r.png
+    - lib/assets/images/workout-thumbnail-img/neckch03_l.png
+    - lib/assets/images/workout-thumbnail-img/neckch03_r.png
+    - lib/assets/images/workout-thumbnail-img/neckth01.png
+    - lib/assets/images/workout-thumbnail-img/neckth02.png
+    - lib/assets/images/workout-thumbnail-img/neckth03_l.png
+    - lib/assets/images/workout-thumbnail-img/neckth03_r.png
+    - lib/assets/images/workout-thumbnail-img/neckth04_l.png
+    - lib/assets/images/workout-thumbnail-img/neckth04_r.png
+    - lib/assets/images/workout-thumbnail-img/neckth05.png
+    - lib/assets/images/workout-thumbnail-img/shoulder01_l.png
+    - lib/assets/images/workout-thumbnail-img/shoulder01_r.png
+    - lib/assets/images/workout-thumbnail-img/shoulder02_l.png
+    - lib/assets/images/workout-thumbnail-img/shoulder02_r.png
+    - lib/assets/images/workout-thumbnail-img/shoulder03.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

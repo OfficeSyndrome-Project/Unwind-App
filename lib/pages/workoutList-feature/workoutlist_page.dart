@@ -60,14 +60,7 @@ class WorkoutListPage extends StatelessWidget {
                               workoutLists[index].workoutData.length.toString(),
                           time: workoutLists[index].workoutData.isEmpty
                               ? ''
-                              : workoutLists[index]
-                                      .workoutData
-                                      .map((e) => Duration(seconds: e.time))
-                                      .reduce(
-                                          (value, element) => value + element)
-                                      .inSeconds
-                                      .toString() +
-                                  ' วินาที',
+                              : workoutLists[index].totalTime ?? "",
                           assetName: workoutLists[index].titlePath,
                         ),
                     itemCount: workoutLists.length,
