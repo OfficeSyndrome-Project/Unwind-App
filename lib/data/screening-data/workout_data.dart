@@ -111,7 +111,9 @@ class WorkoutData {
   String detail;
   List<String> step1;
   String step;
+  int sec;
   int time;
+  int? set;
   String thumbnailPath;
   String frequency;
   String? caution;
@@ -125,7 +127,9 @@ class WorkoutData {
     required this.detail,
     required this.step1,
     required this.step,
+    required this.sec,
     required this.time,
+    this.set,
     required this.thumbnailPath,
     required this.frequency,
     this.caution,
@@ -136,7 +140,7 @@ class WorkoutData {
 
   @override
   String toString() {
-    return 'WorkoutData{title: $title, name: $name, detail: $step1, time: $time, thumbnailPath: $thumbnailPath, videoPath: $videoPath, animationPaths: $animationPaths}';
+    return 'WorkoutData{title: $title, name: $name, detail: $step1, time: $sec, thumbnailPath: $thumbnailPath, videoPath: $videoPath, animationPaths: $animationPaths}';
   }
 
   static List<WorkoutData> getWorkoutData() => [
@@ -154,7 +158,9 @@ class WorkoutData {
           ],
           step:
               "นั่ง/ยืนหลังตรง ก้มศีรษะลงจนสุด ร่วมกับเก็บคางชิดคอ ใช้มือทั้ง 2 ข้างออกแรงกดศีรษะลง จนกระทั่งรู้สึกตึงที่หลังคอ ค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
-          time: 10,
+          sec: 10,
+          time: 5,
+          set: 3,
           thumbnailPath: "lib/assets/images/workout-thumbnail-img/neckch01.png",
           frequency: "ทำทุกวัน",
           caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
@@ -182,7 +188,9 @@ class WorkoutData {
             ],
             step:
                 "ยืดด้านซ้าย นั่งหลังตรง ใช้มือข้างขวายึดกับเก้าอี้ให้นิ่ง เพื่อเกิดแรงดึงมากขึ้น ก้มศีรษะ เอนศีรษะไปทางด้านซ้าย หันหน้าไปทางด้านขวา ใช้มือซ้ายจับศีรษะให้โน้มคอไปทางซ้ายมากขึ้น จนรู้สึกตึงบริเวณบ่าขวาค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย ในการยืดด้านขวาให้ทำกลับกัน",
-            time: 10,
+            sec: 10,
+            time: 5,
+            set: 3,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckch02.png",
             frequency: "ทำทุกวัน",
@@ -210,7 +218,9 @@ class WorkoutData {
             ],
             step:
                 "นั่งหลังตรง ใช้มือข้างขวายึดกับเก้าอี้ให้นิ่ง เพื่อเกิดแรงดึงมากขึ้น หันหน้าไปทางด้านซ้าย ก้มศีรษะมองรักแร้ทางด้านซ้าย ใช้มือซ้ายจับศีรษะ ให้โน้มคอไปทางซ้ายมากขึ้น จนรู้สึกตึงบริเวณสะบักขวา ค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
-            time: 10,
+            sec: 10,
+            time: 5,
+            set: 3,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckch03.png",
             frequency: "ทำทุกวัน",
@@ -232,7 +242,8 @@ class WorkoutData {
             ],
             step:
                 "นอนหงาย ชันเข่า เก็บคางชิดอก ยกศีรษะขึ้นจากพื้น ค้างไว้นานเป็นเวลา 5 วินาทีแล้วจึงคลาย",
-            time: 5,
+            sec: 5,
+            time: 10,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth01.png",
             frequency: "ทำวันเว้นวัน",
@@ -252,7 +263,8 @@ class WorkoutData {
             ],
             step:
                 "นั่ง/ยืนตัวตรง ใช้ฝ่ามือข้างที่ถนัดดันบริเวณหน้าผาก ให้ลำคอออกแรงต้านหน้าผากไปด้านหน้าสวนทางกับแรงดันจากฝ่ามือ ดันต้านไว้เป็นเวลา 5 วินาทีแล้วจึงคลาย",
-            time: 5,
+            sec: 5,
+            time: 10,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth02.png",
             frequency: "ทำวันเว้นวัน",
@@ -277,7 +289,8 @@ class WorkoutData {
             ],
             step:
                 "ด้านขวา นั่ง/ยืนโดยหันหน้าตรง ใช้ฝ่ามือขวาดันบริเวณใบหน้าด้านขวา ให้ลำคอออกแรงหันใบหน้าไปด้านขวาสวนทางกับแรงดันจากฝ่ามือ ดันต้านไว้เป็นเวลา 5 วินาทีแล้วจึงคลาย ในด้านซ้ายให้ทำกลับกัน",
-            time: 5,
+            sec: 5,
+            time: 10,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth03.png",
             frequency: "ทำวันเว้นวัน",
@@ -302,7 +315,8 @@ class WorkoutData {
             ],
             step:
                 "ในด้านขวา นั่ง/ยืนโดยหันหน้าตรง ใช้ฝ่ามือขวาดันบริเวณกกหูด้านขวา ให้ลำคอออกแรงเอียงหัวไปด้านขวาสวนทางกับแรงดันจากฝ่ามือ ดันต้านไว้เป็นเวลา 5 วินาทีแล้วจึงคลาย ในด้านซ้ายให้ทำกลับกัน",
-            time: 5,
+            sec: 5,
+            time: 10,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth04.png",
             frequency: "ทำวันเว้นวัน",
@@ -321,7 +335,8 @@ class WorkoutData {
             ],
             step:
                 "นั่ง/ยืนตัวตรง ใช้ทั้ง 2 มือผสานบริเวณท้ายทอย ให้ลำคอออกแรงต้านหัวไปด้านหลังสวนทางกับแรงดันจากฝ่ามือดันต้านไว้เป็นเวลา 5 วินาทีแล้วจึงคลาย",
-            time: 5,
+            sec: 5,
+            time: 10,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth05.png",
             frequency: "ทำวันเว้นวัน",
@@ -351,7 +366,9 @@ class WorkoutData {
             ],
             step:
                 "ในด้านขวา ยืนตัวตรง งอข้อศอกด้านขวาขึ้นเหนือศีรษะ ใช้มือซ้ายจับข้อศอกด้านขวา ค่อย ๆ ออกแรงดึงข้อศอกมาด้านหลังจนรู้สึกตึงบริเวณต้นแขนด้านหลัง ดึงค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย ในด้านซ้ายให้ทำกลับกัน",
-            time: 10,
+            sec: 10,
+            time: 15,
+            set: 3,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/shoulder01.png",
             frequency: "ทำทุกวัน",
@@ -379,7 +396,9 @@ class WorkoutData {
             ],
             step:
                 "ในการยืดด้านขวา ยืนตัวตรง ยกแขนขวาพาดผ่านหน้าอกไปด้านซ้าย ใช้มือซ้ายจับที่ข้อศอกด้านขวา ค่อย ๆ ออกแรงดึงข้อศอกเข้าหาลำตัว ค้างไว้จนรู้สึกตึงบริเวณหัวไหล่และสะบักด้านขวา ดึงค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย ในการยืดด้านซ้ายให้ทำกลับกัน",
-            time: 10,
+            sec: 10,
+            time: 15,
+            set: 3,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/shoulder02.png",
             frequency: "ทำทุกวัน",
@@ -399,7 +418,9 @@ class WorkoutData {
             ],
             step:
                 "ยืนตัวตรง ประสานมือไว้ระดับหน้าอก โดยหันฝ่ามือออก เหยียดแขนออกไปข้างหน้าจนรู้สึกตึงบริเวณกล้ามเนื้อหลังส่วนบนและสะบัก ดึงค้างไว้นานเป็นเวลา 15 วินาทีแล้วปล่อย",
+            sec: 15,
             time: 15,
+            set: 3,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/shoulder03.png",
             frequency: "ทำทุกวัน",
@@ -420,7 +441,9 @@ class WorkoutData {
             ],
             step:
                 "นอนคว่ำราบกับพื้น ยันลำตัวช่วงบนขึ้นช้า ๆ โดยที่ศอกและข้อมือวางราบกับพื้น ยันลำตัวค้างไว้นานเป็นเวลา 150  วินาทีแล้วจึงค่อยๆ นอนคว่ำลงเหมือนท่าเริ่มต้น",
-            time: 150,
+            sec: 150,
+            time: 1,
+            set: 6,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/backch01.png",
             frequency: "ทำทุกวัน",
@@ -441,7 +464,9 @@ class WorkoutData {
             ],
             step:
                 "นอนคว่ำราบกับพื้น โดยวางมือทั้ง 2 ข้างไว้ใต้ไหล่ ค่อยๆ เหยียดแขนทั้ง 2 ข้างให้ตรงพร้อมกับยันลำตัวช่วงบนขึ้น ยันลำตัวค้างไว้เป็น 2 วินาทีแล้วนอนคว่ำลงเหมือนท่าเริ่มต้น จากนั้นทำซ้ำอีก 9 ครั้ง",
-            time: 20,
+            sec: 2,
+            time: 10,
+            set: 6,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/backch02.png",
             frequency: "ทำทุกวัน",
@@ -463,7 +488,8 @@ class WorkoutData {
             ],
             step:
                 "ในด้านขวา นอนตะแคงทับด้านขวาโดยใช้ศอกยันลำตัวช่วงบนไว้ เกร็งลำตัว ยกสะโพกให้พ้นพื้น ให้ลำตัวตรง เกร็งลำตัวไว้เป็นเวลา 2 วินาทีแล้วค่อยๆ วางสะโพกลงบนพื้นเหมือนท่าเริ่มต้น",
-            time: 2,
+            sec: 2,
+            time: 10,
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/backth01.png",
             frequency: "ทำวันเว้นวัน",

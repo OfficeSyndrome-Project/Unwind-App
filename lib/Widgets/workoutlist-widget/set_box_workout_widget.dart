@@ -62,7 +62,9 @@ class SetBoxWorkoutWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '00 : ${workoutData?.time}',
+                  workoutData?.set != null
+                      ? 'ค้างไว้ ${workoutData?.sec} วินาที \n${workoutData?.time} ครั้ง/เซต \n${workoutData?.set} เซต/วัน '
+                      : 'ค้างไว้ ${workoutData?.sec} วินาที \n${workoutData?.time} ครั้ง/เซต',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:

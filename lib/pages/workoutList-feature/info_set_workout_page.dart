@@ -81,7 +81,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       Icons.access_time_rounded,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: '${workoutData?.time} วินาทีต่อเซต',
+                    topicName: '${workoutData?.sec} วินาทีต่อเซต',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -94,7 +94,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 8,
+                height: 16,
               ),
               Column(
                 children: [
@@ -114,7 +114,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 4,
+                    height: 8,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -124,9 +124,9 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: "Noto Sans Thai",
                         fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                            ? 14
-                            : 16,
-                        fontWeight: FontWeight.w500,
+                            ? 12
+                            : 14,
+                        fontWeight: FontWeight.w300,
                         color: const Color(0xFF636A75),
                       ),
                     ),

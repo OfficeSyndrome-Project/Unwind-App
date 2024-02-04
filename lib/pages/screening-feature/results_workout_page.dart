@@ -192,7 +192,7 @@ class ResultsWorkoutPage extends StatelessWidget {
               name: workoutList.workoutData[index].name,
               detail: workoutList.workoutData[index].detail,
               time: Duration(
-                seconds: workoutList.workoutData[index].time,
+                seconds: workoutList.workoutData[index].sec,
               ),
               imagePath: workoutList.workoutData[index].thumbnailPath,
             ),
