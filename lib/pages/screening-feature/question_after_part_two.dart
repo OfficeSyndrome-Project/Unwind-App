@@ -5,11 +5,12 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/box_nrs_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/part_two_question_box_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/posture_widget.dart';
+import 'package:unwind_app/data/screening-data/exception_screening_data.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/screening-feature/form_after_screening.dart';
 import 'package:unwind_app/pages/screening-feature/question_button_state_service.dart';
-import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
@@ -309,14 +310,12 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                   final backSetToDoctor = isDoctoringOnUpperBackOrLowerBack ||
                       isNrsExceedingOnUpperBackOrLowerBack;
                   if (neckSetToDoctor && backSetToDoctor) {
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResultsWorkoutPage(
-                                  workoutLists: [],
-                                  resultText:
-                                      "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
-                                )));
+                    await Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return FormAfterScreening(
+                        resultText: ExceptionData.getData()[3].descriptionLabel,
+                      );
+                    }));
                     return;
                   }
                   // go to part 3
