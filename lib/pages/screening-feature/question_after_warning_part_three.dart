@@ -56,12 +56,6 @@ class _QuestionAfterWarningPartThreeState
 
   bool isButtonEnable = false;
 
-  // List<ScreeningPartThreeModel> getAvailableParts() => ScreeningQuestionPartThreeService.getScreeningPartThreeModelByListOfParts(
-  //         allPartTitle
-  //             .where((element) => !widget.selectPart
-  //                 .any((select) => select.selectedPart.title == element))
-  //             .toList());
-
   Function(double) nrsOnChangeHandler(String title) {
     final screeningTitle = ScreeningDiagnoseService.fromThai[title];
     if (screeningTitle == null) {
@@ -154,16 +148,6 @@ class _QuestionAfterWarningPartThreeState
     Map<String, int> moreIntenseQuestionsPages = {};
     List<int> lowerBackPage = [];
 
-    // final availableParts = getPart; // remove parts that are exposed to doctor
-    // if (isNeckSetToDoctor(answers, nrs)) {
-    //   availableParts.removeWhere((part) => part.postures
-    //       .any((element) => element.title == "คอ" || element.title == "บ่า"));
-    // }
-    // if (isBackSetToDoctor(answers, nrs)) {
-    //   availableParts.removeWhere((part) =>
-    //       part.postures.any((element) => element.title == "หลังส่วนล่าง"));
-    // }
-
     for (var part in availableParts) {
       if (part.postures.first.title == "หลังส่วนล่าง") {
         lowerBackPage.add(pageAmount);
@@ -217,8 +201,6 @@ class _QuestionAfterWarningPartThreeState
       pageAmount += 1;
     }
 
-    // print('currentPage : ${currentPage}');
-    // print('pageAmount : ${pageAmount}');
     return AppscreenTheme(
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
@@ -233,6 +215,15 @@ class _QuestionAfterWarningPartThreeState
           },
           color: Theme.of(context).colorScheme.primary,
         ),
+        iconButtonEnd: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  pageRoutes.screening.infomationpage().route(context));
+            },
+            icon: Icon(
+              Icons.info_outline_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            )),
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

@@ -171,6 +171,15 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           },
           color: Theme.of(context).colorScheme.primary,
         ),
+        iconButtonEnd: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  pageRoutes.screening.infomationpage().route(context));
+            },
+            icon: Icon(
+              Icons.info_outline_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            )),
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
