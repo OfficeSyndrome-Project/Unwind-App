@@ -3,7 +3,10 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/box_result_syndrom_widget.dart';
+
 import 'package:unwind_app/Widgets/screening-widget/box_results_workout.dart';
+
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
@@ -25,6 +28,7 @@ class ResultsWorkoutPage extends StatelessWidget {
   }) : super(key: key);
 
   final PageRoutes pageRoutes = PageRoutes();
+  final bool isSyndrom = true;
 
   @override
   Widget build(BuildContext context) {
@@ -57,22 +61,7 @@ class ResultsWorkoutPage extends StatelessWidget {
                         color: const Color(0xFF484D56),
                       )),
                 ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(8),
-                  margin: EdgeInsets.only(top: 8, bottom: 16),
-                  child: Text(
-                    'อาการ : $resultText',
-                    style: TextStyle(
-                      fontFamily: "Noto Sans Thai",
-                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                          ? 14
-                          : 16,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF484D56),
-                    ),
-                  ),
-                ),
+                BoxResultSyndromWidget(result: resultText.toString()),
                 workoutLists.isNotEmpty
                     ? Container(
                         alignment: Alignment.centerLeft,
@@ -94,21 +83,8 @@ class ResultsWorkoutPage extends StatelessWidget {
                             )),
                       )
                     : SizedBox(),
-                // SingleChildScrollView(
-                //     child: Column(
-                //   children: workoutLists
-                //       .map((element) => buildWorkoutData(element))
-                //       .toList(),
-                // )),
-                // ListView.separated(
-                //   itemBuilder: (context, index) =>
-                //       buildWorkoutData(workoutLists[index]),
-                //   itemCount: workoutLists.length,
-                //   separatorBuilder: (context, index) => Text('$index'),
-                //   physics: NeverScrollableScrollPhysics(),
-                // ),
                 SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 Expanded(
                   // height: MediaQuery.of(context).size.height * 0.55,
@@ -116,10 +92,6 @@ class ResultsWorkoutPage extends StatelessWidget {
                       itemBuilder: (context, index) => Container(
                             child:
                                 buildWorkoutData(context, workoutLists[index]),
-                            // decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(25),
-                            //     color: Colors.white,
-                            //     shape: BoxShape.rectangle),
                           ),
                       shrinkWrap: true,
                       itemCount: workoutLists.length,
@@ -192,7 +164,7 @@ class ResultsWorkoutPage extends StatelessWidget {
               name: workoutList.workoutData[index].name,
               detail: workoutList.workoutData[index].detail,
               time: Duration(
-                seconds: workoutList.workoutData[index].time,
+                seconds: workoutList.workoutData[index].sec,
               ),
               imagePath: workoutList.workoutData[index].thumbnailPath,
             ),

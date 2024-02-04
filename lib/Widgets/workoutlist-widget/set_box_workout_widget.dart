@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 
 class SetBoxWorkoutWidget extends StatelessWidget {
-  final String name;
+  // final String name;
+  final WorkoutData? workoutData;
   final void Function()? onTap;
-  SetBoxWorkoutWidget({super.key, required this.name, this.onTap});
+  SetBoxWorkoutWidget({super.key, this.onTap, this.workoutData});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class SetBoxWorkoutWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'ชื่อท่าที่ ${name}',
+                  '${workoutData?.name}',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:
@@ -48,7 +50,7 @@ class SetBoxWorkoutWidget extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 4),
                   child: Text(
-                    'รายละเอียดการทำ',
+                    '${workoutData?.detail}',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -60,7 +62,9 @@ class SetBoxWorkoutWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '00 : 20',
+                  workoutData?.workoutType == 'stretch'
+                      ? '${workoutData?.set} เซต/วัน '
+                      : '${workoutData?.set} เซต/2วัน',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:
@@ -72,11 +76,11 @@ class SetBoxWorkoutWidget extends StatelessWidget {
               ],
             ),
             RatioImageoneToOne(
-                assetName: 'lib/assets/images/screeningPart/self_slumper.png',
+                assetName: '${workoutData?.thumbnailPath}',
                 smallWidth: 60,
                 largeWidth: 80,
                 smallHeight: 60,
-                largeHeight: 80)
+                largeHeight: 80),
           ],
         ),
       ),

@@ -8,13 +8,15 @@ class RatioImageoneToOne extends StatelessWidget {
   final double largeWidth;
   final double smallHeight;
   final double largeHeight;
+  final double? opacity;
   RatioImageoneToOne(
       {super.key,
       required this.assetName,
       required this.smallWidth,
       required this.largeWidth,
       required this.smallHeight,
-      required this.largeHeight});
+      required this.largeHeight,
+      this.opacity});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class RatioImageoneToOne extends StatelessWidget {
     double ratioSmallHeight = smallHeight;
     double ratioLargeWidth = largeWidth;
     double ratioLargeHeight = largeHeight;
-
+    double _opacity = opacity ?? 1.0;
     return Container(
       width: ResponsiveCheckWidget.isSmallMobile(context)
           ? smallWidth
@@ -43,6 +45,7 @@ class RatioImageoneToOne extends StatelessWidget {
             image: DecorationImage(
               image: AssetImage(assetName),
               fit: BoxFit.contain,
+              opacity: _opacity,
             ),
           ),
         ),

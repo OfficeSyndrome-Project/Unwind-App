@@ -20,7 +20,7 @@ void main() async {
     await GeneralStoredService.writeBoolean(
         GeneralStoredService.isFirstTime, 0, 0, true);
   }
-
+  print("isFirstTime: $isFirstTime");
   runApp(MyApp(isFirstTime: isFirstTime ?? true));
 }
 
@@ -36,7 +36,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: isFirstTime ?? true
           ? const ScreeningPage()
-          : const HomePage(selectedIndex: 0),
+          : HomePage(
+              selectedIndex: 0,
+            ),
       theme: appTheme,
     );
   }

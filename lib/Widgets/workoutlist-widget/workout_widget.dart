@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:image_sequence_animator/image_sequence_animator.dart';
+import 'package:unwind_app/Widgets/animate_sequence_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class WorkoutWidget extends StatelessWidget {
   final String name;
-  final String assetName;
-  const WorkoutWidget({super.key, required this.name, required this.assetName});
+  final List<String> fullPaths;
+  final int repeat;
+  final int eachSetDuration;
+  final void Function(ImageSequenceAnimatorState)? onReadyToPlay;
+  const WorkoutWidget(
+      {super.key,
+      required this.name,
+      required this.fullPaths,
+      required this.eachSetDuration,
+      this.onReadyToPlay,
+      required this.repeat});
 
   @override
   Widget build(BuildContext context) {
@@ -26,40 +36,12 @@ class WorkoutWidget extends StatelessWidget {
               ),
             ),
           ),
-          // RatioImageoneToOne(
-          //     assetName: assetName,
-          //     smallWidth: 320,
-          //     largeWidth: 380,
-          //     smallHeight: 320,
-          //     largeHeight: 380),
-          FrameAnimation(),
+          AnimateSequenceWidget(
+            listPath: fullPaths,
+            eachSetDuration: eachSetDuration,
+            repeat: repeat,
+          )
         ],
-      ),
-    );
-  }
-}
-
-class FrameAnimation extends StatelessWidget {
-  const FrameAnimation({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 380,
-      height: 380,
-      child: ImageSequenceAnimator(
-        'lib/assets/images/workout/neck-shoulder/neckch03/tp-right',
-        'TP-',
-        1,
-        0,
-        'png',
-        9,
-        isAutoPlay: true,
-        fps: 9,
-        isLooping: true,
-        onPlaying: (_imageSequenceAnimator) async {
-          await Future.delayed(Duration(seconds: 1));
-        },
       ),
     );
   }

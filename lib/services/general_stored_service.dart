@@ -63,4 +63,23 @@ class GeneralStoredService {
     var value = prefs.getInt(getKey(pagename, id, index));
     return value;
   }
+
+  static Future<bool> writeDateTime(
+      String pagename, int id, int index, DateTime value) async {
+    try {
+      final SharedPreferences prefs = await _prefs;
+      prefs.setString(getKey(pagename, id, index), value.toString());
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<DateTime> readDateTime(
+      String pagename, int id, int index) async {
+    final SharedPreferences prefs = await _prefs;
+
+    var value = prefs.getString(getKey(pagename, id, index));
+    return DateTime.parse(value!);
+  }
 }

@@ -61,11 +61,11 @@ class WorkoutListDB {
   //query workoutlist by title
   Future<List<WorkoutListModel>> getWorkoutListByTitle(String title) async {
     Database db = await database.database;
-    final List<Map<String, dynamic>> maps = await db.query(
-      'WorkoutList',
-      where: "WOL_title = ? AND deleted_at IS NULL",
-      whereArgs: [title],
-    );
+    final List<Map<String, dynamic>> maps = await db.query('WorkoutList',
+        where: "WOL_title = ? AND deleted_at IS NULL",
+        whereArgs: [title],
+        orderBy: 'date ASC');
+    print(maps);
     return maps.map((e) => WorkoutListModel.fromJson(e)).toList();
   }
 
