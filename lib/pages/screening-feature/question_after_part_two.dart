@@ -91,14 +91,17 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
 
     /// Use for skip to backs section
     List<int> first_page_of_back_or_empty = [];
-
+    List<int> page_for_four_choices = [];
     for (var part in selectedParts) {
       //ใส่หน้าแรกของ upper back และ/หรือ lower back
       if (part.selectedPart.title == 'หลังส่วนบน' ||
           part.selectedPart.title == 'หลังส่วนล่าง') {
         first_page_of_back_or_empty.add(pageAmount);
       }
-
+      if (part.selectedPart.title == 'ไหล่' ||
+          part.selectedPart.title == 'บ่า') {
+        page_for_four_choices.add(pageAmount + 2);
+      }
       pageAmount += part.selectedPart.questionPage.length;
       var pageAmountOfQuestion =
           part.questions.map((e) => e.questionPage).toSet().length;
@@ -121,6 +124,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                 controller: _controller,
                 questionID: part.questions.map((e) => e.questionId).toList(),
                 onChanged: handleCurrentAnswerChanged,
+                page_for_four_choices: page_for_four_choices,
                 onCompleted: (isCompleted) => setState(() {
                       isButtonEnable = isCompleted;
                       pagesCompleted.add(pageNumber);
@@ -171,6 +175,15 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           },
           color: Theme.of(context).colorScheme.primary,
         ),
+        iconButtonEnd: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  pageRoutes.screening.infomationpage().route(context));
+            },
+            icon: Icon(
+              Icons.info_outline_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            )),
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

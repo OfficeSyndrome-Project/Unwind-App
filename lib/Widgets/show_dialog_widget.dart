@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
+import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class alertDialog {
   static Future<bool?> getshowDialog(
@@ -38,7 +39,9 @@ class alertDialog {
                         style: TextStyle(
                           color: Color(0xFF484D56),
                           fontFamily: "Noto Sans Thai",
-                          fontSize: 12,
+                          fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? 12
+                              : 14,
                           fontWeight: FontWeight.w600,
                           decoration: TextDecoration.none,
                         ),
@@ -50,13 +53,16 @@ class alertDialog {
                               style: TextStyle(
                                 color: Color(0xFF484D56),
                                 fontFamily: "Noto Sans Thai",
-                                fontSize: 12,
+                                fontSize:
+                                    ResponsiveCheckWidget.isSmallMobile(context)
+                                        ? 12
+                                        : 14,
                                 fontWeight: FontWeight.w500,
                                 decoration: TextDecoration.none,
                               ),
                             ),
                       const SizedBox(
-                        height: 8,
+                        height: 16,
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.min,
@@ -75,12 +81,15 @@ class alertDialog {
                                   color: Theme.of(context).colorScheme.primary),
                               style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 12,
+                                  fontSize: ResponsiveCheckWidget.isSmallMobile(
+                                          context)
+                                      ? 12
+                                      : 14,
                                   fontFamily: "Noto Sans Thai",
                                   fontWeight: FontWeight.w600,
                                   decoration: TextDecoration.none,
                                   letterSpacing: 1.0)),
-                          const SizedBox(
+                          SizedBox(
                             width: 8,
                           ),
                           ButtonWithoutIconWidget(
@@ -91,9 +100,12 @@ class alertDialog {
                               height: 32,
                               color: Theme.of(context).colorScheme.primary,
                               borderSide: BorderSide.none,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 12,
+                                fontSize:
+                                    ResponsiveCheckWidget.isSmallMobile(context)
+                                        ? 12
+                                        : 14,
                                 fontFamily: "Noto Sans Thai",
                                 fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.none,

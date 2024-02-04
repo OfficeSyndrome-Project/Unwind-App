@@ -17,14 +17,14 @@ class ResultsWorkoutPage extends StatelessWidget {
   final AnswerContext? answerContext;
   final String? resultText;
   final List<WorkoutList> workoutLists;
-  final Widget? nextPage;
+  // final Widget? nextPage;
 
   ResultsWorkoutPage({
     Key? key,
     required this.workoutLists,
     this.answerContext,
     this.resultText,
-    this.nextPage,
+    // this.nextPage,
   }) : super(key: key);
 
   final PageRoutes pageRoutes = PageRoutes();
@@ -110,10 +110,7 @@ class ResultsWorkoutPage extends StatelessWidget {
                 await GeneralStoredService.writeBoolean(
                     GeneralStoredService.isFirstTime, 0, 0, false);
                 Navigator.push(
-                    context,
-                    nextPage == null
-                        ? pageRoutes.home.workoutlist().route(context)
-                        : MaterialPageRoute(builder: (context) => nextPage!));
+                    context, pageRoutes.home.workoutlist().route(context));
               },
               text: "ดำเนินการต่อ",
               radius: 32,

@@ -102,6 +102,7 @@ flutter:
     - lib/assets/images/screeningPart/get_started_2.png
     - lib/assets/images/screeningPart/get_started_3.png
     - lib/assets/images/screeningPart/get_started_4.png
+    - lib/assets/images/screeningPart/get_started_5.png
     - lib/assets/images/screeningPart/scr_part_one_1.png
     - lib/assets/images/screeningPart/scr_part_one_2.png
     - lib/assets/images/screeningPart/scr_part_two_1.png
@@ -136,7 +137,18 @@ flutter:
     - lib/assets/images/screeningPart/neck_turn_lr.png
     - lib/assets/images/screeningPart/self_slumper.png
     - lib/assets/images/screeningPart/exception_screen.png
+    - lib/assets/images/screeningPart/information_1.png
+    - lib/assets/images/screeningPart/information_2.png
+    - lib/assets/images/screeningPart/information_3.png
+
     - lib/assets/images/logo.png
+    - lib/assets/images/successful_icon.png
+
+    - lib/assets/images/workout/result_nrs_per_week.png
+    - lib/assets/images/workout/result_nrs_four_week_1.png
+    - lib/assets/images/workout/result_nrs_four_week_2.png
+    - lib/assets/images/workout/result_nrs_four_week_3.png
+    
     - lib/assets/images/workout/prepare/prepare.png
     - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-1.png
     - lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-2.png

@@ -100,6 +100,12 @@ class _ScreeningPageState extends State<ScreeningPage> {
                             'ป้องกันอาการเจ็บปวดจากการทำงานที่ต้นเหตุ unwind จะแนะนำการจัดสภาพแวดล้อมการทำงาน รวมถึงเวลาในการทำงานที่เหมาะให้กับคุณ'),
                     ScreeningBoxWidget(
                         assetPath:
+                            'lib/assets/images/screeningPart/get_started_5.png',
+                        titleLabel: 'ทำอย่างไรหากไม่เข้าใจในอาการแต่ละรูปแบบ ?',
+                        descriptionLabel:
+                            'สามารถกดไอคอนรูปตัว i มุมขวาบน เพื่อดูรายละเอียดแต่ละอาการปวดได้'),
+                    ScreeningBoxWidget(
+                        assetPath:
                             'lib/assets/images/screeningPart/get_started_1.png',
                         titleLabel: 'ยินดีต้อนรับเข้าสู่ unwind ! ',
                         descriptionLabel:
@@ -108,7 +114,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                 ),
               ),
               DotsIndicator(
-                dotsCount: 5,
+                dotsCount: 6,
                 position: currentPage,
                 decorator: DotsDecorator(
                   color: const Color(0xFFC3C8D2),
@@ -119,12 +125,8 @@ class _ScreeningPageState extends State<ScreeningPage> {
               ),
             ],
           )),
-
-          // SizedBox(
-          //   height: ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 32,
-          // ),
           ButtonWithoutIconWidget(
-              text: currentPage == 4 ? 'เริ่มประเมินอาการปวดของคุณ' : 'ถัดไป',
+              text: currentPage == 5 ? 'เริ่มประเมินอาการปวดของคุณ' : 'ถัดไป',
               radius: 32,
               width: 345,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
@@ -138,7 +140,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                     )
                   : Theme.of(context).textTheme.headlineSmall,
               onTap: () {
-                currentPage < 4
+                currentPage < 5
                     ? _controller.nextPage(
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeOut)
