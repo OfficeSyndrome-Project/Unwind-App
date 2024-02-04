@@ -119,7 +119,7 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
         Expanded(
           child: ListView.separated(
               clipBehavior: Clip.antiAlias,
-              padding: EdgeInsets.symmetric(vertical: 32, horizontal: 4),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
               physics: ResponsiveCheckWidget.isSmallMobile(context)
                   ? ClampingScrollPhysics()
                   : ClampingScrollPhysics(),
@@ -141,7 +141,7 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
               itemCount: typelist.length),
         ),
         SizedBox(
-          height: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 0,
+          height: 16,
         ),
         ButtonWithoutIconWidget(
             onTap: () {

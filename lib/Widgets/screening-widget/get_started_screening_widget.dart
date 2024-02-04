@@ -37,10 +37,11 @@ class ScreeningBoxWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 8,
+              height: 16,
             ),
             Text(
               titleLabel,
+              textAlign: TextAlign.center,
               style: ResponsiveCheckWidget.isSmallMobile(context)
                   ? TextStyle(
                       fontSize: 16,
