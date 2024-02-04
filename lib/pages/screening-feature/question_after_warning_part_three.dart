@@ -9,7 +9,6 @@ import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
-import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/question_button_state_service.dart';
 import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
@@ -352,7 +351,6 @@ class _QuestionAfterWarningPartThreeState
                                   workoutLists: [],
                                   resultText:
                                       "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
-                                  nextPage: const ScreeningPage(),
                                 )));
                   }
 
@@ -387,7 +385,6 @@ class _QuestionAfterWarningPartThreeState
                                   workoutLists: [],
                                   resultText:
                                       "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
-                                  nextPage: const ScreeningPage(),
                                 )));
                   }
 

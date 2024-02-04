@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
+
 import 'package:unwind_app/pages/history-feature/history_page.dart';
 import 'package:unwind_app/pages/history-feature/result_per_week_page.dart';
 import 'package:unwind_app/pages/home.dart';
@@ -16,9 +18,12 @@ import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_one_question.dart';
 import 'package:unwind_app/pages/screening-feature/screening_part_two_question.dart';
 import 'package:unwind_app/pages/screening-feature/warning_part_three_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/info_schedule_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/info_set_workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/info_of_list_workout_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/schedule_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/set_schedule_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/report_workout_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
@@ -182,6 +187,19 @@ class Workout {
       PathRoute(title: "ประเมินความเจ็บปวด", widget: NrsAfterAndBeforePage());
   PathRoute preparebeforeworkout() => PathRoute(
       title: "เตรียมพร้อมก่อนเริ่มออกกำลังกาย", widget: WorkoutPage());
+  PathRoute schdulepage() =>
+      PathRoute(title: "การแจ้งเตือน", widget: SchedulePage());
+  PathRoute infoschedulepage(
+          int index, List<Event> value, DateTime selectedDay) =>
+      PathRoute(
+          title: "การแจ้งเตือน",
+          widget: InfoSchedulePage(
+            selectedDay: selectedDay,
+            index: index,
+            value: value,
+          ));
+  PathRoute setschedulepage() =>
+      PathRoute(title: "ตั้งเวลาแจ้งเตือน", widget: SetSchedulePage());
 }
 
 class PathRoute {
@@ -191,7 +209,7 @@ class PathRoute {
   PathRoute({required this.title, required this.widget});
 
   MaterialPageRoute route(BuildContext context,
-      {List<TimeWatchObj>? timesArr}) {
+      {List<TimeWatchObj>? timesArr, List<SummaryListObj>? summaryArr}) {
     return MaterialPageRoute(builder: (context) => widget);
   }
 }

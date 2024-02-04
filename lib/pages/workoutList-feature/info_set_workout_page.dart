@@ -4,6 +4,7 @@ import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/Widgets/workoutlist-widget/box_help_what_point_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
@@ -16,6 +17,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
+        vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : null,
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
             highlightColor: Colors.transparent,
