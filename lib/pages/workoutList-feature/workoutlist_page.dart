@@ -8,13 +8,12 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
-import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
 import 'package:unwind_app/services/general_stored_service.dart';
 
 class WorkoutListPage extends StatelessWidget {
   WorkoutListPage({super.key});
 
-  static PageRoutes pageRoute = PageRoutes();
+  static PageRoutes pageRoutes = PageRoutes();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,7 @@ class WorkoutListPage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                                 context,
-                                pageRoute.workout
+                                pageRoutes.workout
                                     .reportworkoutpage(workoutLists[index])
                                     .route(context));
                           },
@@ -134,12 +133,10 @@ class WorkoutListPage extends StatelessWidget {
           ButtonWithiconWidget(
             onTap: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ScreeningPage(
-                          isFirstTime: false,
-                        )),
-              );
+                  context,
+                  pageRoutes.screening
+                      .introscreeningpage(0, [], [], null)
+                      .route(context));
             },
             onLongPress: () async {
               int count =
