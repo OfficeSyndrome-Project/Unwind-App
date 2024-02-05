@@ -138,8 +138,6 @@ class ShowGoToDoctorPageService {
 
 enum ScreeningTitle { neck, baa, shoulder, lowerback, upperback }
 
-enum WorkoutlistTitle { neckbaa_ch, neckbaa_th, shoulder, back_ch, back_th }
-
 class ScreeningDiagnoseService {
   static const nrsLimit = 8;
 
@@ -434,5 +432,28 @@ class ScreeningDiagnoseService {
     ], nrs ?? {});
     return isDoctoringOnUpperBackOrLowerBack ||
         isNrsExceedingOnUpperBackOrLowerBack;
+  }
+
+  static Future<void> createAllWorkoutList() async {
+    final List<WorkoutlistTitle> workoutListTitles = [
+      WorkoutlistTitle.neckbaa_ch,
+      WorkoutlistTitle.neckbaa_th,
+      WorkoutlistTitle.shoulder,
+      WorkoutlistTitle.back_ch,
+      WorkoutlistTitle.back_th
+    ];
+    final workout_days = Give_Workoutlist_Per_Day(workoutListTitles);
+    WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
+    for (var workoutlist_title in workout_days.entries) {
+      final there_is_workoutlist = await wl_db
+          .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
+      // if there is workoutlist then skip
+      if (there_is_workoutlist) {
+        continue;
+      }
+      for (var workout in workoutlist_title.value) {
+        wl_db.insertWorkoutList(workout);
+      }
+    }
   }
 }

@@ -3,6 +3,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:unwind_app/database/db_helper.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 
+enum WorkoutlistTitle { neckbaa_ch, neckbaa_th, shoulder, back_ch, back_th }
+
 class WorkoutListDB {
   DatabaseHelper database;
   WorkoutListDB(this.database);
@@ -116,6 +118,16 @@ class WorkoutListDB {
       'WorkoutList',
       {'deleted_at': DateTime.now().toIso8601String()},
       where: 'deleted_at IS NULL',
+    );
+  }
+
+  Future<int> deleteWorkoutListByTitle(String title) async {
+    Database db = await database.database;
+    return await db.update(
+      'WorkoutList',
+      {'deleted_at': DateTime.now().toIso8601String()},
+      where: 'WOL_title = ?',
+      whereArgs: [title],
     );
   }
 

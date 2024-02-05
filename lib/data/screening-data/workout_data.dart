@@ -1,4 +1,4 @@
-import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 
 class WorkoutList {
   String title;

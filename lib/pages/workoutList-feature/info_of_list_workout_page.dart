@@ -7,13 +7,16 @@ import 'package:unwind_app/Widgets/show_dialog_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/set_box_workout_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/injection_container.dart';
 
 class InfoOfListWorkoutPage extends StatelessWidget {
   final WorkoutList? workoutList;
   InfoOfListWorkoutPage({super.key, this.workoutList});
 
   final PageRoutes pageRoutes = PageRoutes();
+  final WorkoutListDB workoutListDB = serviceLocator<WorkoutListDB>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +129,10 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                 Navigator.pop(context, true);
               });
               if (result == true) {
-                Navigator.pop(context);
+                await workoutListDB
+                    .deleteWorkoutListByTitle(workoutList?.titleCode ?? '');
+                // Navigator.pop(context);
+                Navigator.popUntil(context, (route) => route.isFirst);
               }
             },
             mainAxisAlignment: MainAxisAlignment.center,
