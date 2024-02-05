@@ -197,57 +197,28 @@ class ScreeningDiagnoseService {
 
   static Future<List<WorkoutList>> diagnose(
       List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
-    print('----${nrs}');
-    // filter answer ว่าเป็นคอบ่าไหล่ ที่ต้องหาหมอไหม
-    List<ScreeningTitle> titleNeckBaaShoulder = [
-      ScreeningTitle.neck,
-      ScreeningTitle.baa,
-      ScreeningTitle.shoulder
-    ];
-    if (shouldGoToDoctorByParts(answers, titleNeckBaaShoulder)) {
-      nrs.remove(ScreeningTitle.neck);
-      nrs.remove(ScreeningTitle.baa);
-      nrs.remove(ScreeningTitle.shoulder);
+    nrs.removeWhere((key, value) => value == null);
+    Map<ScreeningTitle, int> nrsFiltered = {
+      for (var entry in nrs.entries) entry.key: entry.value!
+    };
+    if (isNeckSetToDoctor(answers, nrsFiltered)) {
+      nrsFiltered.remove(ScreeningTitle.neck);
+      nrsFiltered.remove(ScreeningTitle.baa);
+      nrsFiltered.remove(ScreeningTitle.shoulder);
+    }
+    if (isBackSetToDoctor(answers, nrsFiltered)) {
+      nrsFiltered.remove(ScreeningTitle.upperback);
+      nrsFiltered.remove(ScreeningTitle.lowerback);
     }
 
-    // filter answer ว่าเป็นหลังส่วนบน หลังส่วนล่าง ที่ต้องหาหมอไหม
-    List<ScreeningTitle> titleUpperbackLowerback = [
-      ScreeningTitle.upperback,
-      ScreeningTitle.lowerback
-    ];
-    if (shouldGoToDoctorByParts(answers, titleUpperbackLowerback)) {
-      nrs.remove(ScreeningTitle.upperback);
-      nrs.remove(ScreeningTitle.lowerback);
-    }
+    final workouts = nrsFiltered.entries
+        .expand((entry) => workoutFromScreeningTitle(entry.key))
+        .toSet()
+        .toList();
 
-    final List<WorkoutlistTitle> workoutListTitles = [];
-    //loop nrs ทีละอัน
-    nrs.forEach((key, value) {
-      //check if nrs is null then cancel this part
-      if (value == null) {
-        return;
-      }
-      //filter nrs by checkNRS (if nrs>=8 then cancel this part)
-      if (nrs_less_than_eigth(value)) {
-        //filter answers by title (which is nrs < 8)
-        final ans_of_title =
-            answers.where((element) => element.title == toThai[key]).toList();
-
-        ans_of_title.forEach((element) {
-          //filter gotodoctor
-          if (ShowGoToDoctorPageService.showGoToDoctorPage(element.questionPart,
-              element.title, element.questionId, element.answer)) {
-            return;
-          }
-          //give workout list
-          // workoutList.add(convertToWorkoutlistTittle(key));
-          workoutListTitles.addAll(workoutListsFromScreeningTitle(key));
-        });
-      }
-    });
-    final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
+    // final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
     // Insert workout list to database, if there is workoutlist then skip
-    final workout_days = Give_Workoutlist_Per_Day(uniqueWorkoutListTitles);
+    final workout_days = Give_Workoutlist_Per_Day(workouts);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
     for (var workoutlist_title in workout_days.entries) {
       final there_is_workoutlist = await wl_db
@@ -261,7 +232,7 @@ class ScreeningDiagnoseService {
       }
     }
     // Get workout list data
-    List<WorkoutList> acquiredWorkoutList = uniqueWorkoutListTitles
+    List<WorkoutList> acquiredWorkoutList = workouts
         .map((title) => WorkoutList.workoutListFromTitle[title]!)
         .toList();
     //TODO resume (กรณีตรวจใหม่ได้ชุดท่าเดิม)
@@ -454,6 +425,21 @@ class ScreeningDiagnoseService {
       for (var workout in workoutlist_title.value) {
         wl_db.insertWorkoutList(workout);
       }
+    }
+  }
+
+  static List<WorkoutlistTitle> workoutFromScreeningTitle(ScreeningTitle key) {
+    switch (key) {
+      case ScreeningTitle.neck:
+        return [WorkoutlistTitle.neckbaa_ch, WorkoutlistTitle.neckbaa_th];
+      case ScreeningTitle.baa:
+        return [WorkoutlistTitle.neckbaa_ch, WorkoutlistTitle.neckbaa_th];
+      case ScreeningTitle.shoulder:
+        return [WorkoutlistTitle.shoulder];
+      case ScreeningTitle.lowerback:
+        return [WorkoutlistTitle.back_ch, WorkoutlistTitle.back_th];
+      case ScreeningTitle.upperback:
+        return [WorkoutlistTitle.back_ch, WorkoutlistTitle.back_th];
     }
   }
 }
