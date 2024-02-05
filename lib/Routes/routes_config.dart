@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
@@ -178,15 +179,24 @@ class Workout {
       title: "ชุดท่าบริหาร",
       widget: InfoOfListWorkoutPage(workoutList: workoutList));
 
-  PathRoute infoofsetworkout(WorkoutData? workoutData) => PathRoute(
-      title: "คำอธิบายชุดท่า",
-      widget: InfoSetWorkoutPage(
-        workoutData: workoutData,
+  PathRoute infoofsetworkout(
+          WorkoutData? workoutData, WorkoutList workoutList) =>
+      PathRoute(
+          title: "คำอธิบายชุดท่า",
+          widget: InfoSetWorkoutPage(
+            workoutData: workoutData,
+            workoutList: workoutList,
+          ));
+  PathRoute nrsafterandbeforeworkout(WorkoutList workoutList, NrsType type) =>
+      PathRoute(
+          title: "ประเมินความเจ็บปวด",
+          widget: NrsAfterAndBeforePage(
+              workoutList: workoutList, nrsType: NrsType.before));
+  PathRoute preparebeforeworkout(WorkoutList workoutList) => PathRoute(
+      title: "เตรียมพร้อมก่อนเริ่มออกกำลังกาย",
+      widget: WorkoutPage(
+        workoutList: workoutList,
       ));
-  PathRoute nrsafterandbeforeworkout() =>
-      PathRoute(title: "ประเมินความเจ็บปวด", widget: NrsAfterAndBeforePage());
-  PathRoute preparebeforeworkout() => PathRoute(
-      title: "เตรียมพร้อมก่อนเริ่มออกกำลังกาย", widget: WorkoutPage());
   PathRoute schdulepage() =>
       PathRoute(title: "การแจ้งเตือน", widget: SchedulePage());
   PathRoute infoschedulepage(

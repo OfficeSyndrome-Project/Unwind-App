@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withicon_widget.dart';
-import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/show_dialog_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
@@ -10,6 +9,7 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/pages/workoutList-feature/start_workout_button_widget.dart';
 
 class InfoOfListWorkoutPage extends StatelessWidget {
   final WorkoutList? workoutList;
@@ -67,7 +67,8 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                                 context,
                                 pageRoutes.workout
                                     .infoofsetworkout(
-                                        workoutList?.workoutData[index])
+                                        workoutList?.workoutData[index],
+                                        workoutList!)
                                     .route(context));
                           },
                         ),
@@ -81,27 +82,12 @@ class InfoOfListWorkoutPage extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          ButtonWithoutIconWidget(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    pageRoutes.workout
-                        .nrsafterandbeforeworkout()
-                        .route(context));
-              },
-              text: "เริ่มกายบริหาร",
-              radius: 32,
-              width: double.infinity,
-              height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-              color: Theme.of(context).colorScheme.primary,
-              borderSide: BorderSide.none,
-              style: ResponsiveCheckWidget.isSmallMobile(context)
-                  ? TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFFFFFFFF),
-                    )
-                  : Theme.of(context).textTheme.headlineSmall),
+          (workoutList != null)
+              ? StartWorkoutButton(
+                  pageRoutes: pageRoutes,
+                  workoutList: workoutList!,
+                )
+              : Text('คุณไม่สามารถบริหารได้'),
           Container(
             margin: EdgeInsets.symmetric(vertical: 16),
             child: TextWithStartIconWidget(

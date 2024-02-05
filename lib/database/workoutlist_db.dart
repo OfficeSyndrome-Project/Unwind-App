@@ -80,9 +80,9 @@ class WorkoutListDB {
   }
 
   //update NRS before
-  Future<void> updateNRSbefore(int NRS, int WOL_id) async {
+  Future<int> updateNRSbefore(int NRS, int WOL_id) async {
     Database db = await database.database;
-    await db.update(
+    return await db.update(
       'WorkoutList',
       {'NRS_before': NRS},
       where: 'WOL_id = ? AND deleted_at IS NULL',
@@ -91,9 +91,9 @@ class WorkoutListDB {
   }
 
   //update NRS after
-  Future<void> updateNRSafter(int NRS, int WOL_id) async {
+  Future<int> updateNRSafter(int NRS, int WOL_id) async {
     Database db = await database.database;
-    await db.update(
+    return await db.update(
       'WorkoutList',
       {'NRS_after': NRS},
       where: 'WOL_id = ? AND deleted_at IS NULL',

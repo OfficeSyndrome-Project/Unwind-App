@@ -6,13 +6,19 @@ import 'package:unwind_app/Widgets/soud_widget.dart';
 
 import 'package:unwind_app/Widgets/workoutlist-widget/circular_countdown_timer_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/next_workout_widget.dart';
+import 'package:unwind_app/Widgets/workoutlist-widget/prepare_workout_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/workout_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:unwind_app/pages/loading_page.dart';
 
 class WorkoutPage extends StatefulWidget {
-  const WorkoutPage({super.key});
+  final WorkoutList workoutList;
+  const WorkoutPage({
+    super.key,
+    required this.workoutList,
+  });
 
   @override
   State<WorkoutPage> createState() => _WorkoutPageState();
@@ -73,24 +79,79 @@ class _WorkoutPageState extends State<WorkoutPage> {
     'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-9.png',
   ];
 
+  List<U> workoutWidgetComposer<T, U>(List<T> xs, U Function(T) prepareWidgetFn,
+      U Function(T) workoutWidgetFn, U Function(T) upNextWidgetFn) {
+    if (xs.isEmpty) return [];
+    if (xs.length == 1) {
+      return [prepareWidgetFn(xs.first), workoutWidgetFn(xs.first)];
+    }
+    return [
+      prepareWidgetFn(xs.first),
+      workoutWidgetFn(xs.first),
+      ...tailComposer(xs.sublist(1), [
+        upNextWidgetFn,
+        prepareWidgetFn,
+        workoutWidgetFn,
+      ])
+    ];
+  }
+
+  /// Composes a list of elements by applying a list of functions to each element in the input list.
+  ///
+  /// The `tailComposer` function takes in two parameters: `xs` and `fns`.
+  /// - `xs` is a list of elements of type `T`.
+  /// - `fns` is a list of functions that take an element of type `T` and return an element of type `U`.
+  ///
+  /// The function returns a list of elements of type `U` that is composed by applying each function in `fns` to each element in `xs`.
+  /// If `xs` is empty, an empty list of type `U` is returned.
+  List<U> tailComposer<T, U>(List<T> xs, List<U Function(T)> fns) => xs.isEmpty
+      ? <U>[]
+      : xs.expand<U>((x) => fns.map((f) => f(x)).toList()).toList();
+
+  Widget prepareWidgetFn(WorkoutData workoutData) => PrepareWorkoutWidget(
+        assetName: workoutData.thumbnailPath,
+      );
+  Widget workoutWidgetFn(WorkoutData workoutData) => WorkoutWidget(
+        name: workoutData.name,
+        fullPaths: fullPaths, // change to workoutData.fullPaths
+        eachSetDuration:
+            workoutData.sec, // change to workoutData.eachSetDuration?
+        repeat: workoutData.time, // change to workoutData.repeat?
+      );
+  Widget nextWidgetFn(WorkoutData workoutData) => NextWorkoutWidget(
+        name: workoutData.name,
+        time: 20, // change to workoutData.time?
+        descrip: workoutData.detail, // change to workoutData.descrip?
+        assetName: workoutData.thumbnailPath,
+      );
+
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _widgetOptions = <Widget>[
-      // PrepareWorkoutWidget(
-      //     assetName: 'lib/assets/images/workout/prepare/prepare.png'),
-      WorkoutWidget(
-        name: 'ท่าเอนคอ',
-        fullPaths: fullPaths,
-        eachSetDuration: _duration,
-        repeat: 3,
-      ),
-      NextWorkoutWidget(
-        name: 'ท่าดันต้าน',
-        time: 20,
-        descrip: 'เพิ่มความแข็งแรงบริเวณคอ',
-        assetName: 'lib/assets/images/workout/prepare/prepare.png',
-      ),
-    ];
+    // final List<Widget> _widgetOptions = <Widget>[
+    //   // PrepareWorkoutWidget(
+    //   //     assetName: 'lib/assets/images/workout/prepare/prepare.png'),
+    //   WorkoutWidget(
+    //     name: 'ท่าเอนคอ',
+    //     fullPaths: fullPaths,
+    //     eachSetDuration: _duration,
+    //     repeat: 3,
+    //   ),
+    //   NextWorkoutWidget(
+    //     name: 'ท่าดันต้าน',
+    //     time: 20,
+    //     descrip: 'เพิ่มความแข็งแรงบริเวณคอ',
+    //     assetName: 'lib/assets/images/workout/prepare/prepare.png',
+    //   ),
+    // ];
+
+    // T = WorkoutData
+    // U = Widget
+    final List<Widget> _widgetOptions = workoutWidgetComposer(
+      widget.workoutList.workoutData,
+      prepareWidgetFn,
+      workoutWidgetFn,
+      nextWidgetFn,
+    );
 
     return isLoding
         ? LoadingPage(
