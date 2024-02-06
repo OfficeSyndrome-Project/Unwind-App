@@ -47,6 +47,7 @@ class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
   }
 
   void onNext() {
+    if (!mounted) return; // Fix for: setState() called after dispose()
     setState(() {
       if (currentIndex < widget.listPath.length - 1)
         currentIndex += 1;
@@ -64,6 +65,10 @@ class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
         startTimer();
       });
     } else {
+      timer = Timer(Duration(milliseconds: duration), () {
+        onNext();
+        startTimer();
+      });
       print("All timers completed!");
     }
   }

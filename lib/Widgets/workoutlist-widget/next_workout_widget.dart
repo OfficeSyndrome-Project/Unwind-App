@@ -116,7 +116,8 @@ class NextWorkoutWidget extends StatelessWidget {
                     ))
               ],
             ),
-          )
+          ),
+          SizedBox(height: 48),
         ],
       ),
     );

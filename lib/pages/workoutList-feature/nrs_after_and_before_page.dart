@@ -113,11 +113,19 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
                     : saveNrsAfter;
                 int success = await nrs_saving(nrs, now);
                 print('successfully saved nrs: $nrs ($success record)');
-                Navigator.push(
-                    context,
-                    pageRoutes.workout
-                        .preparebeforeworkout(widget.workoutList)
-                        .route(context));
+                if (widget.nrsType == NrsType.before) {
+                  Navigator.push(
+                      context,
+                      pageRoutes.workout
+                          .preparebeforeworkout(widget.workoutList)
+                          .route(context));
+                  return;
+                }
+                if (widget.nrsType == NrsType.after) {
+                  Navigator.pushReplacement(
+                      context, pageRoutes.home.workoutlist().route(context));
+                  return;
+                }
               },
               text: "ยืนยัน",
               radius: 32,

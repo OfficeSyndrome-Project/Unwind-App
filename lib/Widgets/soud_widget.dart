@@ -29,7 +29,6 @@ class TtsManager {
 
   initTts() {
     flutterTts = FlutterTts();
-
     _setAwaitOptions();
 
     if (isAndroid) {
@@ -101,6 +100,17 @@ class TtsManager {
 
   Future _setAwaitOptions() async {
     await flutterTts.awaitSpeakCompletion(true);
+
+    // await flutterTts.setSharedInstance(true);
+    await flutterTts.setIosAudioCategory(
+        IosTextToSpeechAudioCategory.playback,
+        [
+          IosTextToSpeechAudioCategoryOptions.allowBluetooth,
+          IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
+          IosTextToSpeechAudioCategoryOptions.mixWithOthers,
+          IosTextToSpeechAudioCategoryOptions.defaultToSpeaker
+        ],
+        IosTextToSpeechAudioMode.defaultMode);
   }
 
   Future stop() async {
