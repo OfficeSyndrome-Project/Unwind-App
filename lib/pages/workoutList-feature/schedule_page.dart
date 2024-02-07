@@ -36,6 +36,7 @@ class _SchedulePageState extends State<SchedulePage> {
     _selectedDay = _focusedDay; //เปลี่ยนตรงนี้เป็น selectday จากวันที่เลือกมา
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
     initKEvent();
+    // ScheduleService.removeEvent(0, DateTime.parse('2024-02-07 00:00:00.000'));
   }
 
   void initKEvent() async {
@@ -104,7 +105,6 @@ class _SchedulePageState extends State<SchedulePage> {
           onDaySelected: _onDaySelected,
           onPageChanged: (focusedDay) {
             _focusedDay = focusedDay;
-            // _selectedEvents.value = _getEventsForDay(_selectedDay!);
           },
         ),
         const SizedBox(height: 16.0),
@@ -198,7 +198,7 @@ class _SchedulePageState extends State<SchedulePage> {
                       bottom: MediaQuery.of(context).size.height - 150,
                       left: 24,
                       right: 24),
-                  duration: Duration(milliseconds: 2000),
+                  duration: Duration(milliseconds: 1000),
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
