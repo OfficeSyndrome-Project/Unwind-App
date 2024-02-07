@@ -84,18 +84,19 @@ class ScheduleService {
   static Future<void> removeEvent(int index, DateTime selectedDay) async {
     final int length = await readLength(selectedDay);
     final List<Event> events = await readEvents(selectedDay);
-    events.removeAt(index);
+    final List<Event> newEvents =
+        events.where((event) => event.times != selectedDay).toList();
 
     await writeLength(length - 1, selectedDay);
-    await writeEvents(selectedDay, events);
+    await writeEvents(selectedDay, newEvents);
 
     if (length == 1) {
       final List<DateTime> selectedDays = await readSelectedDays();
       final int size = await readkEventsSize();
+      final List<DateTime> newSeletedDays =
+          selectedDays.where((day) => day != selectedDay).toList();
 
-      selectedDays.remove(selectedDay);
-
-      await writeSelectedDays(selectedDays, size);
+      await writeSelectedDays(newSeletedDays, size);
       await writekEventsSize(size - 1);
     }
   }
@@ -179,6 +180,7 @@ class ScheduleService {
 
   static Future<void> loadkEvents() async {
     final _kEvents = await readkEvents();
+
     kEvents.addAll(_kEvents);
   }
 

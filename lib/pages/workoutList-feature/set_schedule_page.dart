@@ -104,12 +104,19 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
 
   void onConfirm() {
     List<Event> oldEvents = _getEventsForDay(_selectedDay!);
+
     ScheduleService.kEvents.addAll({
       _selectedDay!: [
         ...oldEvents,
         Event(selectWorkoutList ?? 'ไม่มีชื่อชุดท่า', setSchedule())
       ]
     });
+    // NotificationService.scheduleNotification(
+    //   selectedDay: setSchedule(),
+    //   title: 'Test title',
+    //   body: 'hey!',
+    // );
+
     ScheduleService.savekEvents();
 
     Navigator.pop(context, _selectedDay);

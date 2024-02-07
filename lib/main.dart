@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
 import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+
 import 'package:unwind_app/services/general_stored_service.dart';
+import 'package:unwind_app/services/schedule-service/notification_service.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService.initNotification();
+  tz.initializeTimeZones();
+
   initializeDateFormatting('th');
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -21,7 +28,9 @@ void main() async {
         GeneralStoredService.isFirstTime, 0, 0, true);
   }
   print("isFirstTime: $isFirstTime");
+
   runApp(MyApp(isFirstTime: isFirstTime ?? true));
+  // dispose();
 }
 
 class MyApp extends StatelessWidget {
