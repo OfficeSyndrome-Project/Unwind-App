@@ -71,7 +71,7 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
                       DateFormat('yyyy', 'th').format(DateTime.utc(
                           widget.value[widget.index].times.year + 543)) +
                       '\n' +
-                      DateFormat('เวลา hh:mm', 'th')
+                      DateFormat('เวลา HH:mm', 'th')
                           .format(widget.value[widget.index].times) +
                       ' นาฬิกา',
                   style: TextStyle(
@@ -111,6 +111,7 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
                     ScheduleService.kEvents.remove(widget.selectedDay);
                   }
                   ScheduleService.removeEvent(widget.index, widget.selectedDay);
+
                   Navigator.pop(context, true);
                 });
                 if (result == true) {

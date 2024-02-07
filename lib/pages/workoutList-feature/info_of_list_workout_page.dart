@@ -56,8 +56,6 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                 child: ListView.separated(
                     padding: EdgeInsets.all(2),
                     itemBuilder: (context, index) => SetBoxWorkoutWidget(
-                          // name:
-                          //     'ชื่อท่าที่ ${index + 1} ${workoutList?.workoutData[index].name}',
                           workoutData: workoutList?.workoutData[index],
                           onTap: () {
                             Navigator.push(

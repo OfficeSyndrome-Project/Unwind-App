@@ -25,8 +25,7 @@ class ReportWorkoutPage extends StatefulWidget {
 
 class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
   PageRoutes pageRoutes = PageRoutes();
-  // List<DateWorkoutMockup> dateMockup = DateWorkoutMockup.getData();
-  // List<WorkoutMockup> dataWorkout = WorkoutMockup.getData();
+
   DateTime currentSelectingDate = DateTime.now();
   int currentSelectionIndex = DateTime.now().weekday; // default browse today
   int currentCircularDisplayIndex = 0;
@@ -39,30 +38,10 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
 
   WorkoutListDB get workoutListDb => widget.workoutListDB;
 
-  // static int lengthOfpercentNotEqualToZero =
-  //     dateMockup.where((element) => element.percent != 0.0).length;
-
-  // List<DateTime> getWeekDates(DateTime dateTime) {
-  //   final monday =
-  //       dateTime.subtract(Duration(days: dateTime.weekday - DateTime.monday));
-  //   return List.generate(7, (index) => monday.add(Duration(days: index)));
-  // }
-
-  // bool Function(DateTime) isSameDayWith(DateTime? dateTime) => dateTime == null
-  //     ? (date) => false
-  //     : (date) =>
-  //         date.year == dateTime.year &&
-  //         date.month == dateTime.month &&
-  //         date.day == dateTime.day;
-
   List<WorkoutListModel>? getWorkoutListModelsCache;
 
   @override
   Widget build(BuildContext context) {
-    // double doubleToPercent =
-    //     dataWorkout[currentCircularDisplayIndex].percent * 100;
-    // int percentToIntCeli = doubleToPercent.ceil();
-
     return AppscreenTheme(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,11 +105,6 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                           .map((entry) {
                         final wol = circleData[entry.key];
                         final date = entry.value;
-                        // print('from map---------');
-                        // print('circle : $circleData');
-                        // print('entry key : ${entry.key}');
-                        // print('wol : ${wol}');
-                        // print('remaining_times : ${wol?.remaining_times}');
                         return DateCirclePickWidget(
                           date: DateFormat('E', 'th').format(date),
                           // percent: entry.value?.percent ?? 0.0,
@@ -145,34 +119,6 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                           },
                         );
                       }).toList(),
-                      // children: dateMockup.asMap().entries.map((entry) {
-                      //   final dayPosition = entry.key;
-                      //   final data = entry.value;
-                      //   final matchIndex = dataWorkout
-                      //       .map((element) => element.workoutDate.weekday)
-                      //       .toList()
-                      //       .indexOf(data.date?.weekday ?? 0); // 3
-
-                      //   return DateCirclePickWidget(
-                      //     date: DateFormat('E', 'th')
-                      //         .format(data.date ?? DateTime.now()),
-                      //     percent: dataWorkout[matchIndex].percent,
-                      //     onSelect: currentSelectionIndex == dayPosition,
-                      //     isDone: dataWorkout[matchIndex].isDone,
-                      //     onTap: () {
-                      //       setState(() {
-                      //         print('dayPosition: $dayPosition');
-                      //         print('matchIndex: $matchIndex');
-                      //         currentSelectionIndex = dayPosition;
-                      //         currentCircularDisplayIndex = matchIndex;
-                      //         // if (index != currentSelectionIndex) {
-                      //         //   currentSelectionIndex = index;
-                      //         //   currentCircularDisplayIndex = matchIndex;
-                      //         // }
-                      //       });
-                      //     },
-                      //   );
-                      // }).toList()
                     );
                   }
                   return Text('Error');
