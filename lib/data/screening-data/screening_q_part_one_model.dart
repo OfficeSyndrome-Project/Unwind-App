@@ -19,7 +19,7 @@ class ScreeningPartOneModel {
             questionId: 1,
             questionPage: 1,
             question:
-                "1. ท่านแน่ใจหรือไม่ว่า อาการเจ็บปวดของท่าน\nมีสาเหตุจากการทำงาน",
+                "1. ขณะนี้ท่านมีอาการปวดและท่านคาดว่าอาการปวดนั้นมีสาเหตุจากการทำงานใช่หรือไม่?",
             questionPart: 1),
         ScreeningPartOneModel(
             questionId: 2,
