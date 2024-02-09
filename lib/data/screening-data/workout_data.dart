@@ -116,7 +116,6 @@ class WorkoutData {
   String thumbnailPath;
   String frequency;
   String? caution;
-  String? videoPath;
   String workoutType;
   List<String>? animationPaths;
 
@@ -131,14 +130,13 @@ class WorkoutData {
     required this.thumbnailPath,
     required this.frequency,
     this.caution,
-    required this.videoPath,
     required this.animationPaths,
     required this.workoutType,
   });
 
   @override
   String toString() {
-    return 'WorkoutData{title: $title, name: $name, time: $sec, thumbnailPath: $thumbnailPath, videoPath: $videoPath, animationPaths: $animationPaths}';
+    return 'WorkoutData{title: $title, name: $name, time: $sec, thumbnailPath: $thumbnailPath,  animationPaths: $animationPaths}';
   }
 
   static List<WorkoutData> getWorkoutData() => [
@@ -156,8 +154,15 @@ class WorkoutData {
           thumbnailPath: "lib/assets/images/workout-thumbnail-img/neckch01.png",
           frequency: "ทำทุกวัน",
           caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-          videoPath: null,
-          animationPaths: null,
+          animationPaths: [
+            "lib/assets/images/workout/neck-shoulder/neckch01/TP-1.png",
+            "lib/assets/images/workout/neck-shoulder/neckch01/TP-2.png",
+            "lib/assets/images/workout/neck-shoulder/neckch01/TP-3.png",
+            "lib/assets/images/workout/neck-shoulder/neckch01/TP-4.png",
+            "lib/assets/images/workout/neck-shoulder/neckch01/TP-5.png",
+            "lib/assets/images/workout/neck-shoulder/neckch01/TP-6.png",
+            "lib/assets/images/workout/neck-shoulder/neckch01/TP-7.png"
+          ],
           workoutType: "stretch",
         ),
         WorkoutData(
@@ -173,8 +178,17 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/neckch02_l.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-3.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-4.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-5.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-6.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-7.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-8.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-left/TP-9.png",
+            ],
             workoutType: "stretch"),
         WorkoutData(
             title: "คอ-บ่า",
@@ -189,8 +203,17 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/neckch02_r.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-3.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-4.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-5.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-6.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-7.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-8.png",
+              "lib/assets/images/workout/neck-shoulder/neckch02/tp-right/TP-9.png",
+            ],
             workoutType: "stretch"),
         WorkoutData(
             title: "คอ-บ่า",
@@ -205,8 +228,17 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/neckch03_l.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-3.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-4.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-5.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-6.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-7.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-8.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-left/TP-9.png"
+            ],
             workoutType: "stretch"),
         WorkoutData(
             title: "คอ-บ่า",
@@ -221,8 +253,17 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/neckch03_r.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-3.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-4.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-5.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-6.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-7.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-8.png",
+              "lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-9.png"
+            ],
             workoutType: "stretch"),
         //strength
         WorkoutData(
@@ -238,8 +279,11 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/neckth01.png",
             frequency: "ทำวันเว้นวัน",
             caution: "ไม่ควรกลั้นหายใจขณะบริหารซึ่งอาจทำให้เกิดอาการหน้ามืดได้",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckth01/TP-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckth01/TP-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckth01/TP-3.png"
+            ],
             workoutType: "strength"),
         WorkoutData(
             title: "คอ-บ่า",
@@ -253,8 +297,14 @@ class WorkoutData {
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth02.png",
             frequency: "ทำวันเว้นวัน",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckth02/TP-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckth02/TP-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckth02/TP-3.png",
+              "lib/assets/images/workout/neck-shoulder/neckth02/TP-4.png",
+              "lib/assets/images/workout/neck-shoulder/neckth02/TP-5.png",
+              "lib/assets/images/workout/neck-shoulder/neckth02/TP-6.png"
+            ],
             workoutType: "strength"),
         WorkoutData(
             title: "คอ-บ่า",
@@ -268,8 +318,11 @@ class WorkoutData {
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth03_l.png",
             frequency: "ทำวันเว้นวัน",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckth03/tp-left/TP-ซ้าย-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckth03/tp-left/TP-ซ้าย-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckth03/tp-left/TP-ซ้าย-3.png"
+            ],
             workoutType: "strength"),
         WorkoutData(
             title: "คอ-บ่า",
@@ -283,8 +336,11 @@ class WorkoutData {
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth03_r.png",
             frequency: "ทำวันเว้นวัน",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckth03/tp-right/TP-ขวา-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckth03/tp-right/TP-ขวา-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckth03/tp-right/TP-ขวา-3.png"
+            ],
             workoutType: "strength"),
 
         WorkoutData(
@@ -299,8 +355,12 @@ class WorkoutData {
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth04_l.png",
             frequency: "ทำวันเว้นวัน",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckth04/tp-left/TP-ซ้าย-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckth04/tp-left/TP-ซ้าย-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckth04/tp-left/TP-ซ้าย-3.png",
+              "lib/assets/images/workout/neck-shoulder/neckth04/tp-left/TP-ซ้าย-4.png",
+            ],
             workoutType: "strength"),
         WorkoutData(
             title: "คอ-บ่า",
@@ -314,8 +374,12 @@ class WorkoutData {
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth04_r.png",
             frequency: "ทำวันเว้นวัน",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckth04/tp-right/TP-ขวา-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckth04/tp-right/TP-ขวา-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckth04/tp-right/TP-ขวา-3.png",
+              "lib/assets/images/workout/neck-shoulder/neckth04/tp-right/TP-ขวา-4.png",
+            ],
             workoutType: "strength"),
         WorkoutData(
             title: "คอ-บ่า",
@@ -329,8 +393,14 @@ class WorkoutData {
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/neckth05.png",
             frequency: "ทำวันเว้นวัน",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/neck-shoulder/neckth05/TP-1.png",
+              "lib/assets/images/workout/neck-shoulder/neckth05/TP-2.png",
+              "lib/assets/images/workout/neck-shoulder/neckth05/TP-3.png",
+              "lib/assets/images/workout/neck-shoulder/neckth05/TP-4.png",
+              "lib/assets/images/workout/neck-shoulder/neckth05/TP-5.png",
+              "lib/assets/images/workout/neck-shoulder/neckth05/TP-6.png",
+            ],
             workoutType: "strength"),
 
         //ไหล่
@@ -348,8 +418,13 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/shoulder01_l.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-left/TP-1.png",
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-left/TP-2.png",
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-left/TP-3.png",
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-left/TP-4.png",
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-left/TP-5.png",
+            ],
             workoutType: "stretch"),
         WorkoutData(
             title: "ไหล่",
@@ -364,8 +439,13 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/shoulder01_r.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-right/TP-1.png",
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-right/TP-2.png",
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-right/TP-3.png",
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-right/TP-4.png",
+              "lib/assets/images/workout/shoulder/shoulderch01/tp-right/TP-5.png",
+            ],
             workoutType: "stretch"),
         WorkoutData(
             title: "ไหล่",
@@ -380,8 +460,11 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/shoulder02_l.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/shoulder/shoulderch02/tp-left/TP-1.png",
+              "lib/assets/images/workout/shoulder/shoulderch02/tp-left/TP-2.png",
+              "lib/assets/images/workout/shoulder/shoulderch02/tp-left/TP-3.png",
+            ],
             workoutType: "stretch"),
         WorkoutData(
             title: "ไหล่",
@@ -396,8 +479,11 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/shoulder02_r.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/shoulder/shoulderch02/tp-right/TP-1.png",
+              "lib/assets/images/workout/shoulder/shoulderch02/tp-right/TP-2.png",
+              "lib/assets/images/workout/shoulder/shoulderch02/tp-right/TP-3.png",
+            ],
             workoutType: "stretch"),
         WorkoutData(
             title: "ไหล่",
@@ -412,8 +498,11 @@ class WorkoutData {
                 "lib/assets/images/workout-thumbnail-img/shoulder03.png",
             frequency: "ทำทุกวัน",
             caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/shoulder/shoulderch03/TP-1.png",
+              "lib/assets/images/workout/shoulder/shoulderch03/TP-2.png",
+              "lib/assets/images/workout/shoulder/shoulderch03/TP-3.png",
+            ],
             workoutType: "stretch"),
         //หลัง
         //stretch
@@ -431,8 +520,11 @@ class WorkoutData {
             frequency: "ทำทุกวัน",
             caution:
                 "ควรหยุดบริหารร่างกายทันที ถ้าอาการปวดแย่ลงทันทีหลังการยืดเหยียด หรือถ้าในขณะยืดเหยียดมีอาการปวดร้าวไปที่ขาใต้ข้อเข่า",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/back/backch01/TP-1.png",
+              "lib/assets/images/workout/back/backch01/TP-2.png",
+              "lib/assets/images/workout/back/backch01/TP-3.png",
+            ],
             workoutType: "stretch"),
         WorkoutData(
             title: "หลัง",
@@ -448,8 +540,13 @@ class WorkoutData {
             frequency: "ทำทุกวัน",
             caution:
                 "ควรหยุดบริหารร่างกายทันที ถ้าอาการปวดแย่ลงทันทีหลังการยืดเหยียด หรือถ้าในขณะยืดเหยียดมีอาการปวดร้าวไปที่ขาใต้ข้อเข่า",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/back/backch02/TP-1.png",
+              "lib/assets/images/workout/back/backch02/TP-2.png",
+              "lib/assets/images/workout/back/backch02/TP-3.png",
+              "lib/assets/images/workout/back/backch02/TP-4.png",
+              "lib/assets/images/workout/back/backch02/TP-5.png",
+            ],
             workoutType: "stretch"),
         //strength
         WorkoutData(
@@ -464,8 +561,11 @@ class WorkoutData {
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/backth01_l.png",
             frequency: "ทำวันเว้นวัน",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/back/backth01/tp-left/TP-1.png",
+              "lib/assets/images/workout/back/backth01/tp-left/TP-2.png",
+              "lib/assets/images/workout/back/backth01/tp-left/TP-3.png"
+            ],
             workoutType: "strength"),
         WorkoutData(
             title: "หลัง",
@@ -479,8 +579,11 @@ class WorkoutData {
             thumbnailPath:
                 "lib/assets/images/workout-thumbnail-img/backth01_r.png",
             frequency: "ทำวันเว้นวัน",
-            videoPath: null,
-            animationPaths: null,
+            animationPaths: [
+              "lib/assets/images/workout/back/backth01/tp-right/TP-1.png",
+              "lib/assets/images/workout/back/backth01/tp-right/TP-2.png",
+              "lib/assets/images/workout/back/backth01/tp-right/TP-3.png"
+            ],
             workoutType: "strength"),
       ];
 }
