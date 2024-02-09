@@ -3,6 +3,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:unwind_app/database/db_helper.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 
+enum WorkoutlistTitle { neckbaa_ch, neckbaa_th, shoulder, back_ch, back_th }
+
 class WorkoutListDB {
   DatabaseHelper database;
   WorkoutListDB(this.database);
@@ -78,9 +80,9 @@ class WorkoutListDB {
   }
 
   //update NRS before
-  Future<void> updateNRSbefore(int NRS, int WOL_id) async {
+  Future<int> updateNRSbefore(int NRS, int WOL_id) async {
     Database db = await database.database;
-    await db.update(
+    return await db.update(
       'WorkoutList',
       {'NRS_before': NRS},
       where: 'WOL_id = ? AND deleted_at IS NULL',
@@ -89,9 +91,9 @@ class WorkoutListDB {
   }
 
   //update NRS after
-  Future<void> updateNRSafter(int NRS, int WOL_id) async {
+  Future<int> updateNRSafter(int NRS, int WOL_id) async {
     Database db = await database.database;
-    await db.update(
+    return await db.update(
       'WorkoutList',
       {'NRS_after': NRS},
       where: 'WOL_id = ? AND deleted_at IS NULL',
@@ -119,6 +121,16 @@ class WorkoutListDB {
     );
   }
 
+  Future<int> deleteWorkoutListByTitle(String title) async {
+    Database db = await database.database;
+    return await db.update(
+      'WorkoutList',
+      {'deleted_at': DateTime.now().toIso8601String()},
+      where: 'WOL_title = ?',
+      whereArgs: [title],
+    );
+  }
+
   Future<List<String>> getAvailableWorkoutListTitles() async {
     Database db = await database.database;
 
@@ -131,5 +143,16 @@ class WorkoutListDB {
     );
 
     return maps.map((row) => row['WOL_title'].toString()).toList();
+  }
+
+  //update remaining times
+  Future<int> updateRemainingTimes(int remainingTimes, int WOL_id) async {
+    Database db = await database.database;
+    return await db.update(
+      'WorkoutList',
+      {'remaining_times': remainingTimes},
+      where: 'WOL_id = ? AND deleted_at IS NULL',
+      whereArgs: [WOL_id],
+    );
   }
 }
