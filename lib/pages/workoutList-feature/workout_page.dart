@@ -152,7 +152,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     final nextIndex = currentSequence.index + 1;
     if (nextIndex >= workoutWidgetSequences.length) {
       // End of workout
-      return WorkoutSequence(index: 0, duration: 10);
+      return WorkoutSequence(index: 0, duration: 1);
     }
     final nextWidget = workoutWidgetSequences[nextIndex];
     if (nextWidget is PrepareWorkoutWidget) {
@@ -291,12 +291,20 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   void skipSequence() {
     print('debug: skipping to the next sequence');
+    print(
+        '--- currentSequence: ${currentSequence.index + 1} of ${workoutWidgetSequences.length} ---');
     currentSequence =
         nextWorkoutSequence(currentSequence, workoutWidgetSequences);
     if (currentSequence.widget != null) {
       _controller.restart(duration: currentSequence.duration);
       return;
     }
+    Navigator.push(
+        context,
+        pageRoutes.workout
+            .nrsafterandbeforeworkout(widget.workoutList, NrsType.after)
+            .route(context));
+    return;
   }
 }
 

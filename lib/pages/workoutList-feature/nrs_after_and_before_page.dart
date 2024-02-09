@@ -124,8 +124,13 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
                   return;
                 }
                 if (widget.nrsType == NrsType.after) {
-                  Navigator.pushReplacement(
-                      context, pageRoutes.home.workoutlist().route(context));
+                  // Navigator.pushReplacement(
+                  //     context, pageRoutes.home.workoutlist().route(context));
+                  Navigator.popUntil(
+                      context,
+                      (route) =>
+                          route.settings.name == PageName.REPORT_WORKOUT);
+
                   return;
                 }
               },
