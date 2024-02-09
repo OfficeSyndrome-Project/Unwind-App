@@ -55,7 +55,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                           onTap: () async {
                             await Navigator.push(
                                 context,
-                                WorkoutListPage.pageRoute.workout
+                                WorkoutListPage.pageRoutes.workout
                                     .reportworkoutpage(workoutLists[index])
                                     .route(context));
                             setState(() {});
@@ -140,7 +140,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
             onTap: () {
               Navigator.push(
                   context,
-                  pageRoutes.screening
+                  WorkoutListPage.pageRoutes.screening
                       .introscreeningpage(0, [], [], null)
                       .route(context));
             },
