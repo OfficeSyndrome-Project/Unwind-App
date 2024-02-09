@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:table_calendar/table_calendar.dart';
+import 'package:unwind_app/services/schedule-service/notification_service.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/services/general_stored_service.dart';
 
@@ -63,6 +64,11 @@ class ScheduleService {
     for (var index = 0; index < events.length; index++) {
       results.add(await writeEvent(events[index], id, index));
       results.add(await writeLength(events.length, times));
+      await NotificationService.scheduleNotification(
+          selectedDay: events[index].times,
+          id: index,
+          title: 'ดูเหมือนว่าคุณจะต้องบริหารร่างกายแล้ว~ !',
+          body: events[index].title);
     }
     if (results.contains(false)) {
       return false;
@@ -98,6 +104,7 @@ class ScheduleService {
 
       await writeSelectedDays(newSeletedDays, size);
       await writekEventsSize(size - 1);
+      NotificationService.cancel(index);
     }
   }
 
