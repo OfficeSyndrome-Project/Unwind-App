@@ -65,10 +65,10 @@ class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
         startTimer();
       });
     } else {
-      timer = Timer(Duration(milliseconds: duration), () {
-        onNext();
-        startTimer();
-      });
+      // timer = Timer(Duration(milliseconds: duration), () {
+      //   onNext();
+      //   startTimer();
+      // });
       print("All timers completed!");
     }
   }
