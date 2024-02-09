@@ -47,6 +47,8 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   late Map<DateTime, List<Event>> events = {};
 
+  bool isEdited = false;
+
   @override
   void initState() {
     super.initState();
@@ -62,6 +64,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     setState(() {
       isTapCalender = !isTapCalender;
       isTapTime = false;
+      isEdited = true;
     });
   }
 
@@ -69,6 +72,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     setState(() {
       isTapTime = !isTapTime;
       isTapCalender = false;
+      isEdited = true;
     });
   }
 
@@ -150,6 +154,10 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
             children: [
               GestureDetector(
                 onTap: () async {
+                  if (!isEdited) {
+                    Navigator.pop(context);
+                    return;
+                  }
                   final result = await alertDialog.getshowDialog(
                       context, 'ยกเลิกการตั้ง Schedule ใช่หรือไม่ ?', null, () {
                     Navigator.pop(context, false);
@@ -228,6 +236,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                   value: selectWorkoutList,
                   onChanged: (String? value) {
                     setState(() {
+                      isEdited = true;
                       selectWorkoutList = value!;
                     });
                   },
