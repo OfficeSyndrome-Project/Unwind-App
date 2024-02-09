@@ -84,7 +84,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       Icons.access_time_rounded,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: '${workoutData?.sec} วินาทีต่อเซต',
+                    topicName: '${workoutData?.sec} วินาทีต่อครั้ง',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
