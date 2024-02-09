@@ -115,6 +115,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     //   selectedDay: setSchedule(),
     //   title: 'Test title',
     //   body: 'hey!',
+    //   id:
     // );
 
     ScheduleService.savekEvents();

@@ -1,14 +1,22 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  // static final onNotifications = BehaviorSubject<NotificationResponse>();
+  static final onNotification = BehaviorSubject<NotificationResponse?>();
 
   static Future<void> initNotification() async {
     AndroidInitializationSettings initializationSettingsAndroid =
         const AndroidInitializationSettings('logo');
+
+    final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    if (notificationAppLaunchDetails != null &&
+        notificationAppLaunchDetails.didNotificationLaunchApp) {
+      onNotification.add(notificationAppLaunchDetails.notificationResponse);
+    }
 
     var initializationSettingsIOS = DarwinInitializationSettings(
       requestAlertPermission: true,
@@ -23,9 +31,8 @@ class NotificationService {
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse:
-          (NotificationResponse notificationResponse) async {
-        // onNotifications.add(notificationResponse);
+      onDidReceiveNotificationResponse: (details) async {
+        onNotification.add(details);
       },
     );
 
@@ -40,7 +47,9 @@ class NotificationService {
         android: AndroidNotificationDetails(
           'channelId',
           'channelName',
+          channelDescription: 'channelDescription',
           importance: Importance.max,
+          priority: Priority.high,
         ),
         iOS: DarwinNotificationDetails());
   }
@@ -50,20 +59,28 @@ class NotificationService {
       flutterLocalNotificationsPlugin
           .show(id, title, body, await notificationDetails(), payload: payLoad);
 
-  static Future scheduleNotification(
-          {int id = 0,
-          String? title,
-          String? body,
-          String? payLoad,
-          required DateTime selectedDay}) async =>
-      flutterLocalNotificationsPlugin.zonedSchedule(
+  static Future<void> scheduleNotification(
+      {int id = 0,
+      required String title,
+      required String body,
+      String? payLoad,
+      required DateTime selectedDay}) async {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    if (selectedDay.isBefore(now) == true) {
+      return flutterLocalNotificationsPlugin.cancel(id);
+    } else
+      return flutterLocalNotificationsPlugin.zonedSchedule(
           id,
           title,
           body,
-          tz.TZDateTime.from(selectedDay, tz.local),
+          tz.TZDateTime.from(selectedDay.toLocal(), tz.local),
           await notificationDetails(),
           payload: payLoad,
           androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.absoluteTime);
+  }
+
+  static void cancel(int id) => flutterLocalNotificationsPlugin.cancel(id);
+  static void cancelAll() => flutterLocalNotificationsPlugin.cancelAll();
 }
