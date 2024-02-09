@@ -31,8 +31,6 @@ class InfoSetWorkoutPage extends StatelessWidget {
         children: [
           Expanded(
               child: ListView(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RatioImageoneToOne(
                   assetName: '${workoutData?.thumbnailPath}',
@@ -175,22 +173,6 @@ class InfoSetWorkoutPage extends StatelessWidget {
                               )
                             ],
                           )
-                        // ? TextWithStartIconWidget(
-                        //     startIcon: Icon(
-                        //       Icons.warning_rounded,
-                        //       color: Theme.of(context).colorScheme.primary,
-                        //     ),
-                        //     topicName: '${workoutData?.caution}',
-                        //     style: TextStyle(
-                        //       fontFamily: "Noto Sans Thai",
-                        //       fontSize: ResponsiveCheckWidget.isSmallMobile(
-                        //               context)
-                        //           ? 14
-                        //           : 16,
-                        //       fontWeight: FontWeight.w300,
-                        //       color: const Color(0xFF636A75),
-                        //     ),
-                        //   )
                         : Container(),
                   ),
                 ],

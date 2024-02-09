@@ -5,11 +5,12 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/box_nrs_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/part_two_question_box_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/posture_widget.dart';
+import 'package:unwind_app/data/screening-data/exception_screening_data.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/screening-feature/form_after_screening.dart';
 import 'package:unwind_app/pages/screening-feature/question_button_state_service.dart';
-import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
@@ -91,14 +92,17 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
 
     /// Use for skip to backs section
     List<int> first_page_of_back_or_empty = [];
-
+    List<int> page_for_four_choices = [];
     for (var part in selectedParts) {
       //ใส่หน้าแรกของ upper back และ/หรือ lower back
       if (part.selectedPart.title == 'หลังส่วนบน' ||
           part.selectedPart.title == 'หลังส่วนล่าง') {
         first_page_of_back_or_empty.add(pageAmount);
       }
-
+      if (part.selectedPart.title == 'ไหล่' ||
+          part.selectedPart.title == 'บ่า') {
+        page_for_four_choices.add(pageAmount + 2);
+      }
       pageAmount += part.selectedPart.questionPage.length;
       var pageAmountOfQuestion =
           part.questions.map((e) => e.questionPage).toSet().length;
@@ -121,6 +125,7 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                 controller: _controller,
                 questionID: part.questions.map((e) => e.questionId).toList(),
                 onChanged: handleCurrentAnswerChanged,
+                page_for_four_choices: page_for_four_choices,
                 onCompleted: (isCompleted) => setState(() {
                       isButtonEnable = isCompleted;
                       pagesCompleted.add(pageNumber);
@@ -171,6 +176,15 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           },
           color: Theme.of(context).colorScheme.primary,
         ),
+        iconButtonEnd: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  pageRoutes.screening.infomationpage().route(context));
+            },
+            icon: Icon(
+              Icons.info_outline_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            )),
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -305,14 +319,12 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                   final backSetToDoctor = isDoctoringOnUpperBackOrLowerBack ||
                       isNrsExceedingOnUpperBackOrLowerBack;
                   if (neckSetToDoctor && backSetToDoctor) {
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResultsWorkoutPage(
-                                  workoutLists: [],
-                                  resultText:
-                                      "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
-                                )));
+                    await Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return FormAfterScreening(
+                        resultText: ExceptionData.getData()[3].descriptionLabel,
+                      );
+                    }));
                     return;
                   }
                   // go to part 3

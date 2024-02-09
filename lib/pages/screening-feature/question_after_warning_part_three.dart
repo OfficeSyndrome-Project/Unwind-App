@@ -5,12 +5,14 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/box_nrs_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/part_three_question_box_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/posture_part_three_widget.dart';
+import 'package:unwind_app/data/screening-data/exception_screening_data.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/screening-feature/form_after_screening.dart';
 import 'package:unwind_app/pages/screening-feature/question_button_state_service.dart';
-import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
+// import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
@@ -55,12 +57,6 @@ class _QuestionAfterWarningPartThreeState
   late List<ScreeningPartThreeModel> availableParts;
 
   bool isButtonEnable = false;
-
-  // List<ScreeningPartThreeModel> getAvailableParts() => ScreeningQuestionPartThreeService.getScreeningPartThreeModelByListOfParts(
-  //         allPartTitle
-  //             .where((element) => !widget.selectPart
-  //                 .any((select) => select.selectedPart.title == element))
-  //             .toList());
 
   Function(double) nrsOnChangeHandler(String title) {
     final screeningTitle = ScreeningDiagnoseService.fromThai[title];
@@ -154,16 +150,6 @@ class _QuestionAfterWarningPartThreeState
     Map<String, int> moreIntenseQuestionsPages = {};
     List<int> lowerBackPage = [];
 
-    // final availableParts = getPart; // remove parts that are exposed to doctor
-    // if (isNeckSetToDoctor(answers, nrs)) {
-    //   availableParts.removeWhere((part) => part.postures
-    //       .any((element) => element.title == "คอ" || element.title == "บ่า"));
-    // }
-    // if (isBackSetToDoctor(answers, nrs)) {
-    //   availableParts.removeWhere((part) =>
-    //       part.postures.any((element) => element.title == "หลังส่วนล่าง"));
-    // }
-
     for (var part in availableParts) {
       if (part.postures.first.title == "หลังส่วนล่าง") {
         lowerBackPage.add(pageAmount);
@@ -217,8 +203,6 @@ class _QuestionAfterWarningPartThreeState
       pageAmount += 1;
     }
 
-    // print('currentPage : ${currentPage}');
-    // print('pageAmount : ${pageAmount}');
     return AppscreenTheme(
         colorBar: Colors.transparent,
         iconButtonStart: IconButton(
@@ -233,6 +217,15 @@ class _QuestionAfterWarningPartThreeState
           },
           color: Theme.of(context).colorScheme.primary,
         ),
+        iconButtonEnd: IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  pageRoutes.screening.infomationpage().route(context));
+            },
+            icon: Icon(
+              Icons.info_outline_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            )),
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -345,13 +338,12 @@ class _QuestionAfterWarningPartThreeState
                   // if neck is also go to doctor, No workout list shall be given
                   if (isNeckSetToDoctor(answers, nrs)) {
                     await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResultsWorkoutPage(
-                                  workoutLists: [],
-                                  resultText:
-                                      "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
-                                )));
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FormAfterScreening(
+                              resultText:
+                                  ExceptionData.getData()[3].descriptionLabel)),
+                    );
                   }
 
                   // Jump to form, for protential workout list
@@ -381,10 +373,9 @@ class _QuestionAfterWarningPartThreeState
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ResultsWorkoutPage(
-                                  workoutLists: [],
-                                  resultText:
-                                      "คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง",
+                            builder: (context) => FormAfterScreening(
+                                  resultText: ExceptionData.getData()[3]
+                                      .descriptionLabel,
                                 )));
                   }
 

@@ -13,9 +13,11 @@ import 'package:unwind_app/services/screening-service/screening_diagnose_service
 
 class FormAfterScreening extends StatefulWidget {
   final AnswerContext? answerContext;
+  final String? resultText;
   const FormAfterScreening({
     Key? key,
     this.answerContext,
+    this.resultText,
   }) : super(key: key);
 
   @override
@@ -237,6 +239,12 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                       ? 'คุณมีอาการที่ไม่ใช่ออฟฟิศซินโดรม ควรพบแพทย์เพื่อได้รับการรักษาที่ถูกต้อง'
                       : 'ยินดีด้วย! คุณไม่มีอาการ\nออฟฟิศซินโดรม';
                 }
+
+                // Widget.resulText is from ExceptionPage
+                if (widget.resultText != null) {
+                  resultText = widget.resultText!;
+                }
+
                 print(
                     "workoutList: ${workoutList.map((e) => e.workoutData.map((e) => e.name))}");
                 Navigator.push(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/pages/screening-feature/infomation_page.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
@@ -104,6 +105,8 @@ class Screening {
             workoutLists: workoutList,
             resultText: resultText,
           ));
+  PathRoute infomationpage() =>
+      PathRoute(title: "อาการปวดแต่ละรูปแบบ", widget: InformationPage());
 }
 
 class AnswerContext {
