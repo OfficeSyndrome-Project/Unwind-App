@@ -14,6 +14,8 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:unwind_app/pages/loading_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.dart';
 
+bool ENABLE_WORKOUT_SKIP = false;
+
 class WorkoutPage extends StatefulWidget {
   final WorkoutList workoutList;
   const WorkoutPage({
@@ -86,8 +88,12 @@ class _WorkoutPageState extends State<WorkoutPage> {
   /// prepareWidgetFn is a function to create the workout prepare widget
   List<Widget> prepareWidgetFn(WorkoutData workoutData) => [
         PrepareWorkoutWidget(
-          assetName: workoutData.thumbnailPath,
-        )
+          workoutData: workoutData,
+        ),
+        // WorkoutWidget( //   name: workoutData.name,
+        //   workoutData: workoutData,
+        //   timeth: 0,
+        // ),
       ];
 
   /// workoutWidgetFn is a function to create the workout widget with workout animation
@@ -223,12 +229,22 @@ class _WorkoutPageState extends State<WorkoutPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-                IndexedStack(
-                  // index: index,
-                  index: 0,
-                  children: currentSequence.widget != null
-                      ? [currentSequence.widget!]
-                      : [],
+                GestureDetector(
+                  onTap: () {
+                    // Skip to the next workout for DEBUGGING
+                    if (ENABLE_WORKOUT_SKIP) {
+                      setState(() {
+                        skipSequence();
+                      });
+                    }
+                  },
+                  child: IndexedStack(
+                    // index: index,
+                    index: 0,
+                    children: currentSequence.widget != null
+                        ? [currentSequence.widget!]
+                        : [],
+                  ),
                 ),
                 CircularCountdownTimerWidget(
                   duration: currentSequence.duration,
@@ -271,6 +287,16 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   },
                 ),
               ]);
+  }
+
+  void skipSequence() {
+    print('debug: skipping to the next sequence');
+    currentSequence =
+        nextWorkoutSequence(currentSequence, workoutWidgetSequences);
+    if (currentSequence.widget != null) {
+      _controller.restart(duration: currentSequence.duration);
+      return;
+    }
   }
 }
 
