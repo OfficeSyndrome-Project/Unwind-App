@@ -31,7 +31,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
   static bool isVolumn = true;
   static final CountDownController _controller = CountDownController();
   final PageRoutes pageRoutes = PageRoutes();
-  static bool onPressed = true;
+  // static bool onPressed = true;
   String? _newVoiceText;
   late TtsManager ttsManager;
   bool isLoding = true;
