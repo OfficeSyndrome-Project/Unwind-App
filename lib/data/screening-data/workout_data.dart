@@ -29,7 +29,7 @@ class WorkoutList {
       };
 
   // Use for converting from String such as 'neckbaa_ch' to WorkoutList
-  static Map<String, WorkoutList> get workoutListFromString => {
+  static Map<String, WorkoutList> get workoutListFromTitleCode => {
         'neckbaa_ch': workoutListFromTitle[WorkoutlistTitle.neckbaa_ch]!,
         'neckbaa_th': workoutListFromTitle[WorkoutlistTitle.neckbaa_th]!,
         'shoulder': workoutListFromTitle[WorkoutlistTitle.shoulder]!,

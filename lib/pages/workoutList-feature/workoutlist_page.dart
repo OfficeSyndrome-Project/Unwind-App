@@ -40,7 +40,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                 }
                 final data = snapshot.data as List<String>;
                 List<WorkoutList> workoutLists = data
-                    .map((s) => WorkoutList.workoutListFromString[s]!)
+                    .map((s) => WorkoutList.workoutListFromTitleCode[s]!)
                     .toList();
                 if (workoutLists.isEmpty) {
                   return Center(

@@ -7,6 +7,9 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
+import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/list_dropdown_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/select_box_widget.dart';
@@ -103,6 +106,11 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
   }
 
   void onConfirm() {
+    if (selectWorkoutList == null) {
+      print('no selectWorkoutList');
+      return;
+    }
+
     List<Event> oldEvents = _getEventsForDay(_selectedDay!);
 
     ScheduleService.kEvents.addAll({
@@ -202,13 +210,30 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                   fontWeight: FontWeight.w600,
                 )),
           ),
-          ListDropdownWidget(
-            nameList: nameList,
-            value: selectWorkoutList,
-            onChanged: (String? value) {
-              setState(() {
-                selectWorkoutList = value!;
-              });
+          FutureBuilder(
+            future:
+                serviceLocator<WorkoutListDB>().getAvailableWorkoutListTitles(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              if (snapshot.hasData) {
+                final availableTitleCodes = snapshot.data as List<String>;
+                final nameList = availableTitleCodes
+                    .map((code) => WorkoutList.workoutListFromTitleCode[code])
+                    .map((wol) => wol?.description ?? '')
+                    .toList();
+                return ListDropdownWidget(
+                  nameList: nameList,
+                  value: selectWorkoutList,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectWorkoutList = value!;
+                    });
+                  },
+                );
+              }
+              return Text("Loading...");
             },
           ),
           ResponsiveCheckWidget.isSmallMobile(context)
