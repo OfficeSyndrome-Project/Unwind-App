@@ -31,13 +31,15 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
-        iconButtonStart: IconButton(
-            highlightColor: Colors.transparent,
-            icon: const Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Theme.of(context).colorScheme.primary),
+        iconButtonStart: (widget.nrsType == NrsType.before)
+            ? IconButton(
+                highlightColor: Colors.transparent,
+                icon: const Icon(Icons.arrow_back_ios_rounded),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                color: Theme.of(context).colorScheme.primary)
+            : null,
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
