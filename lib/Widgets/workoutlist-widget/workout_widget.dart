@@ -41,7 +41,14 @@ class WorkoutWidget extends StatelessWidget {
             eachSetDuration: workoutData.sec,
             repeat: workoutData.time,
           ),
-          Text('$timeth/${workoutData.time}'),
+          Text('$timeth/${workoutData.time}',
+              style: TextStyle(
+                fontFamily: "Noto Sans Thai",
+                fontSize:
+                    ResponsiveCheckWidget.isSmallMobile(context) ? 18 : 20,
+                fontWeight: FontWeight.w500,
+                color: const Color(0xFF2C3036),
+              ))
         ],
       ),
     );
