@@ -369,7 +369,10 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
           Container(
             margin: EdgeInsets.only(top: 16),
             child: ButtonWithiconWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context, pageRoutes.workout.schdulepage().route(context));
+              },
               mainAxisAlignment: MainAxisAlignment.center,
               text: 'ตั้งแจ้งเตือน',
               radius: 8,

@@ -8,7 +8,7 @@ import 'package:unwind_app/Widgets/screening-widget/posture_widget.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 
 void main() {
-  group('Posture', () {
+  group('Posture widget', () {
     testWidgets('test PostuerWidget widget', (WidgetTester tester) async {
       List<ScreeningPartTwoPostureModel> mockQuestions = [
         ScreeningPartTwoPostureModel(
@@ -40,7 +40,7 @@ void main() {
       expect(find.text('ท่าเส้นประสาทคอที่ 1 ULNT 1'), findsOneWidget);
     });
 
-    testWidgets('QuestionAndRadioButton widget test',
+    testWidgets('test QuestionAndRadioButton widget',
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(

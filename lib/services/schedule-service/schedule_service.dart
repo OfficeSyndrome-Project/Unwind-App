@@ -22,7 +22,7 @@ class ScheduleService {
 
     results.add(await writeTitle(event.title, id, index));
     results.add(await writeTimes(event.times, id, index));
-
+    // print('Results: $results'); //ขอปริ้นดูหน่อย
     if (results.contains(false)) {
       return false;
     } else
