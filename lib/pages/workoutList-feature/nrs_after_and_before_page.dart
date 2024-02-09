@@ -162,6 +162,17 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
       // Failed to get workout list on that day
       return 0;
     }
+    await updateRemainingTime(now, widget.workoutList);
     return await workoutListDB.updateNRSafter(nrs.toInt(), wol.first.WOL_id!);
+  }
+
+  updateRemainingTime(DateTime date, WorkoutList workoutList) async {
+    final wol = await workoutListDB.getWorkoutListByDateAndTitle(
+        date, workoutList.titleCode);
+    if (wol.isEmpty || wol.first.WOL_id == null) {
+      return 0;
+    }
+    return workoutListDB.updateRemainingTimes(
+        (wol.first.remaining_times ?? 0) - 1, wol.first.WOL_id!);
   }
 }

@@ -144,4 +144,15 @@ class WorkoutListDB {
 
     return maps.map((row) => row['WOL_title'].toString()).toList();
   }
+
+  //update remaining times
+  Future<int> updateRemainingTimes(int remainingTimes, int WOL_id) async {
+    Database db = await database.database;
+    return await db.update(
+      'WorkoutList',
+      {'remaining_times': remainingTimes},
+      where: 'WOL_id = ? AND deleted_at IS NULL',
+      whereArgs: [WOL_id],
+    );
+  }
 }
