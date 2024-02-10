@@ -8,6 +8,8 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 enum NrsType { after, before }
 
@@ -109,6 +111,29 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
           ),
           ButtonWithoutIconWidget(
               onTap: () async {
+                //if nrs>8 go to exceptionpage
+                if (widget.nrsType == NrsType.before &&
+                    ScreeningDiagnoseService.isExceedingNrsLimit(nrs.toInt())) {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ExceptionPage(exceptionPart: 4)));
+                  return Navigator.pop(context);
+                }
+                if (widget.nrsType == NrsType.after &&
+                    ScreeningDiagnoseService.isExceedingNrsLimit(nrs.toInt())) {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ExceptionPage(exceptionPart: 4)));
+                  return Navigator.popUntil(
+                      context,
+                      (route) =>
+                          route.settings.name == PageName.REPORT_WORKOUT);
+                }
+
                 final now = DateTime.now();
                 final nrs_saving = (widget.nrsType == NrsType.before)
                     ? saveNrsBefore
