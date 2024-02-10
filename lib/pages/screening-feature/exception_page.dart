@@ -15,14 +15,6 @@ class ExceptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
-      iconButtonStart: IconButton(
-        highlightColor: Colors.transparent,
-        icon: const Icon(Icons.arrow_back_ios_rounded),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        color: Theme.of(context).colorScheme.primary,
-      ),
       colorBar: Colors.transparent,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,

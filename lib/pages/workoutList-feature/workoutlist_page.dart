@@ -10,11 +10,16 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/services/general_stored_service.dart';
 
-class WorkoutListPage extends StatelessWidget {
+class WorkoutListPage extends StatefulWidget {
   WorkoutListPage({super.key});
 
   static PageRoutes pageRoutes = PageRoutes();
 
+  @override
+  State<WorkoutListPage> createState() => _WorkoutListPageState();
+}
+
+class _WorkoutListPageState extends State<WorkoutListPage> {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
@@ -47,12 +52,13 @@ class WorkoutListPage extends StatelessWidget {
                     // mainAxisAlignment: MainAxisAlignment.start,
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     itemBuilder: (context, index) => WorkoutBoxWidget(
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async {
+                            await Navigator.push(
                                 context,
-                                pageRoutes.workout
+                                WorkoutListPage.pageRoutes.workout
                                     .reportworkoutpage(workoutLists[index])
                                     .route(context));
+                            setState(() {});
                           },
                           workoutName: workoutLists[index].description,
                           numberWorkout:
@@ -134,7 +140,7 @@ class WorkoutListPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                   context,
-                  pageRoutes.screening
+                  WorkoutListPage.pageRoutes.screening
                       .introscreeningpage(0, [], [], null)
                       .route(context));
             },
@@ -142,6 +148,7 @@ class WorkoutListPage extends StatelessWidget {
               int count =
                   await serviceLocator<WorkoutListDB>().deleteAllWorkoutList();
               print('successfully deleted $count workouts');
+              setState(() {});
             },
             mainAxisAlignment: MainAxisAlignment.center,
             text: 'ตรวจอีกครั้ง',

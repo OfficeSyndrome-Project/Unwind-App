@@ -95,6 +95,17 @@ class TtsManager {
 
   static Future<void> _setAwaitOptions() async {
     await flutterTts.awaitSpeakCompletion(true);
+
+    // await flutterTts.setSharedInstance(true);
+    await flutterTts.setIosAudioCategory(
+        IosTextToSpeechAudioCategory.playback,
+        [
+          IosTextToSpeechAudioCategoryOptions.allowBluetooth,
+          IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
+          IosTextToSpeechAudioCategoryOptions.mixWithOthers,
+          IosTextToSpeechAudioCategoryOptions.defaultToSpeaker
+        ],
+        IosTextToSpeechAudioMode.defaultMode);
   }
 
   static Future<void> stop() async {

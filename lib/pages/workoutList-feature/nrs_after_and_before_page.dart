@@ -4,13 +4,30 @@ import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/slider_nrs.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/injection_container.dart';
 
-class NrsAfterAndBeforePage extends StatelessWidget {
-  NrsAfterAndBeforePage({super.key});
+enum NrsType { after, before }
 
+class NrsAfterAndBeforePage extends StatefulWidget {
+  final WorkoutList workoutList;
+  final NrsType nrsType;
+  NrsAfterAndBeforePage({
+    super.key,
+    required this.workoutList,
+    required this.nrsType,
+  });
+
+  @override
+  State<NrsAfterAndBeforePage> createState() => _NrsAfterAndBeforePageState();
+}
+
+class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
   final PageRoutes pageRoutes = PageRoutes();
-
+  double nrs = 0;
+  WorkoutListDB workoutListDB = serviceLocator();
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
@@ -45,7 +62,11 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(bottom: 16),
                   child: Text(
-                    'ก่อนบริหารร่างกาย',
+                    (widget.nrsType == NrsType.before)
+                        ? 'ก่อนบริหารร่างกาย'
+                        : (widget.nrsType == NrsType.after)
+                            ? 'หลังบริหารร่างกาย'
+                            : '',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -57,8 +78,7 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                   ),
                 ),
                 RatioImageoneToOne(
-                    assetName:
-                        'lib/assets/images/screeningPart/select_pain_1.png',
+                    assetName: widget.workoutList.titlePath,
                     smallWidth: 120,
                     largeWidth: 150,
                     smallHeight: 120,
@@ -79,14 +99,33 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SliderNrs(),
+                SliderNrs(
+                  onChanged: onNrsChange,
+                ),
               ],
             ),
           ),
           ButtonWithoutIconWidget(
-              onTap: () {
-                Navigator.push(context,
-                    pageRoutes.workout.preparebeforeworkout().route(context));
+              onTap: () async {
+                final now = DateTime.now();
+                final nrs_saving = (widget.nrsType == NrsType.before)
+                    ? saveNrsBefore
+                    : saveNrsAfter;
+                int success = await nrs_saving(nrs, now);
+                print('successfully saved nrs: $nrs ($success record)');
+                if (widget.nrsType == NrsType.before) {
+                  Navigator.push(
+                      context,
+                      pageRoutes.workout
+                          .preparebeforeworkout(widget.workoutList)
+                          .route(context));
+                  return;
+                }
+                if (widget.nrsType == NrsType.after) {
+                  Navigator.pushReplacement(
+                      context, pageRoutes.home.workoutlist().route(context));
+                  return;
+                }
               },
               text: "ยืนยัน",
               radius: 32,
@@ -102,5 +141,38 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                     )
                   : Theme.of(context).textTheme.headlineSmall),
         ]);
+  }
+
+  onNrsChange(double nrs) {
+    this.nrs = nrs;
+  }
+
+  Future<int> saveNrsBefore(double nrs, DateTime now) async {
+    final wol = await workoutListDB.getWorkoutListByDate(now);
+    if (wol.isEmpty || wol.first.WOL_id == null) {
+      // Failed to get workout list on that day
+      return 0;
+    }
+    return await workoutListDB.updateNRSbefore(nrs.toInt(), wol.first.WOL_id!);
+  }
+
+  Future<int> saveNrsAfter(double nrs, DateTime now) async {
+    final wol = await workoutListDB.getWorkoutListByDate(now);
+    if (wol.isEmpty || wol.first.WOL_id == null) {
+      // Failed to get workout list on that day
+      return 0;
+    }
+    await updateRemainingTime(now, widget.workoutList);
+    return await workoutListDB.updateNRSafter(nrs.toInt(), wol.first.WOL_id!);
+  }
+
+  updateRemainingTime(DateTime date, WorkoutList workoutList) async {
+    final wol = await workoutListDB.getWorkoutListByDateAndTitle(
+        date, workoutList.titleCode);
+    if (wol.isEmpty || wol.first.WOL_id == null) {
+      return 0;
+    }
+    return workoutListDB.updateRemainingTimes(
+        (wol.first.remaining_times ?? 0) - 1, wol.first.WOL_id!);
   }
 }

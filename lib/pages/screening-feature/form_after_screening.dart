@@ -52,13 +52,6 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
-        iconButtonStart: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_rounded,
-              color: Theme.of(context).colorScheme.primary),
-        ),
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
