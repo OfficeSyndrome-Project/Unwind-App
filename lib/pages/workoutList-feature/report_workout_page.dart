@@ -327,12 +327,14 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
           Container(
             margin: EdgeInsets.only(top: 16, bottom: 16),
             child: ButtonWithiconWidget(
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  await Navigator.push(
                       context,
                       pageRoutes.workout
                           .infooflistworkout(widget.workoutList)
                           .route(context));
+                  await refreshWorkoutListModel();
+                  setState(() {});
                 },
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 color: Color(0xFFD7E0F5),
@@ -414,6 +416,15 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
       getWorkoutListModelsCache = await workoutListDb
           .getWorkoutListByTitle(widget.workoutList?.titleCode ?? '');
     }
+
+    final Map<int?, WorkoutListModel?> circle = mapWorkoutListForBrowsingWeek(
+        getWorkoutListModelsCache!)(currentSelectingDate);
+    return circle;
+  }
+
+  Future<Map<int?, WorkoutListModel?>> refreshWorkoutListModel() async {
+    getWorkoutListModelsCache = await workoutListDb
+        .getWorkoutListByTitle(widget.workoutList?.titleCode ?? '');
     final Map<int?, WorkoutListModel?> circle = mapWorkoutListForBrowsingWeek(
         getWorkoutListModelsCache!)(currentSelectingDate);
     return circle;
