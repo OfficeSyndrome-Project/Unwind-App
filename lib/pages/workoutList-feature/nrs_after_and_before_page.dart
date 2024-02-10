@@ -9,6 +9,8 @@ import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/result_nrs_four_week_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/result_nrs_per_week_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 enum NrsType { after, before }
@@ -138,7 +140,7 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
                 final nrs_saving = (widget.nrsType == NrsType.before)
                     ? saveNrsBefore
                     : saveNrsAfter;
-                int success = await nrs_saving(nrs, now);
+                int success = await nrs_saving(nrs, now, widget.workoutList);
                 print('successfully saved nrs: $nrs ($success record)');
                 if (widget.nrsType == NrsType.before) {
                   Navigator.push(
@@ -149,14 +151,23 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
                   return;
                 }
                 if (widget.nrsType == NrsType.after) {
-                  // Navigator.pushReplacement(
-                  //     context, pageRoutes.home.workoutlist().route(context));
+                  final int cumulativeWorkoutDays =
+                      await workoutListDB.cumulativeDayOfWorkoutListTitle(
+                          widget.workoutList.titleCode);
+                  if (cumulativeWorkoutDays == 28) {
+                    _navigateToResultNrsFourWeekPage(context);
+                    return;
+                  }
+                  if (cumulativeWorkoutDays < 28 &&
+                      cumulativeWorkoutDays % 7 == 0) {
+                    _navigateToResultNrsPerWeekPage(
+                        context, cumulativeWorkoutDays);
+                    return;
+                  }
                   Navigator.popUntil(
                       context,
                       (route) =>
                           route.settings.name == PageName.REPORT_WORKOUT);
-
-                  return;
                 }
               },
               text: "ยืนยัน",
@@ -179,8 +190,10 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
     this.nrs = nrs;
   }
 
-  Future<int> saveNrsBefore(double nrs, DateTime now) async {
-    final wol = await workoutListDB.getWorkoutListByDate(now);
+  Future<int> saveNrsBefore(
+      double nrs, DateTime now, WorkoutList workoutList) async {
+    final wol = await workoutListDB.getWorkoutListByDateAndTitle(
+        now, workoutList.titleCode);
     if (wol.isEmpty || wol.first.WOL_id == null) {
       // Failed to get workout list on that day
       return 0;
@@ -188,8 +201,10 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
     return await workoutListDB.updateNRSbefore(nrs.toInt(), wol.first.WOL_id!);
   }
 
-  Future<int> saveNrsAfter(double nrs, DateTime now) async {
-    final wol = await workoutListDB.getWorkoutListByDate(now);
+  Future<int> saveNrsAfter(
+      double nrs, DateTime now, WorkoutList workoutList) async {
+    final wol = await workoutListDB.getWorkoutListByDateAndTitle(
+        now, workoutList.titleCode);
     if (wol.isEmpty || wol.first.WOL_id == null) {
       // Failed to get workout list on that day
       return 0;
@@ -206,5 +221,33 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
     }
     return workoutListDB.updateRemainingTimes(
         (wol.first.remaining_times ?? 0) - 1, wol.first.WOL_id!);
+  }
+
+  void _navigateToResultNrsFourWeekPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultNrsFourWeekPage(),
+      ),
+    );
+  }
+
+  void _navigateToResultNrsPerWeekPage(
+      BuildContext context, int cumulativeWorkoutDays) async {
+    final firstTimeNrs = await workoutListDB
+        .getFirstTimeNrsByTitle(widget.workoutList.titleCode);
+    final lastestNrs =
+        await workoutListDB.getLatestNrsByTitle(widget.workoutList.titleCode);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultNrsPerWeekPage(
+          workoutList: widget.workoutList,
+          numberOfWeeks: cumulativeWorkoutDays ~/ 7,
+          firstNrs: firstTimeNrs,
+          lastestNrs: lastestNrs,
+        ),
+      ),
+    );
   }
 }

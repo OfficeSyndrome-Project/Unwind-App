@@ -19,11 +19,11 @@ class WorkoutList {
   });
 
   static Map<String, int> customOrder = {
-    'neckbaa_ch': 5,
+    'neckbaa_ch': 1,
     'neckbaa_th': 2,
     'shoulder': 3,
     'back_ch': 4,
-    'back_th': 1,
+    'back_th': 5,
   };
 
   static int compareByTitleOrder(WorkoutList a, WorkoutList b) =>

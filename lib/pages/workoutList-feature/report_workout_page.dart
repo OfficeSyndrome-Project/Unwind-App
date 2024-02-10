@@ -388,11 +388,17 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
         ]);
   }
 
-  double percentageDone(WorkoutListModel? wol) => (wol == null ||
-          wol.total_times == 0 ||
-          wol.total_times == null)
-      ? 0.0
-      : (wol.total_times! - (wol.remaining_times ?? 0.0)) / wol.total_times!;
+  double percentageDone(WorkoutListModel? wol) {
+    final result = (wol == null ||
+            wol.total_times == 0 ||
+            wol.total_times == null)
+        ? 0.0
+        : (wol.total_times! - (wol.remaining_times ?? 0.0)) / wol.total_times!;
+    if (result > 1) {
+      return 1;
+    }
+    return result;
+  }
 
   handleSelectDate(DateTime date) {
     setState(() {

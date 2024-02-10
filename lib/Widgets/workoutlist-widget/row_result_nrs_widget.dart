@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class RowResultNrsWidget extends StatelessWidget {
-  final int firstNrs;
-  final int lastestNrs;
+  final int? firstNrs;
+  final int? lastestNrs;
   const RowResultNrsWidget(
       {Key? key, required this.firstNrs, required this.lastestNrs})
       : super(key: key);
@@ -31,7 +31,7 @@ class RowResultNrsWidget extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: 8, bottom: 16),
                 child: Text(
-                  '${firstNrs}',
+                  '${firstNrs ?? '-'}',
                   style: TextStyle(
                     fontSize:
                         ResponsiveCheckWidget.isSmallMobile(context) ? 20 : 28,
@@ -58,7 +58,7 @@ class RowResultNrsWidget extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: 8, bottom: 16),
                 child: Text(
-                  '${lastestNrs}',
+                  '${lastestNrs ?? '-'}',
                   style: TextStyle(
                     fontSize:
                         ResponsiveCheckWidget.isSmallMobile(context) ? 20 : 28,
