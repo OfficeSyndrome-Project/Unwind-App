@@ -18,8 +18,6 @@ class WorkoutPage extends StatefulWidget {
   State<WorkoutPage> createState() => _WorkoutPageState();
 }
 
-// enum TtsState { playing, stopped, paused, continued }
-
 class _WorkoutPageState extends State<WorkoutPage> {
   static bool isVolumn = true;
   static final int _duration = 10;
@@ -32,17 +30,16 @@ class _WorkoutPageState extends State<WorkoutPage> {
   static bool onPressed = true;
 
   String? _newVoiceText;
-  late TtsManager ttsManager;
   bool isLoding = true;
 
   @override
   initState() {
     super.initState();
     init();
+    TtsManager.initTts();
   }
 
   void init() {
-    ttsManager = TtsManager();
     setState(() {
       isLoding = false;
     });
