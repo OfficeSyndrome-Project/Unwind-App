@@ -151,10 +151,9 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
                   return;
                 }
                 if (widget.nrsType == NrsType.after) {
-                  // final int cumulativeWorkoutDays =
-                  //     await workoutListDB.cumulativeDayOfWorkoutListTitle(
-                  //         widget.workoutList.titleCode);
-                  final int cumulativeWorkoutDays = 28;
+                  final int cumulativeWorkoutDays =
+                      await workoutListDB.cumulativeDayOfWorkoutListTitle(
+                          widget.workoutList.titleCode);
                   if (cumulativeWorkoutDays == 28) {
                     _navigateToResultNrsFourWeekPage(context);
                     return;
@@ -225,13 +224,15 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
   }
 
   Future<void> _navigateToResultNrsFourWeekPage(BuildContext context) async {
-    final averageCumulativeNrs = await workoutListDB
-        .averageCumulativeNrsByTitle(widget.workoutList.titleCode);
+    // final averageCumulativeNrs = await workoutListDB
+    //     .averageCumulativeNrsByTitle(widget.workoutList.titleCode);
+    final lastestNrs =
+        await workoutListDB.getLatestNrsByTitle(widget.workoutList.titleCode);
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ResultNrsFourWeekPage(
-          averageCumulativeNrs: averageCumulativeNrs.toInt(),
+          latestNrs: lastestNrs,
         ),
       ),
     );

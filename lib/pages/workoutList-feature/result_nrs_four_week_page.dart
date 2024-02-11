@@ -8,8 +8,8 @@ import 'package:unwind_app/Widgets/workoutlist-widget/question_box_nrs_widget.da
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 class ResultNrsFourWeekPage extends StatefulWidget {
-  final int averageCumulativeNrs;
-  const ResultNrsFourWeekPage({Key? key, required this.averageCumulativeNrs})
+  final int? latestNrs;
+  const ResultNrsFourWeekPage({Key? key, required this.latestNrs})
       : super(key: key);
   @override
   State<ResultNrsFourWeekPage> createState() => _ResultNrsFourWeekPageState();
@@ -63,8 +63,7 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
                   ? SizedBox()
                   : HeadAndSubResultNrsWidget(
                       title: 'ปัจจุบันผ่านมาทั้งหมด 4 สัปดาห์',
-                      subtitle:
-                          'ค่า NRS ของคุณเฉลี่ยคือ ${widget.averageCumulativeNrs}'),
+                      subtitle: 'ค่า NRS ล่าสุดของคุณคือ ${widget.latestNrs}'),
               IndexedStack(
                 index: index,
                 children: [
