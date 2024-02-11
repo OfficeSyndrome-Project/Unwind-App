@@ -53,7 +53,7 @@ class _SplashPageState extends State<SplashPage>
           mainAxisSize: MainAxisSize.max,
           children: [
             RatioImageoneToOne(
-                assetName: 'lib/assets/logo_white.png',
+                assetName: 'lib/assets/logo.png',
                 smallWidth: 120,
                 largeWidth: 140,
                 smallHeight: 120,
