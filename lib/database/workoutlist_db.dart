@@ -183,6 +183,27 @@ class WorkoutListDB {
     return cumulativeActiveDay(workoutlist);
   }
 
+  Future<double> averageCumulativeNrsByTitle(String titleCode) async {
+    final workoutlist = await getWorkoutListByTitle(titleCode);
+    final workoutWithNrs = workoutlist
+        .where((workout) =>
+            workout.NRS_before != null && workout.NRS_after != null)
+        .toList();
+    if (workoutWithNrs.isEmpty) {
+      return 0;
+    }
+    final sumNrs = (workoutWithNrs
+                .map((workout) => workout.NRS_before)
+                .reduce((acc, value) => (acc ?? 0) + (value ?? 0)) ??
+            0) +
+        (workoutWithNrs
+                .map((workout) => workout.NRS_after)
+                .reduce((acc, value) => (acc ?? 0) + (value ?? 0)) ??
+            0);
+    ;
+    return sumNrs / 2 * workoutWithNrs.length;
+  }
+
   /// Get the number of days that the user has done the workout
   static int cumulativeActiveDay(List<WorkoutListModel> workouts) =>
       workouts.where(didWorkout).length;
