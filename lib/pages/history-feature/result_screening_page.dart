@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:unwind_app/Widgets/history-widget/box_have_img.dart';
+import 'package:unwind_app/Widgets/history-widget/box_only_q.dart';
+import 'package:unwind_app/Widgets/history-widget/box_title_part_select.dart';
 
-import 'package:unwind_app/Widgets/history-widget/box_result_answer_screening_widget.dart';
 import 'package:unwind_app/Widgets/history-widget/header_box.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
@@ -20,7 +22,7 @@ class ResultScreeningPage extends StatelessWidget {
     List<Widget> resultWidget = [];
 
     for (var data in q1) {
-      var answerS1Widget = BoxResultAnswerScreeningWidget(
+      var answerS1Widget = BoxOnlyQ(
         question: data.question,
         answer: 'ใช่',
       );
@@ -33,7 +35,15 @@ class ResultScreeningPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HeaderBox(screeningPart: i + 1, partName: 'partName'),
-          ...resultWidget
+          ...resultWidget,
+          BoxTitlePartSelect(partSelect: 'partSelect'),
+          BoxHaveImg(
+            question: 'question',
+            answer: 'answer',
+            name: 'name',
+            assetPath:
+                'lib/assets/images/workout/shoulder/shoulderch02/tp-left/TP-1.png',
+          )
         ],
       );
       _partWidget.add(partWidget);

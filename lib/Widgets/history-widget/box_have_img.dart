@@ -17,6 +17,8 @@ class BoxHaveImg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           margin: EdgeInsets.only(left: 8, bottom: 8),
@@ -29,12 +31,14 @@ class BoxHaveImg extends StatelessWidget {
             ),
           ),
         ),
-        RatioImageoneToOne(
-            assetName: assetPath!,
-            smallWidth: 100,
-            largeWidth: 120,
-            smallHeight: 100,
-            largeHeight: 120),
+        Center(
+          child: RatioImageoneToOne(
+              assetName: assetPath ?? '',
+              smallWidth: 100,
+              largeWidth: 120,
+              smallHeight: 100,
+              largeHeight: 120),
+        ),
         Container(
           margin: EdgeInsets.only(left: 8, top: 8),
           child: Text(
@@ -69,7 +73,7 @@ class BoxHaveImg extends StatelessWidget {
               flex: 5,
               fit: FlexFit.tight,
               child: Text(
-                answer,
+                '${answer}',
                 style: TextStyle(
                   fontSize:
                       ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
