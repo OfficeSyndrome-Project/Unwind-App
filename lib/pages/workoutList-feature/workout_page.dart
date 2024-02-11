@@ -26,11 +26,10 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  static bool isVolumn = true;
+  bool isVolume = true;
   static final CountDownController _controller = CountDownController();
   final PageRoutes pageRoutes = PageRoutes();
-  // static bool onPressed = true;
-  String? _newVoiceText;
+
   bool isLoding = true;
   List<Widget> workoutWidgetSequences = [];
   WorkoutSequence currentSequence = WorkoutSequence(index: -1, duration: 0);
@@ -70,21 +69,24 @@ class _WorkoutPageState extends State<WorkoutPage> {
   @override
   void dispose() {
     super.dispose();
+    TtsManager.dispose();
   }
 
-  void btnTime(bool onPressed) {
-    if (onPressed) {
-      _controller.resume();
-    } else if (!onPressed) {
-      _controller.pause();
-    }
-  }
+  // void btnVolume() async {
+  //   if (isVolume == true) {
+  //     // _controller.resume();
+  //     await TtsManager.setVolume(1.0);
+  //   } else if (isVolume == false) {
+  //     // _controller.pause();
+  //     await TtsManager.setVolume(0.0);
+  //   }
+  // }
 
   /// prepareWidgetFn is a function to create the workout prepare widget
   List<Widget> prepareWidgetFn(WorkoutData workoutData) => [
         PrepareWorkoutWidget(
           assetName: workoutData.thumbnailPath,
-        )
+        ),
       ];
 
   /// workoutWidgetFn is a function to create the workout widget with workout animation
@@ -147,6 +149,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
     }
     final nextWidget = workoutWidgetSequences[nextIndex];
     if (nextWidget is PrepareWorkoutWidget) {
+      // btnVolume();
+      TtsManager.speak(
+          'ท่าต่อไปนี้จะทำให้กระดูกสันหลังของคุณหัก หากไม่อยากให้อาการหนัก ควรจะหยุดพักเสียก่อน');
       return WorkoutSequence(
         index: nextIndex,
         duration: 10,
@@ -200,13 +205,16 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 },
                 color: Theme.of(context).colorScheme.primary),
             iconButtonEnd: IconButton(
-              onPressed: () {
+              onPressed: () async {
                 setState(() {
-                  isVolumn = !isVolumn;
-                  btnTime(isVolumn);
+                  isVolume = !isVolume;
                 });
+                if (!isVolume) {
+                  await TtsManager.setVolume(0.0, isVolume: false);
+                } else
+                  await TtsManager.setVolume(1.0);
               },
-              icon: isVolumn
+              icon: isVolume == true
                   ? Icon(Icons.volume_up_rounded)
                   : Icon(Icons.volume_off_rounded),
               color: Colors.white,
@@ -249,14 +257,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
                               .route(context));
                       return;
                     });
-                  },
-                  onChange: (value) {
-                    if (_newVoiceText != value) {
-                      _newVoiceText = value;
-                      print('speaking $_newVoiceText');
-                      ttsManager.speak(_newVoiceText);
-                      // _speak();
-                    }
                   },
                   // make it ceil up, not showing zero at the end
                   timeFormatterFunction: (defaultFormatterFunction, duration) {
