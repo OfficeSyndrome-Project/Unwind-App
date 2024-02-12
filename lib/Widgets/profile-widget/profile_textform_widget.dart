@@ -72,6 +72,8 @@ class ProfileTextFormState extends State<ProfileTextForm> {
           // สร้าง #SuperHero
           if (value == 'superhero') {
             ScreeningDiagnoseService.createAllWorkoutList();
+            Navigator.pop(context);
+            return;
           }
         },
         controller: _controller,

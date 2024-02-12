@@ -313,8 +313,8 @@ class ScreeningDiagnoseService {
                 WorkoutListModel(
                     date: now.add(Duration(days: days_from_now)),
                     WOL_title: WorkoutlistTitle.neckbaa_th.name,
-                    remaining_times: 3,
-                    total_times: 3,
+                    remaining_times: 1,
+                    total_times: 1,
                     WOL_id: null,
                     NRS_before: null,
                     NRS_after: null)
@@ -344,8 +344,8 @@ class ScreeningDiagnoseService {
           (days_from_now) => WorkoutListModel(
               date: now.add(Duration(days: days_from_now)),
               WOL_title: WorkoutlistTitle.back_ch.name,
-              remaining_times: 3,
-              total_times: 3,
+              remaining_times: 6,
+              total_times: 6,
               WOL_id: null,
               NRS_before: null,
               NRS_after: null),
@@ -360,8 +360,8 @@ class ScreeningDiagnoseService {
                 WorkoutListModel(
                     date: now.add(Duration(days: days_from_now)),
                     WOL_title: WorkoutlistTitle.back_th.name,
-                    remaining_times: 3,
-                    total_times: 3,
+                    remaining_times: 1,
+                    total_times: 1,
                     WOL_id: null,
                     NRS_before: null,
                     NRS_after: null)

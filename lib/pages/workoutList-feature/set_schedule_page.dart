@@ -7,6 +7,9 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
+import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/list_dropdown_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/select_box_widget.dart';
@@ -44,6 +47,8 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   late Map<DateTime, List<Event>> events = {};
 
+  bool isEdited = false;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +64,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     setState(() {
       isTapCalender = !isTapCalender;
       isTapTime = false;
+      isEdited = true;
     });
   }
 
@@ -66,6 +72,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     setState(() {
       isTapTime = !isTapTime;
       isTapCalender = false;
+      isEdited = true;
     });
   }
 
@@ -103,6 +110,11 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
   }
 
   void onConfirm() {
+    if (selectWorkoutList == null) {
+      print('no selectWorkoutList');
+      return;
+    }
+
     List<Event> oldEvents = _getEventsForDay(_selectedDay!);
 
     ScheduleService.kEvents.addAll({
@@ -142,6 +154,10 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
             children: [
               GestureDetector(
                 onTap: () async {
+                  if (!isEdited) {
+                    Navigator.pop(context);
+                    return;
+                  }
                   final result = await alertDialog.getshowDialog(
                       context, 'ยกเลิกการตั้ง Schedule ใช่หรือไม่ ?', null, () {
                     Navigator.pop(context, false);
@@ -202,13 +218,31 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                   fontWeight: FontWeight.w600,
                 )),
           ),
-          ListDropdownWidget(
-            nameList: nameList,
-            value: selectWorkoutList,
-            onChanged: (String? value) {
-              setState(() {
-                selectWorkoutList = value!;
-              });
+          FutureBuilder(
+            future:
+                serviceLocator<WorkoutListDB>().getAvailableWorkoutListTitles(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              if (snapshot.hasData) {
+                final availableTitleCodes = snapshot.data as List<String>;
+                final nameList = availableTitleCodes
+                    .map((code) => WorkoutList.workoutListFromTitleCode[code])
+                    .map((wol) => wol?.description ?? '')
+                    .toList();
+                return ListDropdownWidget(
+                  nameList: nameList,
+                  value: selectWorkoutList,
+                  onChanged: (String? value) {
+                    setState(() {
+                      isEdited = true;
+                      selectWorkoutList = value!;
+                    });
+                  },
+                );
+              }
+              return Text("Loading...");
             },
           ),
           ResponsiveCheckWidget.isSmallMobile(context)

@@ -18,6 +18,17 @@ class WorkoutList {
     this.totalTime,
   });
 
+  static Map<String, int> customOrder = {
+    'neckbaa_ch': 1,
+    'neckbaa_th': 2,
+    'shoulder': 3,
+    'back_ch': 4,
+    'back_th': 5,
+  };
+
+  static int compareByTitleOrder(WorkoutList a, WorkoutList b) =>
+      (customOrder[a.titleCode] ?? 0) - (customOrder[b.titleCode] ?? 0);
+
   static List<String> get allWorkoutListTitles => ["คอ-บ่า", "ไหล่", "หลัง"];
 
   static List<String> get allWorkoutTypes => ["stretch", "strength"];
@@ -29,7 +40,7 @@ class WorkoutList {
       };
 
   // Use for converting from String such as 'neckbaa_ch' to WorkoutList
-  static Map<String, WorkoutList> get workoutListFromString => {
+  static Map<String, WorkoutList> get workoutListFromTitleCode => {
         'neckbaa_ch': workoutListFromTitle[WorkoutlistTitle.neckbaa_ch]!,
         'neckbaa_th': workoutListFromTitle[WorkoutlistTitle.neckbaa_th]!,
         'shoulder': workoutListFromTitle[WorkoutlistTitle.shoulder]!,

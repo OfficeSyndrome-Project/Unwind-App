@@ -14,6 +14,8 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:unwind_app/pages/loading_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.dart';
 
+bool ENABLE_WORKOUT_SKIP = false;
+
 class WorkoutPage extends StatefulWidget {
   final WorkoutList workoutList;
   const WorkoutPage({
@@ -85,8 +87,12 @@ class _WorkoutPageState extends State<WorkoutPage> {
   /// prepareWidgetFn is a function to create the workout prepare widget
   List<Widget> prepareWidgetFn(WorkoutData workoutData) => [
         PrepareWorkoutWidget(
-          assetName: workoutData.thumbnailPath,
+          workoutData: workoutData,
         ),
+        // WorkoutWidget( //   name: workoutData.name,
+        //   workoutData: workoutData,
+        //   timeth: 0,
+        // ),
       ];
 
   /// workoutWidgetFn is a function to create the workout widget with workout animation
@@ -145,7 +151,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     final nextIndex = currentSequence.index + 1;
     if (nextIndex >= workoutWidgetSequences.length) {
       // End of workout
-      return WorkoutSequence(index: 0, duration: 10);
+      return WorkoutSequence(index: 0, duration: 1);
     }
     final nextWidget = workoutWidgetSequences[nextIndex];
     if (nextWidget is PrepareWorkoutWidget) {
@@ -228,12 +234,22 @@ class _WorkoutPageState extends State<WorkoutPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-                IndexedStack(
-                  // index: index,
-                  index: 0,
-                  children: currentSequence.widget != null
-                      ? [currentSequence.widget!]
-                      : [],
+                GestureDetector(
+                  onTap: () {
+                    // Skip to the next workout for DEBUGGING
+                    if (ENABLE_WORKOUT_SKIP) {
+                      setState(() {
+                        skipSequence();
+                      });
+                    }
+                  },
+                  child: IndexedStack(
+                    // index: index,
+                    index: 0,
+                    children: currentSequence.widget != null
+                        ? [currentSequence.widget!]
+                        : [],
+                  ),
                 ),
                 CircularCountdownTimerWidget(
                   duration: currentSequence.duration,
@@ -268,6 +284,24 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   },
                 ),
               ]);
+  }
+
+  void skipSequence() {
+    print('debug: skipping to the next sequence');
+    print(
+        '--- currentSequence: ${currentSequence.index + 1} of ${workoutWidgetSequences.length} ---');
+    currentSequence =
+        nextWorkoutSequence(currentSequence, workoutWidgetSequences);
+    if (currentSequence.widget != null) {
+      _controller.restart(duration: currentSequence.duration);
+      return;
+    }
+    Navigator.push(
+        context,
+        pageRoutes.workout
+            .nrsafterandbeforeworkout(widget.workoutList, NrsType.after)
+            .route(context));
+    return;
   }
 }
 

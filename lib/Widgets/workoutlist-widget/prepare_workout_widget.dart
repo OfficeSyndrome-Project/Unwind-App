@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
+import 'package:unwind_app/Widgets/animate_sequence_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 
 class PrepareWorkoutWidget extends StatelessWidget {
-  final String assetName;
-  const PrepareWorkoutWidget({super.key, required this.assetName});
+  // final String assetName;
+  final WorkoutData workoutData;
+  const PrepareWorkoutWidget({
+    super.key,
+    // required this.assetName,
+    required this.workoutData,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +31,18 @@ class PrepareWorkoutWidget extends StatelessWidget {
               ),
             ),
           ),
-          RatioImageoneToOne(
-              assetName: assetName,
-              smallWidth: 320,
-              largeWidth: 380,
-              smallHeight: 320,
-              largeHeight: 380),
+          AnimateSequenceWidget(
+            listPath: workoutData.animationPaths ?? [],
+            eachSetDuration: workoutData.sec,
+            repeat: workoutData.time,
+          ),
+
+          // RatioImageoneToOne(
+          //     assetName: assetName,
+          //     smallWidth: 320,
+          //     largeWidth: 380,
+          //     smallHeight: 320,
+          //     largeHeight: 380),
         ],
       ),
     );

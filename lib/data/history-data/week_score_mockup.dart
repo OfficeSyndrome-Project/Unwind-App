@@ -1,8 +1,8 @@
 class WeekScoreMockup {
   final String? weekName;
-  final int week;
-  final int beforeScore;
-  final int afterScore;
+  final int? week;
+  final int? beforeScore;
+  final int? afterScore;
 
   WeekScoreMockup(
       {required this.week,
