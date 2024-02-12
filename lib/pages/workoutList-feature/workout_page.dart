@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/show_dialog_widget.dart';
-import 'package:unwind_app/Widgets/soud_widget.dart';
+import 'package:unwind_app/services/tts_manager_service.dart';
 
 import 'package:unwind_app/Widgets/workoutlist-widget/circular_countdown_timer_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/next_workout_widget.dart';
@@ -13,6 +13,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:unwind_app/pages/loading_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.dart';
+import 'package:volume_controller/volume_controller.dart';
 
 class WorkoutPage extends StatefulWidget {
   final WorkoutList workoutList;
@@ -29,6 +30,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
   bool isVolume = true;
   static final CountDownController _controller = CountDownController();
   final PageRoutes pageRoutes = PageRoutes();
+  final TtsManager ttsManager = TtsManager();
+  double volumeListenerValue = 0;
+  double getVolume = 0;
+  double setVolumeValue = 0.5;
 
   bool isLoding = true;
   List<Widget> workoutWidgetSequences = [];
@@ -49,7 +54,12 @@ class _WorkoutPageState extends State<WorkoutPage> {
   initState() {
     super.initState();
     init();
-    TtsManager.initTts();
+
+    VolumeController().listener((volume) {
+      setState(() => volumeListenerValue = volume);
+    });
+
+    VolumeController().getVolume().then((volume) => setVolumeValue = volume);
   }
 
   void init() {
@@ -68,19 +78,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   @override
   void dispose() {
+    ttsManager.dispose();
+    VolumeController().removeListener();
     super.dispose();
-    TtsManager.dispose();
   }
-
-  // void btnVolume() async {
-  //   if (isVolume == true) {
-  //     // _controller.resume();
-  //     await TtsManager.setVolume(1.0);
-  //   } else if (isVolume == false) {
-  //     // _controller.pause();
-  //     await TtsManager.setVolume(0.0);
-  //   }
-  // }
 
   /// prepareWidgetFn is a function to create the workout prepare widget
   List<Widget> prepareWidgetFn(WorkoutData workoutData) => [
@@ -150,7 +151,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     final nextWidget = workoutWidgetSequences[nextIndex];
     if (nextWidget is PrepareWorkoutWidget) {
       // btnVolume();
-      TtsManager.speak(
+      ttsManager.speak(
           'ท่าต่อไปนี้จะทำให้กระดูกสันหลังของคุณหัก หากไม่อยากให้อาการหนัก ควรจะหยุดพักเสียก่อน');
       return WorkoutSequence(
         index: nextIndex,
@@ -206,13 +207,15 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 color: Theme.of(context).colorScheme.primary),
             iconButtonEnd: IconButton(
               onPressed: () async {
+                getVolume = await VolumeController().getVolume();
                 setState(() {
                   isVolume = !isVolume;
                 });
                 if (!isVolume) {
-                  await TtsManager.setVolume(0.0, isVolume: false);
-                } else
-                  await TtsManager.setVolume(1.0);
+                  VolumeController().muteVolume();
+                } else {
+                  VolumeController().setVolume(setVolumeValue);
+                }
               },
               icon: isVolume == true
                   ? Icon(Icons.volume_up_rounded)

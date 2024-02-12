@@ -5,25 +5,28 @@ import 'dart:io' show Platform;
 enum TtsState { playing, stopped, paused, continued }
 
 class TtsManager {
-  static final FlutterTts flutterTts = FlutterTts();
-  static String language = 'th-TH';
-  // static double volume = 1.0;
-  static double pitch = 1.0;
-  static double rate = 0.5;
+  TtsManager() {
+    initTts();
+  }
+  final FlutterTts flutterTts = FlutterTts();
+  String language = 'th-TH';
+  double volume = 1.0;
+  double pitch = 1.0;
+  double rate = 0.5;
 
-  static TtsState ttsState = TtsState.stopped;
+  TtsState ttsState = TtsState.stopped;
 
-  static get isPlaying => ttsState == TtsState.playing;
-  static get isStopped => ttsState == TtsState.stopped;
-  static get isPaused => ttsState == TtsState.paused;
-  static get isContinued => ttsState == TtsState.continued;
+  get isPlaying => ttsState == TtsState.playing;
+  get isStopped => ttsState == TtsState.stopped;
+  get isPaused => ttsState == TtsState.paused;
+  get isContinued => ttsState == TtsState.continued;
 
-  static bool get isIOS => !kIsWeb && Platform.isIOS;
-  static bool get isAndroid => !kIsWeb && Platform.isAndroid;
-  static bool get isWindows => !kIsWeb && Platform.isWindows;
-  static bool get isWeb => kIsWeb;
+  bool get isIOS => !kIsWeb && Platform.isIOS;
+  bool get isAndroid => !kIsWeb && Platform.isAndroid;
+  bool get isWindows => !kIsWeb && Platform.isWindows;
+  bool get isWeb => kIsWeb;
 
-  static Future<void> initTts() async {
+  Future<void> initTts() async {
     await _setAwaitOptions();
     await flutterTts.awaitSpeakCompletion(true);
     await flutterTts.awaitSynthCompletion(true);
@@ -70,31 +73,26 @@ class TtsManager {
     });
   }
 
-  static Future _getDefaultEngine() async {
+  Future _getDefaultEngine() async {
     var engine = await flutterTts.getDefaultEngine;
     if (engine != null) {
       print(engine);
     }
   }
 
-  static Future _getDefaultVoice() async {
+  Future _getDefaultVoice() async {
     var voice = await flutterTts.getDefaultVoice;
     if (voice != null) {
       print(voice);
     }
   }
 
-  static Future<void> setVolume(double _volume, {bool isVolume = true}) async {
-    // volume = _volume;
-    if (isVolume == false) {
-      await flutterTts.setVolume(0.0);
-    } else
-      await flutterTts.setVolume(_volume);
+  Future<void> setVolume(double _volume) async {
+    await flutterTts.setVolume(_volume);
   }
 
-  static Future speak(String? text) async {
-    // await flutterTts.setVolume(volume);
-    // await setVolume(volume);
+  Future speak(String? text) async {
+    await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
     await flutterTts.setPitch(pitch);
     await flutterTts.setLanguage(language);
@@ -104,7 +102,7 @@ class TtsManager {
     }
   }
 
-  static Future _setAwaitOptions() async {
+  Future _setAwaitOptions() async {
     await flutterTts.awaitSpeakCompletion(true);
 
     // await flutterTts.setSharedInstance(true);
@@ -119,17 +117,21 @@ class TtsManager {
         IosTextToSpeechAudioMode.defaultMode);
   }
 
-  static Future stop() async {
+  Future stop() async {
     var result = await flutterTts.stop();
     if (result == 1) ttsState = TtsState.stopped;
   }
 
-  static Future pause() async {
+  Future pause() async {
     var result = await flutterTts.pause();
     if (result == 1) ttsState = TtsState.paused;
   }
 
-  static Future<void> dispose() async {
+  Future resume() async {
+    ttsState = TtsState.continued;
+  }
+
+  Future<void> dispose() async {
     await flutterTts.stop();
   }
 }
