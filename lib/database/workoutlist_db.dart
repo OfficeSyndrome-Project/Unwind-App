@@ -5,6 +5,14 @@ import 'package:unwind_app/models/workoutlist_model.dart';
 
 enum WorkoutlistTitle { neckbaa_ch, neckbaa_th, shoulder, back_ch, back_th }
 
+const Map<String, WorkoutlistTitle> workoutListTitleMap = {
+  'neckbaa_ch': WorkoutlistTitle.neckbaa_ch,
+  'neckbaa_th': WorkoutlistTitle.neckbaa_th,
+  'shoulder': WorkoutlistTitle.shoulder,
+  'back_ch': WorkoutlistTitle.back_ch,
+  'back_th': WorkoutlistTitle.back_th,
+};
+
 class WorkoutListDB {
   DatabaseHelper database;
   WorkoutListDB(this.database);

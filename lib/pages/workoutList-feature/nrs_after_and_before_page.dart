@@ -9,6 +9,7 @@ import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/report_workout_utils.dart';
 import 'package:unwind_app/pages/workoutList-feature/result_nrs_four_week_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/result_nrs_per_week_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
@@ -151,13 +152,31 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
                   return;
                 }
                 if (widget.nrsType == NrsType.after) {
-                  final int cumulativeWorkoutDays =
-                      await workoutListDB.cumulativeDayOfWorkoutListTitle(
-                          widget.workoutList.titleCode);
-                  if (cumulativeWorkoutDays == 28) {
+                  final workouts = await workoutListDB
+                      .getWorkoutListByTitle(widget.workoutList.titleCode);
+                  if (workouts.isEmpty) {
+                    print('error empty workouts');
+                    return;
+                  }
+                  // sort by date start from the latest
+                  workouts.sort((a, b) => a.date != null && b.date != null
+                      ? b.date!.compareTo(a.date!)
+                      : 0);
+                  final lastWorkout = workouts.first;
+                  if (lastWorkout.date == null) {
+                    print('error empty date');
+                    return;
+                  }
+                  final isSameDayOrAfterExpiredDate =
+                      isSameDay(now, lastWorkout.date!) ||
+                          now.isAfter(lastWorkout.date!);
+                  if (isSameDayOrAfterExpiredDate) {
                     _navigateToResultNrsFourWeekPage(context);
                     return;
                   }
+                  final int cumulativeWorkoutDays =
+                      await workoutListDB.cumulativeDayOfWorkoutListTitle(
+                          widget.workoutList.titleCode);
                   if (cumulativeWorkoutDays < 28 &&
                       cumulativeWorkoutDays % 7 == 0) {
                     _navigateToResultNrsPerWeekPage(
@@ -232,6 +251,7 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
       context,
       MaterialPageRoute(
         builder: (context) => ResultNrsFourWeekPage(
+          workoutList: widget.workoutList,
           latestNrs: lastestNrs,
         ),
       ),

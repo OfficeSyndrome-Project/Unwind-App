@@ -218,7 +218,7 @@ class ScreeningDiagnoseService {
 
     // final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
     // Insert workout list to database, if there is workoutlist then skip
-    final workout_days = Give_Workoutlist_Per_Day(workouts);
+    final workout_days = GenerateWorkoutListByTitle(workouts);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
     for (var workoutlist_title in workout_days.entries) {
       final there_is_workoutlist = await wl_db
@@ -270,8 +270,8 @@ class ScreeningDiagnoseService {
   }
 
   //function give workoutlist per day
-  static Map<WorkoutlistTitle, List<WorkoutListModel>> Give_Workoutlist_Per_Day(
-      List<WorkoutlistTitle> workoutList) {
+  static Map<WorkoutlistTitle, List<WorkoutListModel>>
+      GenerateWorkoutListByTitle(List<WorkoutlistTitle> workoutList) {
     Map<WorkoutlistTitle, List<WorkoutListModel>> result = {};
     final DateTime now = DateTime.now();
 
@@ -413,7 +413,24 @@ class ScreeningDiagnoseService {
       WorkoutlistTitle.back_ch,
       WorkoutlistTitle.back_th
     ];
-    final workout_days = Give_Workoutlist_Per_Day(workoutListTitles);
+    createWorkouts(workoutListTitles);
+    // final workout_days = GenerateWorkoutListByTitle(workoutListTitles);
+    // WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
+    // for (var workoutlist_title in workout_days.entries) {
+    //   final there_is_workoutlist = await wl_db
+    //       .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
+    //   // if there is workoutlist then skip
+    //   if (there_is_workoutlist) {
+    //     continue;
+    //   }
+    //   for (var workout in workoutlist_title.value) {
+    //     wl_db.insertWorkoutList(workout);
+    //   }
+    // }
+  }
+
+  static Future<void> createWorkouts(List<WorkoutlistTitle> workouts) async {
+    final workout_days = GenerateWorkoutListByTitle(workouts);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
     for (var workoutlist_title in workout_days.entries) {
       final there_is_workoutlist = await wl_db
