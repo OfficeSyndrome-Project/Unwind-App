@@ -290,7 +290,6 @@ flutter:
     - lib/assets/images/screeningPart/information_3.png
 
     - lib/assets/images/logo.png
-    - lib/assets/images/logo_white.png
     - lib/assets/images/logo_with_bg.png
     - lib/assets/images/LOGOwithBGxxxhdpi.png
     - lib/assets/images/successful_icon.png

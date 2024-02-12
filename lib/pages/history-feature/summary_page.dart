@@ -253,7 +253,13 @@ class SummaryPage extends StatelessWidget {
                   nrsScoreAverage: currentDiffScore > 0 ? currentDiffScore : 0,
                 ),
                 ButtonWithiconWidget(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        pageRoutes.history
+                            .resultscreening(keepscores)
+                            .route(context));
+                  },
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   text: 'ผลการประเมินแบบทดสอบ',
                   color: const Color(0xFFC4D1F0),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
+import 'package:unwind_app/pages/history-feature/result_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/infomation_page.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
@@ -157,6 +159,12 @@ class History {
       widget: ResultPerWeekPage(
         summaryArr: summaryArr,
       ));
+  PathRoute resultscreening(List<KeepScoreAndDateModel> dateMockup) =>
+      PathRoute(
+          title: "ประวัติ",
+          widget: ResultScreeningPage(
+            dateMockup: dateMockup,
+          ));
 }
 
 class Profile {

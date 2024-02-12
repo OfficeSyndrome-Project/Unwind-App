@@ -18,67 +18,67 @@ class KeepScoreAndDateModel {
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 1,
-        dateTime: DateTime.utc(2566, 8, 8),
+        dateTime: DateTime.utc(2023, 8, 8),
         beforeScore: 8,
         afterScore: 4));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 2,
-        dateTime: DateTime.utc(2566, 8, 9),
+        dateTime: DateTime.utc(2023, 8, 9),
         beforeScore: 5,
         afterScore: 4));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 3,
-        dateTime: DateTime.utc(2566, 8, 10),
+        dateTime: DateTime.utc(2023, 8, 10),
         beforeScore: 5,
         afterScore: 4));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 4,
-        dateTime: DateTime.utc(2566, 8, 11),
+        dateTime: DateTime.utc(2023, 8, 11),
         beforeScore: 5,
         afterScore: 3));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 5,
-        dateTime: DateTime.utc(2566, 8, 12),
+        dateTime: DateTime.utc(2023, 8, 12),
         beforeScore: 4,
         afterScore: 3));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 6,
-        dateTime: DateTime.utc(2566, 8, 13),
+        dateTime: DateTime.utc(2023, 8, 13),
         beforeScore: 4,
         afterScore: 3));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 7,
-        dateTime: DateTime.utc(2566, 8, 14),
+        dateTime: DateTime.utc(2023, 8, 14),
         beforeScore: 6,
         afterScore: 4));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 8,
-        dateTime: DateTime.utc(2566, 8, 15),
+        dateTime: DateTime.utc(2023, 8, 15),
         beforeScore: 6,
         afterScore: 4));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 9,
-        dateTime: DateTime.utc(2566, 8, 16),
+        dateTime: DateTime.utc(2023, 8, 16),
         beforeScore: 6,
         afterScore: 4));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 10,
-        dateTime: DateTime.utc(2566, 8, 17),
+        dateTime: DateTime.utc(2023, 8, 17),
         beforeScore: 6,
         afterScore: 4));
     keepscores.add(KeepScoreAndDateModel(
         name: 'ชุดท่าบริหารคอ',
         day: 11,
-        dateTime: DateTime.utc(2566, 8, 18),
+        dateTime: DateTime.utc(2023, 8, 18),
         beforeScore: 6,
         afterScore: 2));
 

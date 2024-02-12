@@ -12,8 +12,9 @@
         android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
      <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <application
-        android:label="unwind_app"
+        android:label="Unwind"
         android:name="${applicationName}"
+        android:roundIcon="@mipmap/round_launcher"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true">
         <activity
