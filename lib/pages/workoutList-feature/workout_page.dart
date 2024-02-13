@@ -35,17 +35,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
   bool isLoding = true;
   List<Widget> workoutWidgetSequences = [];
   WorkoutSequence currentSequence = WorkoutSequence(index: -1, duration: 0);
-  final List<String> fullPaths = [
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-1.png',
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-2.png',
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-3.png',
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-4.png',
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-5.png',
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-6.png',
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-7.png',
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-8.png',
-    'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-9.png',
-  ];
 
   @override
   initState() {

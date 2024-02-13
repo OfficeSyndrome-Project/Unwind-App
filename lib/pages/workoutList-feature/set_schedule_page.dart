@@ -186,7 +186,12 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                 ),
               ),
               ButtonWithoutIconWidget(
-                  onTap: onConfirm,
+                  onTap: () async {
+                    if (!isEdited) {
+                      return;
+                    }
+                    onConfirm();
+                  },
                   text: 'ยืนยัน',
                   radius: 4,
                   width: 72,
