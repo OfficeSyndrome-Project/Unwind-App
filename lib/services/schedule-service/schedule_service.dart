@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:table_calendar/table_calendar.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/services/schedule-service/notification_service.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/services/general_stored_service.dart';
@@ -21,7 +22,7 @@ class ScheduleService {
   static Future<bool> writeEvent(Event event, int id, int index) async {
     List<bool> results = [];
 
-    results.add(await writeTitle(event.title, id, index));
+    results.add(await writeTitle(event.wol?.titleCode ?? '', id, index));
     results.add(await writeTimes(event.times, id, index));
 
     if (results.contains(false)) {
@@ -34,7 +35,7 @@ class ScheduleService {
     final title = await readTitle(id, index);
     final times = await readTimes(id, index);
 
-    return Event(title, times);
+    return Event(WorkoutList.workoutListFromTitleCode[title], times);
   }
 
   static Future<bool> writeTitle(String title, int id, int index) async {
@@ -68,7 +69,7 @@ class ScheduleService {
           selectedDay: events[index].times,
           id: index,
           title: 'ดูเหมือนว่าคุณจะต้องบริหารร่างกายแล้ว~ !',
-          body: events[index].title);
+          body: events[index].wol?.titleTH ?? '');
     }
     if (results.contains(false)) {
       return false;

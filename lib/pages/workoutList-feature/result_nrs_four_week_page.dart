@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:unwind_app/Routes/routes_config.dart';
+// import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/head_and_sub_result_nrs_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/question_box_nrs_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class ResultNrsFourWeekPage extends StatefulWidget {
+  final WorkoutList workoutList;
   final int? latestNrs;
-  const ResultNrsFourWeekPage({Key? key, required this.latestNrs})
+  const ResultNrsFourWeekPage(
+      {Key? key, required this.latestNrs, required this.workoutList})
       : super(key: key);
   @override
   State<ResultNrsFourWeekPage> createState() => _ResultNrsFourWeekPageState();
@@ -18,6 +24,7 @@ class ResultNrsFourWeekPage extends StatefulWidget {
 class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
   int index = 0;
   Map<int, int> answers = {};
+  WorkoutListDB workoutListDB = serviceLocator();
   String generateBtnTitle(int index) {
     if (index == 0) {
       return 'ถัดไป';
@@ -140,7 +147,7 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
     );
   }
 
-  void nextPage(BuildContext context, Map<int, int> answers) {
+  Future<void> nextPage(BuildContext context, Map<int, int> answers) async {
     print(index);
     print(answers);
     if (index == 0) {
@@ -154,21 +161,28 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
       return;
     }
     if (index == 1) {
-      setState(() {
-        if (answers[2] == 1) {
-          // renew the workout
-          Navigator.popUntil(
-              context, (rp) => rp.settings.name == PageName.REPORT_WORKOUT);
+      if (answers[2] == 1) {
+        // renew the workout
+        final workoutList = workoutListTitleMap[widget.workoutList.titleCode];
+        if (workoutList == null) {
+          print('error workoutList is null, cannot renew the workout');
+          return;
         }
-        if (answers[2] == 2) {
-          // remove the workout, go the home page
-          Navigator.popUntil(context, (rp) => rp.isFirst);
-        }
-      });
+        // Remove the old workout, and add the new one
+        await workoutListDB
+            .deleteWorkoutListByTitle(widget.workoutList.titleCode);
+        await ScreeningDiagnoseService.createWorkouts([workoutList]);
+        Navigator.popUntil(context, (rp) => rp.isFirst);
+      }
+      if (answers[2] == 2) {
+        // remove the workout, go the home page
+        await workoutListDB
+            .deleteWorkoutListByTitle(widget.workoutList.titleCode);
+        Navigator.popUntil(context, (rp) => rp.isFirst);
+      }
     }
     if (index == 2) {
-      Navigator.popUntil(
-          context, (rp) => rp.settings.name == PageName.REPORT_WORKOUT);
+      Navigator.popUntil(context, (rp) => rp.isFirst);
     }
   }
 }

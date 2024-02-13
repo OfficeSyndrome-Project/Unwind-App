@@ -61,7 +61,7 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                                     .route(context));
                             setState(() {});
                           },
-                          workoutName: workoutLists[index].description,
+                          workoutName: workoutLists[index].titleTH,
                           numberWorkout:
                               workoutLists[index].workoutData.length.toString(),
                           time: workoutLists[index].workoutData.isEmpty
