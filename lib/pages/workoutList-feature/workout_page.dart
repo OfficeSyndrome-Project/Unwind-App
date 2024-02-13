@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:unwind_app/Routes/routes_config.dart';
@@ -92,6 +94,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
       (n) => WorkoutWidget(
             name: workoutData.name,
             workoutData: workoutData,
+            ttsManager: ttsManager,
             timeth: n + 1,
           )).toList();
 
@@ -147,8 +150,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
     final nextWidget = workoutWidgetSequences[nextIndex];
     if (nextWidget is PrepareWorkoutWidget) {
       // btnVolume();
-      ttsManager.speak(
-          'ท่าต่อไปนี้จะทำให้กระดูกสันหลังของคุณหัก หากไม่อยากให้อาการหนัก ควรจะหยุดพักเสียก่อน');
+      final step = nextWidget.workoutData.step;
+      ttsManager.speak(step);
       return WorkoutSequence(
         index: nextIndex,
         duration: 10,
@@ -186,6 +189,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 icon: const Icon(Icons.arrow_back_ios_rounded),
                 onPressed: () async {
                   _controller.pause();
+                  ttsManager.pause();
+                  ttsManager.stop();
                   final result = await alertDialog.getshowDialog(
                       context, 'ยกเลิกการบริหารใช่หรือไม่ ?', null, () {
                     Navigator.pop(context, false);
@@ -198,6 +203,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   if (result == true) {
                     _controller.pause();
                     Navigator.pop(context);
+                    return;
                   }
                 },
                 color: Theme.of(context).colorScheme.primary),
@@ -247,6 +253,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 CircularCountdownTimerWidget(
                   duration: currentSequence.duration,
                   controller: _controller,
+                  ttsManager: ttsManager,
                   onComplete: () {
                     setState(() {
                       print('--- update sequence ---');
@@ -256,6 +263,12 @@ class _WorkoutPageState extends State<WorkoutPage> {
                           '--- currentSequence: ${currentSequence.index} of ${workoutWidgetSequences.length} ---');
                       if (currentSequence.widget != null) {
                         _controller.restart(duration: currentSequence.duration);
+                        if (currentSequence.widget is WorkoutWidget) {
+                          speakWhileExercising();
+                        }
+                        if (currentSequence.widget is NextWorkoutWidget) {
+                          ttsManager.speak('เตรียมตัวสำหรับท่าต่อไป');
+                        }
                         return;
                       }
                       Navigator.push(
@@ -277,6 +290,23 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   },
                 ),
               ]);
+  }
+
+  void speakWhileExercising() {
+    ttsManager.speak('${currentSequence.duration}');
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      print('timer: ${timer.tick}');
+      ttsManager.pause();
+      ttsManager.stop();
+      final timeSec = currentSequence.duration - timer.tick;
+      if (timeSec != 0) {
+        ttsManager.speak('${currentSequence.duration - timer.tick}');
+      }
+      if (timer.tick == currentSequence.duration) {
+        print('timer cancel');
+        timer.cancel();
+      }
+    });
   }
 
   void skipSequence() {
