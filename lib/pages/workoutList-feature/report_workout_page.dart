@@ -89,7 +89,7 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                   currentSelectionIndex = DateTime.now().weekday - 1;
                 },
                 color: Colors.white),
-            textBar: widget.workoutList?.description,
+            textBar: widget.workoutList?.titleTH,
             children: [
               FutureBuilder(
                 future: getCircle(),

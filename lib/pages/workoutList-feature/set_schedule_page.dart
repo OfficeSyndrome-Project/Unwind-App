@@ -32,12 +32,8 @@ class SetSchedulePage extends StatefulWidget {
 
 class _SetSchedulePageState extends State<SetSchedulePage> {
   final PageRoutes pageRoutes = PageRoutes();
-  final List<String> nameList = [
-    'ชุดท่าบริหารคอ',
-    'ชุดท่าบริหารไหล่',
-    'ชุดท่าบริหารหลังส่วนบน'
-  ];
-  String? selectWorkoutList;
+
+  WorkoutList? selectWorkoutList;
   bool isTapCalender = false;
   bool isTapTime = false;
 
@@ -118,10 +114,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     List<Event> oldEvents = _getEventsForDay(_selectedDay!);
 
     ScheduleService.kEvents.addAll({
-      _selectedDay!: [
-        ...oldEvents,
-        Event(selectWorkoutList ?? 'ไม่มีชื่อชุดท่า', setSchedule())
-      ]
+      _selectedDay!: [...oldEvents, Event(selectWorkoutList, setSchedule())]
     });
     // NotificationService.scheduleNotification(
     //   selectedDay: setSchedule(),
@@ -234,12 +227,13 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                 final availableTitleCodes = snapshot.data as List<String>;
                 final nameList = availableTitleCodes
                     .map((code) => WorkoutList.workoutListFromTitleCode[code])
-                    .map((wol) => wol?.description ?? '')
+                    .where((element) => element != null)
+                    .map((wol) => wol!)
                     .toList();
                 return ListDropdownWidget(
                   nameList: nameList,
                   value: selectWorkoutList,
-                  onChanged: (String? value) {
+                  onChanged: (WorkoutList? value) {
                     setState(() {
                       isEdited = true;
                       selectWorkoutList = value!;

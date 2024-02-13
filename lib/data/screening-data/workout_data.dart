@@ -4,7 +4,7 @@ class WorkoutList {
   String title;
   String workoutType;
   String titlePath;
-  String description;
+  String titleTH;
   String titleCode;
   String? totalTime;
   List<WorkoutData> workoutData;
@@ -13,7 +13,7 @@ class WorkoutList {
     required this.workoutType,
     required this.titlePath,
     required this.workoutData,
-    required this.description,
+    required this.titleTH,
     required this.titleCode,
     this.totalTime,
   });
@@ -25,6 +25,11 @@ class WorkoutList {
     'back_ch': 4,
     'back_th': 5,
   };
+  @override
+  operator ==(wol) => wol is WorkoutList && wol.titleCode == titleCode;
+
+  @override
+  int get hashCode => titleCode.hashCode;
 
   static int compareByTitleOrder(WorkoutList a, WorkoutList b) =>
       (customOrder[a.titleCode] ?? 0) - (customOrder[b.titleCode] ?? 0);
@@ -52,7 +57,7 @@ class WorkoutList {
   static Map<WorkoutlistTitle, WorkoutList> get workoutListFromTitle => {
         WorkoutlistTitle.neckbaa_ch: WorkoutList(
             title: "คอ-บ่า",
-            description: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
+            titleTH: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
             workoutType: "stretch",
             titlePath: "lib/assets/images/screeningPart/select_pain_1.png",
             titleCode: "neckbaa_ch",
@@ -64,7 +69,7 @@ class WorkoutList {
             totalTime: "4 นาที 10 วินาที"),
         WorkoutlistTitle.neckbaa_th: WorkoutList(
             title: "คอ-บ่า",
-            description: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
+            titleTH: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
             workoutType: "strength",
             titlePath: "lib/assets/images/screeningPart/select_pain_1.png",
             titleCode: "neckbaa_th",
@@ -76,7 +81,7 @@ class WorkoutList {
             totalTime: "5 นาที 50 วินาที"),
         WorkoutlistTitle.shoulder: WorkoutList(
             title: "ไหล่",
-            description: "ชุดท่าบริหารไหล่เพิ่มความยืดหยุ่น",
+            titleTH: "ชุดท่าบริหารไหล่เพิ่มความยืดหยุ่น",
             workoutType: "stretch",
             titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
             titleCode: "shoulder",
@@ -87,7 +92,7 @@ class WorkoutList {
             totalTime: "13 นาที 45 วินาที"),
         WorkoutlistTitle.back_ch: WorkoutList(
             title: "หลัง",
-            description: "ชุดท่าบริหารหลังเพิ่มความยืดหยุ่น",
+            titleTH: "ชุดท่าบริหารหลังเพิ่มความยืดหยุ่น",
             workoutType: "stretch",
             titlePath: "lib/assets/images/screeningPart/select_pain_4.png",
             titleCode: "back_ch",
@@ -98,7 +103,7 @@ class WorkoutList {
             totalTime: "2 นาที 50 วินาที"),
         WorkoutlistTitle.back_th: WorkoutList(
             title: "หลัง",
-            description: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
+            titleTH: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
             workoutType: "stretch",
             titlePath: "lib/assets/images/screeningPart/select_pain_4.png",
             titleCode: "back_th",

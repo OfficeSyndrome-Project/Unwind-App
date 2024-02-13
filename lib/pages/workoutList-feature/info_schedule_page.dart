@@ -37,7 +37,7 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
               Navigator.pop(context);
             },
             color: Colors.white),
-        textBar: widget.value[widget.index].title,
+        textBar: widget.value[widget.index].wol?.titleTH,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,7 +54,7 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
                       Icons.directions_run,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: widget.value[widget.index].title,
+                    topicName: widget.value[widget.index].wol?.titleTH ?? '',
                     style: TextStyle(
                       color: Color(0xFF484D56),
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -87,7 +87,7 @@ class _InfoSchedulePageState extends State<InfoSchedulePage> {
                   alignment: Alignment.center,
                   child: RatioImageoneToOne(
                       assetName:
-                          'lib/assets/images/workout/neck-shoulder/neckch03/tp-right/TP-1.png',
+                          widget.value[widget.index].wol?.titlePath ?? '',
                       smallWidth: 180,
                       largeWidth: 250,
                       smallHeight: 180,

@@ -135,7 +135,7 @@ class _SchedulePageState extends State<SchedulePage> {
                 itemCount: value.length,
                 itemBuilder: (context, index) {
                   return EventBoxWidget(
-                    eventName: '${value[index]}',
+                    eventName: '${value[index].wol?.titleTH ?? ''}',
                     time: value[index].times,
                     onTap: () async {
                       await Navigator.push(
