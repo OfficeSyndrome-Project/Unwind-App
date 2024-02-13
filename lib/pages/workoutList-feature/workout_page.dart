@@ -14,6 +14,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:unwind_app/pages/loading_page.dart';
 import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.dart';
 
+//TODO skip workout for debugging
 bool ENABLE_WORKOUT_SKIP = false;
 
 class WorkoutPage extends StatefulWidget {

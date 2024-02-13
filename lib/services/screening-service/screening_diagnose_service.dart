@@ -235,8 +235,6 @@ class ScreeningDiagnoseService {
     List<WorkoutList> acquiredWorkoutList = workouts
         .map((title) => WorkoutList.workoutListFromTitle[title]!)
         .toList();
-    //TODO resume (กรณีตรวจใหม่ได้ชุดท่าเดิม)
-
     return acquiredWorkoutList;
   }
 
