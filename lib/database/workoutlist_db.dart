@@ -3,12 +3,20 @@ import 'package:sqflite/sqflite.dart';
 import 'package:unwind_app/database/db_helper.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 
-enum WorkoutlistTitle { neckbaa_ch, neckbaa_th, shoulder, back_ch, back_th }
+enum WorkoutlistTitle {
+  neckbaa_ch,
+  neckbaa_th,
+  shoulder_ch,
+  shoulder_th,
+  back_ch,
+  back_th
+}
 
 const Map<String, WorkoutlistTitle> workoutListTitleMap = {
   'neckbaa_ch': WorkoutlistTitle.neckbaa_ch,
   'neckbaa_th': WorkoutlistTitle.neckbaa_th,
-  'shoulder': WorkoutlistTitle.shoulder,
+  'shoulder_ch': WorkoutlistTitle.shoulder_ch,
+  'shoulder_th': WorkoutlistTitle.shoulder_th,
   'back_ch': WorkoutlistTitle.back_ch,
   'back_th': WorkoutlistTitle.back_th,
 };

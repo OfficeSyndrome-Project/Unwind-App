@@ -254,7 +254,8 @@ class ScreeningDiagnoseService {
         ];
       case ScreeningTitle.shoulder:
         return [
-          WorkoutlistTitle.shoulder,
+          WorkoutlistTitle.shoulder_ch,
+          WorkoutlistTitle.shoulder_th,
         ];
       case ScreeningTitle.lowerback:
         return [
@@ -281,8 +282,11 @@ class ScreeningDiagnoseService {
     if (workoutList.contains(WorkoutlistTitle.neckbaa_th)) {
       result[WorkoutlistTitle.neckbaa_th] = GiveNeckBaaThWorkoutlist(now);
     }
-    if (workoutList.contains(WorkoutlistTitle.shoulder)) {
-      result[WorkoutlistTitle.shoulder] = GiveShoulderWorkoutlist(now);
+    if (workoutList.contains(WorkoutlistTitle.shoulder_ch)) {
+      result[WorkoutlistTitle.shoulder_ch] = GiveShoulderChWorkoutlist(now);
+    }
+    if (workoutList.contains(WorkoutlistTitle.shoulder_th)) {
+      result[WorkoutlistTitle.shoulder_th] = GiveShoulderThWorkoutlist(now);
     }
     if (workoutList.contains(WorkoutlistTitle.back_ch)) {
       result[WorkoutlistTitle.back_ch] = GiveBackChWorkoutlist(now);
@@ -323,18 +327,35 @@ class ScreeningDiagnoseService {
         .toList();
   }
 
-  static List<WorkoutListModel> GiveShoulderWorkoutlist(DateTime now) {
+  static List<WorkoutListModel> GiveShoulderChWorkoutlist(DateTime now) {
     return List<int>.generate(days_in_four_weeks, (index) => index)
         .map(
           (days_from_now) => WorkoutListModel(
               date: now.add(Duration(days: days_from_now)),
-              WOL_title: WorkoutlistTitle.shoulder.name,
+              WOL_title: WorkoutlistTitle.shoulder_ch.name,
               remaining_times: 3,
               total_times: 3,
               WOL_id: null,
               NRS_before: null,
               NRS_after: null),
         )
+        .toList();
+  }
+
+  static List<WorkoutListModel> GiveShoulderThWorkoutlist(DateTime now) {
+    return List<int>.generate(days_in_four_weeks, (index) => index)
+        .expand((days_from_now) => (days_from_now % 2 == 0)
+            ? [
+                WorkoutListModel(
+                    date: now.add(Duration(days: days_from_now)),
+                    WOL_title: WorkoutlistTitle.shoulder_th.name,
+                    remaining_times: 1,
+                    total_times: 1,
+                    WOL_id: null,
+                    NRS_before: null,
+                    NRS_after: null)
+              ]
+            : <WorkoutListModel>[])
         .toList();
   }
 
@@ -409,7 +430,8 @@ class ScreeningDiagnoseService {
     final List<WorkoutlistTitle> workoutListTitles = [
       WorkoutlistTitle.neckbaa_ch,
       WorkoutlistTitle.neckbaa_th,
-      WorkoutlistTitle.shoulder,
+      WorkoutlistTitle.shoulder_ch,
+      WorkoutlistTitle.shoulder_th,
       WorkoutlistTitle.back_ch,
       WorkoutlistTitle.back_th
     ];
@@ -452,7 +474,7 @@ class ScreeningDiagnoseService {
       case ScreeningTitle.baa:
         return [WorkoutlistTitle.neckbaa_ch, WorkoutlistTitle.neckbaa_th];
       case ScreeningTitle.shoulder:
-        return [WorkoutlistTitle.shoulder];
+        return [WorkoutlistTitle.shoulder_ch, WorkoutlistTitle.shoulder_th];
       case ScreeningTitle.lowerback:
         return [WorkoutlistTitle.back_ch, WorkoutlistTitle.back_th];
       case ScreeningTitle.upperback:
