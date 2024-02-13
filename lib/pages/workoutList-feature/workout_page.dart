@@ -154,7 +154,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
       ttsManager.speak(step);
       return WorkoutSequence(
         index: nextIndex,
-        duration: (nextWidget.workoutData.stepSpeechDuration ?? 10),
+        duration: (nextWidget.workoutData.stepSpeechDuration ?? 15),
         widget: nextWidget,
       );
     }
@@ -293,6 +293,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
   }
 
   void speakWhileExercising() {
+    ttsManager.pause();
+    ttsManager.stop();
     ttsManager.speak('${currentSequence.duration}');
     Timer.periodic(Duration(seconds: 1), (timer) {
       print('timer: ${timer.tick}');
