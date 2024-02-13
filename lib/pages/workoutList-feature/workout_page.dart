@@ -18,7 +18,7 @@ import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.d
 import 'package:volume_controller/volume_controller.dart';
 
 //TODO skip workout for debugging
-bool ENABLE_WORKOUT_SKIP = false;
+bool ENABLE_WORKOUT_SKIP = true;
 
 class WorkoutPage extends StatefulWidget {
   final WorkoutList workoutList;
@@ -154,7 +154,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
       ttsManager.speak(step);
       return WorkoutSequence(
         index: nextIndex,
-        duration: 10,
+        duration: (nextWidget.workoutData.stepSpeechDuration ?? 10),
         widget: nextWidget,
       );
     }
