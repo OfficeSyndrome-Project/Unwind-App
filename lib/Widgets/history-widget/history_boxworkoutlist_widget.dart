@@ -5,7 +5,12 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
-  HistoryWorkoutlistWidget({super.key});
+  HistoryWorkoutlistWidget({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
 
   static List<ChartData> chartData = [ChartData(1, 10)];
   static List<KeepScoreAndDateModel> keepscores =
