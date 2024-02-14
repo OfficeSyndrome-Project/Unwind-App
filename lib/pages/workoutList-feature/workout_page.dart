@@ -44,6 +44,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
   List<Widget> workoutWidgetSequences = [];
   WorkoutSequence currentSequence = WorkoutSequence(index: -1, duration: 0);
 
+  Timer? ttsTimer;
+
   @override
   initState() {
     super.initState();
@@ -191,6 +193,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   _controller.pause();
                   ttsManager.pause();
                   ttsManager.stop();
+                  ttsTimer?.cancel();
                   final result = await alertDialog.getshowDialog(
                       context, 'ยกเลิกการบริหารใช่หรือไม่ ?', null, () {
                     Navigator.pop(context, false);
@@ -264,7 +267,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                       if (currentSequence.widget != null) {
                         _controller.restart(duration: currentSequence.duration);
                         if (currentSequence.widget is WorkoutWidget) {
-                          speakWhileExercising();
+                          speakWhileExercising(currentSequence.duration);
                         }
                         if (currentSequence.widget is NextWorkoutWidget) {
                           ttsManager.speak('เตรียมตัวสำหรับท่าต่อไป');
@@ -292,19 +295,24 @@ class _WorkoutPageState extends State<WorkoutPage> {
               ]);
   }
 
-  void speakWhileExercising() {
+  Future<void> speakWhileExercising(int durationSecond) async {
     ttsManager.pause();
     ttsManager.stop();
-    ttsManager.speak('${currentSequence.duration}');
+    // ttsManager.speak('${durationSecond}');
     Timer.periodic(Duration(seconds: 1), (timer) {
+      this.ttsTimer = timer;
       print('timer: ${timer.tick}');
       ttsManager.pause();
       ttsManager.stop();
-      final timeSec = currentSequence.duration - timer.tick;
+      final timeSec = durationSecond - timer.tick;
       if (timeSec != 0) {
-        ttsManager.speak('${currentSequence.duration - timer.tick}');
+        if (!mounted) {
+          timer.cancel();
+          return;
+        }
+        ttsManager.speak('${durationSecond - timer.tick}');
       }
-      if (timer.tick == currentSequence.duration) {
+      if (timer.tick == durationSecond) {
         print('timer cancel');
         timer.cancel();
       }
