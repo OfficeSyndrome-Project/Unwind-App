@@ -3,6 +3,24 @@ import 'package:sqflite/sqflite.dart';
 import 'package:unwind_app/database/db_helper.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 
+enum WorkoutlistTitle {
+  neckbaa_ch,
+  neckbaa_th,
+  shoulder_ch,
+  shoulder_th,
+  back_ch,
+  back_th
+}
+
+const Map<String, WorkoutlistTitle> workoutListTitleMap = {
+  'neckbaa_ch': WorkoutlistTitle.neckbaa_ch,
+  'neckbaa_th': WorkoutlistTitle.neckbaa_th,
+  'shoulder_ch': WorkoutlistTitle.shoulder_ch,
+  'shoulder_th': WorkoutlistTitle.shoulder_th,
+  'back_ch': WorkoutlistTitle.back_ch,
+  'back_th': WorkoutlistTitle.back_th,
+};
+
 class WorkoutListDB {
   DatabaseHelper database;
   WorkoutListDB(this.database);
@@ -65,7 +83,6 @@ class WorkoutListDB {
         where: "WOL_title = ? AND deleted_at IS NULL",
         whereArgs: [title],
         orderBy: 'date ASC');
-    print(maps);
     return maps.map((e) => WorkoutListModel.fromJson(e)).toList();
   }
 
@@ -78,9 +95,9 @@ class WorkoutListDB {
   }
 
   //update NRS before
-  Future<void> updateNRSbefore(int NRS, int WOL_id) async {
+  Future<int> updateNRSbefore(int NRS, int WOL_id) async {
     Database db = await database.database;
-    await db.update(
+    return await db.update(
       'WorkoutList',
       {'NRS_before': NRS},
       where: 'WOL_id = ? AND deleted_at IS NULL',
@@ -89,9 +106,9 @@ class WorkoutListDB {
   }
 
   //update NRS after
-  Future<void> updateNRSafter(int NRS, int WOL_id) async {
+  Future<int> updateNRSafter(int NRS, int WOL_id) async {
     Database db = await database.database;
-    await db.update(
+    return await db.update(
       'WorkoutList',
       {'NRS_after': NRS},
       where: 'WOL_id = ? AND deleted_at IS NULL',
@@ -119,6 +136,16 @@ class WorkoutListDB {
     );
   }
 
+  Future<int> deleteWorkoutListByTitle(String title) async {
+    Database db = await database.database;
+    return await db.update(
+      'WorkoutList',
+      {'deleted_at': DateTime.now().toIso8601String()},
+      where: 'WOL_title = ?',
+      whereArgs: [title],
+    );
+  }
+
   Future<List<String>> getAvailableWorkoutListTitles() async {
     Database db = await database.database;
 
@@ -132,4 +159,74 @@ class WorkoutListDB {
 
     return maps.map((row) => row['WOL_title'].toString()).toList();
   }
+
+  //update remaining times
+  Future<int> updateRemainingTimes(int remainingTimes, int WOL_id) async {
+    if (remainingTimes < 0) {
+      return 0;
+    }
+    Database db = await database.database;
+    return await db.update(
+      'WorkoutList',
+      {'remaining_times': remainingTimes},
+      where: 'WOL_id = ? AND deleted_at IS NULL',
+      whereArgs: [WOL_id],
+    );
+  }
+
+  Future<int?> getFirstTimeNrsByTitle(String titleCode) async {
+    final workoutlist = await getWorkoutListByTitle(titleCode);
+    final workoutWithNrs =
+        workoutlist.where((workout) => workout.NRS_before != null).toList();
+    if (workoutWithNrs.isEmpty) {
+      return null;
+    }
+    return workoutWithNrs.first.NRS_before;
+  }
+
+  Future<int?> getLatestNrsByTitle(String titleCode) async {
+    final workoutlist = await getWorkoutListByTitle(titleCode);
+    final workoutWithNrs =
+        workoutlist.where((workout) => workout.NRS_after != null).toList();
+    if (workoutWithNrs.isEmpty) {
+      return null;
+    }
+    return workoutWithNrs.last.NRS_after;
+  }
+
+  Future<int> cumulativeDayOfWorkoutListTitle(String titleCode) async {
+    final workoutlist = await getWorkoutListByTitle(titleCode);
+    return cumulativeActiveDay(workoutlist);
+  }
+
+  Future<double> averageCumulativeNrsByTitle(String titleCode) async {
+    final workoutlist = await getWorkoutListByTitle(titleCode);
+    final workoutWithNrs = workoutlist
+        .where((workout) =>
+            workout.NRS_before != null && workout.NRS_after != null)
+        .toList();
+    if (workoutWithNrs.isEmpty) {
+      return 0;
+    }
+    final sumNrs = (workoutWithNrs
+                .map((workout) => workout.NRS_before)
+                .reduce((acc, value) => (acc ?? 0) + (value ?? 0)) ??
+            0) +
+        (workoutWithNrs
+                .map((workout) => workout.NRS_after)
+                .reduce((acc, value) => (acc ?? 0) + (value ?? 0)) ??
+            0);
+    ;
+    return sumNrs / 2 * workoutWithNrs.length;
+  }
+
+  /// Get the number of days that the user has done the workout
+  static int cumulativeActiveDay(List<WorkoutListModel> workouts) =>
+      workouts.where(didWorkout).length;
+
+  /// Compare the remaining times and total times, if the remaining times is less than the total times, then the user has done the workout
+  static bool didWorkout(workout) =>
+      ((workout.remaining_times == null) || (workout.total_times == null))
+          ? false
+          : workout.remaining_times! < workout.total_times!;
 }

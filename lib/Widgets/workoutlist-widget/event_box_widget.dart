@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/services/schedule-service/utils.dart';
 
 class EventBoxWidget extends StatelessWidget {
   final String eventName;
-  final String time;
+  final DateTime time;
   final void Function()? onTap;
   const EventBoxWidget(
       {super.key, required this.eventName, required this.time, this.onTap});
@@ -36,7 +37,9 @@ class EventBoxWidget extends StatelessWidget {
               Text(
                 eventName,
                 style: TextStyle(
-                  color: Color(0xFF484D56),
+                  color: time.isBefore(getDateTimeToday()) == true
+                      ? Color(0xffc9635f)
+                      : Color(0xFF484D56),
                   fontSize:
                       ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
                   fontFamily: 'Noto Sans Thai',
@@ -48,9 +51,13 @@ class EventBoxWidget extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             child: Text(
-              time,
+              time.hour.toString().padLeft(2, '0') +
+                  ':' +
+                  time.minute.toString().padLeft(2, '0'),
               style: TextStyle(
-                color: Color(0xFF484D56),
+                color: time.isBefore(getDateTimeToday()) == true
+                    ? Color(0xffc9635f)
+                    : Color(0xFF484D56),
                 fontSize:
                     ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 14,
                 fontFamily: 'Noto Sans Thai',

@@ -5,11 +5,14 @@ import 'dart:io' show Platform;
 enum TtsState { playing, stopped, paused, continued }
 
 class TtsManager {
-  late FlutterTts flutterTts;
+  TtsManager() {
+    initTts();
+  }
+  final FlutterTts flutterTts = FlutterTts();
   String language = 'th-TH';
-  double volume = 0.5;
+  double volume = 1.0;
   double pitch = 1.0;
-  double rate = 0.6;
+  double rate = 0.5;
 
   TtsState ttsState = TtsState.stopped;
 
@@ -23,18 +26,14 @@ class TtsManager {
   bool get isWindows => !kIsWeb && Platform.isWindows;
   bool get isWeb => kIsWeb;
 
-  TtsManager() {
-    initTts();
-  }
-
-  initTts() {
-    flutterTts = FlutterTts();
-
-    _setAwaitOptions();
+  Future<void> initTts() async {
+    await _setAwaitOptions();
+    await flutterTts.awaitSpeakCompletion(true);
+    await flutterTts.awaitSynthCompletion(true);
 
     if (isAndroid) {
-      _getDefaultEngine();
-      _getDefaultVoice();
+      await _getDefaultEngine();
+      await _getDefaultVoice();
     }
 
     flutterTts.setStartHandler(() {
@@ -88,6 +87,10 @@ class TtsManager {
     }
   }
 
+  Future<void> setVolume(double _volume) async {
+    await flutterTts.setVolume(_volume);
+  }
+
   Future speak(String? text) async {
     await flutterTts.setVolume(volume);
     await flutterTts.setSpeechRate(rate);
@@ -101,6 +104,17 @@ class TtsManager {
 
   Future _setAwaitOptions() async {
     await flutterTts.awaitSpeakCompletion(true);
+
+    // await flutterTts.setSharedInstance(true);
+    await flutterTts.setIosAudioCategory(
+        IosTextToSpeechAudioCategory.playback,
+        [
+          IosTextToSpeechAudioCategoryOptions.allowBluetooth,
+          IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
+          IosTextToSpeechAudioCategoryOptions.mixWithOthers,
+          IosTextToSpeechAudioCategoryOptions.defaultToSpeaker
+        ],
+        IosTextToSpeechAudioMode.defaultMode);
   }
 
   Future stop() async {
@@ -113,7 +127,11 @@ class TtsManager {
     if (result == 1) ttsState = TtsState.paused;
   }
 
-  void dispose() {
-    flutterTts.stop();
+  Future resume() async {
+    ttsState = TtsState.continued;
+  }
+
+  Future<void> dispose() async {
+    await flutterTts.stop();
   }
 }

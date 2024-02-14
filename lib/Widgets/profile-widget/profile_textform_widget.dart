@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
+
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 // import 'package:flutter/services.dart';
 
 class ProfileTextForm extends StatefulWidget {
@@ -67,6 +69,12 @@ class ProfileTextFormState extends State<ProfileTextForm> {
       child: TextFormField(
         onChanged: (value) {
           widget.onChange?.call(value);
+          // สร้าง #SuperHero
+          if (value == 'superhero') {
+            ScreeningDiagnoseService.createAllWorkoutList();
+            Navigator.pop(context);
+            return;
+          }
         },
         controller: _controller,
         focusNode: _focusNode,

@@ -138,8 +138,6 @@ class ShowGoToDoctorPageService {
 
 enum ScreeningTitle { neck, baa, shoulder, lowerback, upperback }
 
-enum WorkoutlistTitle { neckbaa_ch, neckbaa_th, shoulder, back_ch, back_th }
-
 class ScreeningDiagnoseService {
   static const nrsLimit = 8;
 
@@ -199,57 +197,28 @@ class ScreeningDiagnoseService {
 
   static Future<List<WorkoutList>> diagnose(
       List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
-    print('----${nrs}');
-    // filter answer ว่าเป็นคอบ่าไหล่ ที่ต้องหาหมอไหม
-    List<ScreeningTitle> titleNeckBaaShoulder = [
-      ScreeningTitle.neck,
-      ScreeningTitle.baa,
-      ScreeningTitle.shoulder
-    ];
-    if (shouldGoToDoctorByParts(answers, titleNeckBaaShoulder)) {
-      nrs.remove(ScreeningTitle.neck);
-      nrs.remove(ScreeningTitle.baa);
-      nrs.remove(ScreeningTitle.shoulder);
+    nrs.removeWhere((key, value) => value == null);
+    Map<ScreeningTitle, int> nrsFiltered = {
+      for (var entry in nrs.entries) entry.key: entry.value!
+    };
+    if (isNeckSetToDoctor(answers, nrsFiltered)) {
+      nrsFiltered.remove(ScreeningTitle.neck);
+      nrsFiltered.remove(ScreeningTitle.baa);
+      nrsFiltered.remove(ScreeningTitle.shoulder);
+    }
+    if (isBackSetToDoctor(answers, nrsFiltered)) {
+      nrsFiltered.remove(ScreeningTitle.upperback);
+      nrsFiltered.remove(ScreeningTitle.lowerback);
     }
 
-    // filter answer ว่าเป็นหลังส่วนบน หลังส่วนล่าง ที่ต้องหาหมอไหม
-    List<ScreeningTitle> titleUpperbackLowerback = [
-      ScreeningTitle.upperback,
-      ScreeningTitle.lowerback
-    ];
-    if (shouldGoToDoctorByParts(answers, titleUpperbackLowerback)) {
-      nrs.remove(ScreeningTitle.upperback);
-      nrs.remove(ScreeningTitle.lowerback);
-    }
+    final workouts = nrsFiltered.entries
+        .expand((entry) => workoutFromScreeningTitle(entry.key))
+        .toSet()
+        .toList();
 
-    final List<WorkoutlistTitle> workoutListTitles = [];
-    //loop nrs ทีละอัน
-    nrs.forEach((key, value) {
-      //check if nrs is null then cancel this part
-      if (value == null) {
-        return;
-      }
-      //filter nrs by checkNRS (if nrs>=8 then cancel this part)
-      if (nrs_less_than_eigth(value)) {
-        //filter answers by title (which is nrs < 8)
-        final ans_of_title =
-            answers.where((element) => element.title == toThai[key]).toList();
-
-        ans_of_title.forEach((element) {
-          //filter gotodoctor
-          if (ShowGoToDoctorPageService.showGoToDoctorPage(element.questionPart,
-              element.title, element.questionId, element.answer)) {
-            return;
-          }
-          //give workout list
-          // workoutList.add(convertToWorkoutlistTittle(key));
-          workoutListTitles.addAll(workoutListsFromScreeningTitle(key));
-        });
-      }
-    });
-    final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
+    // final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
     // Insert workout list to database, if there is workoutlist then skip
-    final workout_days = Give_Workoutlist_Per_Day(uniqueWorkoutListTitles);
+    final workout_days = GenerateWorkoutListByTitle(workouts);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
     for (var workoutlist_title in workout_days.entries) {
       final there_is_workoutlist = await wl_db
@@ -263,11 +232,9 @@ class ScreeningDiagnoseService {
       }
     }
     // Get workout list data
-    List<WorkoutList> acquiredWorkoutList = uniqueWorkoutListTitles
+    List<WorkoutList> acquiredWorkoutList = workouts
         .map((title) => WorkoutList.workoutListFromTitle[title]!)
         .toList();
-    //TODO resume (กรณีตรวจใหม่ได้ชุดท่าเดิม)
-
     return acquiredWorkoutList;
   }
 
@@ -285,7 +252,8 @@ class ScreeningDiagnoseService {
         ];
       case ScreeningTitle.shoulder:
         return [
-          WorkoutlistTitle.shoulder,
+          WorkoutlistTitle.shoulder_ch,
+          WorkoutlistTitle.shoulder_th,
         ];
       case ScreeningTitle.lowerback:
         return [
@@ -301,8 +269,8 @@ class ScreeningDiagnoseService {
   }
 
   //function give workoutlist per day
-  static Map<WorkoutlistTitle, List<WorkoutListModel>> Give_Workoutlist_Per_Day(
-      List<WorkoutlistTitle> workoutList) {
+  static Map<WorkoutlistTitle, List<WorkoutListModel>>
+      GenerateWorkoutListByTitle(List<WorkoutlistTitle> workoutList) {
     Map<WorkoutlistTitle, List<WorkoutListModel>> result = {};
     final DateTime now = DateTime.now();
 
@@ -312,8 +280,11 @@ class ScreeningDiagnoseService {
     if (workoutList.contains(WorkoutlistTitle.neckbaa_th)) {
       result[WorkoutlistTitle.neckbaa_th] = GiveNeckBaaThWorkoutlist(now);
     }
-    if (workoutList.contains(WorkoutlistTitle.shoulder)) {
-      result[WorkoutlistTitle.shoulder] = GiveShoulderWorkoutlist(now);
+    if (workoutList.contains(WorkoutlistTitle.shoulder_ch)) {
+      result[WorkoutlistTitle.shoulder_ch] = GiveShoulderChWorkoutlist(now);
+    }
+    if (workoutList.contains(WorkoutlistTitle.shoulder_th)) {
+      result[WorkoutlistTitle.shoulder_th] = GiveShoulderThWorkoutlist(now);
     }
     if (workoutList.contains(WorkoutlistTitle.back_ch)) {
       result[WorkoutlistTitle.back_ch] = GiveBackChWorkoutlist(now);
@@ -344,8 +315,8 @@ class ScreeningDiagnoseService {
                 WorkoutListModel(
                     date: now.add(Duration(days: days_from_now)),
                     WOL_title: WorkoutlistTitle.neckbaa_th.name,
-                    remaining_times: 3,
-                    total_times: 3,
+                    remaining_times: 1,
+                    total_times: 1,
                     WOL_id: null,
                     NRS_before: null,
                     NRS_after: null)
@@ -354,12 +325,12 @@ class ScreeningDiagnoseService {
         .toList();
   }
 
-  static List<WorkoutListModel> GiveShoulderWorkoutlist(DateTime now) {
+  static List<WorkoutListModel> GiveShoulderChWorkoutlist(DateTime now) {
     return List<int>.generate(days_in_four_weeks, (index) => index)
         .map(
           (days_from_now) => WorkoutListModel(
               date: now.add(Duration(days: days_from_now)),
-              WOL_title: WorkoutlistTitle.shoulder.name,
+              WOL_title: WorkoutlistTitle.shoulder_ch.name,
               remaining_times: 3,
               total_times: 3,
               WOL_id: null,
@@ -369,14 +340,31 @@ class ScreeningDiagnoseService {
         .toList();
   }
 
+  static List<WorkoutListModel> GiveShoulderThWorkoutlist(DateTime now) {
+    return List<int>.generate(days_in_four_weeks, (index) => index)
+        .expand((days_from_now) => (days_from_now % 2 == 0)
+            ? [
+                WorkoutListModel(
+                    date: now.add(Duration(days: days_from_now)),
+                    WOL_title: WorkoutlistTitle.shoulder_th.name,
+                    remaining_times: 1,
+                    total_times: 1,
+                    WOL_id: null,
+                    NRS_before: null,
+                    NRS_after: null)
+              ]
+            : <WorkoutListModel>[])
+        .toList();
+  }
+
   static List<WorkoutListModel> GiveBackChWorkoutlist(DateTime now) {
     return List<int>.generate(days_in_four_weeks, (index) => index)
         .map(
           (days_from_now) => WorkoutListModel(
               date: now.add(Duration(days: days_from_now)),
               WOL_title: WorkoutlistTitle.back_ch.name,
-              remaining_times: 3,
-              total_times: 3,
+              remaining_times: 6,
+              total_times: 6,
               WOL_id: null,
               NRS_before: null,
               NRS_after: null),
@@ -391,8 +379,8 @@ class ScreeningDiagnoseService {
                 WorkoutListModel(
                     date: now.add(Duration(days: days_from_now)),
                     WOL_title: WorkoutlistTitle.back_th.name,
-                    remaining_times: 3,
-                    total_times: 3,
+                    remaining_times: 1,
+                    total_times: 1,
                     WOL_id: null,
                     NRS_before: null,
                     NRS_after: null)
@@ -434,5 +422,61 @@ class ScreeningDiagnoseService {
     ], nrs ?? {});
     return isDoctoringOnUpperBackOrLowerBack ||
         isNrsExceedingOnUpperBackOrLowerBack;
+  }
+
+  static Future<void> createAllWorkoutList() async {
+    final List<WorkoutlistTitle> workoutListTitles = [
+      WorkoutlistTitle.neckbaa_ch,
+      WorkoutlistTitle.neckbaa_th,
+      WorkoutlistTitle.shoulder_ch,
+      WorkoutlistTitle.shoulder_th,
+      WorkoutlistTitle.back_ch,
+      WorkoutlistTitle.back_th
+    ];
+    createWorkouts(workoutListTitles);
+    // final workout_days = GenerateWorkoutListByTitle(workoutListTitles);
+    // WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
+    // for (var workoutlist_title in workout_days.entries) {
+    //   final there_is_workoutlist = await wl_db
+    //       .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
+    //   // if there is workoutlist then skip
+    //   if (there_is_workoutlist) {
+    //     continue;
+    //   }
+    //   for (var workout in workoutlist_title.value) {
+    //     wl_db.insertWorkoutList(workout);
+    //   }
+    // }
+  }
+
+  static Future<void> createWorkouts(List<WorkoutlistTitle> workouts) async {
+    final workout_days = GenerateWorkoutListByTitle(workouts);
+    WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
+    for (var workoutlist_title in workout_days.entries) {
+      final there_is_workoutlist = await wl_db
+          .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
+      // if there is workoutlist then skip
+      if (there_is_workoutlist) {
+        continue;
+      }
+      for (var workout in workoutlist_title.value) {
+        wl_db.insertWorkoutList(workout);
+      }
+    }
+  }
+
+  static List<WorkoutlistTitle> workoutFromScreeningTitle(ScreeningTitle key) {
+    switch (key) {
+      case ScreeningTitle.neck:
+        return [WorkoutlistTitle.neckbaa_ch, WorkoutlistTitle.neckbaa_th];
+      case ScreeningTitle.baa:
+        return [WorkoutlistTitle.neckbaa_ch, WorkoutlistTitle.neckbaa_th];
+      case ScreeningTitle.shoulder:
+        return [WorkoutlistTitle.shoulder_ch, WorkoutlistTitle.shoulder_th];
+      case ScreeningTitle.lowerback:
+        return [WorkoutlistTitle.back_ch, WorkoutlistTitle.back_th];
+      case ScreeningTitle.upperback:
+        return [WorkoutlistTitle.back_ch, WorkoutlistTitle.back_th];
+    }
   }
 }

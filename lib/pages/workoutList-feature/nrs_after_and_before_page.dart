@@ -4,23 +4,47 @@ import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/slider_nrs.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/pages/screening-feature/exception_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/report_workout_utils.dart';
+import 'package:unwind_app/pages/workoutList-feature/result_nrs_four_week_page.dart';
+import 'package:unwind_app/pages/workoutList-feature/result_nrs_per_week_page.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
-class NrsAfterAndBeforePage extends StatelessWidget {
-  NrsAfterAndBeforePage({super.key});
+enum NrsType { after, before }
 
+class NrsAfterAndBeforePage extends StatefulWidget {
+  final WorkoutList workoutList;
+  final NrsType nrsType;
+  NrsAfterAndBeforePage({
+    super.key,
+    required this.workoutList,
+    required this.nrsType,
+  });
+
+  @override
+  State<NrsAfterAndBeforePage> createState() => _NrsAfterAndBeforePageState();
+}
+
+class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
   final PageRoutes pageRoutes = PageRoutes();
-
+  double nrs = 0;
+  WorkoutListDB workoutListDB = serviceLocator();
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
-        iconButtonStart: IconButton(
-            highlightColor: Colors.transparent,
-            icon: const Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Theme.of(context).colorScheme.primary),
+        iconButtonStart: (widget.nrsType == NrsType.before)
+            ? IconButton(
+                highlightColor: Colors.transparent,
+                icon: const Icon(Icons.arrow_back_ios_rounded),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                color: Theme.of(context).colorScheme.primary)
+            : null,
         colorBar: Colors.transparent,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +69,11 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(bottom: 16),
                   child: Text(
-                    'ก่อนบริหารร่างกาย',
+                    (widget.nrsType == NrsType.before)
+                        ? 'ก่อนบริหารร่างกาย'
+                        : (widget.nrsType == NrsType.after)
+                            ? 'หลังบริหารร่างกาย'
+                            : '',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -57,8 +85,7 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                   ),
                 ),
                 RatioImageoneToOne(
-                    assetName:
-                        'lib/assets/images/screeningPart/select_pain_1.png',
+                    assetName: widget.workoutList.titlePath,
                     smallWidth: 120,
                     largeWidth: 150,
                     smallHeight: 120,
@@ -79,14 +106,92 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SliderNrs(),
+                SliderNrs(
+                  onChanged: onNrsChange,
+                ),
               ],
             ),
           ),
           ButtonWithoutIconWidget(
-              onTap: () {
-                Navigator.push(context,
-                    pageRoutes.workout.preparebeforeworkout().route(context));
+              onTap: () async {
+                //if nrs>8 go to exceptionpage
+                if (widget.nrsType == NrsType.before &&
+                    ScreeningDiagnoseService.isExceedingNrsLimit(nrs.toInt())) {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ExceptionPage(exceptionPart: 4)));
+                  return Navigator.pop(context);
+                }
+                if (widget.nrsType == NrsType.after &&
+                    ScreeningDiagnoseService.isExceedingNrsLimit(nrs.toInt())) {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ExceptionPage(exceptionPart: 4)));
+                  return Navigator.popUntil(
+                      context,
+                      (route) =>
+                          route.settings.name == PageName.REPORT_WORKOUT);
+                }
+
+                final now = DateTime.now();
+                final nrs_saving = (widget.nrsType == NrsType.before)
+                    ? saveNrsBefore
+                    : saveNrsAfter;
+                int success = await nrs_saving(nrs, now, widget.workoutList);
+                print('successfully saved nrs: $nrs ($success record)');
+                if (widget.nrsType == NrsType.before) {
+                  Navigator.push(
+                      context,
+                      pageRoutes.workout
+                          .preparebeforeworkout(widget.workoutList)
+                          .route(context));
+                  return;
+                }
+                if (widget.nrsType == NrsType.after) {
+                  final workouts = await workoutListDB
+                      .getWorkoutListByTitle(widget.workoutList.titleCode);
+                  if (workouts.isEmpty) {
+                    print('error empty workouts');
+                    return;
+                  }
+                  // sort by date start from the latest
+                  workouts.sort((a, b) => a.date != null && b.date != null
+                      ? b.date!.compareTo(a.date!)
+                      : 0);
+                  final lastWorkout = workouts.first;
+                  if (lastWorkout.date == null) {
+                    print('error empty date');
+                    return;
+                  }
+                  final isSameDayOrAfterExpiredDate =
+                      isSameDay(now, lastWorkout.date!) ||
+                          now.isAfter(lastWorkout.date!);
+                  //TODO 4weeks enable TEST
+                  final String isSameDayOrAfterExpiredDateTEST = "";
+                  if (isSameDayOrAfterExpiredDate ||
+                      isSameDayOrAfterExpiredDateTEST == "TEST") {
+                    _navigateToResultNrsFourWeekPage(context);
+                    return;
+                  }
+                  //TODO cumulative = 7
+                  final int cumulativeWorkoutDays =
+                      await workoutListDB.cumulativeDayOfWorkoutListTitle(
+                          widget.workoutList.titleCode);
+                  if (cumulativeWorkoutDays < 28 &&
+                      cumulativeWorkoutDays % 7 == 0) {
+                    _navigateToResultNrsPerWeekPage(
+                        context, cumulativeWorkoutDays);
+                    return;
+                  }
+                  Navigator.popUntil(
+                      context,
+                      (route) =>
+                          route.settings.name == PageName.REPORT_WORKOUT);
+                }
               },
               text: "ยืนยัน",
               radius: 32,
@@ -102,5 +207,77 @@ class NrsAfterAndBeforePage extends StatelessWidget {
                     )
                   : Theme.of(context).textTheme.headlineSmall),
         ]);
+  }
+
+  onNrsChange(double nrs) {
+    this.nrs = nrs;
+  }
+
+  Future<int> saveNrsBefore(
+      double nrs, DateTime now, WorkoutList workoutList) async {
+    final wol = await workoutListDB.getWorkoutListByDateAndTitle(
+        now, workoutList.titleCode);
+    if (wol.isEmpty || wol.first.WOL_id == null) {
+      // Failed to get workout list on that day
+      return 0;
+    }
+    return await workoutListDB.updateNRSbefore(nrs.toInt(), wol.first.WOL_id!);
+  }
+
+  Future<int> saveNrsAfter(
+      double nrs, DateTime now, WorkoutList workoutList) async {
+    final wol = await workoutListDB.getWorkoutListByDateAndTitle(
+        now, workoutList.titleCode);
+    if (wol.isEmpty || wol.first.WOL_id == null) {
+      // Failed to get workout list on that day
+      return 0;
+    }
+    await updateRemainingTime(now, widget.workoutList);
+    return await workoutListDB.updateNRSafter(nrs.toInt(), wol.first.WOL_id!);
+  }
+
+  updateRemainingTime(DateTime date, WorkoutList workoutList) async {
+    final wol = await workoutListDB.getWorkoutListByDateAndTitle(
+        date, workoutList.titleCode);
+    if (wol.isEmpty || wol.first.WOL_id == null) {
+      return 0;
+    }
+    return workoutListDB.updateRemainingTimes(
+        (wol.first.remaining_times ?? 0) - 1, wol.first.WOL_id!);
+  }
+
+  Future<void> _navigateToResultNrsFourWeekPage(BuildContext context) async {
+    // final averageCumulativeNrs = await workoutListDB
+    //     .averageCumulativeNrsByTitle(widget.workoutList.titleCode);
+    final lastestNrs =
+        await workoutListDB.getLatestNrsByTitle(widget.workoutList.titleCode);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultNrsFourWeekPage(
+          workoutList: widget.workoutList,
+          latestNrs: lastestNrs,
+        ),
+      ),
+    );
+  }
+
+  void _navigateToResultNrsPerWeekPage(
+      BuildContext context, int cumulativeWorkoutDays) async {
+    final firstTimeNrs = await workoutListDB
+        .getFirstTimeNrsByTitle(widget.workoutList.titleCode);
+    final lastestNrs =
+        await workoutListDB.getLatestNrsByTitle(widget.workoutList.titleCode);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultNrsPerWeekPage(
+          workoutList: widget.workoutList,
+          numberOfWeeks: cumulativeWorkoutDays ~/ 7,
+          firstNrs: firstTimeNrs,
+          lastestNrs: lastestNrs,
+        ),
+      ),
+    );
   }
 }

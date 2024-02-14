@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
-import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/pages/workoutList-feature/info_of_list_workout_page.dart';
 
 class InfoSetWorkoutPage extends StatelessWidget {
-  InfoSetWorkoutPage({super.key, this.workoutData});
+  InfoSetWorkoutPage({super.key, this.workoutData, required this.workoutList});
 
   final WorkoutData? workoutData;
+  final WorkoutList? workoutList;
   final PageRoutes pageRoutes = PageRoutes();
 
   @override
@@ -81,7 +82,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
                       Icons.access_time_rounded,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    topicName: '${workoutData?.sec} วินาทีต่อเซต',
+                    topicName: '${workoutData?.sec} วินาทีต่อครั้ง',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -178,27 +179,8 @@ class InfoSetWorkoutPage extends StatelessWidget {
               ),
             ],
           )),
-          ButtonWithoutIconWidget(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    pageRoutes.workout
-                        .nrsafterandbeforeworkout()
-                        .route(context));
-              },
-              text: "เริ่มกายบริหาร",
-              radius: 32,
-              width: double.infinity,
-              height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-              color: Theme.of(context).colorScheme.primary,
-              borderSide: BorderSide.none,
-              style: ResponsiveCheckWidget.isSmallMobile(context)
-                  ? TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFFFFFFFF),
-                    )
-                  : Theme.of(context).textTheme.headlineSmall),
+          ConditionalStartWorkoutButton(
+              workoutList: workoutList, pageRoutes: pageRoutes),
         ]);
   }
 }

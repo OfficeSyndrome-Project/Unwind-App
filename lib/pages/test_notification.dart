@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/services/schedule-service/notification_service.dart';
 
@@ -11,11 +12,9 @@ class TestNotification extends StatefulWidget {
 
 class _TestNotificationState extends State<TestNotification> {
   // @override
-  // void initState() {
-  //   super.initState();
-
-  //   listenNotification();
-  // }
+  void initState() {
+    super.initState();
+  }
 
   // void listenNotification() => NotificationService.onNotifications.stream.listen((event) { });
 
@@ -28,7 +27,7 @@ class _TestNotificationState extends State<TestNotification> {
           ElevatedButton(
               onPressed: () => NotificationService.showNotification(
                   title: 'Sample title', body: 'hey!'),
-              child: Text('show noti'))
+              child: Text('show noti')),
         ]);
   }
 }

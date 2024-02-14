@@ -87,7 +87,6 @@ class ResultsWorkoutPage extends StatelessWidget {
                   height: 8,
                 ),
                 Expanded(
-                  // height: MediaQuery.of(context).size.height * 0.55,
                   child: ListView.separated(
                       itemBuilder: (context, index) => Container(
                             child:
@@ -141,7 +140,7 @@ class ResultsWorkoutPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  workoutList.description,
+                  workoutList.titleTH,
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:

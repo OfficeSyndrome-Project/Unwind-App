@@ -9,6 +9,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:unwind_app/globals/theme/table_calender_theme.dart';
 import 'package:unwind_app/pages/loading_page.dart';
+
 import 'package:unwind_app/services/schedule-service/schedule_service.dart';
 
 import '../../services/schedule-service/utils.dart';
@@ -36,6 +37,7 @@ class _SchedulePageState extends State<SchedulePage> {
     _selectedDay = _focusedDay; //เปลี่ยนตรงนี้เป็น selectday จากวันที่เลือกมา
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
     initKEvent();
+
     // ScheduleService.removeEvent(0, DateTime.parse('2024-02-07 00:00:00.000'));
   }
 
@@ -133,10 +135,8 @@ class _SchedulePageState extends State<SchedulePage> {
                 itemCount: value.length,
                 itemBuilder: (context, index) {
                   return EventBoxWidget(
-                    eventName: '${value[index]}',
-                    time: value[index].times.hour.toString().padLeft(2, '0') +
-                        ':' +
-                        value[index].times.minute.toString().padLeft(2, '0'),
+                    eventName: '${value[index].wol?.titleTH ?? ''}',
+                    time: value[index].times,
                     onTap: () async {
                       await Navigator.push(
                           context,

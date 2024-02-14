@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class WorkoutListModel {
   int? WOL_id;
   DateTime? date;
@@ -53,6 +55,7 @@ class WorkoutListModel {
   //title and date
   @override
   String toString() {
-    return '$WOL_title-${date?.day}';
+    final encoder = const JsonEncoder.withIndent('  ');
+    return encoder.convert(toMap());
   }
 }

@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withicon_widget.dart';
-import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/show_dialog_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/set_box_workout_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
+import 'package:unwind_app/pages/workoutList-feature/start_workout_button_widget.dart';
 
 class InfoOfListWorkoutPage extends StatelessWidget {
   final WorkoutList? workoutList;
   InfoOfListWorkoutPage({super.key, this.workoutList});
 
   final PageRoutes pageRoutes = PageRoutes();
+  final WorkoutListDB workoutListDB = serviceLocator<WorkoutListDB>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +66,8 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                                 context,
                                 pageRoutes.workout
                                     .infoofsetworkout(
-                                        workoutList?.workoutData[index])
+                                        workoutList?.workoutData[index],
+                                        workoutList!)
                                     .route(context));
                           },
                         ),
@@ -76,27 +81,8 @@ class InfoOfListWorkoutPage extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          ButtonWithoutIconWidget(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    pageRoutes.workout
-                        .nrsafterandbeforeworkout()
-                        .route(context));
-              },
-              text: "เริ่มกายบริหาร",
-              radius: 32,
-              width: double.infinity,
-              height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-              color: Theme.of(context).colorScheme.primary,
-              borderSide: BorderSide.none,
-              style: ResponsiveCheckWidget.isSmallMobile(context)
-                  ? TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFFFFFFFF),
-                    )
-                  : Theme.of(context).textTheme.headlineSmall),
+          ConditionalStartWorkoutButton(
+              workoutList: workoutList, pageRoutes: pageRoutes),
           Container(
             margin: EdgeInsets.symmetric(vertical: 16),
             child: TextWithStartIconWidget(
@@ -124,7 +110,10 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                 Navigator.pop(context, true);
               });
               if (result == true) {
-                Navigator.pop(context);
+                await workoutListDB
+                    .deleteWorkoutListByTitle(workoutList?.titleCode ?? '');
+                // Navigator.pop(context);
+                Navigator.popUntil(context, (route) => route.isFirst);
               }
             },
             mainAxisAlignment: MainAxisAlignment.center,
@@ -136,5 +125,58 @@ class InfoOfListWorkoutPage extends StatelessWidget {
             colorText: Color(0xFFC9635F),
           ),
         ]);
+  }
+}
+
+class ConditionalStartWorkoutButton extends StatelessWidget {
+  final WorkoutList? workoutList;
+  final PageRoutes pageRoutes;
+
+  const ConditionalStartWorkoutButton({
+    super.key,
+    required this.workoutList,
+    required this.pageRoutes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: serviceLocator<WorkoutListDB>().getWorkoutListByDateAndTitle(
+          DateTime.now(), workoutList?.titleCode ?? ''),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        if (snapshot.hasData) {
+          if (workoutList == null) {
+            return Text('คุณไม่สามารถบริหารได้');
+          }
+          final todayWorkout = snapshot.data as List<WorkoutListModel>;
+          if (todayWorkout.isEmpty) {
+            // return Text('hello');
+            return StartWorkoutButton(
+              pageRoutes: pageRoutes,
+              workoutList: workoutList!,
+              text: 'คุณไม่มีการบริหารในวันนี้',
+              disabled: true,
+            );
+          }
+          // If the user has already done the workout today
+          if (todayWorkout.first.remaining_times == 0) {
+            return StartWorkoutButton(
+              pageRoutes: pageRoutes,
+              workoutList: workoutList!,
+              text: 'วันนี้คุณทำท่าบริหารครบแล้ว',
+              disabled: true,
+            );
+          }
+          return StartWorkoutButton(
+            pageRoutes: pageRoutes,
+            workoutList: workoutList!,
+          );
+        }
+        return Text('Loading...');
+      },
+    );
   }
 }
