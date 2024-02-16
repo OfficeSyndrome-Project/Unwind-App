@@ -225,14 +225,13 @@ class Workout {
       PathRoute(title: "ตั้งเวลาแจ้งเตือน", widget: SetSchedulePage());
 }
 
-
 class PreviewPdf {
   PathRoute pdfpreviewpage() =>
       PathRoute(title: "ผลทดสอบ", widget: PdfPreviewPage());
+}
 
 class PageName {
   static String REPORT_WORKOUT = "/report-workout";
-
 }
 
 class PathRoute {
