@@ -4,7 +4,7 @@ class WorkoutList {
   String title;
   String workoutType;
   String titlePath;
-  String description;
+  String titleTH;
   String titleCode;
   String? totalTime;
   List<WorkoutData> workoutData;
@@ -13,10 +13,27 @@ class WorkoutList {
     required this.workoutType,
     required this.titlePath,
     required this.workoutData,
-    required this.description,
+    required this.titleTH,
     required this.titleCode,
     this.totalTime,
   });
+
+  static Map<String, int> customOrder = {
+    'neckbaa_ch': 1,
+    'neckbaa_th': 2,
+    'shoulder_ch': 3,
+    'shoulder_th': 4,
+    'back_ch': 5,
+    'back_th': 6,
+  };
+  @override
+  operator ==(wol) => wol is WorkoutList && wol.titleCode == titleCode;
+
+  @override
+  int get hashCode => titleCode.hashCode;
+
+  static int compareByTitleOrder(WorkoutList a, WorkoutList b) =>
+      (customOrder[a.titleCode] ?? 0) - (customOrder[b.titleCode] ?? 0);
 
   static List<String> get allWorkoutListTitles => ["คอ-บ่า", "ไหล่", "หลัง"];
 
@@ -29,10 +46,11 @@ class WorkoutList {
       };
 
   // Use for converting from String such as 'neckbaa_ch' to WorkoutList
-  static Map<String, WorkoutList> get workoutListFromString => {
+  static Map<String, WorkoutList> get workoutListFromTitleCode => {
         'neckbaa_ch': workoutListFromTitle[WorkoutlistTitle.neckbaa_ch]!,
         'neckbaa_th': workoutListFromTitle[WorkoutlistTitle.neckbaa_th]!,
-        'shoulder': workoutListFromTitle[WorkoutlistTitle.shoulder]!,
+        'shoulder_ch': workoutListFromTitle[WorkoutlistTitle.shoulder_ch]!,
+        'shoulder_th': workoutListFromTitle[WorkoutlistTitle.shoulder_th]!,
         'back_ch': workoutListFromTitle[WorkoutlistTitle.back_ch]!,
         'back_th': workoutListFromTitle[WorkoutlistTitle.back_th]!,
       };
@@ -41,7 +59,7 @@ class WorkoutList {
   static Map<WorkoutlistTitle, WorkoutList> get workoutListFromTitle => {
         WorkoutlistTitle.neckbaa_ch: WorkoutList(
             title: "คอ-บ่า",
-            description: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
+            titleTH: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
             workoutType: "stretch",
             titlePath: "lib/assets/images/screeningPart/select_pain_1.png",
             titleCode: "neckbaa_ch",
@@ -53,7 +71,7 @@ class WorkoutList {
             totalTime: "4 นาที 10 วินาที"),
         WorkoutlistTitle.neckbaa_th: WorkoutList(
             title: "คอ-บ่า",
-            description: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
+            titleTH: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
             workoutType: "strength",
             titlePath: "lib/assets/images/screeningPart/select_pain_1.png",
             titleCode: "neckbaa_th",
@@ -63,20 +81,32 @@ class WorkoutList {
                     element.workoutType == "strength")
                 .toList(),
             totalTime: "5 นาที 50 วินาที"),
-        WorkoutlistTitle.shoulder: WorkoutList(
+        WorkoutlistTitle.shoulder_ch: WorkoutList(
             title: "ไหล่",
-            description: "ชุดท่าบริหารไหล่เพิ่มความยืดหยุ่น",
+            titleTH: "ชุดท่าบริหารไหล่เพิ่มความยืดหยุ่น",
             workoutType: "stretch",
             titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
-            titleCode: "shoulder",
+            titleCode: "shoulder_ch",
             workoutData: WorkoutData.getWorkoutData()
                 .where((element) =>
                     element.title == "ไหล่" && element.workoutType == "stretch")
                 .toList(),
             totalTime: "13 นาที 45 วินาที"),
+        WorkoutlistTitle.shoulder_th: WorkoutList(
+            title: "ไหล่",
+            titleTH: "ชุดท่าบริหารไหล่เพิ่มความแข็งแรง",
+            workoutType: "strength",
+            titlePath: "lib/assets/images/screeningPart/select_pain_3.png",
+            titleCode: "shoulder_th",
+            workoutData: WorkoutData.getWorkoutData()
+                .where((element) =>
+                    element.title == "ไหล่" &&
+                    element.workoutType == "strength")
+                .toList(),
+            totalTime: "44 วินาที"),
         WorkoutlistTitle.back_ch: WorkoutList(
             title: "หลัง",
-            description: "ชุดท่าบริหารหลังเพิ่มความยืดหยุ่น",
+            titleTH: "ชุดท่าบริหารหลังเพิ่มความยืดหยุ่น",
             workoutType: "stretch",
             titlePath: "lib/assets/images/screeningPart/select_pain_4.png",
             titleCode: "back_ch",
@@ -87,7 +117,7 @@ class WorkoutList {
             totalTime: "2 นาที 50 วินาที"),
         WorkoutlistTitle.back_th: WorkoutList(
             title: "หลัง",
-            description: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
+            titleTH: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
             workoutType: "stretch",
             titlePath: "lib/assets/images/screeningPart/select_pain_4.png",
             titleCode: "back_th",
@@ -504,6 +534,46 @@ class WorkoutData {
               "lib/assets/images/workout/shoulder/shoulderch03/TP-3.png",
             ],
             workoutType: "stretch"),
+        WorkoutData(
+            title: "ไหล่",
+            name: "ท่ากางแขนแนบลำตัว",
+            detail: "เพิ่มความแข็งแรงให้กล้ามเนื้อไหล่",
+            step:
+                " ตั้งศอก 90องศาแนบกับลำตัว ตั้งมือขึ้นปลายนิ้วทิ่มไปข้างหน้า กางแขนทั้ง 2 ข้างออกในระนาบเดิม บีบสะบักด้านหลัง หุบแขนทั้ง 2 ข้างเข้ามาในท่าตั้งต้น กางแขนสลับกันเข้าออกทั้งหมด 12ครั้ง/เซต",
+            sec: 2,
+            time: 12,
+            set: 1,
+            thumbnailPath:
+                "lib/assets/images/workout/shoulder/shoulderch03/TP-3.png",
+            frequency: "ทำวันเว้นวัน",
+            caution: null,
+            animationPaths: [
+              "lib/assets/images/workout/shoulder/shoulderth01/1.png",
+              "lib/assets/images/workout/shoulder/shoulderth01/2.png",
+              "lib/assets/images/workout/shoulder/shoulderth01/3.png",
+              "lib/assets/images/workout/shoulder/shoulderth01/4.png",
+            ],
+            workoutType: "strength"),
+        WorkoutData(
+            title: "ไหล่",
+            name: "ท่ายกไหล่",
+            detail: "เพิ่มความแข็งแรงให้กล้ามเนื้อไหล่",
+            step:
+                " ยืน/นั่งหลังตรง แขนทั้ง 2 ข้างแนบลำตัว ยกไหล่ทั้ง 2 ขึ้นพร้อมกัน กดไหล่ทั้ง 2 ข้างลงพร้อมกัน ยกและกดไหล่สลับกันขึ้นลงทั้งหมด 10ครั้ง/เซต",
+            sec: 2,
+            time: 10,
+            set: 1,
+            thumbnailPath:
+                "lib/assets/images/workout/shoulder/shoulderch03/TP-3.png",
+            frequency: "ทำวันเว้นวัน",
+            caution: null,
+            animationPaths: [
+              "lib/assets/images/workout/shoulder/shoulderth02/1.png",
+              "lib/assets/images/workout/shoulder/shoulderth02/2.png",
+              "lib/assets/images/workout/shoulder/shoulderth02/3.png",
+              "lib/assets/images/workout/shoulder/shoulderth02/4.png",
+            ],
+            workoutType: "strength"),
         //หลัง
         //stretch
         WorkoutData(

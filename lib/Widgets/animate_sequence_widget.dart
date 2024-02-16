@@ -52,8 +52,9 @@ class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
       if (currentIndex < widget.listPath.length - 1)
         currentIndex += 1;
       else {
-        currentIndex = 0;
+        currentIndex = widget.listPath.length - 1;
         isDone = true;
+        print("isDone: $isDone");
       }
     });
   }

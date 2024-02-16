@@ -218,7 +218,7 @@ class ScreeningDiagnoseService {
 
     // final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
     // Insert workout list to database, if there is workoutlist then skip
-    final workout_days = Give_Workoutlist_Per_Day(workouts);
+    final workout_days = GenerateWorkoutListByTitle(workouts);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
     for (var workoutlist_title in workout_days.entries) {
       final there_is_workoutlist = await wl_db
@@ -235,8 +235,6 @@ class ScreeningDiagnoseService {
     List<WorkoutList> acquiredWorkoutList = workouts
         .map((title) => WorkoutList.workoutListFromTitle[title]!)
         .toList();
-    //TODO resume (กรณีตรวจใหม่ได้ชุดท่าเดิม)
-
     return acquiredWorkoutList;
   }
 
@@ -254,7 +252,8 @@ class ScreeningDiagnoseService {
         ];
       case ScreeningTitle.shoulder:
         return [
-          WorkoutlistTitle.shoulder,
+          WorkoutlistTitle.shoulder_ch,
+          WorkoutlistTitle.shoulder_th,
         ];
       case ScreeningTitle.lowerback:
         return [
@@ -270,8 +269,8 @@ class ScreeningDiagnoseService {
   }
 
   //function give workoutlist per day
-  static Map<WorkoutlistTitle, List<WorkoutListModel>> Give_Workoutlist_Per_Day(
-      List<WorkoutlistTitle> workoutList) {
+  static Map<WorkoutlistTitle, List<WorkoutListModel>>
+      GenerateWorkoutListByTitle(List<WorkoutlistTitle> workoutList) {
     Map<WorkoutlistTitle, List<WorkoutListModel>> result = {};
     final DateTime now = DateTime.now();
 
@@ -281,8 +280,11 @@ class ScreeningDiagnoseService {
     if (workoutList.contains(WorkoutlistTitle.neckbaa_th)) {
       result[WorkoutlistTitle.neckbaa_th] = GiveNeckBaaThWorkoutlist(now);
     }
-    if (workoutList.contains(WorkoutlistTitle.shoulder)) {
-      result[WorkoutlistTitle.shoulder] = GiveShoulderWorkoutlist(now);
+    if (workoutList.contains(WorkoutlistTitle.shoulder_ch)) {
+      result[WorkoutlistTitle.shoulder_ch] = GiveShoulderChWorkoutlist(now);
+    }
+    if (workoutList.contains(WorkoutlistTitle.shoulder_th)) {
+      result[WorkoutlistTitle.shoulder_th] = GiveShoulderThWorkoutlist(now);
     }
     if (workoutList.contains(WorkoutlistTitle.back_ch)) {
       result[WorkoutlistTitle.back_ch] = GiveBackChWorkoutlist(now);
@@ -313,8 +315,8 @@ class ScreeningDiagnoseService {
                 WorkoutListModel(
                     date: now.add(Duration(days: days_from_now)),
                     WOL_title: WorkoutlistTitle.neckbaa_th.name,
-                    remaining_times: 3,
-                    total_times: 3,
+                    remaining_times: 1,
+                    total_times: 1,
                     WOL_id: null,
                     NRS_before: null,
                     NRS_after: null)
@@ -323,12 +325,12 @@ class ScreeningDiagnoseService {
         .toList();
   }
 
-  static List<WorkoutListModel> GiveShoulderWorkoutlist(DateTime now) {
+  static List<WorkoutListModel> GiveShoulderChWorkoutlist(DateTime now) {
     return List<int>.generate(days_in_four_weeks, (index) => index)
         .map(
           (days_from_now) => WorkoutListModel(
               date: now.add(Duration(days: days_from_now)),
-              WOL_title: WorkoutlistTitle.shoulder.name,
+              WOL_title: WorkoutlistTitle.shoulder_ch.name,
               remaining_times: 3,
               total_times: 3,
               WOL_id: null,
@@ -338,14 +340,31 @@ class ScreeningDiagnoseService {
         .toList();
   }
 
+  static List<WorkoutListModel> GiveShoulderThWorkoutlist(DateTime now) {
+    return List<int>.generate(days_in_four_weeks, (index) => index)
+        .expand((days_from_now) => (days_from_now % 2 == 0)
+            ? [
+                WorkoutListModel(
+                    date: now.add(Duration(days: days_from_now)),
+                    WOL_title: WorkoutlistTitle.shoulder_th.name,
+                    remaining_times: 1,
+                    total_times: 1,
+                    WOL_id: null,
+                    NRS_before: null,
+                    NRS_after: null)
+              ]
+            : <WorkoutListModel>[])
+        .toList();
+  }
+
   static List<WorkoutListModel> GiveBackChWorkoutlist(DateTime now) {
     return List<int>.generate(days_in_four_weeks, (index) => index)
         .map(
           (days_from_now) => WorkoutListModel(
               date: now.add(Duration(days: days_from_now)),
               WOL_title: WorkoutlistTitle.back_ch.name,
-              remaining_times: 3,
-              total_times: 3,
+              remaining_times: 6,
+              total_times: 6,
               WOL_id: null,
               NRS_before: null,
               NRS_after: null),
@@ -360,8 +379,8 @@ class ScreeningDiagnoseService {
                 WorkoutListModel(
                     date: now.add(Duration(days: days_from_now)),
                     WOL_title: WorkoutlistTitle.back_th.name,
-                    remaining_times: 3,
-                    total_times: 3,
+                    remaining_times: 1,
+                    total_times: 1,
                     WOL_id: null,
                     NRS_before: null,
                     NRS_after: null)
@@ -409,11 +428,29 @@ class ScreeningDiagnoseService {
     final List<WorkoutlistTitle> workoutListTitles = [
       WorkoutlistTitle.neckbaa_ch,
       WorkoutlistTitle.neckbaa_th,
-      WorkoutlistTitle.shoulder,
+      WorkoutlistTitle.shoulder_ch,
+      WorkoutlistTitle.shoulder_th,
       WorkoutlistTitle.back_ch,
       WorkoutlistTitle.back_th
     ];
-    final workout_days = Give_Workoutlist_Per_Day(workoutListTitles);
+    createWorkouts(workoutListTitles);
+    // final workout_days = GenerateWorkoutListByTitle(workoutListTitles);
+    // WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
+    // for (var workoutlist_title in workout_days.entries) {
+    //   final there_is_workoutlist = await wl_db
+    //       .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
+    //   // if there is workoutlist then skip
+    //   if (there_is_workoutlist) {
+    //     continue;
+    //   }
+    //   for (var workout in workoutlist_title.value) {
+    //     wl_db.insertWorkoutList(workout);
+    //   }
+    // }
+  }
+
+  static Future<void> createWorkouts(List<WorkoutlistTitle> workouts) async {
+    final workout_days = GenerateWorkoutListByTitle(workouts);
     WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
     for (var workoutlist_title in workout_days.entries) {
       final there_is_workoutlist = await wl_db
@@ -435,7 +472,7 @@ class ScreeningDiagnoseService {
       case ScreeningTitle.baa:
         return [WorkoutlistTitle.neckbaa_ch, WorkoutlistTitle.neckbaa_th];
       case ScreeningTitle.shoulder:
-        return [WorkoutlistTitle.shoulder];
+        return [WorkoutlistTitle.shoulder_ch, WorkoutlistTitle.shoulder_th];
       case ScreeningTitle.lowerback:
         return [WorkoutlistTitle.back_ch, WorkoutlistTitle.back_th];
       case ScreeningTitle.upperback:

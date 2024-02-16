@@ -9,6 +9,7 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/pages/workoutList-feature/start_workout_button_widget.dart';
 
 class InfoOfListWorkoutPage extends StatelessWidget {
@@ -80,12 +81,8 @@ class InfoOfListWorkoutPage extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          (workoutList != null)
-              ? StartWorkoutButton(
-                  pageRoutes: pageRoutes,
-                  workoutList: workoutList!,
-                )
-              : Text('คุณไม่สามารถบริหารได้'),
+          ConditionalStartWorkoutButton(
+              workoutList: workoutList, pageRoutes: pageRoutes),
           Container(
             margin: EdgeInsets.symmetric(vertical: 16),
             child: TextWithStartIconWidget(
@@ -128,5 +125,58 @@ class InfoOfListWorkoutPage extends StatelessWidget {
             colorText: Color(0xFFC9635F),
           ),
         ]);
+  }
+}
+
+class ConditionalStartWorkoutButton extends StatelessWidget {
+  final WorkoutList? workoutList;
+  final PageRoutes pageRoutes;
+
+  const ConditionalStartWorkoutButton({
+    super.key,
+    required this.workoutList,
+    required this.pageRoutes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: serviceLocator<WorkoutListDB>().getWorkoutListByDateAndTitle(
+          DateTime.now(), workoutList?.titleCode ?? ''),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        if (snapshot.hasData) {
+          if (workoutList == null) {
+            return Text('คุณไม่สามารถบริหารได้');
+          }
+          final todayWorkout = snapshot.data as List<WorkoutListModel>;
+          if (todayWorkout.isEmpty) {
+            // return Text('hello');
+            return StartWorkoutButton(
+              pageRoutes: pageRoutes,
+              workoutList: workoutList!,
+              text: 'คุณไม่มีการบริหารในวันนี้',
+              disabled: true,
+            );
+          }
+          // If the user has already done the workout today
+          if (todayWorkout.first.remaining_times == 0) {
+            return StartWorkoutButton(
+              pageRoutes: pageRoutes,
+              workoutList: workoutList!,
+              text: 'วันนี้คุณทำท่าบริหารครบแล้ว',
+              disabled: true,
+            );
+          }
+          return StartWorkoutButton(
+            pageRoutes: pageRoutes,
+            workoutList: workoutList!,
+          );
+        }
+        return Text('Loading...');
+      },
+    );
   }
 }

@@ -7,6 +7,9 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
+import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/list_dropdown_widget.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/select_box_widget.dart';
@@ -29,12 +32,8 @@ class SetSchedulePage extends StatefulWidget {
 
 class _SetSchedulePageState extends State<SetSchedulePage> {
   final PageRoutes pageRoutes = PageRoutes();
-  final List<String> nameList = [
-    'ชุดท่าบริหารคอ',
-    'ชุดท่าบริหารไหล่',
-    'ชุดท่าบริหารหลังส่วนบน'
-  ];
-  String? selectWorkoutList;
+
+  WorkoutList? selectWorkoutList;
   bool isTapCalender = false;
   bool isTapTime = false;
 
@@ -43,6 +42,8 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   late Map<DateTime, List<Event>> events = {};
+
+  bool isEdited = false;
 
   @override
   void initState() {
@@ -59,6 +60,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     setState(() {
       isTapCalender = !isTapCalender;
       isTapTime = false;
+      isEdited = true;
     });
   }
 
@@ -66,6 +68,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     setState(() {
       isTapTime = !isTapTime;
       isTapCalender = false;
+      isEdited = true;
     });
   }
 
@@ -103,13 +106,15 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
   }
 
   void onConfirm() {
+    if (selectWorkoutList == null) {
+      print('no selectWorkoutList');
+      return;
+    }
+
     List<Event> oldEvents = _getEventsForDay(_selectedDay!);
 
     ScheduleService.kEvents.addAll({
-      _selectedDay!: [
-        ...oldEvents,
-        Event(selectWorkoutList ?? 'ไม่มีชื่อชุดท่า', setSchedule())
-      ]
+      _selectedDay!: [...oldEvents, Event(selectWorkoutList, setSchedule())]
     });
     // NotificationService.scheduleNotification(
     //   selectedDay: setSchedule(),
@@ -142,6 +147,10 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
             children: [
               GestureDetector(
                 onTap: () async {
+                  if (!isEdited) {
+                    Navigator.pop(context);
+                    return;
+                  }
                   final result = await alertDialog.getshowDialog(
                       context, 'ยกเลิกการตั้ง Schedule ใช่หรือไม่ ?', null, () {
                     Navigator.pop(context, false);
@@ -170,7 +179,12 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                 ),
               ),
               ButtonWithoutIconWidget(
-                  onTap: onConfirm,
+                  onTap: () async {
+                    if (!isEdited) {
+                      return;
+                    }
+                    onConfirm();
+                  },
                   text: 'ยืนยัน',
                   radius: 4,
                   width: 72,
@@ -202,13 +216,32 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                   fontWeight: FontWeight.w600,
                 )),
           ),
-          ListDropdownWidget(
-            nameList: nameList,
-            value: selectWorkoutList,
-            onChanged: (String? value) {
-              setState(() {
-                selectWorkoutList = value!;
-              });
+          FutureBuilder(
+            future:
+                serviceLocator<WorkoutListDB>().getAvailableWorkoutListTitles(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              if (snapshot.hasData) {
+                final availableTitleCodes = snapshot.data as List<String>;
+                final nameList = availableTitleCodes
+                    .map((code) => WorkoutList.workoutListFromTitleCode[code])
+                    .where((element) => element != null)
+                    .map((wol) => wol!)
+                    .toList();
+                return ListDropdownWidget(
+                  nameList: nameList,
+                  value: selectWorkoutList,
+                  onChanged: (WorkoutList? value) {
+                    setState(() {
+                      isEdited = true;
+                      selectWorkoutList = value!;
+                    });
+                  },
+                );
+              }
+              return Text("Loading...");
             },
           ),
           ResponsiveCheckWidget.isSmallMobile(context)

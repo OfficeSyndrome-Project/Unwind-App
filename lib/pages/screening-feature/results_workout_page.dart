@@ -140,7 +140,7 @@ class ResultsWorkoutPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  workoutList.description,
+                  workoutList.titleTH,
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
                     fontSize:

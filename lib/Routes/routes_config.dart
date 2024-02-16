@@ -183,6 +183,7 @@ class Profile {
 class Workout {
   PathRoute reportworkoutpage(WorkoutList? workoutList) => PathRoute(
       title: "ชุดท่าบริหาร",
+      name: PageName.REPORT_WORKOUT,
       widget: ReportWorkoutPage(
         workoutList: workoutList,
         workoutListDB: serviceLocator(),
@@ -224,19 +225,34 @@ class Workout {
       PathRoute(title: "ตั้งเวลาแจ้งเตือน", widget: SetSchedulePage());
 }
 
+
 class PreviewPdf {
   PathRoute pdfpreviewpage() =>
       PathRoute(title: "ผลทดสอบ", widget: PdfPreviewPage());
+
+class PageName {
+  static String REPORT_WORKOUT = "/report-workout";
+
 }
 
 class PathRoute {
   String title;
   Widget widget;
+  Object? arguments;
+  String name;
 
-  PathRoute({required this.title, required this.widget});
+  PathRoute({
+    required this.title,
+    required this.widget,
+    this.arguments,
+    this.name = "",
+  });
 
   MaterialPageRoute route(BuildContext context,
       {List<TimeWatchObj>? timesArr, List<SummaryListObj>? summaryArr}) {
-    return MaterialPageRoute(builder: (context) => widget);
+    return MaterialPageRoute(
+      builder: (context) => widget,
+      settings: RouteSettings(name: name, arguments: arguments),
+    );
   }
 }

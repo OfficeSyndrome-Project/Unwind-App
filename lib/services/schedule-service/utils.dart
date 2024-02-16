@@ -1,11 +1,13 @@
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+
 class Event {
-  final String title;
+  // final String title;
   final DateTime times;
+  final WorkoutList? wol;
+  const Event(this.wol, this.times);
 
-  const Event(this.title, this.times);
-
-  @override
-  String toString() => title;
+  // @override
+  // String toString() => title;
 }
 
 int getHashCode(DateTime key) {

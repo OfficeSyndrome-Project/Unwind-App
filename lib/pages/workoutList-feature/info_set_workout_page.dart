@@ -5,7 +5,7 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:unwind_app/pages/workoutList-feature/start_workout_button_widget.dart';
+import 'package:unwind_app/pages/workoutList-feature/info_of_list_workout_page.dart';
 
 class InfoSetWorkoutPage extends StatelessWidget {
   InfoSetWorkoutPage({super.key, this.workoutData, required this.workoutList});
@@ -179,10 +179,8 @@ class InfoSetWorkoutPage extends StatelessWidget {
               ),
             ],
           )),
-          (workoutList != null)
-              ? StartWorkoutButton(
-                  pageRoutes: pageRoutes, workoutList: workoutList!)
-              : Text('คุณไม่สามารถบริหารได้'),
+          ConditionalStartWorkoutButton(
+              workoutList: workoutList, pageRoutes: pageRoutes),
         ]);
   }
 }
