@@ -52,6 +52,9 @@ dependencies:
   rxdart: ^0.27.7
   flutter_native_splash: ^2.3.10
   volume_controller: ^2.0.7
+  pdf: ^3.10.7
+  path_provider: ^2.1.2
+  printing: ^5.11.1
 
 dev_dependencies:
   flutter_test:
@@ -435,6 +438,44 @@ flutter:
     - lib/assets/images/workout-thumbnail-img/shoulder02_l.png
     - lib/assets/images/workout-thumbnail-img/shoulder02_r.png
     - lib/assets/images/workout-thumbnail-img/shoulder03.png
+
+    - lib/assets/images/break-post/arm-posture/TP-left/TP-1.png
+    - lib/assets/images/break-post/arm-posture/TP-left/TP-2.png
+    - lib/assets/images/break-post/arm-posture/TP-left/TP-3.png
+    - lib/assets/images/break-post/arm-posture/TP-left/TP-4.png
+    - lib/assets/images/break-post/arm-posture/TP-left/TP-5.png
+    - lib/assets/images/break-post/arm-posture/TP-right/TP-1.png
+    - lib/assets/images/break-post/arm-posture/TP-right/TP-2.png
+    - lib/assets/images/break-post/arm-posture/TP-right/TP-3.png
+    - lib/assets/images/break-post/arm-posture/TP-right/TP-4.png
+    - lib/assets/images/break-post/arm-posture/TP-right/TP-5.png
+    - lib/assets/images/break-post/leg-posture/1.png
+    - lib/assets/images/break-post/leg-posture/2.png
+    - lib/assets/images/break-post/leg-posture/3.png
+    - lib/assets/images/break-post/leg-posture/4.png
+    - lib/assets/images/break-post/leg-posture/5.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-1.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-2.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-3.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-4.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-5.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-6.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-7.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-8.png
+    - lib/assets/images/break-post/neck-posture/TP-left/TP-9.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-1.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-2.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-3.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-4.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-5.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-6.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-7.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-8.png
+    - lib/assets/images/break-post/neck-posture/TP-right/TP-9.png
+    - lib/assets/images/break-post/shoulder-posture/TP-1.png
+    - lib/assets/images/break-post/shoulder-posture/TP-2.png
+    - lib/assets/images/break-post/shoulder-posture/TP-3.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
