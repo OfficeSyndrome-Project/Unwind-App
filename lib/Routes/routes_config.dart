@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/pages/history-feature/result_screening_page.dart';
 import 'package:unwind_app/pages/screening-feature/infomation_page.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
@@ -153,11 +154,18 @@ class Menu {
 
 class History {
   PathRoute historylist() => PathRoute(title: "ประวัติ", widget: HistoryPage());
-  PathRoute summarypage() => PathRoute(title: "ประวัติ", widget: SummaryPage());
-  PathRoute resultperweekpage(List<SummaryListObj> summaryArr) => PathRoute(
+  PathRoute summarypage(
+          WorkoutList workoutList, List<WorkoutListModel> workoutListModel) =>
+      PathRoute(
+          title: "ประวัติ",
+          widget: SummaryPage(
+            workoutList: workoutList,
+            workoutListModel: workoutListModel,
+          ));
+  PathRoute resultperweekpage(WeeklySummary weeklySummary) => PathRoute(
       title: "ประวัติ",
       widget: ResultPerWeekPage(
-        summaryArr: summaryArr,
+        weeklySummary: weeklySummary,
       ));
   PathRoute resultscreening(List<KeepScoreAndDateModel> dateMockup) =>
       PathRoute(

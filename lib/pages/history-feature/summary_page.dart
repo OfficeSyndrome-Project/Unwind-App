@@ -10,27 +10,33 @@ import 'package:unwind_app/Widgets/history-widget/score_chart_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 import 'package:unwind_app/data/history-data/week_score_mockup.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
+import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
+import 'package:unwind_app/pages/workoutList-feature/report_workout_utils.dart';
 
 import '../../data/history-data/keep_score_and_date_model.dart';
 import '../../data/history-data/summary_list_obj.dart';
 
 class SummaryPage extends StatelessWidget {
-  SummaryPage({super.key});
+  SummaryPage({
+    super.key,
+    required this.workoutList,
+    required this.workoutListModel,
+  });
 
   final PageRoutes pageRoutes = PageRoutes();
+  final WorkoutList workoutList;
+  final List<WorkoutListModel> workoutListModel;
 
-  final List<String> nameWorkout = [
-    'ท่าหดคอ กดศีรษะ',
-    'ท่ามองรักแร้ กดศีรษะ',
-    'ท่าเงยหน้า เอนคอ'
-  ];
   //example data line chart
   static List<KeepScoreAndDateModel> keepscores =
       KeepScoreAndDateModel.getData();
 
-  static List<WeekScoreMockup> weekscoremockup = WeekScoreMockup.getData();
+  static List<WeekScore> weekscoremockup = WeekScoreMockup.getData();
 
   static List<List<KeepScoreAndDateModel>> divideListIntoWeeks(
       List<KeepScoreAndDateModel> data) {
@@ -59,10 +65,13 @@ class SummaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double? boxHeight = weeklyChunks.length + 0;
-
+    final weeklyWorkoutLists = getWeeklyWorkouts(workoutListModel);
+    print('--- xxx');
+    print(weeklyWorkoutLists.first);
+    double? boxHeight = weeklyWorkoutLists.length + 0;
     return AppscreenTheme(
-        textBar: pageRoutes.history.summarypage().title,
+        textBar:
+            pageRoutes.history.summarypage(workoutList, workoutListModel).title,
         iconButtonStart: IconButton(
             alignment: Alignment.centerLeft,
             onPressed: () {
@@ -98,8 +107,10 @@ class SummaryPage extends StatelessWidget {
               children: <Widget>[
                 Center(
                   child: Text(
-                    //day - day Month year
-                    '${keepscores.map((data) => data.dateTime.day).first.toString()} - ${keepscores.map((data) => data.dateTime.day).last.toString()} ${changeMonthIntToString(keepscores).toString()} ${keepscores.map((data) => data.dateTime.year).first.toString()}',
+                    (workoutListModel.firstOrNull?.date == null ||
+                            workoutListModel.firstOrNull?.date == null)
+                        ? 'ไม่มีข้อมูลวันที่'
+                        : '${formatDateTimeRangeToThai(workoutListModel.first.date!, workoutListModel.last.date!)}',
                     style: ResponsiveCheckWidget.isSmallMobile(context)
                         ? TextStyle(
                             fontSize: 16,
@@ -130,7 +141,7 @@ class SummaryPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: nameWorkout.map((data) {
+                    children: workoutList.workoutData.map((data) {
                       return Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Row(
@@ -145,7 +156,7 @@ class SummaryPage extends StatelessWidget {
                               width: 8,
                             ),
                             Text(
-                              data,
+                              data.name,
                               style:
                                   ResponsiveCheckWidget.isSmallMobile(context)
                                       ? TextStyle(
@@ -179,37 +190,52 @@ class SummaryPage extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-                ScoreChartWidget(
-                  height: 150,
-                  series: <LineSeries<WeekScoreMockup, int>>[
-                    LineSeries(
-                      legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
-                      legendIconType: LegendIconType.rectangle,
-                      color: Color(0xFFb1c2eb),
-                      markerSettings: const MarkerSettings(
-                        isVisible: true,
-                        height: 6,
-                        width: 6,
-                      ),
-                      animationDuration: 0,
-                      dataSource: weekscoremockup,
-                      xValueMapper: (WeekScoreMockup score, _) => score.week,
-                      yValueMapper: (WeekScoreMockup score, _) =>
-                          score.beforeScore,
-                    ),
-                    LineSeries(
-                      legendItemText: 'ค่าความเจ็บปวด (หลัง)',
-                      legendIconType: LegendIconType.rectangle,
-                      color: Theme.of(context).colorScheme.primary,
-                      animationDuration: 0,
-                      markerSettings: const MarkerSettings(
-                          isVisible: true, height: 6, width: 6),
-                      dataSource: weekscoremockup,
-                      xValueMapper: (WeekScoreMockup score, _) => score.week,
-                      yValueMapper: (WeekScoreMockup score, _) =>
-                          score.afterScore,
-                    ),
-                  ],
+                FutureBuilder(
+                  future: () async {
+                    final wols = await serviceLocator<WorkoutListDB>()
+                        .getWorkoutListByTitle(workoutList.titleCode);
+                    final weekScores = getWeekScores(wols);
+                    return weekScores;
+                  }(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final List<WeekScoreRealize> weekscoremockup =
+                          snapshot.data as List<WeekScoreRealize>;
+                      return ScoreChartWidget(
+                        height: 150,
+                        series: <LineSeries<WeekScore, int>>[
+                          LineSeries(
+                            legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
+                            legendIconType: LegendIconType.rectangle,
+                            color: Color(0xFFb1c2eb),
+                            markerSettings: const MarkerSettings(
+                              isVisible: true,
+                              height: 6,
+                              width: 6,
+                            ),
+                            animationDuration: 0,
+                            dataSource: weekscoremockup,
+                            xValueMapper: (WeekScore item, _) => item.week,
+                            yValueMapper: (WeekScore score, _) =>
+                                score.beforeScore,
+                          ),
+                          LineSeries(
+                            legendItemText: 'ค่าความเจ็บปวด (หลัง)',
+                            legendIconType: LegendIconType.rectangle,
+                            color: Theme.of(context).colorScheme.primary,
+                            animationDuration: 0,
+                            markerSettings: const MarkerSettings(
+                                isVisible: true, height: 6, width: 6),
+                            dataSource: weekscoremockup,
+                            xValueMapper: (WeekScore score, _) => score.week,
+                            yValueMapper: (WeekScore score, _) =>
+                                score.afterScore,
+                          ),
+                        ],
+                      );
+                    }
+                    return Text('Loading...');
+                  },
                 ),
                 Container(
                   width: double.infinity,
@@ -221,10 +247,17 @@ class SummaryPage extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                                 context,
-                                pageRoutes.history.resultperweekpage([
-                                  SummaryListObj(
-                                      weeklyChunks: weeklyChunks, index: index)
-                                ]).route(context));
+                                pageRoutes.history
+                                    .resultperweekpage(
+                                      WeeklySummary(
+                                        dailyNrsScores:
+                                            weeklyWorkoutLists[index]
+                                                .map(toDailyNrsScore)
+                                                .toList(),
+                                        weekNumber: index + 1,
+                                      ),
+                                    )
+                                    .route(context));
                           },
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           text: 'สัปดาห์ที่ ' + (index + 1).toString(),
@@ -247,10 +280,13 @@ class SummaryPage extends StatelessWidget {
                       separatorBuilder: (context, index) => SizedBox(
                             height: 4,
                           ),
-                      itemCount: weeklyChunks.length),
+                      itemCount: weeklyWorkoutLists.length),
                 ),
                 ScoreAverageWidget(
-                  nrsScoreAverage: currentDiffScore > 0 ? currentDiffScore : 0,
+                  // nrsScoreAverage: currentDiffScore > 0 ? currentDiffScore : 0,
+                  nrsScoreAverage:
+                      (getNrsBeforeAfter(workoutListModel).before ?? 0) -
+                          (getNrsBeforeAfter(workoutListModel).after ?? 0),
                 ),
                 ButtonWithiconWidget(
                   onTap: () {
@@ -282,4 +318,146 @@ class SummaryPage extends StatelessWidget {
           ),
         ]);
   }
+}
+
+String formatDateTimeRangeToThai(DateTime from, DateTime to) {
+  if (from.year == to.year && from.month == to.month)
+    return '${from.day} - ${to.day} ${from.thaiMonthName()} ${from.year}';
+  if (from.year == to.year)
+    return '${from.day} ${from.thaiMonthName()} - ${to.day} ${to.thaiMonthName()} ${from.year}';
+  return '${from.day} ${from.thaiMonthName()} ${from.year} - ${to.day} ${to.thaiMonthName()} ${to.year}';
+}
+
+extension ThaiDateTime on DateTime {
+  String thaiMonthName() {
+    return DateFormat('MMMM', 'th').format(this);
+  }
+}
+
+class NrsBeforeAfter {
+  final int? before;
+  final int? after;
+  const NrsBeforeAfter({this.before, this.after});
+  @override
+  String toString() => 'NrsBeforeAfter $before $after';
+}
+
+NrsBeforeAfter getNrsBeforeAfter(List<WorkoutListModel> wols) {
+  final sortedWols = wols.where((e) => e.date != null).toList()
+    ..sort((a, b) => a.date!.compareTo(b.date!));
+
+  final x = NrsBeforeAfter(
+    before: sortedWols
+        .where((element) => element.NRS_before != null)
+        .firstOrNull
+        ?.NRS_before,
+    after: sortedWols
+        .where((element) => element.NRS_after != null)
+        .lastOrNull
+        ?.NRS_after,
+  );
+  return x;
+}
+
+List<List<WorkoutListModel>> getWeeklyWorkouts(List<WorkoutListModel> wols) {
+  final sortedWols = wols.where((workout) => workout.date != null).toList()
+    ..sort((a, b) => a.date!.compareTo(b.date!));
+  print('--- sortedWols : ${sortedWols.first}');
+  final result = getWeekly(sortedWols)((workout) => workout.date);
+  print('--- result : ${result.first.first}');
+  print('---  getWeeklyWorkouts : ${result.length}');
+  return result;
+}
+
+/// Calculates the weekly scores based on the provided list of workout models.
+List<WeekScoreRealize> getWeekScores(List<WorkoutListModel> wols) {
+  if (wols.isEmpty) return [];
+  return getWeeklyWorkouts(wols)
+      .map(getNrsBeforeAfter)
+      .toList()
+      .asMap() // to get the index for the week number, use in WeekScore
+      .entries
+      .map((entry) => WeekScoreRealize(
+          week: entry.key,
+          weekName: 'week ${entry.key + 1}',
+          beforeScore: entry.value.before,
+          afterScore: entry.value.after))
+      .toList();
+}
+
+extension IterableFirstOrNull<T> on Iterable<T> {
+  T? get firstOrNull {
+    var iterator = this.iterator;
+    if (iterator.moveNext()) return iterator.current;
+    return null;
+  }
+
+  T? get lastOrNull {
+    // if (this is EfficientLengthIterable) {
+    //   if (isEmpty) return null;
+    //   return last;
+    // }
+    var iterator = this.iterator;
+    if (!iterator.moveNext()) return null;
+    T result;
+    do {
+      result = iterator.current;
+    } while (iterator.moveNext());
+    return result;
+  }
+}
+
+/// Returns a function that takes a DateTime and returns a bool indicating
+/// whether the date is within the range (inclusive, exclusive).
+/// withinDate :: DateTime -> DateTime -> DateTime? -> bool
+bool Function(DateTime?) Function(DateTime) withinDateOrSameFirstDay(
+        DateTime from) =>
+    (DateTime to) => (DateTime? date) => (date == null)
+        ? false
+        : isSameDay(date, from) || date.isAfter(from) && date.isBefore(to);
+
+/// Returns a list of lists of elements of type T, where each inner list contains
+/// elements that fall within a week.
+/// The input list of elements must be sorted by date.
+/// The function takes a function that extracts the date from the element.
+/// getWeekly :: [T] -> (T -> DateTime?) -> [[T]]
+List<List<T>> Function(DateTime? Function(T) getDate) getWeekly<T>(
+    List<T> elements) {
+  return (getDate) {
+    if (elements.isEmpty) return [];
+
+    // Extracting first and last dates from the sorted list
+    final firstDate = getDate(elements.first);
+    final lastDate = getDate(elements.last);
+
+    // If any of the dates is null, return an empty list
+    if (firstDate == null || lastDate == null) return [];
+
+    // Calculating the number of weeks between the first and last dates
+    final weeksCount = (lastDate.difference(firstDate).inDays ~/ 7) + 1;
+
+    // Generating a list of first dates of each week
+    final firstDatesOfWeeks = List.generate(
+      weeksCount,
+      (index) => firstDate.add(Duration(days: index * 7)),
+    );
+
+    // Grouping elements into weekly lists
+    final weeklyLists = firstDatesOfWeeks.map((startDate) {
+      // Defining a function to check if the element's date falls within the current week
+      // bool Function(DateTime?) withinCurrentWeek = (date) =>
+      //     date != null &&
+      //     date.isAfter(startDate) &&
+      //     date.isBefore(startDate.add(Duration(days: 7)));
+      final withinCurrentWeek =
+          withinDateOrSameFirstDay(startDate)(startDate.add(Duration(days: 7)));
+
+      // Filtering elements that fall within the current week
+      return elements
+          .where((element) => withinCurrentWeek(getDate(element)))
+          .toList();
+    }).toList();
+
+    return weeklyLists.where((week) => week.isNotEmpty).toList();
+  };
 }

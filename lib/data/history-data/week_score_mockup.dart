@@ -1,4 +1,29 @@
-class WeekScoreMockup {
+/// WeekScore interface use for SummaryPage in line series
+abstract class WeekScore {
+  String? get weekName;
+  int? get week;
+  int? get beforeScore;
+  int? get afterScore;
+}
+
+class WeekScoreRealize implements WeekScore {
+  final String? weekName;
+  final int? week;
+  final int? beforeScore;
+  final int? afterScore;
+
+  WeekScoreRealize({
+    required this.week,
+    required this.weekName,
+    required this.beforeScore,
+    required this.afterScore,
+  });
+  @override
+  String toString() =>
+      'WeekScoreRealize $weekName $week $beforeScore $afterScore';
+}
+
+class WeekScoreMockup implements WeekScore {
   final String? weekName;
   final int? week;
   final int? beforeScore;

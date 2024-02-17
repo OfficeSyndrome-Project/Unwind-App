@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/db_helper.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 

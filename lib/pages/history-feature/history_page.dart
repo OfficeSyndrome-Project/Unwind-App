@@ -6,7 +6,7 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
-import 'package:unwind_app/pages/loading_page.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
 
 class HistoryPage extends StatelessWidget {
   HistoryPage({super.key});
@@ -14,7 +14,7 @@ class HistoryPage extends StatelessWidget {
   final PageRoutes pageRoutes = PageRoutes();
 
   // final List<WorkoutList> workoutLists =[];
-  final List<int> workoutLists = [1, 2, 3, 4, 5, 6];
+  final List<WorkoutList> workoutLists = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +41,38 @@ class HistoryPage extends StatelessWidget {
                             .then((workoutListModels) => workoutListModels)
                       })
                   .toList();
-              return workoutModelMaps;
+              final result = await Future.wait(
+                  workoutModelMaps.map(resolveFutureMap).toList());
+              return result;
             }(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                // final workoutLists = snapshot.data as List<Map<String, Future<List<WorkoutList>>>>;
-                return Column(children: [
-                  ...workoutLists
-                      .expand((e) => [
-                            HistoryWorkoutListItem(
-                                pageRoutes: pageRoutes, title: "Workout $e"),
-                            SizedBox(
-                              height: 8,
-                            ),
-                          ])
-                      .toList()
-                    // Remove the last SizedBox
-                    ..removeLast(),
-                ]);
+                final workoutLists =
+                    snapshot.data as List<Map<String, List<WorkoutListModel>>>;
+                return (workoutLists.isEmpty)
+                    ? Expanded(
+                        child: Center(
+                          child: Text('คุณยังไม่มีประวัติออกกำลังกาย'),
+                        ),
+                      )
+                    : Column(children: [
+                        ...workoutLists
+                            // filter out empty map
+                            .where((wolModelMap) => wolModelMap.isNotEmpty)
+                            .expand((wolModelMap) => [
+                                  HistoryWorkoutListItem(
+                                    pageRoutes: pageRoutes,
+                                    workoutList:
+                                        WorkoutList.workoutListFromTitleCode[
+                                            wolModelMap.keys.first]!,
+                                    workoutListModels: wolModelMap.values.first,
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                ])
+                            .toList()
+                      ]);
               }
               return LoadingAnimationWidget.inkDrop(
                   color: Theme.of(context).colorScheme.primary, size: 50);
@@ -69,23 +83,63 @@ class HistoryPage extends StatelessWidget {
 }
 
 class HistoryWorkoutListItem extends StatelessWidget {
+  final WorkoutList workoutList;
+  final PageRoutes pageRoutes;
+  final List<WorkoutListModel> workoutListModels;
+
   const HistoryWorkoutListItem({
     super.key,
     required this.pageRoutes,
-    required this.title,
+    required this.workoutList,
+    required this.workoutListModels,
   });
-
-  final String title;
-  final PageRoutes pageRoutes;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, pageRoutes.history.summarypage().route(context));
+            context,
+            pageRoutes.history
+                .summarypage(workoutList, workoutListModels)
+                .route(context));
       },
-      child: HistoryWorkoutlistWidget(title: title),
+      child: HistoryWorkoutlistWidget(
+        workoutList: workoutList,
+        workoutListModels: workoutListModels,
+      ),
     );
   }
+}
+
+// Future<Map<K, V>> resolveFutureMap<K, V>(Map<K, Future<V>> futureMap) async {
+//   final resolvedMap = <K, V>{};
+
+//   await Future.forEach(futureMap.entries, (MapEntry<K, Future<V>> entry) async {
+//     final key = entry.key;
+//     final futureValue = entry.value;
+
+//     try {
+//       final value = await futureValue;
+//       resolvedMap[key] = value;
+//     } catch (e) {
+//       // Handle error gracefully
+//       print('Error resolving future for key $key: $e');
+//       // omit the key-value pair from the resolved map
+//     }
+//   });
+
+//   return resolvedMap;
+// }
+
+Future<Map<K, V>> resolveFutureMap<K, V>(Map<K, Future<V>> futureMap) async {
+  return Future.wait(
+    futureMap.entries
+        .map((entry) async => entry.value.then(
+              (value) => MapEntry(entry.key, value),
+            ))
+        .toList(),
+  ).then(
+    (entries) => Map.fromEntries(entries),
+  );
 }

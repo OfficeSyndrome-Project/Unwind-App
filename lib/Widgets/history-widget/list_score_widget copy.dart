@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 class ListScoreWidget extends StatelessWidget {
-  final int firstNrs;
-  final int lastNrs;
-  final int differenceNrs;
+  final int? firstNrs;
+  final int? lastNrs;
+  final int? differenceNrs;
   const ListScoreWidget(
       {super.key,
       required this.firstNrs,
@@ -36,7 +36,7 @@ class ListScoreWidget extends StatelessWidget {
                       color: Color(0xFF484D56),
                     )),
                 TextSpan(
-                    text: firstNrs.toString(),
+                    text: (firstNrs == null) ? '-' : firstNrs.toString(),
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -63,7 +63,7 @@ class ListScoreWidget extends StatelessWidget {
                       color: Color(0xFF484D56),
                     )),
                 TextSpan(
-                    text: lastNrs.toString(),
+                    text: (lastNrs == null) ? '-' : lastNrs.toString(),
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -80,7 +80,9 @@ class ListScoreWidget extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                    text: 'ความเจ็บปวดลดลง ',
+                    text: (differenceNrs != null && differenceNrs! < 0)
+                        ? 'ความเจ็บปวดเพิ่มขึ้น '
+                        : 'ความเจ็บปวดลดลง ',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -90,7 +92,7 @@ class ListScoreWidget extends StatelessWidget {
                       color: Color(0xFF3B67CD),
                     )),
                 TextSpan(
-                    text: differenceNrs.toString() + ' ระดับ',
+                    text: (differenceNrs?.abs().toString() ?? '-') + ' ระดับ',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
