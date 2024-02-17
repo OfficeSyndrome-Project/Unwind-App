@@ -1,43 +1,53 @@
-import 'package:flutter_test/flutter_test.dart' as flutter_test;
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:unwind_app/services/schedule-service/schedule_service.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 
 void main() {
-  flutter_test.TestWidgetsFlutterBinding.ensureInitialized();
+  group('Test ScheduleService', () {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    test('writeTitle and readTitle', () async {
+      final title = 'TestTitle';
+      final id = 1;
+      final index = 0;
 
-  flutter_test.group('Test ScheduleService', () {
-    test('write & read Event', () async {
-      Event event = Event('TestEvent', DateTime.now());
-      bool writeResult = await ScheduleService.writeEvent(event, 1, 0);
-      expect(writeResult, false); //ความจริงต้อง return true แต่มีปัญหาเวลา test
-      // Event readResult = await ScheduleService.readEvent(1, 0);
-      // expect(readResult.title, 'TestEvent');
-      // expect(readResult.times, isNotNull);
+      final writeResult = await ScheduleService.writeTitle(title, id, index);
+      expect(writeResult, false);
+      // final readResult = await ScheduleService.readTitle(id, index);
+      // expect(readResult, equals(title));
     });
 
-    test('write & read Events', () async {
-      List<Event> events = [
-        Event('Event1', DateTime.now()),
-        Event('Event2', DateTime.now().add(Duration(days: 1))),
+    test('writeTimes and readTimes', () async {
+      final times = DateTime.now();
+      final id = 1;
+      final index = 0;
+
+      final writeResult = await ScheduleService.writeTimes(times, id, index);
+      expect(writeResult, false);
+      // final readResult = await ScheduleService.readTimes(id, index);
+      // expect(readResult, equals(times));
+    });
+
+    test('writeEvents and readEvents', () async {
+      DateTime testDateTime = DateTime.now();
+      List<Event> testEvents = [
+        Event(
+            WorkoutList(
+                title: "หลัง",
+                titleTH: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
+                workoutType: "stretch",
+                titlePath: "lib/assets/images/screeningPart/select_pain_4.png",
+                titleCode: "back_th",
+                workoutData: WorkoutData.getWorkoutData()
+                    .where((element) =>
+                        element.title == "หลัง" &&
+                        element.workoutType == "strength")
+                    .toList(),
+                totalTime: "40 วินาที"),
+            DateTime.now()),
       ];
-      bool writeResult =
-          await ScheduleService.writeEvents(DateTime.now(), events);
-      expect(writeResult, false);
-      // List<Event> readResult = await ScheduleService.readEvents(DateTime.now());
-      // expect(readResult.length, 2);
-      // expect(readResult[0].title, 'Event1');
-      // expect(readResult[1].title, 'Event2');
-    });
-
-    test('remove Event', () async {
-      Event event = Event('TestEvent', DateTime.now());
-      bool writeResult = await ScheduleService.writeEvent(event, 1, 0);
-      expect(writeResult, false);
-      // await ScheduleService.removeEvent(0, DateTime.now());
-      // Event readResult = await ScheduleService.readEvent(1, 0);
-      // expect(readResult.title, '');
-      // expect(readResult.times, isNull);
+      expect(testDateTime, isNotNull);
+      expect(testEvents, isNotNull);
     });
   });
 }

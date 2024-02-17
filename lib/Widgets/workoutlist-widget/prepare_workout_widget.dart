@@ -31,11 +31,13 @@ class PrepareWorkoutWidget extends StatelessWidget {
               ),
             ),
           ),
-          AnimateSequenceWidget(
-            listPath: workoutData.animationPaths ?? [],
-            eachSetDuration: workoutData.sec,
-            repeat: workoutData.time,
-          ),
+          if (workoutData.animationPaths !=
+              null) //เพิ่มมาเพื่อให้ run test ได้ปกติ
+            AnimateSequenceWidget(
+              listPath: workoutData.animationPaths ?? [],
+              eachSetDuration: workoutData.sec,
+              repeat: workoutData.time,
+            ),
 
           // RatioImageoneToOne(
           //     assetName: assetName,

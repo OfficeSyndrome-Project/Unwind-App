@@ -18,7 +18,6 @@ void main() {
       thumbnailPath: "lib/assets/images/workout-thumbnail-img/neckch01.png",
       frequency: "ทำทุกวัน",
       caution: "ยืดให้รู้สึกตึง ไม่ควรยืดจนรู้สึกเจ็บ",
-      videoPath: null,
       animationPaths: null,
       workoutType: "stretch",
     );
