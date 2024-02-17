@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
 import 'package:unwind_app/pages/history-feature/result_screening_page.dart';
+import 'package:unwind_app/pages/pdf_preview_page.dart';
 import 'package:unwind_app/pages/screening-feature/infomation_page.dart';
 import 'package:unwind_app/services/schedule-service/utils.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
@@ -49,6 +50,7 @@ class PageRoutes {
   Profile profile = Profile();
   Screening screening = Screening();
   Workout workout = Workout();
+  PreviewPdf previewPdf = PreviewPdf();
 }
 
 class Screening {
@@ -221,6 +223,11 @@ class Workout {
           ));
   PathRoute setschedulepage() =>
       PathRoute(title: "ตั้งเวลาแจ้งเตือน", widget: SetSchedulePage());
+}
+
+class PreviewPdf {
+  PathRoute pdfpreviewpage() =>
+      PathRoute(title: "ผลทดสอบ", widget: PdfPreviewPage());
 }
 
 class PageName {
