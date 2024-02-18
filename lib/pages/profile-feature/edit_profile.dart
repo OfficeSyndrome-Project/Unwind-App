@@ -36,17 +36,6 @@ class EditProfileState extends State<EditProfile> {
     initUser();
   }
 
-  // void initName() async {
-  //   final String storageName = await ProfileService.getName();
-  //   final String storageLastname = await ProfileService.getLastname();
-  //   setState(() {
-  //     name = storageName;
-  //     lastname = storageLastname;
-  //     _editcontroller.text = name;
-  //     _lastnameController.text = lastname;
-  //   });
-  // }
-
   void initUser() async {
     final User storageUser = await ProfileService.getUser();
     setState(() {
@@ -90,7 +79,6 @@ class EditProfileState extends State<EditProfile> {
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               child: ListView(
-                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   ProfileTextForm(
                     onChange: (value) {

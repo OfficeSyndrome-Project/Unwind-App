@@ -76,11 +76,15 @@ class TableCalendarTheme {
     return _daysOfWeekStyle;
   }
 
-  HeaderStyle headerStyle() {
+  HeaderStyle headerStyle(BuildContext context) {
     HeaderStyle _headerStyle = HeaderStyle(
       headerPadding: EdgeInsets.only(bottom: 16),
-      leftChevronMargin: EdgeInsets.only(left: 48),
-      rightChevronMargin: EdgeInsets.only(right: 48),
+      leftChevronMargin: ResponsiveCheckWidget.isSmallMobile(context)
+          ? EdgeInsets.zero
+          : EdgeInsets.only(left: 48),
+      rightChevronMargin: ResponsiveCheckWidget.isSmallMobile(context)
+          ? EdgeInsets.zero
+          : EdgeInsets.only(right: 48),
       leftChevronPadding: EdgeInsets.all(4),
       rightChevronPadding: EdgeInsets.all(4),
       leftChevronIcon: Icon(
@@ -95,7 +99,7 @@ class TableCalendarTheme {
       titleCentered: true,
       titleTextStyle: TextStyle(
         color: Color(0xFF484D56),
-        fontSize: 16,
+        fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
         fontFamily: 'Noto Sans Thai',
         fontWeight: FontWeight.w500,
       ),

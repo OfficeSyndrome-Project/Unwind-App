@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
+import 'package:unwind_app/pages/alarm-feature/info_clock_page.dart';
 import 'package:unwind_app/pages/history-feature/result_screening_page.dart';
 import 'package:unwind_app/pages/pdf_preview_page.dart';
 import 'package:unwind_app/pages/screening-feature/infomation_page.dart';
@@ -151,6 +152,8 @@ class Menu {
       PathRoute(title: "ชุดท่าบริหาร", widget: const ContentAfterWorkPage());
   PathRoute afterbreakpage() =>
       PathRoute(title: "ชุดท่าบริหาร", widget: const AfterBreakPage());
+  PathRoute infoclockpage() =>
+      PathRoute(title: "นาฬิกาจับเวลา", widget: const InfoClockPage());
 }
 
 class History {

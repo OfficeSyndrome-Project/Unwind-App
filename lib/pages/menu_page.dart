@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
-import 'package:unwind_app/pages/alarm-feature/clock_page.dart';
-
-import 'ergonomic-feature/ergonomic_page.dart';
 
 class MenuWidget extends StatelessWidget {
-  const MenuWidget({super.key});
+  MenuWidget({super.key});
 
+  final PageRoutes pageRoutes = PageRoutes();
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
@@ -26,10 +25,8 @@ class MenuWidget extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ErgonomicPage()));
+                    Navigator.push(context,
+                        pageRoutes.menu.ergonomicpage().route(context));
                   },
                   child: Container(
                     width: double.infinity,
@@ -52,13 +49,12 @@ class MenuWidget extends StatelessWidget {
                 ),
                 Text(
                   'ปรับสภาพแวดล้อมการทำงาน',
-                  style: ResponsiveCheckWidget.isSmallMobile(context)
-                      ? TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF484D56),
-                        )
-                      : Theme.of(context).textTheme.titleMedium,
+                  style: TextStyle(
+                    fontSize:
+                        ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF484D56),
+                  ),
                 )
               ],
             ),
@@ -73,9 +69,7 @@ class MenuWidget extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ClockPage()));
+                        context, pageRoutes.menu.clockpage().route(context));
                   },
                   child: Container(
                     width: double.infinity,
@@ -97,13 +91,12 @@ class MenuWidget extends StatelessWidget {
                 ),
                 Text(
                   'นาฬิกาจับเวลา',
-                  style: ResponsiveCheckWidget.isSmallMobile(context)
-                      ? TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF484D56),
-                        )
-                      : Theme.of(context).textTheme.titleMedium,
+                  style: TextStyle(
+                    fontSize:
+                        ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF484D56),
+                  ),
                 )
               ],
             ),

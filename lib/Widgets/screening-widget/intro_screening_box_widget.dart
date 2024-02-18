@@ -29,8 +29,8 @@ class ScreeningIntroToQuestionWidget extends StatelessWidget {
           smallHeight: 200,
           largeHeight: 250,
         ),
-        const SizedBox(
-          height: 64,
+        SizedBox(
+          height: ResponsiveCheckWidget.isSmallMobile(context) ? 32 : 64,
         ),
         Text(
           titleLabel,

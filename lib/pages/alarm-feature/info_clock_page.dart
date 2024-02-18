@@ -3,8 +3,8 @@ import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
-class InfoErgonomicPage extends StatelessWidget {
-  const InfoErgonomicPage({super.key});
+class InfoClockPage extends StatelessWidget {
+  const InfoClockPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,12 @@ class InfoErgonomicPage extends StatelessWidget {
               margin: EdgeInsets.only(top: 8, bottom: 8),
               child: Text(
                 'หลักการทำงานของนาฬิกาจับเวลา',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: TextStyle(
+                  fontSize:
+                      ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF484D56),
+                ),
               ),
             ),
             SizedBox(
@@ -49,43 +54,41 @@ class InfoErgonomicPage extends StatelessWidget {
                 children: [
                   Text(
                     '1. เลือกจำนวนเวลาที่ต้องการทำงาน',
-                    style: ResponsiveCheckWidget.isSmallMobile(context)
-                        ? TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF636A75),
-                          )
-                        : Theme.of(context).textTheme.titleSmall,
+                    style: TextStyle(
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 14
+                          : 16,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF636A75),
+                    ),
                   ),
                   Text(
                     '2. เลือกจำนวนเวลาที่ต้องการพัก',
-                    style: ResponsiveCheckWidget.isSmallMobile(context)
-                        ? TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF636A75),
-                          )
-                        : Theme.of(context).textTheme.titleSmall,
+                    style: TextStyle(
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 14
+                          : 16,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF636A75),
+                    ),
                   ),
-                  Text(
-                    '3. นาฬิกาจะแจ้งเตือนเมื่อครบเวลาที่กำหนดไว้',
-                    style: ResponsiveCheckWidget.isSmallMobile(context)
-                        ? TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF636A75),
-                          )
-                        : Theme.of(context).textTheme.titleSmall,
-                  ),
+                  Text('3. นาฬิกาจะแจ้งเตือนเมื่อครบเวลาที่กำหนดไว้',
+                      style: TextStyle(
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF636A75),
+                      )),
                   Text(
                     '4. เมื่อพักเสร็จสิ้น สามารถเลือกได้ว่าต้องการทำงานต่อหรือไม่',
-                    style: ResponsiveCheckWidget.isSmallMobile(context)
-                        ? TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF636A75),
-                          )
-                        : Theme.of(context).textTheme.titleSmall,
+                    style: TextStyle(
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 14
+                          : 16,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF636A75),
+                    ),
                   ),
                 ],
               ),

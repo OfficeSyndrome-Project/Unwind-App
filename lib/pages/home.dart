@@ -18,9 +18,9 @@ class _HomeState extends State<HomePage> {
 
   late List<Widget> _widgetOptions = <Widget>[
     WorkoutListPage(),
-    const MenuWidget(),
+    MenuWidget(),
     HistoryPage(),
-    const ProfilePage(),
+    ProfilePage(),
   ];
 
   late List<BottomNavigationBarItem> bottomNavigationBarItem =
