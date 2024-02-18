@@ -334,6 +334,10 @@ String formatDateTimeRangeToThai(DateTime from, DateTime to) {
   return '${from.day} ${from.thaiMonthName()} ${from.yearTH()} - ${to.day} ${to.thaiMonthName()} พ.ศ.${to.yearTH()}';
 }
 
+String formatDateTimeRangeToThaiForHistoryPage(DateTime from, DateTime to) {
+  return '${from.day.toString().padLeft(2, '0')}/${from.month.toString().padLeft(2, '0')}/${from.yearTH() % 100} ถึง ${to.day.toString().padLeft(2, '0')}/${to.month.toString().padLeft(2, '0')}/${to.yearTH() % 100}';
+}
+
 extension ThaiDateTime on DateTime {
   String thaiMonthName() {
     return DateFormat('MMMM', 'th').format(this);

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
@@ -64,7 +61,7 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
                 (workoutListModels.first.date == null ||
                         workoutListModels.last.date == null)
                     ? ""
-                    : "วันที่ ${formatDateTimeRangeToThai(workoutListModels.first.date!, workoutListModels.last.date!)}",
+                    : "วันที่ ${formatDateTimeRangeToThaiForHistoryPage(workoutListModels.first.date!, workoutListModels.last.date!)}",
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 12,
