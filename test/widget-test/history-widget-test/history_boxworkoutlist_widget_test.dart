@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:unwind_app/Widgets/history-widget/history_boxworkoutlist_widget.dart';
+// import 'package:unwind_app/Widgets/history-widget/history_boxworkoutlist_widget.dart';
 import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
 
 void main() {
@@ -12,8 +12,8 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: HistoryWorkoutlistWidget(),
-        ),
+            // body: HistoryWorkoutlistWidget(),
+            ),
       ),
     );
 

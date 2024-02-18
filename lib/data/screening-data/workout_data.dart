@@ -1,6 +1,6 @@
 import 'package:unwind_app/database/workoutlist_db.dart';
 
-class WorkoutList {
+class WorkoutListData {
   String title;
   String workoutType;
   String titlePath;
@@ -8,7 +8,7 @@ class WorkoutList {
   String titleCode;
   String? totalTime;
   List<WorkoutData> workoutData;
-  WorkoutList({
+  WorkoutListData({
     required this.title,
     required this.workoutType,
     required this.titlePath,
@@ -27,12 +27,12 @@ class WorkoutList {
     'back_th': 6,
   };
   @override
-  operator ==(wol) => wol is WorkoutList && wol.titleCode == titleCode;
+  operator ==(wol) => wol is WorkoutListData && wol.titleCode == titleCode;
 
   @override
   int get hashCode => titleCode.hashCode;
 
-  static int compareByTitleOrder(WorkoutList a, WorkoutList b) =>
+  static int compareByTitleOrder(WorkoutListData a, WorkoutListData b) =>
       (customOrder[a.titleCode] ?? 0) - (customOrder[b.titleCode] ?? 0);
 
   static List<String> get allWorkoutListTitles => ["คอ-บ่า", "ไหล่", "หลัง"];
@@ -46,7 +46,7 @@ class WorkoutList {
       };
 
   // Use for converting from String such as 'neckbaa_ch' to WorkoutList
-  static Map<String, WorkoutList> get workoutListFromTitleCode => {
+  static Map<String, WorkoutListData> get workoutListFromTitleCode => {
         'neckbaa_ch': workoutListFromTitle[WorkoutlistTitle.neckbaa_ch]!,
         'neckbaa_th': workoutListFromTitle[WorkoutlistTitle.neckbaa_th]!,
         'shoulder_ch': workoutListFromTitle[WorkoutlistTitle.shoulder_ch]!,
@@ -56,8 +56,8 @@ class WorkoutList {
       };
 
   // Use for converting from WorkoutlistTitle to WorkoutList
-  static Map<WorkoutlistTitle, WorkoutList> get workoutListFromTitle => {
-        WorkoutlistTitle.neckbaa_ch: WorkoutList(
+  static Map<WorkoutlistTitle, WorkoutListData> get workoutListFromTitle => {
+        WorkoutlistTitle.neckbaa_ch: WorkoutListData(
             title: "คอ-บ่า",
             titleTH: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
             workoutType: "stretch",
@@ -69,7 +69,7 @@ class WorkoutList {
                     element.workoutType == "stretch")
                 .toList(),
             totalTime: "4 นาที 10 วินาที"),
-        WorkoutlistTitle.neckbaa_th: WorkoutList(
+        WorkoutlistTitle.neckbaa_th: WorkoutListData(
             title: "คอ-บ่า",
             titleTH: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
             workoutType: "strength",
@@ -81,7 +81,7 @@ class WorkoutList {
                     element.workoutType == "strength")
                 .toList(),
             totalTime: "5 นาที 50 วินาที"),
-        WorkoutlistTitle.shoulder_ch: WorkoutList(
+        WorkoutlistTitle.shoulder_ch: WorkoutListData(
             title: "ไหล่",
             titleTH: "ชุดท่าบริหารไหล่เพิ่มความยืดหยุ่น",
             workoutType: "stretch",
@@ -92,7 +92,7 @@ class WorkoutList {
                     element.title == "ไหล่" && element.workoutType == "stretch")
                 .toList(),
             totalTime: "13 นาที 45 วินาที"),
-        WorkoutlistTitle.shoulder_th: WorkoutList(
+        WorkoutlistTitle.shoulder_th: WorkoutListData(
             title: "ไหล่",
             titleTH: "ชุดท่าบริหารไหล่เพิ่มความแข็งแรง",
             workoutType: "strength",
@@ -104,7 +104,7 @@ class WorkoutList {
                     element.workoutType == "strength")
                 .toList(),
             totalTime: "44 วินาที"),
-        WorkoutlistTitle.back_ch: WorkoutList(
+        WorkoutlistTitle.back_ch: WorkoutListData(
             title: "หลัง",
             titleTH: "ชุดท่าบริหารหลังเพิ่มความยืดหยุ่น",
             workoutType: "stretch",
@@ -115,7 +115,7 @@ class WorkoutList {
                     element.title == "หลัง" && element.workoutType == "stretch")
                 .toList(),
             totalTime: "2 นาที 50 วินาที"),
-        WorkoutlistTitle.back_th: WorkoutList(
+        WorkoutlistTitle.back_th: WorkoutListData(
             title: "หลัง",
             titleTH: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
             workoutType: "stretch",

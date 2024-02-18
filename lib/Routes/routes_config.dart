@@ -101,7 +101,8 @@ class Screening {
       widget: FormAfterScreening(
         answerContext: answerContext,
       ));
-  PathRoute resultsworkout(List<WorkoutList> workoutList, String resultText) =>
+  PathRoute resultsworkout(
+          List<WorkoutListData> workoutList, String resultText) =>
       PathRoute(
           title: "",
           widget: ResultsWorkoutPage(
@@ -154,8 +155,8 @@ class Menu {
 
 class History {
   PathRoute historylist() => PathRoute(title: "ประวัติ", widget: HistoryPage());
-  PathRoute summarypage(
-          WorkoutList workoutList, List<WorkoutListModel> workoutListModel) =>
+  PathRoute summarypage(WorkoutListData workoutList,
+          List<WorkoutListModel> workoutListModel) =>
       PathRoute(
           title: "ประวัติ",
           widget: SummaryPage(
@@ -187,31 +188,32 @@ class Profile {
 }
 
 class Workout {
-  PathRoute reportworkoutpage(WorkoutList? workoutList) => PathRoute(
+  PathRoute reportworkoutpage(WorkoutListData? workoutList) => PathRoute(
       title: "ชุดท่าบริหาร",
       name: PageName.REPORT_WORKOUT,
       widget: ReportWorkoutPage(
         workoutList: workoutList,
         workoutListDB: serviceLocator(),
       ));
-  PathRoute infooflistworkout(WorkoutList? workoutList) => PathRoute(
+  PathRoute infooflistworkout(WorkoutListData? workoutList) => PathRoute(
       title: "ชุดท่าบริหาร",
       widget: InfoOfListWorkoutPage(workoutList: workoutList));
 
   PathRoute infoofsetworkout(
-          WorkoutData? workoutData, WorkoutList workoutList) =>
+          WorkoutData? workoutData, WorkoutListData workoutList) =>
       PathRoute(
           title: "คำอธิบายชุดท่า",
           widget: InfoSetWorkoutPage(
             workoutData: workoutData,
             workoutList: workoutList,
           ));
-  PathRoute nrsafterandbeforeworkout(WorkoutList workoutList, NrsType type) =>
+  PathRoute nrsafterandbeforeworkout(
+          WorkoutListData workoutList, NrsType type) =>
       PathRoute(
           title: "ประเมินความเจ็บปวด",
           widget:
               NrsAfterAndBeforePage(workoutList: workoutList, nrsType: type));
-  PathRoute preparebeforeworkout(WorkoutList workoutList) => PathRoute(
+  PathRoute preparebeforeworkout(WorkoutListData workoutList) => PathRoute(
       title: "เตรียมพร้อมก่อนเริ่มออกกำลังกาย",
       widget: WorkoutPage(
         workoutList: workoutList,

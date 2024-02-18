@@ -14,7 +14,7 @@ class ResultNrsPerWeekPageWordings {
 }
 
 class ResultNrsPerWeekPage extends StatelessWidget {
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   final int? numberOfWeeks;
   final int? firstNrs;
   final int? lastestNrs;

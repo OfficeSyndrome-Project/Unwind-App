@@ -14,7 +14,7 @@ class HistoryPage extends StatelessWidget {
   final PageRoutes pageRoutes = PageRoutes();
 
   // final List<WorkoutList> workoutLists =[];
-  final List<WorkoutList> workoutLists = [];
+  final List<WorkoutListData> workoutLists = [];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class HistoryPage extends StatelessWidget {
                   await workoutListDB.getAvailableWorkoutListTitles();
               final workouts = availableWorkoutListTitles
                   .map((titleCode) =>
-                      WorkoutList.workoutListFromTitleCode[titleCode])
+                      WorkoutListData.workoutListFromTitleCode[titleCode])
                   .where((workout) => workout != null)
                   .map((workout) => workout!)
                   .toList();
@@ -62,9 +62,9 @@ class HistoryPage extends StatelessWidget {
                             .expand((wolModelMap) => [
                                   HistoryWorkoutListItem(
                                     pageRoutes: pageRoutes,
-                                    workoutList:
-                                        WorkoutList.workoutListFromTitleCode[
-                                            wolModelMap.keys.first]!,
+                                    workoutList: WorkoutListData
+                                            .workoutListFromTitleCode[
+                                        wolModelMap.keys.first]!,
                                     workoutListModels: wolModelMap.values.first,
                                   ),
                                   SizedBox(
@@ -83,7 +83,7 @@ class HistoryPage extends StatelessWidget {
 }
 
 class HistoryWorkoutListItem extends StatelessWidget {
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   final PageRoutes pageRoutes;
   final List<WorkoutListModel> workoutListModels;
 

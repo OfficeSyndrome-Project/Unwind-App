@@ -19,7 +19,7 @@ import 'package:volume_controller/volume_controller.dart';
 bool ENABLE_WORKOUT_SKIP = false;
 
 class WorkoutPage extends StatefulWidget {
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   const WorkoutPage({
     super.key,
     required this.workoutList,

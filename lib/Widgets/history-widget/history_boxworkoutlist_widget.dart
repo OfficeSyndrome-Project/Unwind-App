@@ -6,7 +6,7 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   final List<WorkoutListModel> workoutListModels;
 
   HistoryWorkoutlistWidget({

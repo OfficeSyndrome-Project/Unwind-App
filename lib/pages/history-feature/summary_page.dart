@@ -29,7 +29,7 @@ class SummaryPage extends StatelessWidget {
   });
 
   final PageRoutes pageRoutes = PageRoutes();
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   final List<WorkoutListModel> workoutListModel;
 
   //example data line chart
