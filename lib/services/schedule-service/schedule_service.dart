@@ -35,7 +35,7 @@ class ScheduleService {
     final title = await readTitle(id, index);
     final times = await readTimes(id, index);
 
-    return Event(WorkoutList.workoutListFromTitleCode[title], times);
+    return Event(WorkoutListData.workoutListFromTitleCode[title], times);
   }
 
   static Future<bool> writeTitle(String title, int id, int index) async {

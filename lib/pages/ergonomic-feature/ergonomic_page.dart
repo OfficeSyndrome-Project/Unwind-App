@@ -36,27 +36,21 @@ class ErgonomicPage extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        Text(
-          "รายการตรวจสอบการยศาสตร์",
-          style: ResponsiveCheckWidget.isSmallMobile(context)
-              ? TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xFF484D56),
-                )
-              : Theme.of(context).textTheme.titleMedium,
-        ),
+        Text("รายการตรวจสอบการยศาสตร์",
+            style: TextStyle(
+              fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 16 : 18,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF484D56),
+            )),
         SizedBox(
           width: double.infinity,
           child: Text(
-            "เป้าหมายของรายการนี้คือการช่วยให้คุณจัดท่าทาง\nการนั่งในการทำงานได้อย่างเหมาะสมที่สุดเพื่อ\nการทำงานที่มีประสิทธิภาพ โดยมีทั้งหมด 7 ส่วน",
-            style: ResponsiveCheckWidget.isSmallMobile(context)
-                ? TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF636A75),
-                  )
-                : Theme.of(context).textTheme.titleSmall,
+            "เป้าหมายของรายการนี้คือการช่วยให้คุณจัดท่าทางการนั่งในการทำงานได้อย่างเหมาะสมที่สุด เพื่อการทำงานที่มีประสิทธิภาพ โดยมีทั้งหมด 7 ส่วน",
+            style: TextStyle(
+              fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xFF636A75),
+            ),
             textAlign: TextAlign.center,
           ),
         ),

@@ -3,8 +3,10 @@ import 'package:image_sequence_animator/image_sequence_animator.dart';
 import 'package:unwind_app/Widgets/animate_sequence_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/services/tts_manager_service.dart';
 
 class WorkoutWidget extends StatelessWidget {
+  final TtsManager ttsManager;
   final String name;
   final WorkoutData workoutData;
   final int timeth; // timeth is the current time of WorkoutData.time
@@ -14,6 +16,7 @@ class WorkoutWidget extends StatelessWidget {
     required this.name,
     required this.timeth,
     required this.workoutData,
+    required this.ttsManager,
     this.onReadyToPlay,
   });
 
@@ -40,6 +43,7 @@ class WorkoutWidget extends StatelessWidget {
             listPath: workoutData.animationPaths ?? [],
             eachSetDuration: workoutData.sec,
             repeat: workoutData.time,
+            ttsManager: ttsManager,
           ),
           Text('$timeth/${workoutData.time}',
               style: TextStyle(

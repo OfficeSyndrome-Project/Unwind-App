@@ -148,9 +148,9 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
         ),
         Text(
           '${hours.toString().padLeft(2, '0')} : ${minutes.toString().padLeft(2, '0')} : ${seconds.toString().padLeft(2, '0')}',
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFF636A75),
-            fontSize: 56,
+            fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 40 : 56,
             fontFamily: 'Noto Sans Thai',
             fontWeight: FontWeight.w500,
           ),

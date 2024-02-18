@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
-import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
-  HistoryWorkoutlistWidget({super.key});
+  final WorkoutListData workoutList;
+  final List<WorkoutListModel> workoutListModels;
 
-  static List<ChartData> chartData = [ChartData(1, 10)];
-  static List<KeepScoreAndDateModel> keepscores =
-      KeepScoreAndDateModel.getData();
+  HistoryWorkoutlistWidget({
+    super.key,
+    required this.workoutList,
+    required this.workoutListModels,
+  });
+
+  // static List<ChartData> chartData = [ChartData(1, 10)];
+  // static List<KeepScoreAndDateModel> keepscores =
+  //     KeepScoreAndDateModel.getData();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +47,8 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                keepscores.map((data) => data.name).first.toString(),
+                // keepscores.map((data) => data.name).first.toString(),
+                '${workoutList.titleTH}',
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 14,
@@ -49,7 +58,7 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
                     : Theme.of(context).textTheme.titleMedium,
               ),
               Text(
-                "วันที่ ${DateFormat("dd/MM/yy").format(keepscores.map((data) => data.dateTime).first)} ถึง ${DateFormat("dd/MM/yy").format(keepscores.map((data) => data.dateTime).last)}",
+                "วันที่ ${DateFormat("dd/MM/yy").format(workoutListModels.first.date ?? DateTime.now())} ถึง ${DateFormat("dd/MM/yy").format(workoutListModels.last.date ?? DateTime.now())}",
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 12,

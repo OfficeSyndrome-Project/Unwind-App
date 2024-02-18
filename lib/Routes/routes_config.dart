@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
+import 'package:unwind_app/pages/alarm-feature/info_clock_page.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/pages/history-feature/result_screening_page.dart';
 import 'package:unwind_app/pages/pdf_preview_page.dart';
 import 'package:unwind_app/pages/screening-feature/infomation_page.dart';
@@ -102,7 +104,8 @@ class Screening {
       widget: FormAfterScreening(
         answerContext: answerContext,
       ));
-  PathRoute resultsworkout(List<WorkoutList> workoutList, String resultText) =>
+  PathRoute resultsworkout(
+          List<WorkoutListData> workoutList, String resultText) =>
       PathRoute(
           title: "",
           widget: ResultsWorkoutPage(
@@ -151,15 +154,24 @@ class Menu {
       PathRoute(title: "ชุดท่าบริหาร", widget: const ContentAfterWorkPage());
   PathRoute afterbreakpage() =>
       PathRoute(title: "ชุดท่าบริหาร", widget: const AfterBreakPage());
+  PathRoute infoclockpage() =>
+      PathRoute(title: "นาฬิกาจับเวลา", widget: const InfoClockPage());
 }
 
 class History {
   PathRoute historylist() => PathRoute(title: "ประวัติ", widget: HistoryPage());
-  PathRoute summarypage() => PathRoute(title: "ประวัติ", widget: SummaryPage());
-  PathRoute resultperweekpage(List<SummaryListObj> summaryArr) => PathRoute(
+  PathRoute summarypage(WorkoutListData workoutList,
+          List<WorkoutListModel> workoutListModel) =>
+      PathRoute(
+          title: "ประวัติ",
+          widget: SummaryPage(
+            workoutList: workoutList,
+            workoutListModel: workoutListModel,
+          ));
+  PathRoute resultperweekpage(WeeklySummary weeklySummary) => PathRoute(
       title: "ประวัติ",
       widget: ResultPerWeekPage(
-        summaryArr: summaryArr,
+        weeklySummary: weeklySummary,
       ));
   PathRoute resultscreening(List<KeepScoreAndDateModel> dateMockup) =>
       PathRoute(
@@ -181,31 +193,32 @@ class Profile {
 }
 
 class Workout {
-  PathRoute reportworkoutpage(WorkoutList? workoutList) => PathRoute(
+  PathRoute reportworkoutpage(WorkoutListData? workoutList) => PathRoute(
       title: "ชุดท่าบริหาร",
       name: PageName.REPORT_WORKOUT,
       widget: ReportWorkoutPage(
         workoutList: workoutList,
         workoutListDB: serviceLocator(),
       ));
-  PathRoute infooflistworkout(WorkoutList? workoutList) => PathRoute(
+  PathRoute infooflistworkout(WorkoutListData? workoutList) => PathRoute(
       title: "ชุดท่าบริหาร",
       widget: InfoOfListWorkoutPage(workoutList: workoutList));
 
   PathRoute infoofsetworkout(
-          WorkoutData? workoutData, WorkoutList workoutList) =>
+          WorkoutData? workoutData, WorkoutListData workoutList) =>
       PathRoute(
           title: "คำอธิบายชุดท่า",
           widget: InfoSetWorkoutPage(
             workoutData: workoutData,
             workoutList: workoutList,
           ));
-  PathRoute nrsafterandbeforeworkout(WorkoutList workoutList, NrsType type) =>
+  PathRoute nrsafterandbeforeworkout(
+          WorkoutListData workoutList, NrsType type) =>
       PathRoute(
           title: "ประเมินความเจ็บปวด",
           widget:
               NrsAfterAndBeforePage(workoutList: workoutList, nrsType: type));
-  PathRoute preparebeforeworkout(WorkoutList workoutList) => PathRoute(
+  PathRoute preparebeforeworkout(WorkoutListData workoutList) => PathRoute(
       title: "เตรียมพร้อมก่อนเริ่มออกกำลังกาย",
       widget: WorkoutPage(
         workoutList: workoutList,

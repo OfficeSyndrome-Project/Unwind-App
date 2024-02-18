@@ -22,8 +22,8 @@ class ScreeningBoxWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              width: 240,
-              height: 240,
+              width: ResponsiveCheckWidget.isSmallMobile(context) ? 180 : 240,
+              height: ResponsiveCheckWidget.isSmallMobile(context) ? 180 : 240,
               child: AspectRatio(
                 aspectRatio: 1 / 1,
                 child: Container(

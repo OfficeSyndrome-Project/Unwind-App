@@ -33,7 +33,7 @@ class SetSchedulePage extends StatefulWidget {
 class _SetSchedulePageState extends State<SetSchedulePage> {
   final PageRoutes pageRoutes = PageRoutes();
 
-  WorkoutList? selectWorkoutList;
+  WorkoutListData? selectWorkoutList;
   bool isTapCalender = false;
   bool isTapTime = false;
 
@@ -226,14 +226,15 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
               if (snapshot.hasData) {
                 final availableTitleCodes = snapshot.data as List<String>;
                 final nameList = availableTitleCodes
-                    .map((code) => WorkoutList.workoutListFromTitleCode[code])
+                    .map((code) =>
+                        WorkoutListData.workoutListFromTitleCode[code])
                     .where((element) => element != null)
                     .map((wol) => wol!)
                     .toList();
                 return ListDropdownWidget(
                   nameList: nameList,
                   value: selectWorkoutList,
-                  onChanged: (WorkoutList? value) {
+                  onChanged: (WorkoutListData? value) {
                     setState(() {
                       isEdited = true;
                       selectWorkoutList = value!;
@@ -401,7 +402,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                     calendarFormat: _calendarFormat,
                     locale: 'th_TH',
                     rowHeight: 40,
-                    headerStyle: TableCalendarTheme().headerStyle(),
+                    headerStyle: TableCalendarTheme().headerStyle(context),
                     daysOfWeekStyle: TableCalendarTheme().daysOfWeekStyle(),
                     calendarStyle: TableCalendarTheme().calendarStyle(context),
                     onDaySelected: _onDaySelected,

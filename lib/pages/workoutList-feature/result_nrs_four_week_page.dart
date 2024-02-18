@@ -12,7 +12,7 @@ import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
 class ResultNrsFourWeekPage extends StatefulWidget {
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   final int? latestNrs;
   const ResultNrsFourWeekPage(
       {Key? key, required this.latestNrs, required this.workoutList})

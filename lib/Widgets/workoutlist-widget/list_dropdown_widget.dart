@@ -3,9 +3,9 @@ import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 
 class ListDropdownWidget extends StatefulWidget {
-  final void Function(WorkoutList?)? onChanged;
-  final List<WorkoutList> nameList;
-  final WorkoutList? value;
+  final void Function(WorkoutListData?)? onChanged;
+  final List<WorkoutListData> nameList;
+  final WorkoutListData? value;
   const ListDropdownWidget(
       {Key? key, this.onChanged, required this.nameList, this.value})
       : super(key: key);
@@ -23,7 +23,7 @@ class _ListDropdownWidgetState extends State<ListDropdownWidget> {
         margin: EdgeInsets.only(bottom: 16),
         child: ButtonTheme(
           alignedDropdown: true,
-          child: DropdownButtonFormField<WorkoutList>(
+          child: DropdownButtonFormField<WorkoutListData>(
             value: widget.value,
             alignment: Alignment.centerLeft,
             autovalidateMode: AutovalidateMode.disabled,
@@ -69,9 +69,9 @@ class _ListDropdownWidgetState extends State<ListDropdownWidget> {
               ),
             ),
             onChanged: widget.onChanged,
-            items: widget.nameList
-                .map<DropdownMenuItem<WorkoutList>>((WorkoutList value) {
-              return DropdownMenuItem<WorkoutList>(
+            items: widget.nameList.map<DropdownMenuItem<WorkoutListData>>(
+                (WorkoutListData value) {
+              return DropdownMenuItem<WorkoutListData>(
                 alignment: Alignment.centerLeft,
                 value: value,
                 child: Text(

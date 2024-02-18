@@ -16,7 +16,7 @@ import 'package:unwind_app/services/general_stored_service.dart';
 class ResultsWorkoutPage extends StatelessWidget {
   final AnswerContext? answerContext;
   final String? resultText;
-  final List<WorkoutList> workoutLists;
+  final List<WorkoutListData> workoutLists;
   // final Widget? nextPage;
 
   ResultsWorkoutPage({
@@ -127,7 +127,7 @@ class ResultsWorkoutPage extends StatelessWidget {
         ]);
   }
 
-  Widget buildWorkoutData(BuildContext context, WorkoutList workoutList) {
+  Widget buildWorkoutData(BuildContext context, WorkoutListData workoutList) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8), shape: BoxShape.rectangle),

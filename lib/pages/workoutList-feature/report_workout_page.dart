@@ -16,7 +16,7 @@ import 'package:unwind_app/pages/workoutList-feature/report_workout_utils.dart';
 import 'package:unwind_app/pages/workoutList-feature/result_nrs_four_week_page.dart';
 
 class ReportWorkoutPage extends StatefulWidget {
-  final WorkoutList? workoutList;
+  final WorkoutListData? workoutList;
   final WorkoutListDB workoutListDB;
   const ReportWorkoutPage(
       {Key? key, this.workoutList, required this.workoutListDB})
