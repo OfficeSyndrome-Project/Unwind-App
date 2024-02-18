@@ -5,6 +5,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:unwind_app/Widgets/history-widget/history_boxworkoutlist_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
+import 'package:unwind_app/pages/history-feature/summary_page.dart';
 
 void main() {
   // Arrange
@@ -33,10 +34,10 @@ void main() {
     expect(find.text(workoutListData.titleTH), findsOneWidget);
     expect(
       find.text(
-        "วันที่ ${DateFormat("dd/MM/yy").format(workoutListModels.first.date ?? DateTime.now())} ถึง ${DateFormat("dd/MM/yy").format(workoutListModels.last.date ?? DateTime.now())}",
+        "วันที่ ${formatDateTimeRangeToThaiForHistoryPage(workoutListModels.first.date!, workoutListModels.last.date!)}",
       ),
       findsOneWidget,
     );
-    expect(find.byType(CircularPercentIndicator), findsOneWidget);
+    expect(find.byType(Icon), findsOneWidget);
   });
 }
