@@ -249,11 +249,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   controller: _controller,
                   onComplete: () {
                     setState(() {
-                      print('--- update sequence ---');
                       currentSequence = nextWorkoutSequence(
                           currentSequence, workoutWidgetSequences);
-                      print(
-                          '--- currentSequence: ${currentSequence.index} of ${workoutWidgetSequences.length} ---');
                       if (currentSequence.widget != null) {
                         _controller.restart(duration: currentSequence.duration);
                         return;
@@ -280,9 +277,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
   }
 
   void skipSequence() {
-    print('debug: skipping to the next sequence');
-    print(
-        '--- currentSequence: ${currentSequence.index + 1} of ${workoutWidgetSequences.length} ---');
     currentSequence =
         nextWorkoutSequence(currentSequence, workoutWidgetSequences);
     if (currentSequence.widget != null) {

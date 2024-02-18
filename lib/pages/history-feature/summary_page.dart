@@ -66,8 +66,6 @@ class SummaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weeklyWorkoutLists = getWeeklyWorkouts(workoutListModel);
-    print('--- xxx');
-    print(weeklyWorkoutLists.first);
     double? boxHeight = weeklyWorkoutLists.length + 0;
     return AppscreenTheme(
         textBar:
@@ -359,13 +357,11 @@ NrsBeforeAfter getNrsBeforeAfter(List<WorkoutListModel> wols) {
   return x;
 }
 
+//get workout list into a week (7 days)
 List<List<WorkoutListModel>> getWeeklyWorkouts(List<WorkoutListModel> wols) {
   final sortedWols = wols.where((workout) => workout.date != null).toList()
     ..sort((a, b) => a.date!.compareTo(b.date!));
-  print('--- sortedWols : ${sortedWols.first}');
   final result = getWeekly(sortedWols)((workout) => workout.date);
-  print('--- result : ${result.first.first}');
-  print('---  getWeeklyWorkouts : ${result.length}');
   return result;
 }
 

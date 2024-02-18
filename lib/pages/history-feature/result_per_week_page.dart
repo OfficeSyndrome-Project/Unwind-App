@@ -59,7 +59,6 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
         .where((element) => element.beforeScore != null)
         .firstOrNull
         ?.beforeScore;
-    print('--- x : ${weeklySummary.dailyNrsScores.first.dateTime}');
     initializeDateFormatting('th');
     return AppscreenTheme(
         textBar: "ประวัติ",
