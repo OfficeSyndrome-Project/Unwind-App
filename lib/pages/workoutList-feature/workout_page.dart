@@ -21,7 +21,7 @@ import 'package:volume_controller/volume_controller.dart';
 bool ENABLE_WORKOUT_SKIP = true;
 
 class WorkoutPage extends StatefulWidget {
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   const WorkoutPage({
     super.key,
     required this.workoutList,
@@ -259,11 +259,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   ttsManager: ttsManager,
                   onComplete: () {
                     setState(() {
-                      print('--- update sequence ---');
                       currentSequence = nextWorkoutSequence(
                           currentSequence, workoutWidgetSequences);
-                      print(
-                          '--- currentSequence: ${currentSequence.index} of ${workoutWidgetSequences.length} ---');
                       if (currentSequence.widget != null) {
                         _controller.restart(duration: currentSequence.duration);
                         if (currentSequence.widget is WorkoutWidget) {
@@ -320,9 +317,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
   }
 
   void skipSequence() {
-    print('debug: skipping to the next sequence');
-    print(
-        '--- currentSequence: ${currentSequence.index + 1} of ${workoutWidgetSequences.length} ---');
     currentSequence =
         nextWorkoutSequence(currentSequence, workoutWidgetSequences);
     if (currentSequence.widget != null) {

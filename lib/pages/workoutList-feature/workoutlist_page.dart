@@ -39,10 +39,10 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                   );
                 }
                 final data = snapshot.data as List<String>;
-                List<WorkoutList> workoutLists = data
-                    .map((s) => WorkoutList.workoutListFromTitleCode[s]!)
+                List<WorkoutListData> workoutLists = data
+                    .map((s) => WorkoutListData.workoutListFromTitleCode[s]!)
                     .toList()
-                  ..sort(WorkoutList.compareByTitleOrder);
+                  ..sort(WorkoutListData.compareByTitleOrder);
                 if (workoutLists.isEmpty) {
                   return Center(
                     child: Text('คุณยังไม่มีชุดท่าออกกำลังกาย'),

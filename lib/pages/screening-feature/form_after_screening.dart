@@ -228,7 +228,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                 });
 
                 // call diagnose service here
-                final List<WorkoutList> workoutList =
+                final List<WorkoutListData> workoutList =
                     await ScreeningDiagnoseService.diagnose(answers, nrs);
 
                 final toDoctor = ScreeningDiagnoseService.isNeckSetToDoctor(

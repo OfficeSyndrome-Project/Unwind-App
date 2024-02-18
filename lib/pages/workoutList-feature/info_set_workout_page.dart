@@ -11,7 +11,7 @@ class InfoSetWorkoutPage extends StatelessWidget {
   InfoSetWorkoutPage({super.key, this.workoutData, required this.workoutList});
 
   final WorkoutData? workoutData;
-  final WorkoutList? workoutList;
+  final WorkoutListData? workoutList;
   final PageRoutes pageRoutes = PageRoutes();
 
   @override

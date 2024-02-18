@@ -3,25 +3,37 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:unwind_app/Widgets/history-widget/history_boxworkoutlist_widget.dart';
-import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
 
 void main() {
-  List<KeepScoreAndDateModel> keepscores = KeepScoreAndDateModel.getData();
+  // Arrange
+  final now = DateTime.now();
+  WorkoutListData workoutListData =
+      WorkoutListData.workoutListFromTitleCode['neckbaa_ch']!;
+  List<WorkoutListModel> workoutListModels = [
+    WorkoutListModel(date: now),
+    WorkoutListModel(date: now.add(Duration(days: 1))),
+  ];
 
+  // Act
   testWidgets('test HistoryWorkoutlist widget', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: HistoryWorkoutlistWidget(),
+          body: HistoryWorkoutlistWidget(
+            workoutList: workoutListData,
+            workoutListModels: workoutListModels,
+          ),
         ),
       ),
     );
 
-    expect(find.text(keepscores.map((data) => data.name).first.toString()),
-        findsOneWidget);
+    // Assert
+    expect(find.text(workoutListData.titleTH), findsOneWidget);
     expect(
       find.text(
-        "วันที่ ${DateFormat("dd/MM/yy").format(keepscores.map((data) => data.dateTime).first)} ถึง ${DateFormat("dd/MM/yy").format(keepscores.map((data) => data.dateTime).last)}",
+        "วันที่ ${DateFormat("dd/MM/yy").format(workoutListModels.first.date ?? DateTime.now())} ถึง ${DateFormat("dd/MM/yy").format(workoutListModels.last.date ?? DateTime.now())}",
       ),
       findsOneWidget,
     );

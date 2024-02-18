@@ -3,7 +3,7 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 class Event {
   // final String title;
   final DateTime times;
-  final WorkoutList? wol;
+  final WorkoutListData? wol;
   const Event(this.wol, this.times);
 
   // @override
