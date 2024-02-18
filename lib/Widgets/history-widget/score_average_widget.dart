@@ -21,7 +21,9 @@ class ScoreAverageWidget extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                    text: 'ความเจ็บปวดลดลง ',
+                    text: (nrsScoreAverage >= 0)
+                        ? 'ความเจ็บปวดลดลง '
+                        : 'ความเจ็บปวดเพิ่มขึ้น ',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -31,7 +33,7 @@ class ScoreAverageWidget extends StatelessWidget {
                       color: Color(0xFF484D56),
                     )),
                 TextSpan(
-                    text: '${nrsScoreAverage.toString()} ระดับ',
+                    text: '${nrsScoreAverage.abs().toString()} ระดับ',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)

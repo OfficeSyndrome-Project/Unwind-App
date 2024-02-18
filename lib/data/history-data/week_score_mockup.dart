@@ -1,11 +1,36 @@
-class WeekScoreMockup {
+/// WeekScore interface use for SummaryPage in line series
+abstract class WeekScore {
+  String? get weekName;
+  int? get week;
+  int? get beforeScore;
+  int? get afterScore;
+}
+
+class WeekScoreRealize implements WeekScore {
+  final String? weekName;
   final int? week;
-  final DateTime weekDay;
+  final int? beforeScore;
+  final int? afterScore;
+
+  WeekScoreRealize({
+    required this.week,
+    required this.weekName,
+    required this.beforeScore,
+    required this.afterScore,
+  });
+  @override
+  String toString() =>
+      'WeekScoreRealize $weekName $week $beforeScore $afterScore';
+}
+
+class WeekScoreMockup implements WeekScore {
+  final String? weekName;
+  final int? week;
   final int? beforeScore;
   final int? afterScore;
 
   WeekScoreMockup(
-      {required this.weekDay,
+      {required this.weekName,
       required this.week,
       required this.beforeScore,
       required this.afterScore});
@@ -14,27 +39,15 @@ class WeekScoreMockup {
     List<WeekScoreMockup> scoreweekmockup = [];
 
     scoreweekmockup.add(WeekScoreMockup(
-        weekDay: DateTime.utc(2024, 1, 1),
-        beforeScore: 8,
-        afterScore: 6,
-        week: 1));
+        weekName: 'week 1', beforeScore: 8, afterScore: 6, week: 1));
     scoreweekmockup.add(WeekScoreMockup(
-        weekDay: DateTime.utc(2024, 1, 8),
-        beforeScore: 6,
-        afterScore: 5,
-        week: 2));
+        weekName: 'week 2', beforeScore: 6, afterScore: 5, week: 2));
 
     scoreweekmockup.add(WeekScoreMockup(
-        weekDay: DateTime.utc(2024, 1, 15),
-        beforeScore: 5,
-        afterScore: 4,
-        week: 3));
+        weekName: 'week 3', beforeScore: 5, afterScore: 4, week: 3));
 
     scoreweekmockup.add(WeekScoreMockup(
-        weekDay: DateTime.utc(2024, 1, 22),
-        beforeScore: 4,
-        afterScore: 3,
-        week: 4));
+        weekName: 'week 4', beforeScore: 4, afterScore: 3, week: 4));
 
     return scoreweekmockup;
   }

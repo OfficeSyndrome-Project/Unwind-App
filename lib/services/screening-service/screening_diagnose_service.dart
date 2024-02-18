@@ -195,7 +195,7 @@ class ScreeningDiagnoseService {
     return false;
   }
 
-  static Future<List<WorkoutList>> diagnose(
+  static Future<List<WorkoutListData>> diagnose(
       List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
     nrs.removeWhere((key, value) => value == null);
     Map<ScreeningTitle, int> nrsFiltered = {
@@ -232,8 +232,8 @@ class ScreeningDiagnoseService {
       }
     }
     // Get workout list data
-    List<WorkoutList> acquiredWorkoutList = workouts
-        .map((title) => WorkoutList.workoutListFromTitle[title]!)
+    List<WorkoutListData> acquiredWorkoutList = workouts
+        .map((title) => WorkoutListData.workoutListFromTitle[title]!)
         .toList();
     return acquiredWorkoutList;
   }

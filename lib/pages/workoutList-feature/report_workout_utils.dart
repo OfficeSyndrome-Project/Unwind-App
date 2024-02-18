@@ -107,7 +107,8 @@ List<DateTime> createWeekDateList(DateTime date) {
 ///   A boolean value indicating whether both [DateTime] objects represent the same day.
 ///   If either or both of the input dates are null, the function returns false.
 bool isSameDay(DateTime? dateA, DateTime? dateB) {
-  return dateA?.year == dateB?.year &&
-      dateA?.month == dateB?.month &&
-      dateA?.day == dateB?.day;
+  return (dateA != null && dateB != null) &&
+      dateA.year == dateB.year &&
+      dateA.month == dateB.month &&
+      dateA.day == dateB.day;
 }

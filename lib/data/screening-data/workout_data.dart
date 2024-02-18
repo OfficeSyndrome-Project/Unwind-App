@@ -1,6 +1,6 @@
 import 'package:unwind_app/database/workoutlist_db.dart';
 
-class WorkoutList {
+class WorkoutListData {
   String title;
   String workoutType;
   String titlePath;
@@ -8,7 +8,7 @@ class WorkoutList {
   String titleCode;
   String? totalTime;
   List<WorkoutData> workoutData;
-  WorkoutList({
+  WorkoutListData({
     required this.title,
     required this.workoutType,
     required this.titlePath,
@@ -27,12 +27,12 @@ class WorkoutList {
     'back_th': 6,
   };
   @override
-  operator ==(wol) => wol is WorkoutList && wol.titleCode == titleCode;
+  operator ==(wol) => wol is WorkoutListData && wol.titleCode == titleCode;
 
   @override
   int get hashCode => titleCode.hashCode;
 
-  static int compareByTitleOrder(WorkoutList a, WorkoutList b) =>
+  static int compareByTitleOrder(WorkoutListData a, WorkoutListData b) =>
       (customOrder[a.titleCode] ?? 0) - (customOrder[b.titleCode] ?? 0);
 
   static List<String> get allWorkoutListTitles => ["คอ-บ่า", "ไหล่", "หลัง"];
@@ -46,7 +46,7 @@ class WorkoutList {
       };
 
   // Use for converting from String such as 'neckbaa_ch' to WorkoutList
-  static Map<String, WorkoutList> get workoutListFromTitleCode => {
+  static Map<String, WorkoutListData> get workoutListFromTitleCode => {
         'neckbaa_ch': workoutListFromTitle[WorkoutlistTitle.neckbaa_ch]!,
         'neckbaa_th': workoutListFromTitle[WorkoutlistTitle.neckbaa_th]!,
         'shoulder_ch': workoutListFromTitle[WorkoutlistTitle.shoulder_ch]!,
@@ -56,8 +56,8 @@ class WorkoutList {
       };
 
   // Use for converting from WorkoutlistTitle to WorkoutList
-  static Map<WorkoutlistTitle, WorkoutList> get workoutListFromTitle => {
-        WorkoutlistTitle.neckbaa_ch: WorkoutList(
+  static Map<WorkoutlistTitle, WorkoutListData> get workoutListFromTitle => {
+        WorkoutlistTitle.neckbaa_ch: WorkoutListData(
             title: "คอ-บ่า",
             titleTH: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
             workoutType: "stretch",
@@ -69,7 +69,7 @@ class WorkoutList {
                     element.workoutType == "stretch")
                 .toList(),
             totalTime: "4 นาที 10 วินาที"),
-        WorkoutlistTitle.neckbaa_th: WorkoutList(
+        WorkoutlistTitle.neckbaa_th: WorkoutListData(
             title: "คอ-บ่า",
             titleTH: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
             workoutType: "strength",
@@ -81,7 +81,7 @@ class WorkoutList {
                     element.workoutType == "strength")
                 .toList(),
             totalTime: "5 นาที 50 วินาที"),
-        WorkoutlistTitle.shoulder_ch: WorkoutList(
+        WorkoutlistTitle.shoulder_ch: WorkoutListData(
             title: "ไหล่",
             titleTH: "ชุดท่าบริหารไหล่เพิ่มความยืดหยุ่น",
             workoutType: "stretch",
@@ -92,7 +92,7 @@ class WorkoutList {
                     element.title == "ไหล่" && element.workoutType == "stretch")
                 .toList(),
             totalTime: "13 นาที 45 วินาที"),
-        WorkoutlistTitle.shoulder_th: WorkoutList(
+        WorkoutlistTitle.shoulder_th: WorkoutListData(
             title: "ไหล่",
             titleTH: "ชุดท่าบริหารไหล่เพิ่มความแข็งแรง",
             workoutType: "strength",
@@ -104,7 +104,7 @@ class WorkoutList {
                     element.workoutType == "strength")
                 .toList(),
             totalTime: "44 วินาที"),
-        WorkoutlistTitle.back_ch: WorkoutList(
+        WorkoutlistTitle.back_ch: WorkoutListData(
             title: "หลัง",
             titleTH: "ชุดท่าบริหารหลังเพิ่มความยืดหยุ่น",
             workoutType: "stretch",
@@ -115,7 +115,7 @@ class WorkoutList {
                     element.title == "หลัง" && element.workoutType == "stretch")
                 .toList(),
             totalTime: "2 นาที 50 วินาที"),
-        WorkoutlistTitle.back_th: WorkoutList(
+        WorkoutlistTitle.back_th: WorkoutListData(
             title: "หลัง",
             titleTH: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
             workoutType: "stretch",
@@ -148,6 +148,7 @@ class WorkoutData {
   String? caution;
   String workoutType;
   List<String>? animationPaths;
+  int? stepSpeechDuration;
 
   WorkoutData({
     required this.title,
@@ -162,6 +163,7 @@ class WorkoutData {
     this.caution,
     required this.animationPaths,
     required this.workoutType,
+    this.stepSpeechDuration,
   });
 
   @override
@@ -200,7 +202,8 @@ class WorkoutData {
             name: "ท่าเงยหน้า เอนคอด้านซ้าย",
             detail: "ยืดกล้ามเนื้อบ่า",
             step:
-                "ยืดด้านซ้าย นั่งหลังตรง ใช้มือข้างขวายึดกับเก้าอี้ให้นิ่ง เพื่อเกิดแรงดึงมากขึ้น ก้มศีรษะ เอนศีรษะไปทางด้านซ้าย หันหน้าไปทางด้านขวา ใช้มือซ้ายจับศีรษะให้โน้มคอไปทางซ้ายมากขึ้น จนรู้สึกตึงบริเวณบ่าขวาค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
+                "นั่งหลังตรง ใช้มือข้างขวายึดกับเก้าอี้ให้นิ่ง เพื่อเกิดแรงดึงมากขึ้น ก้มศีรษะ เอนศีรษะไปทางด้านซ้าย หันหน้าไปทางด้านขวา ใช้มือซ้ายจับศีรษะให้โน้มคอไปทางซ้ายมากขึ้น จนรู้สึกตึงบริเวณบ่าขวาค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
+            stepSpeechDuration: 20,
             sec: 10,
             time: 5,
             set: 3,
@@ -225,7 +228,8 @@ class WorkoutData {
             name: "ท่าเงยหน้า เอนคอด้านขวา",
             detail: "ยืดกล้ามเนื้อบ่า",
             step:
-                "ยืดด้านขวา นั่งหลังตรง ใช้มือข้างขวายึดกับเก้าอี้ให้นิ่ง เพื่อเกิดแรงดึงมากขึ้น ก้มศีรษะ เอนศีรษะไปทางด้านขวา หันหน้าไปทางด้านซ้าย ใช้มือซ้ายจับศีรษะให้โน้มคอไปทางขวามากขึ้น จนรู้สึกตึงบริเวณบ่าซ้ายค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
+                "นั่งหลังตรง ใช้มือข้างขวายึดกับเก้าอี้ให้นิ่ง เพื่อเกิดแรงดึงมากขึ้น ก้มศีรษะ เอนศีรษะไปทางด้านขวา หันหน้าไปทางด้านซ้าย ใช้มือซ้ายจับศีรษะให้โน้มคอไปทางขวามากขึ้น จนรู้สึกตึงบริเวณบ่าซ้ายค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
+            stepSpeechDuration: 20,
             sec: 10,
             time: 5,
             set: 3,
@@ -251,6 +255,7 @@ class WorkoutData {
             detail: "ยืดกล้ามเนื้อสะบักด้านซ้าย",
             step:
                 "นั่งหลังตรง ใช้มือข้างซ้ายยึดกับเก้าอี้ให้นิ่ง เพื่อเกิดแรงดึงมากขึ้น หันหน้าไปทางด้านขวา ก้มศีรษะมองรักแร้ทางด้านขวา ใช้มือซ้ายจับศีรษะ ให้โน้มคอไปทางขวามากขึ้น จนรู้สึกตึงบริเวณสะบักซ้าย ค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
+            stepSpeechDuration: 20,
             sec: 10,
             time: 5,
             set: 3,
@@ -276,6 +281,7 @@ class WorkoutData {
             detail: "ยืดกล้ามเนื้อสะบักด้านขวา",
             step:
                 "นั่งหลังตรง ใช้มือข้างขวายึดกับเก้าอี้ให้นิ่ง เพื่อเกิดแรงดึงมากขึ้น หันหน้าไปทางด้านซ้าย ก้มศีรษะมองรักแร้ทางด้านซ้าย ใช้มือซ้ายจับศีรษะ ให้โน้มคอไปทางซ้ายมากขึ้น จนรู้สึกตึงบริเวณสะบักขวา ค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
+            stepSpeechDuration: 20,
             sec: 10,
             time: 5,
             set: 3,
@@ -359,7 +365,8 @@ class WorkoutData {
             name: "ท่าดันต้าน-หัน ด้านขวา",
             detail: "เพิ่มความแข็งแรงให้กล้ามเนื้อคอ",
             step:
-                "ด้านขวา นั่งหรือยืนโดยหันหน้าตรง ใช้ฝ่ามือขวาดันบริเวณใบหน้าด้านขวา ให้ลำคอออกแรงหันใบหน้าไปด้านขวาสวนทางกับแรงดันจากฝ่ามือ ดันต้านไว้เป็นเวลา 5 วินาทีแล้วจึงคลาย ในด้านซ้ายให้ทำกลับกัน",
+                "นั่งหรือยืนโดยหันหน้าตรง ใช้ฝ่ามือขวาดันบริเวณใบหน้าด้านขวา ให้ลำคอออกแรงหันใบหน้าไปด้านขวาสวนทางกับแรงดันจากฝ่ามือ ดันต้านไว้เป็นเวลา 5 วินาทีแล้วจึงคลาย ในด้านซ้ายให้ทำกลับกัน",
+            stepSpeechDuration: 20,
             sec: 5,
             time: 10,
             set: 1,
@@ -379,6 +386,7 @@ class WorkoutData {
             detail: "เพิ่มความแข็งแรงให้กล้ามเนื้อคอ",
             step:
                 "นั่งหรือยืนโดยหันหน้าตรง ใช้ฝ่ามือซ้ายดันบริเวณกกหูด้านซ้าย ให้ลำคอออกแรงเอียงหัวไปด้านซ้ายสวนทางกับแรงดันจากฝ่ามือ ดันต้านไว้เป็นเวลา 5 วินาทีแล้วจึงคลาย",
+            stepSpeechDuration: 20,
             sec: 5,
             time: 10,
             set: 1,
@@ -483,6 +491,7 @@ class WorkoutData {
             detail: "ยืดกล้ามเนื้อไหล่",
             step:
                 "ยืนตัวตรง ยกแขนซ้ายพาดผ่านหน้าอกไปด้านซ้าย ใช้มือขวาจับที่ข้อศอกด้านซ้าย ค่อย ๆ ออกแรงดึงข้อศอกเข้าหาลำตัว ค้างไว้จนรู้สึกตึงบริเวณหัวไหล่และสะบักด้านซ้าย ดึงค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
+            stepSpeechDuration: 20,
             sec: 10,
             time: 15,
             set: 3,
@@ -502,6 +511,7 @@ class WorkoutData {
             detail: "ยืดกล้ามเนื้อไหล่",
             step:
                 "ยืนตัวตรง ยกแขนขวาพาดผ่านหน้าอกไปด้านซ้าย ใช้มือซ้ายจับที่ข้อศอกด้านขวา ค่อย ๆ ออกแรงดึงข้อศอกเข้าหาลำตัว ค้างไว้จนรู้สึกตึงบริเวณหัวไหล่และสะบักด้านขวา ดึงค้างไว้นานเป็นเวลา 10 วินาทีแล้วปล่อย",
+            stepSpeechDuration: 20,
             sec: 10,
             time: 15,
             set: 3,
@@ -539,7 +549,8 @@ class WorkoutData {
             name: "ท่ากางแขนแนบลำตัว",
             detail: "เพิ่มความแข็งแรงให้กล้ามเนื้อไหล่",
             step:
-                " ตั้งศอก 90องศาแนบกับลำตัว ตั้งมือขึ้นปลายนิ้วทิ่มไปข้างหน้า กางแขนทั้ง 2 ข้างออกในระนาบเดิม บีบสะบักด้านหลัง หุบแขนทั้ง 2 ข้างเข้ามาในท่าตั้งต้น กางแขนสลับกันเข้าออกทั้งหมด 12ครั้ง/เซต",
+                " ตั้งศอก 90องศาแนบกับลำตัว ตั้งมือขึ้นปลายนิ้วทิ่มไปข้างหน้า กางแขนทั้ง 2 ข้างออกในระนาบเดิม บีบสะบักด้านหลัง หุบแขนทั้ง 2 ข้างเข้ามาในท่าตั้งต้น กางแขนสลับกันเข้าออกทั้งหมด 12ครั้งต่อเซต",
+            stepSpeechDuration: 20,
             sec: 2,
             time: 12,
             set: 1,
@@ -559,7 +570,7 @@ class WorkoutData {
             name: "ท่ายกไหล่",
             detail: "เพิ่มความแข็งแรงให้กล้ามเนื้อไหล่",
             step:
-                " ยืน/นั่งหลังตรง แขนทั้ง 2 ข้างแนบลำตัว ยกไหล่ทั้ง 2 ขึ้นพร้อมกัน กดไหล่ทั้ง 2 ข้างลงพร้อมกัน ยกและกดไหล่สลับกันขึ้นลงทั้งหมด 10ครั้ง/เซต",
+                " ยืนหรือนั่งหลังตรง แขนทั้ง 2 ข้างแนบลำตัว ยกไหล่ทั้ง 2 ขึ้นพร้อมกัน กดไหล่ทั้ง 2 ข้างลงพร้อมกัน ยกและกดไหล่สลับกันขึ้นลงทั้งหมด 10ครั้ง/เซต",
             sec: 2,
             time: 10,
             set: 1,
@@ -602,6 +613,7 @@ class WorkoutData {
             detail: "ยืดกล้ามเนื้อหลัง",
             step:
                 "นอนคว่ำราบกับพื้น โดยวางมือทั้ง 2 ข้างไว้ใต้ไหล่ ค่อยๆ เหยียดแขนทั้ง 2 ข้างให้ตรงพร้อมกับยันลำตัวช่วงบนขึ้น ยันลำตัวค้างไว้เป็น 2 วินาทีแล้วนอนคว่ำลงเหมือนท่าเริ่มต้น จากนั้นทำซ้ำอีก 9 ครั้ง",
+            stepSpeechDuration: 20,
             sec: 2,
             time: 10,
             set: 6,

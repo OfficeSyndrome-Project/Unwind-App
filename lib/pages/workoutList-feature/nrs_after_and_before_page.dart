@@ -17,7 +17,7 @@ import 'package:unwind_app/services/screening-service/screening_diagnose_service
 enum NrsType { after, before }
 
 class NrsAfterAndBeforePage extends StatefulWidget {
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   final NrsType nrsType;
   NrsAfterAndBeforePage({
     super.key,
@@ -214,7 +214,7 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
   }
 
   Future<int> saveNrsBefore(
-      double nrs, DateTime now, WorkoutList workoutList) async {
+      double nrs, DateTime now, WorkoutListData workoutList) async {
     final wol = await workoutListDB.getWorkoutListByDateAndTitle(
         now, workoutList.titleCode);
     if (wol.isEmpty || wol.first.WOL_id == null) {
@@ -225,7 +225,7 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
   }
 
   Future<int> saveNrsAfter(
-      double nrs, DateTime now, WorkoutList workoutList) async {
+      double nrs, DateTime now, WorkoutListData workoutList) async {
     final wol = await workoutListDB.getWorkoutListByDateAndTitle(
         now, workoutList.titleCode);
     if (wol.isEmpty || wol.first.WOL_id == null) {
@@ -236,7 +236,7 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
     return await workoutListDB.updateNRSafter(nrs.toInt(), wol.first.WOL_id!);
   }
 
-  updateRemainingTime(DateTime date, WorkoutList workoutList) async {
+  updateRemainingTime(DateTime date, WorkoutListData workoutList) async {
     final wol = await workoutListDB.getWorkoutListByDateAndTitle(
         date, workoutList.titleCode);
     if (wol.isEmpty || wol.first.WOL_id == null) {

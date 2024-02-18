@@ -6,7 +6,7 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.dart';
 
 class StartWorkoutButton extends StatelessWidget {
-  final WorkoutList workoutList;
+  final WorkoutListData workoutList;
   final bool disabled;
   final String text;
   const StartWorkoutButton({

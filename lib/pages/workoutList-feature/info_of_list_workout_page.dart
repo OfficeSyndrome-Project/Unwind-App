@@ -13,7 +13,7 @@ import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/pages/workoutList-feature/start_workout_button_widget.dart';
 
 class InfoOfListWorkoutPage extends StatelessWidget {
-  final WorkoutList? workoutList;
+  final WorkoutListData? workoutList;
   InfoOfListWorkoutPage({super.key, this.workoutList});
 
   final PageRoutes pageRoutes = PageRoutes();
@@ -129,7 +129,7 @@ class InfoOfListWorkoutPage extends StatelessWidget {
 }
 
 class ConditionalStartWorkoutButton extends StatelessWidget {
-  final WorkoutList? workoutList;
+  final WorkoutListData? workoutList;
   final PageRoutes pageRoutes;
 
   const ConditionalStartWorkoutButton({
