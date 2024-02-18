@@ -1,17 +1,21 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/stack_image_widget.dart';
+import 'package:unwind_app/services/tts_manager_service.dart';
 
 class AnimateSequenceWidget extends StatefulWidget {
   final List<String> listPath;
   final int repeat;
   final int eachSetDuration;
+  final TtsManager? ttsManager;
 
-  const AnimateSequenceWidget(
-      {super.key,
-      required this.listPath,
-      required this.repeat,
-      required this.eachSetDuration});
+  const AnimateSequenceWidget({
+    super.key,
+    required this.listPath,
+    required this.repeat,
+    required this.eachSetDuration,
+    this.ttsManager,
+  });
 
   @override
   State<AnimateSequenceWidget> createState() => _AnimateSequenceWidgetState();

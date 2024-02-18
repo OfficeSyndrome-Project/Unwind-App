@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+import 'package:unwind_app/services/tts_manager_service.dart';
 
 class CircularCountdownTimerWidget extends StatefulWidget {
   final int duration;
@@ -12,6 +13,7 @@ class CircularCountdownTimerWidget extends StatefulWidget {
   final void Function()? onStart;
   final dynamic Function(dynamic Function(Duration), Duration)?
       timeFormatterFunction;
+  final TtsManager? ttsManager;
   CircularCountdownTimerWidget(
       {super.key,
       required this.duration,
@@ -19,6 +21,7 @@ class CircularCountdownTimerWidget extends StatefulWidget {
       this.onComplete,
       this.onChange,
       this.onStart,
+      this.ttsManager,
       this.timeFormatterFunction});
 
   @override
