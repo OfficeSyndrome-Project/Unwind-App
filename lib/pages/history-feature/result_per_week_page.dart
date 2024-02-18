@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
-import 'package:unwind_app/Widgets/history-widget/list_score_widget%20copy.dart';
+import 'package:unwind_app/Widgets/history-widget/list_score_widget.dart';
 import 'package:unwind_app/Widgets/history-widget/score_chart_widget.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
@@ -132,8 +132,9 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                         ),
                         ScoreChartWidget(
                           height: 150,
-                          series: <LineSeries<KeepScoreAndDateModel, int>>[
-                            LineSeries<KeepScoreAndDateModel, int>(
+                          series: <CartesianSeries<KeepScoreAndDateModel,
+                              DateTime>>[
+                            LineSeries<KeepScoreAndDateModel, DateTime>(
                               legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
                               legendIconType: LegendIconType.rectangle,
                               color: Color(0xFFb1c2eb),
@@ -147,11 +148,11 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                                 keepScoreObj.weeklyChunks[currentIndex]
                               ].first,
                               xValueMapper: (KeepScoreAndDateModel score, _) =>
-                                  score.dateTime.day,
+                                  score.dateTime,
                               yValueMapper: (KeepScoreAndDateModel score, _) =>
                                   score.beforeScore,
                             ),
-                            LineSeries(
+                            LineSeries<KeepScoreAndDateModel, DateTime>(
                               legendItemText: 'ค่าความเจ็บปวด (หลัง)',
                               legendIconType: LegendIconType.rectangle,
                               color: Theme.of(context).colorScheme.primary,
@@ -162,7 +163,7 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                                 keepScoreObj.weeklyChunks[currentIndex]
                               ].first,
                               xValueMapper: (KeepScoreAndDateModel score, _) =>
-                                  score.dateTime.day,
+                                  score.dateTime,
                               yValueMapper: (KeepScoreAndDateModel score, _) =>
                                   score.afterScore,
                             ),

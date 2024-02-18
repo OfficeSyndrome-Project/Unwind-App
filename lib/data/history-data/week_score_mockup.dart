@@ -1,12 +1,12 @@
 class WeekScoreMockup {
-  final String? weekName;
   final int? week;
+  final DateTime weekDay;
   final int? beforeScore;
   final int? afterScore;
 
   WeekScoreMockup(
-      {required this.week,
-      required this.weekName,
+      {required this.weekDay,
+      required this.week,
       required this.beforeScore,
       required this.afterScore});
 
@@ -14,15 +14,27 @@ class WeekScoreMockup {
     List<WeekScoreMockup> scoreweekmockup = [];
 
     scoreweekmockup.add(WeekScoreMockup(
-        week: 1, beforeScore: 8, afterScore: 6, weekName: 'week 1'));
+        weekDay: DateTime.utc(2024, 1, 1),
+        beforeScore: 8,
+        afterScore: 6,
+        week: 1));
     scoreweekmockup.add(WeekScoreMockup(
-        week: 2, beforeScore: 6, afterScore: 5, weekName: 'week 2'));
+        weekDay: DateTime.utc(2024, 1, 8),
+        beforeScore: 6,
+        afterScore: 5,
+        week: 2));
 
     scoreweekmockup.add(WeekScoreMockup(
-        week: 3, beforeScore: 5, afterScore: 4, weekName: 'week 3'));
+        weekDay: DateTime.utc(2024, 1, 15),
+        beforeScore: 5,
+        afterScore: 4,
+        week: 3));
 
     scoreweekmockup.add(WeekScoreMockup(
-        week: 4, beforeScore: 4, afterScore: 3, weekName: 'week 4'));
+        weekDay: DateTime.utc(2024, 1, 22),
+        beforeScore: 4,
+        afterScore: 3,
+        week: 4));
 
     return scoreweekmockup;
   }
