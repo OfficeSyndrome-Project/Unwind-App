@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:unwind_app/Widgets/history-widget/history_boxworkoutlist_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
