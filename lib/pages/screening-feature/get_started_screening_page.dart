@@ -54,15 +54,9 @@ class _ScreeningPageState extends State<ScreeningPage> {
               SizedBox(
                 height: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 32,
               ),
-              Container(
-                width: double.infinity,
-                height:
-                    ResponsiveCheckWidget.isSmallMobile(context) ? 350 : 356,
-                margin: EdgeInsets.only(
-                    bottom: ResponsiveCheckWidget.isSmallMobile(context) == true
-                        ? 0
-                        : 32),
-                padding: EdgeInsets.zero,
+              Flexible(
+                flex: 4,
+                fit: FlexFit.tight,
                 child: PageView(
                   controller: _controller,
                   physics: const NeverScrollableScrollPhysics(),
@@ -123,6 +117,13 @@ class _ScreeningPageState extends State<ScreeningPage> {
                   spacing: const EdgeInsets.all(4.0),
                 ),
               ),
+              ResponsiveCheckWidget.isSmallMobile(context)
+                  ? SizedBox(
+                      height: 32,
+                    )
+                  : Spacer(
+                      flex: 1,
+                    ),
             ],
           )),
           ButtonWithoutIconWidget(

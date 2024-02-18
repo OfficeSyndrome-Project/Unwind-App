@@ -47,117 +47,124 @@ class ProfilePageState extends State<ProfilePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 16,
         children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CircleAvatar(
-                backgroundImage:
-                    AssetImage('lib/assets/images/blank_profile.png'),
-                radius: 60,
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                margin: EdgeInsets.only(top: 16, bottom: 8),
-                width: double.infinity,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFEBECF0),
-                  // color: Colors.cyan,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                ),
-                child: Column(
+          Expanded(
+              child: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: Column(
+              children: [
+                Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  ////////// หัวข้อ- ข้อมูลส่วนตัว/////////////
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    TextWithStartIconWidget(
-                      startIcon: Icon(
-                        Icons.contact_mail_outlined,
-                        color: Color(0xFF7F8795),
+                    const CircleAvatar(
+                      backgroundImage:
+                          AssetImage('lib/assets/images/blank_profile.png'),
+                      radius: 60,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      margin: EdgeInsets.only(top: 16, bottom: 8),
+                      width: double.infinity,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFEBECF0),
+                        // color: Colors.cyan,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
                       ),
-                      topicName: 'ข้อมูลส่วนตัว',
-                      style: TextStyle(
-                        fontFamily: "Noto Sans Thai",
-                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                            ? 16
-                            : 18,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF484D56),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        ////////// หัวข้อ- ข้อมูลส่วนตัว/////////////
+                        children: [
+                          TextWithStartIconWidget(
+                            startIcon: Icon(
+                              Icons.contact_mail_outlined,
+                              color: Color(0xFF7F8795),
+                            ),
+                            topicName: 'ข้อมูลส่วนตัว',
+                            style: TextStyle(
+                              fontFamily: "Noto Sans Thai",
+                              fontSize:
+                                  ResponsiveCheckWidget.isSmallMobile(context)
+                                      ? 16
+                                      : 18,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF484D56),
+                            ),
+                          ),
+                          //////////////แสดงข้อมูล//////////
+                          SizedBox(
+                            height: 16,
+                          ),
+                          ShowInfomation(
+                            headDetails: 'ชื่อ',
+                            detail: user.firstName,
+                          ),
+                          SizedBox(height: 2),
+                          ShowInfomation(
+                              headDetails: 'นามสกุล', detail: user.lastName),
+                          SizedBox(height: 2),
+                          ShowInfomation(
+                              headDetails: 'อายุ',
+                              detail: user.age.toString() + " ปี"),
+                          SizedBox(height: 2),
+                          ShowInfomation(headDetails: 'เพศ', detail: user.sex),
+                          SizedBox(height: 2),
+                          ShowInfomation(
+                              headDetails: 'น้ำหนัก',
+                              detail: user.weight.toString() + " กก."),
+                          SizedBox(height: 2),
+                          ShowInfomation(
+                              headDetails: 'ส่วนสูง',
+                              detail: user.height.toString() + " ซม."),
+                          SizedBox(height: 2),
+                          ShowInfomation(
+                              headDetails: 'อาชีพ', detail: user.career),
+                          SizedBox(height: 2),
+                          ShowInfomation(
+                              headDetails: 'การประสบอุบัติเหตุ',
+                              detail: user.accident),
+                        ],
                       ),
                     ),
-                    //////////////แสดงข้อมูล//////////
-                    SizedBox(
-                      height: 16,
-                    ),
-                    ShowInfomation(
-                      headDetails: 'ชื่อ',
-                      detail: user.firstName,
-                    ),
-                    SizedBox(height: 2),
-                    ShowInfomation(
-                        headDetails: 'นามสกุล', detail: user.lastName),
-                    SizedBox(height: 2),
-                    ShowInfomation(
-                        headDetails: 'อายุ',
-                        detail: user.age.toString() + " ปี"),
-                    SizedBox(height: 2),
-                    ShowInfomation(headDetails: 'เพศ', detail: user.sex),
-                    SizedBox(height: 2),
-                    ShowInfomation(
-                        headDetails: 'น้ำหนัก',
-                        detail: user.weight.toString() + " กก."),
-                    SizedBox(height: 2),
-                    ShowInfomation(
-                        headDetails: 'ส่วนสูง',
-                        detail: user.height.toString() + " ซม."),
-                    SizedBox(height: 2),
-                    ShowInfomation(headDetails: 'อาชีพ', detail: user.career),
-                    SizedBox(height: 2),
-                    ShowInfomation(
-                        headDetails: 'การประสบอุบัติเหตุ',
-                        detail: user.accident),
                   ],
                 ),
-              ),
-            ],
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            child: TextButton(
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   pageRoutes.profile.editpage().route(context),
-                // );
-                Navigator.push(
-                  context,
-                  pageRoutes.profile.editpage().route(context),
-                ).then((updatedUser) {
-                  if (updatedUser != null) {
-                    setState(() {
-                      user = updatedUser;
-                    });
-                  }
-                });
-              },
-              child: TextWithStartIconWidget(
-                  startIcon: Icon(
-                    Icons.edit_outlined,
-                    color: Theme.of(context).colorScheme.primary,
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        pageRoutes.profile.editpage().route(context),
+                      ).then((updatedUser) {
+                        if (updatedUser != null) {
+                          setState(() {
+                            user = updatedUser;
+                          });
+                        }
+                      });
+                    },
+                    child: TextWithStartIconWidget(
+                        startIcon: Icon(
+                          Icons.edit_outlined,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        topicName: 'จัดการโปรไฟล์',
+                        style: TextStyle(
+                          fontFamily: "Noto Sans Thai",
+                          fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                              ? 14
+                              : 16,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF3B67CD),
+                        )),
                   ),
-                  topicName: 'จัดการโปรไฟล์',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF3B67CD),
-                  )),
+                ),
+              ],
             ),
-          ),
+          )),
         ]);
   }
 }

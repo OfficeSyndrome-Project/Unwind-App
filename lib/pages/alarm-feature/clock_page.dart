@@ -3,6 +3,7 @@ import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
 import 'package:unwind_app/Widgets/alarm-widget/alarm_btncircle_widget.dart';
+
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
@@ -13,7 +14,6 @@ import 'package:unwind_app/data/alarm-data/time_breakstate.dart';
 import '../../Widgets/button_withouticon_widget.dart';
 import '../../data/alarm-data/time_workstate.dart';
 import '../../data/alarm-data/timewatch_obj.dart';
-import 'info_clock_page.dart';
 
 class ClockPage extends StatefulWidget {
   const ClockPage({super.key});
@@ -79,7 +79,8 @@ class _ClockPageState extends State<ClockPage> {
             )),
         iconButtonEnd: IconButton(
             onPressed: () {
-              Navigator.of(context).push(_animationInfoRoute());
+              Navigator.of(context)
+                  .push(pageRoutes.menu.infoclockpage().route(context));
             },
             icon: const Icon(
               Icons.info_outline_rounded,
@@ -486,22 +487,4 @@ class _ClockPageState extends State<ClockPage> {
 
     return intBreakTimes;
   }
-}
-
-Route _animationInfoRoute() {
-  return PageRouteBuilder(
-    pageBuilder: ((context, animation, secondaryAnimation) =>
-        const InfoErgonomicPage()),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.1, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
 }

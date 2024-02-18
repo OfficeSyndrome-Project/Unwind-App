@@ -100,8 +100,8 @@ class _SchedulePageState extends State<SchedulePage> {
           startingDayOfWeek: StartingDayOfWeek.monday,
           availableGestures: AvailableGestures.horizontalSwipe,
           locale: 'th_TH',
-          rowHeight: ResponsiveCheckWidget.isMediumMobile(context) ? 40 : 52,
-          headerStyle: TableCalendarTheme().headerStyle(),
+          rowHeight: ResponsiveCheckWidget.isSmallMobile(context) ? 35 : 52,
+          headerStyle: TableCalendarTheme().headerStyle(context),
           daysOfWeekStyle: TableCalendarTheme().daysOfWeekStyle(),
           calendarStyle: TableCalendarTheme().calendarStyle(context),
           onDaySelected: _onDaySelected,
@@ -109,7 +109,7 @@ class _SchedulePageState extends State<SchedulePage> {
             _focusedDay = focusedDay;
           },
         ),
-        const SizedBox(height: 16.0),
+        SizedBox(height: 16.0),
         TextWithStartIconWidget(
           startIcon: Icon(
             Icons.directions_run,
@@ -123,7 +123,7 @@ class _SchedulePageState extends State<SchedulePage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 8.0),
+        SizedBox(height: 8.0),
         Expanded(
           child: ValueListenableBuilder<List<Event>>(
             valueListenable: _selectedEvents,
