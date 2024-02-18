@@ -5,7 +5,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withicon_widget.dart';
 import 'package:unwind_app/Widgets/history-widget/score_average_widget.dart';
-import 'package:unwind_app/Widgets/history-widget/score_chart_widget.dart';
+
+import 'package:unwind_app/Widgets/history-widget/week_chart_widget.dart';
 
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
@@ -202,10 +203,10 @@ class SummaryPage extends StatelessWidget {
                         if (snapshot.hasData) {
                           final List<WeekScoreRealize> weekscoremockup =
                               snapshot.data as List<WeekScoreRealize>;
-                          return ScoreChartWidget(
+                          return WeekChartWidget(
                             height: 150,
-                            series: <LineSeries<WeekScore, int>>[
-                              LineSeries(
+                            series: <CartesianSeries<WeekScore, int>>[
+                              LineSeries<WeekScore, int>(
                                 legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
                                 legendIconType: LegendIconType.rectangle,
                                 color: Color(0xFFb1c2eb),
@@ -220,7 +221,7 @@ class SummaryPage extends StatelessWidget {
                                 yValueMapper: (WeekScore score, _) =>
                                     score.beforeScore,
                               ),
-                              LineSeries(
+                              LineSeries<WeekScore, int>(
                                 legendItemText: 'ค่าความเจ็บปวด (หลัง)',
                                 legendIconType: LegendIconType.rectangle,
                                 color: Theme.of(context).colorScheme.primary,

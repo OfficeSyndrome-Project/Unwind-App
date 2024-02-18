@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 
-class ScoreChartWidget extends StatefulWidget {
+class WeekChartWidget extends StatefulWidget {
   final double height;
   final List<CartesianSeries<dynamic, dynamic>> series;
-  const ScoreChartWidget(
+  const WeekChartWidget(
       {super.key,
       required this.height,
       this.series = const <CartesianSeries>[]});
 
   @override
-  State<ScoreChartWidget> createState() => _ScoreChartWidgetState();
+  State<WeekChartWidget> createState() => _WeekChartWidgetState();
 }
 
-class _ScoreChartWidgetState extends State<ScoreChartWidget> {
+class _WeekChartWidgetState extends State<WeekChartWidget> {
   late TooltipBehavior _tooltipBehavior;
 
   @override
@@ -65,8 +65,7 @@ class _ScoreChartWidgetState extends State<ScoreChartWidget> {
             ),
             interval: 2,
             axisLine: const AxisLine(color: Color(0xff233E7B), width: 2)),
-        primaryXAxis: DateTimeAxis(
-            dateFormat: DateFormat('dd/MM'),
+        primaryXAxis: NumericAxis(
             labelStyle: TextStyle(
               color: Color(0xFF233D7B),
               fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 14,

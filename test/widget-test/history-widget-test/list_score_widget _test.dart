@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:unwind_app/Widgets/history-widget/list_score_widget%20copy.dart';
+import 'package:unwind_app/Widgets/history-widget/list_score_widget.dart';
 
 void main() {
   testWidgets('test ListScore widget', (WidgetTester tester) async {
