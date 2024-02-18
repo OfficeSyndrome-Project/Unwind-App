@@ -197,6 +197,7 @@ class SummaryPage extends StatelessWidget {
                         final wols = await serviceLocator<WorkoutListDB>()
                             .getWorkoutListByTitle(workoutList.titleCode);
                         final weekScores = getWeekScores(wols);
+                        print(weekScores);
                         return weekScores;
                       }(),
                       builder: (context, snapshot) {
@@ -327,15 +328,23 @@ class SummaryPage extends StatelessWidget {
 
 String formatDateTimeRangeToThai(DateTime from, DateTime to) {
   if (from.year == to.year && from.month == to.month)
-    return '${from.day} - ${to.day} ${from.thaiMonthName()} ${from.year}';
+    return '${from.day} - ${to.day} ${from.thaiMonthName()} พ.ศ.${from.yearTH()}';
   if (from.year == to.year)
-    return '${from.day} ${from.thaiMonthName()} - ${to.day} ${to.thaiMonthName()} ${from.year}';
-  return '${from.day} ${from.thaiMonthName()} ${from.year} - ${to.day} ${to.thaiMonthName()} ${to.year}';
+    return '${from.day} ${from.thaiMonthName()} - ${to.day} ${to.thaiMonthName()} พ.ศ.${from.yearTH()}';
+  return '${from.day} ${from.thaiMonthName()} ${from.yearTH()} - ${to.day} ${to.thaiMonthName()} พ.ศ.${to.yearTH()}';
+}
+
+String formatDateTimeRangeToThaiForHistoryPage(DateTime from, DateTime to) {
+  return '${from.day.toString().padLeft(2, '0')}/${from.month.toString().padLeft(2, '0')}/${from.yearTH() % 100} ถึง ${to.day.toString().padLeft(2, '0')}/${to.month.toString().padLeft(2, '0')}/${to.yearTH() % 100}';
 }
 
 extension ThaiDateTime on DateTime {
   String thaiMonthName() {
     return DateFormat('MMMM', 'th').format(this);
+  }
+
+  int yearTH() {
+    return this.year + 543;
   }
 }
 
@@ -381,7 +390,7 @@ List<WeekScoreRealize> getWeekScores(List<WorkoutListModel> wols) {
       .asMap() // to get the index for the week number, use in WeekScore
       .entries
       .map((entry) => WeekScoreRealize(
-          week: entry.key,
+          week: entry.key + 1,
           weekName: 'week ${entry.key + 1}',
           beforeScore: entry.value.before,
           afterScore: entry.value.after))

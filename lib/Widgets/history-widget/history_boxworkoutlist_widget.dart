@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
+import 'package:unwind_app/pages/history-feature/summary_page.dart';
 
 class HistoryWorkoutlistWidget extends StatelessWidget {
   final WorkoutListData workoutList;
@@ -58,7 +57,11 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
                     : Theme.of(context).textTheme.titleMedium,
               ),
               Text(
-                "วันที่ ${DateFormat("dd/MM/yy").format(workoutListModels.first.date ?? DateTime.now())} ถึง ${DateFormat("dd/MM/yy").format(workoutListModels.last.date ?? DateTime.now())}",
+                // "วันที่ ${DateFormat("dd/MM/yy").format(workoutListModels.first.date ?? DateTime.now())} ถึง ${DateFormat("dd/MM/yy").format(workoutListModels.last.date ?? DateTime.now())}",
+                (workoutListModels.first.date == null ||
+                        workoutListModels.last.date == null)
+                    ? ""
+                    : "วันที่ ${formatDateTimeRangeToThaiForHistoryPage(workoutListModels.first.date!, workoutListModels.last.date!)}",
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
                         fontSize: 12,
@@ -69,19 +72,8 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
-            width: 48,
-            height: 48,
-            child: CircularPercentIndicator(
-              radius: 24,
-              lineWidth: 9.5,
-              circularStrokeCap: CircularStrokeCap.round,
-              percent: 0.5,
-              animation: false,
-              backgroundColor: const Color(0xFFD9D9D9),
-              progressColor: const Color(0xFF6285D7),
-            ),
-          ),
+          Icon(Icons.arrow_forward_ios_rounded,
+              color: Theme.of(context).colorScheme.primary, size: 24)
         ],
       ),
     );
