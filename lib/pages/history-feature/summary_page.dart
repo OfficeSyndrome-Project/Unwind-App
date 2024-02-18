@@ -197,6 +197,7 @@ class SummaryPage extends StatelessWidget {
                         final wols = await serviceLocator<WorkoutListDB>()
                             .getWorkoutListByTitle(workoutList.titleCode);
                         final weekScores = getWeekScores(wols);
+                        print(weekScores);
                         return weekScores;
                       }(),
                       builder: (context, snapshot) {
@@ -381,7 +382,7 @@ List<WeekScoreRealize> getWeekScores(List<WorkoutListModel> wols) {
       .asMap() // to get the index for the week number, use in WeekScore
       .entries
       .map((entry) => WeekScoreRealize(
-          week: entry.key,
+          week: entry.key + 1,
           weekName: 'week ${entry.key + 1}',
           beforeScore: entry.value.before,
           afterScore: entry.value.after))
