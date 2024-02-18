@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/history-widget/box_have_img.dart';
 import 'package:unwind_app/Widgets/history-widget/box_only_q.dart';
 import 'package:unwind_app/Widgets/history-widget/box_title_part_select.dart';
 
 import 'package:unwind_app/Widgets/history-widget/header_box.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
+
 import 'package:unwind_app/data/history-data/keep_score_and_date_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
@@ -16,6 +18,9 @@ class ResultScreeningPage extends StatelessWidget {
 
   final List<ScreeningPartOneModel> q1 =
       ScreeningPartOneModel.getScreeningPartOneModel();
+
+  final PageRoutes pageRoutes = PageRoutes();
+
   @override
   Widget build(BuildContext context) {
     List<Widget> _partWidget = [];
@@ -128,7 +133,13 @@ class ResultScreeningPage extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            pageRoutes.previewPdf
+                                .pdfpreviewpage()
+                                .route(context));
+                      },
                       child: Icon(
                         Icons.ios_share_rounded,
                         color: Theme.of(context).colorScheme.primary,

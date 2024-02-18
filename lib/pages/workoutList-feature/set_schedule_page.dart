@@ -402,7 +402,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                     calendarFormat: _calendarFormat,
                     locale: 'th_TH',
                     rowHeight: 40,
-                    headerStyle: TableCalendarTheme().headerStyle(),
+                    headerStyle: TableCalendarTheme().headerStyle(context),
                     daysOfWeekStyle: TableCalendarTheme().daysOfWeekStyle(),
                     calendarStyle: TableCalendarTheme().calendarStyle(context),
                     onDaySelected: _onDaySelected,

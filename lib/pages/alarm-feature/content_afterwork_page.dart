@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/animate_sequence_widget.dart';
+import 'package:unwind_app/data/alarm-data/break_post.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 
@@ -12,6 +16,9 @@ class ContentAfterWorkPage extends StatefulWidget {
 }
 
 class _ContentAfterWorkPageState extends State<ContentAfterWorkPage> {
+  static final List<BreakPostModel> postureModel = BreakPostModel.getPosture();
+  final int valueRandom = Random().nextInt(postureModel.length);
+
   @override
   void initState() {
     super.initState();
@@ -30,37 +37,35 @@ class _ContentAfterWorkPageState extends State<ContentAfterWorkPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         textBar: "นาฬิกาจับเวลา",
         children: [
-          Container(
-            width: double.infinity,
-            height: 240,
-            decoration: ShapeDecoration(
-                color: Colors.grey,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x19000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 1),
-                    spreadRadius: 0,
-                  ),
-                ]),
-          ),
-          Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 24, bottom: 48),
-            child: Text(
-              "ตอนนี้คุณได้ทำงานครบตามเวลาที่ได้ตั้งไว้\nได้เวลาพักสายตาและยืดเส้นยืดสาย",
-              textAlign: TextAlign.center,
-              style: ResponsiveCheckWidget.isSmallMobile(context)
-                  ? TextStyle(
-                      fontSize: 14,
+          Expanded(
+              child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height:
+                    ResponsiveCheckWidget.isSmallMobile(context) ? 280 : 350,
+                child: AnimateSequenceWidget(
+                  listPath: postureModel[valueRandom].listPath,
+                  repeat: 10,
+                  eachSetDuration: 10,
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(top: 24, bottom: 48),
+                child: Text(
+                    "ตอนนี้คุณได้ทำงานครบตามเวลาที่ได้ตั้งไว้\nได้เวลาพักสายตาและยืดเส้นยืดสาย",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 16
+                          : 18,
                       fontWeight: FontWeight.w500,
                       color: const Color(0xFF636A75),
-                    )
-                  : Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
+                    )),
+              ),
+            ],
+          )),
           ButtonWithoutIconWidget(
             onTap: () {
               startworkTimes();

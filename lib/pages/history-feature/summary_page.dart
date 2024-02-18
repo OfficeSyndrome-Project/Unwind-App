@@ -83,226 +83,16 @@ class SummaryPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x19000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 1),
-                  spreadRadius: 0,
-                )
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    (workoutListModel.firstOrNull?.date == null ||
-                            workoutListModel.firstOrNull?.date == null)
-                        ? 'ไม่มีข้อมูลวันที่'
-                        : '${formatDateTimeRangeToThai(workoutListModel.first.date!, workoutListModel.last.date!)}',
-                    style: ResponsiveCheckWidget.isSmallMobile(context)
-                        ? TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF484D56),
-                          )
-                        : Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextWithStartIconWidget(
-                  startIcon: Icon(
-                    Icons.directions_run_rounded,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  topicName: 'ชื่อชุดท่าบริหาร',
-                  style: ResponsiveCheckWidget.isSmallMobile(context)
-                      ? TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF3B67CD),
-                        )
-                      : Theme.of(context).textTheme.bodySmall,
-                ),
-                Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: workoutList.workoutData.map((data) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          children: [
-                            const Text(
-                              '\u2022',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 16, color: Color(0xFF484D56)),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              data.name,
-                              style:
-                                  ResponsiveCheckWidget.isSmallMobile(context)
-                                      ? TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: const Color(0xFF484D56),
-                                        )
-                                      : Theme.of(context).textTheme.bodyLarge,
-                            )
-                          ],
-                        ),
-                      );
-                    }).toList()),
-                const SizedBox(
-                  height: 4,
-                ),
-                TextWithStartIconWidget(
-                  startIcon: Icon(
-                    Icons.analytics_rounded,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  topicName: 'ค่าความเจ็บปวด (ก่อน/หลัง)',
-                  style: ResponsiveCheckWidget.isSmallMobile(context)
-                      ? TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: const Color(0xFF3B67CD),
-                        )
-                      : Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                FutureBuilder(
-                  future: () async {
-                    final wols = await serviceLocator<WorkoutListDB>()
-                        .getWorkoutListByTitle(workoutList.titleCode);
-                    final weekScores = getWeekScores(wols);
-                    return weekScores;
-                  }(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final List<WeekScoreRealize> weekscoremockup =
-                          snapshot.data as List<WeekScoreRealize>;
-                      return ScoreChartWidget(
-                        height: 150,
-                        series: <LineSeries<WeekScore, int>>[
-                          LineSeries(
-                            legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
-                            legendIconType: LegendIconType.rectangle,
-                            color: Color(0xFFb1c2eb),
-                            markerSettings: const MarkerSettings(
-                              isVisible: true,
-                              height: 6,
-                              width: 6,
-                            ),
-                            animationDuration: 0,
-                            dataSource: weekscoremockup,
-                            xValueMapper: (WeekScore item, _) => item.week,
-                            yValueMapper: (WeekScore score, _) =>
-                                score.beforeScore,
-                          ),
-                          LineSeries(
-                            legendItemText: 'ค่าความเจ็บปวด (หลัง)',
-                            legendIconType: LegendIconType.rectangle,
-                            color: Theme.of(context).colorScheme.primary,
-                            animationDuration: 0,
-                            markerSettings: const MarkerSettings(
-                                isVisible: true, height: 6, width: 6),
-                            dataSource: weekscoremockup,
-                            xValueMapper: (WeekScore score, _) => score.week,
-                            yValueMapper: (WeekScore score, _) =>
-                                score.afterScore,
-                          ),
-                        ],
-                      );
-                    }
-                    return Text('Loading...');
-                  },
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 44 * boxHeight,
-                  child: ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return ButtonWithiconWidget(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                pageRoutes.history
-                                    .resultperweekpage(
-                                      WeeklySummary(
-                                        dailyNrsScores:
-                                            weeklyWorkoutLists[index]
-                                                .map(toDailyNrsScore)
-                                                .toList(),
-                                        weekNumber: index + 1,
-                                      ),
-                                    )
-                                    .route(context));
-                          },
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          text: 'สัปดาห์ที่ ' + (index + 1).toString(),
-                          color: Theme.of(context).colorScheme.secondary,
-                          colorText: Colors.white,
-                          radius: 8,
-                          side: BorderSide.none,
-                          icon: Icons.arrow_forward_ios_rounded,
-                          iconcolor: Colors.white,
-                          shadows: const [
-                            BoxShadow(
-                              color: Color(0x19000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 1),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context, index) => SizedBox(
-                            height: 4,
-                          ),
-                      itemCount: weeklyWorkoutLists.length),
-                ),
-                ScoreAverageWidget(
-                  // nrsScoreAverage: currentDiffScore > 0 ? currentDiffScore : 0,
-                  nrsScoreAverage:
-                      (getNrsBeforeAfter(workoutListModel).before ?? 0) -
-                          (getNrsBeforeAfter(workoutListModel).after ?? 0),
-                ),
-                ButtonWithiconWidget(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        pageRoutes.history
-                            .resultscreening(keepscores)
-                            .route(context));
-                  },
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  text: 'ผลการประเมินแบบทดสอบ',
-                  color: const Color(0xFFC4D1F0),
-                  colorText: const Color(0xFF6285D7),
-                  radius: 8,
-                  side: BorderSide.none,
-                  icon: Icons.arrow_forward_ios_rounded,
-                  iconcolor: const Color(0xFF6285D7),
-                  shadows: const [
+          Expanded(
+            child: SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: const [
                     BoxShadow(
                       color: Color(0x19000000),
                       blurRadius: 4,
@@ -311,7 +101,223 @@ class SummaryPage extends StatelessWidget {
                     )
                   ],
                 ),
-              ],
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        (workoutListModel.firstOrNull?.date == null ||
+                                workoutListModel.firstOrNull?.date == null)
+                            ? 'ไม่มีข้อมูลวันที่'
+                            : '${formatDateTimeRangeToThai(workoutListModel.first.date!, workoutListModel.last.date!)}',
+                        style: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF484D56),
+                              )
+                            : Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    TextWithStartIconWidget(
+                      startIcon: Icon(
+                        Icons.directions_run_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      topicName: 'ชื่อชุดท่าบริหาร',
+                      style: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF3B67CD),
+                            )
+                          : Theme.of(context).textTheme.bodySmall,
+                    ),
+                    Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: workoutList.workoutData.map((data) {
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  '\u2022',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Color(0xFF484D56)),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  data.name,
+                                  style: ResponsiveCheckWidget.isSmallMobile(
+                                          context)
+                                      ? TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: const Color(0xFF484D56),
+                                        )
+                                      : Theme.of(context).textTheme.bodyLarge,
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList()),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    TextWithStartIconWidget(
+                      startIcon: Icon(
+                        Icons.analytics_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      topicName: 'ค่าความเจ็บปวด (ก่อน/หลัง)',
+                      style: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF3B67CD),
+                            )
+                          : Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    FutureBuilder(
+                      future: () async {
+                        final wols = await serviceLocator<WorkoutListDB>()
+                            .getWorkoutListByTitle(workoutList.titleCode);
+                        final weekScores = getWeekScores(wols);
+                        return weekScores;
+                      }(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final List<WeekScoreRealize> weekscoremockup =
+                              snapshot.data as List<WeekScoreRealize>;
+                          return ScoreChartWidget(
+                            height: 150,
+                            series: <LineSeries<WeekScore, int>>[
+                              LineSeries(
+                                legendItemText: 'ค่าความเจ็บปวด (ก่อน)',
+                                legendIconType: LegendIconType.rectangle,
+                                color: Color(0xFFb1c2eb),
+                                markerSettings: const MarkerSettings(
+                                  isVisible: true,
+                                  height: 6,
+                                  width: 6,
+                                ),
+                                animationDuration: 0,
+                                dataSource: weekscoremockup,
+                                xValueMapper: (WeekScore item, _) => item.week,
+                                yValueMapper: (WeekScore score, _) =>
+                                    score.beforeScore,
+                              ),
+                              LineSeries(
+                                legendItemText: 'ค่าความเจ็บปวด (หลัง)',
+                                legendIconType: LegendIconType.rectangle,
+                                color: Theme.of(context).colorScheme.primary,
+                                animationDuration: 0,
+                                markerSettings: const MarkerSettings(
+                                    isVisible: true, height: 6, width: 6),
+                                dataSource: weekscoremockup,
+                                xValueMapper: (WeekScore score, _) =>
+                                    score.week,
+                                yValueMapper: (WeekScore score, _) =>
+                                    score.afterScore,
+                              ),
+                            ],
+                          );
+                        }
+                        return Text('Loading...');
+                      },
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 44 * boxHeight,
+                      child: ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return ButtonWithiconWidget(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    pageRoutes.history
+                                        .resultperweekpage(
+                                          WeeklySummary(
+                                            dailyNrsScores:
+                                                weeklyWorkoutLists[index]
+                                                    .map(toDailyNrsScore)
+                                                    .toList(),
+                                            weekNumber: index + 1,
+                                          ),
+                                        )
+                                        .route(context));
+                              },
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              text: 'สัปดาห์ที่ ' + (index + 1).toString(),
+                              color: Theme.of(context).colorScheme.secondary,
+                              colorText: Colors.white,
+                              radius: 8,
+                              side: BorderSide.none,
+                              icon: Icons.arrow_forward_ios_rounded,
+                              iconcolor: Colors.white,
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x19000000),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 1),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                                height: 4,
+                              ),
+                          itemCount: weeklyWorkoutLists.length),
+                    ),
+                    ScoreAverageWidget(
+                      // nrsScoreAverage: currentDiffScore > 0 ? currentDiffScore : 0,
+                      nrsScoreAverage:
+                          (getNrsBeforeAfter(workoutListModel).before ?? 0) -
+                              (getNrsBeforeAfter(workoutListModel).after ?? 0),
+                    ),
+                    ButtonWithiconWidget(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            pageRoutes.history
+                                .resultscreening(keepscores)
+                                .route(context));
+                      },
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      text: 'ผลการประเมินแบบทดสอบ',
+                      color: const Color(0xFFC4D1F0),
+                      colorText: const Color(0xFF6285D7),
+                      radius: 8,
+                      side: BorderSide.none,
+                      icon: Icons.arrow_forward_ios_rounded,
+                      iconcolor: const Color(0xFF6285D7),
+                      shadows: const [
+                        BoxShadow(
+                          color: Color(0x19000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 1),
+                          spreadRadius: 0,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ]);

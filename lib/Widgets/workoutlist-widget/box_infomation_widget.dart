@@ -35,9 +35,9 @@ class BoxInfomationWidget extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: 16),
           child: RatioImageoneToOne(
               assetName: assetName,
-              smallWidth: 220,
+              smallWidth: 180,
               largeWidth: 240,
-              smallHeight: 220,
+              smallHeight: 180,
               largeHeight: 240),
         ),
         Row(

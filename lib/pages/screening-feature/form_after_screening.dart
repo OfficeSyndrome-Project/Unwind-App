@@ -191,7 +191,8 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                   text: '*',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
-                    fontSize: 14,
+                    fontSize:
+                        ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 14,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xFFC9635F),
                   )),
@@ -200,7 +201,8 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                       'นโยบายการเก็บข้อมูลส่วนตัวนี้เป็นไปเพื่อการวิเคราะห์ข้อมูลทางเราขอให้ความมั่นใจในการคุ้มครองข้อมูลและไม่มีการนำไปเผยแพร่แต่อย่างใด',
                   style: TextStyle(
                     fontFamily: "Noto Sans Thai",
-                    fontSize: 14,
+                    fontSize:
+                        ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 14,
                     fontWeight: FontWeight.w500,
                     color: const Color(0xFF636A75),
                   ))

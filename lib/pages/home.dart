@@ -6,7 +6,8 @@ import 'package:unwind_app/pages/workoutList-feature/workoutlist_page.dart';
 
 class HomePage extends StatefulWidget {
   final int? selectedIndex;
-  const HomePage({super.key, this.selectedIndex});
+  final Widget? devScreen;
+  const HomePage({super.key, this.selectedIndex, this.devScreen});
 
   @override
   _HomeState createState() => _HomeState();
@@ -17,9 +18,9 @@ class _HomeState extends State<HomePage> {
 
   late List<Widget> _widgetOptions = <Widget>[
     WorkoutListPage(),
-    const MenuWidget(),
+    MenuWidget(),
     HistoryPage(),
-    const ProfilePage(),
+    ProfilePage(),
   ];
 
   late List<BottomNavigationBarItem> bottomNavigationBarItem =
@@ -59,6 +60,21 @@ class _HomeState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    if (widget.devScreen != null) {
+      final devWidget = widget.devScreen ?? Container();
+      setState(() {
+        _widgetOptions = [devWidget, ..._widgetOptions];
+        bottomNavigationBarItem = [
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.developer_mode),
+            icon: Icon(Icons.developer_mode_outlined),
+            label: 'กำลังพัฒนา',
+            backgroundColor: Color(0xffebedf0),
+          ),
+          ...bottomNavigationBarItem
+        ];
+      });
+    }
   }
 
   @override
