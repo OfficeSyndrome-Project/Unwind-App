@@ -328,15 +328,19 @@ class SummaryPage extends StatelessWidget {
 
 String formatDateTimeRangeToThai(DateTime from, DateTime to) {
   if (from.year == to.year && from.month == to.month)
-    return '${from.day} - ${to.day} ${from.thaiMonthName()} ${from.year}';
+    return '${from.day} - ${to.day} ${from.thaiMonthName()} พ.ศ.${from.yearTH()}';
   if (from.year == to.year)
-    return '${from.day} ${from.thaiMonthName()} - ${to.day} ${to.thaiMonthName()} ${from.year}';
-  return '${from.day} ${from.thaiMonthName()} ${from.year} - ${to.day} ${to.thaiMonthName()} ${to.year}';
+    return '${from.day} ${from.thaiMonthName()} - ${to.day} ${to.thaiMonthName()} พ.ศ.${from.yearTH()}';
+  return '${from.day} ${from.thaiMonthName()} ${from.yearTH()} - ${to.day} ${to.thaiMonthName()} พ.ศ.${to.yearTH()}';
 }
 
 extension ThaiDateTime on DateTime {
   String thaiMonthName() {
     return DateFormat('MMMM', 'th').format(this);
+  }
+
+  int yearTH() {
+    return this.year + 543;
   }
 }
 
