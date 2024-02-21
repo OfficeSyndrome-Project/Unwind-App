@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -50,7 +48,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
 
   void startTimer() {
     timer = Timer.periodic(
-      const Duration(microseconds: 2000),
+      const Duration(microseconds: 1000000),
       (timer) async {
         if (remainingTimes > 0) {
           setState(() {
@@ -119,6 +117,7 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
             Navigator.pop(context, false);
           }, () {
             Navigator.pop(context, true);
+            stopTimer();
           });
           if (result == true) {
             Navigator.pop(context);
