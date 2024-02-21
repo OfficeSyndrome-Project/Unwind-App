@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/screening-widget/get_started_screening_widget.dart';
+import 'package:unwind_app/Widgets/screening-widget/welcome_widget.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 
 import '../../Widgets/button_withouticon_widget.dart';
@@ -98,9 +99,8 @@ class _ScreeningPageState extends State<ScreeningPage> {
                         titleLabel: 'ทำอย่างไรหากไม่เข้าใจในอาการแต่ละรูปแบบ ?',
                         descriptionLabel:
                             'สามารถกดไอคอนรูปตัว i มุมขวาบน เพื่อดูรายละเอียดแต่ละอาการปวดได้'),
-                    ScreeningBoxWidget(
-                        assetPath:
-                            'lib/assets/images/screeningPart/get_started_1.png',
+                    WelcomeWidget(
+                        assetPath: 'lib/assets/images/logo.png',
                         titleLabel: 'ยินดีต้อนรับเข้าสู่ unwind ! ',
                         descriptionLabel:
                             'แอปพลิเคชันที่คุณสามารถรักษาอาการ ออฟฟิศซินโดรมได้ด้วยตัวของคุณเอง '),

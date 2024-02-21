@@ -45,7 +45,7 @@ class ErgonomicPage extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: Text(
-            "เป้าหมายของรายการนี้คือการช่วยให้คุณจัดท่าทางการนั่งในการทำงานได้อย่างเหมาะสมที่สุด เพื่อการทำงานที่มีประสิทธิภาพ โดยมีทั้งหมด 7 ส่วน",
+            "เป้าหมายของรายการนี้คือการช่วยให้คุณจัดท่าทางการนั่งในการทำงานได้อย่างเหมาะสมที่สุด เพื่อการทำงานที่มีประสิทธิภาพ โดยมีทั้งหมด 6 ส่วน",
             style: TextStyle(
               fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
               fontWeight: FontWeight.w500,
