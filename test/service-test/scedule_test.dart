@@ -32,7 +32,7 @@ void main() {
       DateTime testDateTime = DateTime.now();
       List<Event> testEvents = [
         Event(
-            WorkoutList(
+            WorkoutListData(
                 title: "หลัง",
                 titleTH: "ชุดท่าบริหารหลังเพิ่มความแข็งแรง",
                 workoutType: "stretch",

@@ -5,8 +5,8 @@ import 'package:unwind_app/data/screening-data/workout_data.dart'; // ต้อ�
 
 void main() {
   testWidgets('test ListDropdown widget', (WidgetTester tester) async {
-    final List<WorkoutList> testWorkoutLists = [
-      WorkoutList(
+    final List<WorkoutListData> testWorkoutLists = [
+      WorkoutListData(
           title: "คอ-บ่า",
           titleTH: "ชุดท่าบริหารคอเพิ่มความยืดหยุ่น",
           workoutType: "stretch",
@@ -17,7 +17,7 @@ void main() {
                   element.title == "คอ-บ่า" && element.workoutType == "stretch")
               .toList(),
           totalTime: "4 นาที 10 วินาที"),
-      WorkoutList(
+      WorkoutListData(
           title: "คอ-บ่า",
           titleTH: "ชุดท่าบริหารคอเพิ่มความแข็งแรง",
           workoutType: "strength",
@@ -30,7 +30,7 @@ void main() {
               .toList(),
           totalTime: "5 นาที 50 วินาที"),
     ];
-    WorkoutList? selectedValue;
+    WorkoutListData? selectedValue;
 
     await tester.pumpWidget(
       MaterialApp(
@@ -47,7 +47,7 @@ void main() {
     );
     expect(find.text('กรุณาเลือกชุดท่าบริหาร'), findsOneWidget);
     expect(find.byType(ListDropdownWidget), findsOneWidget);
-    await tester.tap(find.byType(DropdownButtonFormField<WorkoutList>));
+    await tester.tap(find.byType(DropdownButtonFormField<WorkoutListData>));
     await tester.pumpAndSettle();
     await tester.tap(find.text('ชุดท่าบริหารคอเพิ่มความยืดหยุ่น').last);
     expect(selectedValue, testWorkoutLists[0]);

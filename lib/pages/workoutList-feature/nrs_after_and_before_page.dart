@@ -170,14 +170,14 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
                   final isSameDayOrAfterExpiredDate =
                       isSameDay(now, lastWorkout.date!) ||
                           now.isAfter(lastWorkout.date!);
-                  //TODO 4weeks enable TEST
+
                   final String isSameDayOrAfterExpiredDateTEST = "";
                   if (isSameDayOrAfterExpiredDate ||
                       isSameDayOrAfterExpiredDateTEST == "TEST") {
                     _navigateToResultNrsFourWeekPage(context);
                     return;
                   }
-                  //TODO cumulative = 7
+
                   final int cumulativeWorkoutDays =
                       await workoutListDB.cumulativeDayOfWorkoutListTitle(
                           widget.workoutList.titleCode);

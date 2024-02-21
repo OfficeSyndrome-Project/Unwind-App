@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:unwind_app/Widgets/workoutlist-widget/workout_widget.dart';
 import 'package:unwind_app/Widgets/animate_sequence_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/services/tts_manager_service.dart';
 
 void main() {
   testWidgets('test Workout widget', (WidgetTester tester) async {
@@ -31,7 +32,7 @@ void main() {
       workoutType: "stretch",
     );
     const int testTimeth = 5;
-
+    final TtsManager ttsManager = TtsManager();
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -39,6 +40,7 @@ void main() {
             name: testName,
             timeth: testTimeth,
             workoutData: testWorkoutData,
+            ttsManager: ttsManager,
           ),
         ),
       ),
