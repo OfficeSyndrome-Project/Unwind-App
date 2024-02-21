@@ -39,7 +39,7 @@ class ResultScreeningPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HeaderBox(screeningPart: i + 1, partName: 'partName'),
+          HeaderBox(screeningPart: i + 1),
           ...resultWidget,
           BoxTitlePartSelect(partSelect: 'partSelect'),
           BoxHaveImg(

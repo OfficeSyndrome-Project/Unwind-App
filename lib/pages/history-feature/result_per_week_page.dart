@@ -258,16 +258,6 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                     ],
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.ios_share_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ),
               ],
             ),
           ))
