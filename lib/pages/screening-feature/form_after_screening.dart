@@ -33,6 +33,10 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   User createUser = User();
   List<Answer> get answers => widget.answerContext?.answers ?? [];
   Map<ScreeningTitle, int> get nrs => widget.answerContext?.nrs ?? {};
+
+  bool? isChecked = false;
+  bool isOpen = false;
+
   @override
   void initState() {
     super.initState();
@@ -72,7 +76,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(top: 8, bottom: 24),
                   child: Text(
-                    'unwind',
+                    'UNWIND',
                     style: TextStyle(
                       fontFamily: "Noto Sans Thai",
                       fontSize: ResponsiveCheckWidget.isSmallMobile(context)
@@ -184,29 +188,54 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 32, bottom: 8),
-            child: Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: '*',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 14,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFFC9635F),
-                  )),
-              TextSpan(
-                  text:
-                      'นโยบายการเก็บข้อมูลส่วนตัวนี้เป็นไปเพื่อการวิเคราะห์ข้อมูลทางเราขอให้ความมั่นใจในการคุ้มครองข้อมูลและไม่มีการนำไปเผยแพร่แต่อย่างใด',
-                  style: TextStyle(
-                    fontFamily: "Noto Sans Thai",
-                    fontSize:
-                        ResponsiveCheckWidget.isSmallMobile(context) ? 12 : 14,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF636A75),
-                  ))
-            ])),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context, pageRoutes.screening.policypage().route(context));
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 32, bottom: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 24,
+                    height: 24,
+                    child: Checkbox(
+                      splashRadius: 0,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                        width: 2.0,
+                      ),
+                      value: isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          isChecked = value;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    'ฉันยอมข้อกำหนดและเงื่อนไข',
+                    style: TextStyle(
+                      fontFamily: "Noto Sans Thai",
+                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                          ? 12
+                          : 14,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF636A75),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           ButtonWithoutIconWidget(
               onTap: () async {
@@ -247,19 +276,21 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                   resultText = widget.resultText!;
                 }
 
-                print(
-                    "workoutList: ${workoutList.map((e) => e.workoutData.map((e) => e.name))}");
-                Navigator.push(
-                    context,
-                    pageRoutes.screening
-                        .resultsworkout(workoutList, resultText)
-                        .route(context));
+                if (isChecked == true) {
+                  Navigator.push(
+                      context,
+                      pageRoutes.screening
+                          .resultsworkout(workoutList, resultText)
+                          .route(context));
+                }
               },
               text: "สมัครสมาชิก",
               radius: 32,
               width: double.infinity,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
-              color: Theme.of(context).colorScheme.primary,
+              color: isChecked == true
+                  ? Theme.of(context).colorScheme.primary
+                  : Color(0xFF9BA4B5),
               borderSide: BorderSide.none,
               style: ResponsiveCheckWidget.isSmallMobile(context)
                   ? TextStyle(

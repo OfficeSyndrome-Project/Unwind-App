@@ -73,26 +73,26 @@ class _ScreeningPageState extends State<ScreeningPage> {
                             'lib/assets/images/screeningPart/get_started_1.png',
                         titleLabel: "ปวดเมื่อยจากการทำงานใช่ไหม ?",
                         descriptionLabel:
-                            "หากการทำงานทำให้คุณรู้สึกปวดเมื่อยไม่สบายตัว ส่งผลต่อสภาพจิตใจและร่างกายของคุณอยู่บ่อยครั้งให้ unwind ช่วยคุณ"),
+                            "หากการทำงานทำให้คุณรู้สึกปวดเมื่อยไม่สบายตัว ส่งผลต่อสภาพจิตใจและร่างกายของคุณอยู่บ่อยครั้งให้ UNWIND ช่วยคุณ"),
                     ScreeningBoxWidget(
                       assetPath:
                           'lib/assets/images/screeningPart/get_started_2.png',
                       titleLabel: "บรรเทาอาการเจ็บปวด",
                       descriptionLabel:
-                          "บรรเทาอาการปวดเหล่านั้นกับ unwind ด้วยวิธีการตรวจที่แม่นยำและให้ชุดท่าบริหารที่เหมาะสม ซึ่งได้รับการยืนยันจากแพทย์ผู้เชี่ยวชาญ",
+                          "บรรเทาอาการปวดเหล่านั้นกับ UNWIND ด้วยวิธีการตรวจที่แม่นยำและให้ชุดท่าบริหารที่เหมาะสม ซึ่งได้รับการยืนยันจากแพทย์ผู้เชี่ยวชาญ",
                     ),
                     ScreeningBoxWidget(
                         assetPath:
                             'lib/assets/images/screeningPart/get_started_3.png',
                         titleLabel: 'ติดตามผลอาการของคุณ',
                         descriptionLabel:
-                            'unwind ติดตามผลอาการของคุณอย่างสม่ำเสมอ โดยคุณสามารถดูผลอาการของตนเองย้อนหลังได้'),
+                            'UNWIND ติดตามผลอาการของคุณอย่างสม่ำเสมอ โดยคุณสามารถดูผลอาการของตนเองย้อนหลังได้'),
                     ScreeningBoxWidget(
                         assetPath:
                             'lib/assets/images/screeningPart/get_started_4.png',
                         titleLabel: 'ป้องกันอาการเจ็บปวด',
                         descriptionLabel:
-                            'ป้องกันอาการเจ็บปวดจากการทำงานที่ต้นเหตุ unwind จะแนะนำการจัดสภาพแวดล้อมการทำงาน รวมถึงเวลาในการทำงานที่เหมาะให้กับคุณ'),
+                            'ป้องกันอาการเจ็บปวดจากการทำงานที่ต้นเหตุ UNWIND จะแนะนำการจัดสภาพแวดล้อมการทำงาน รวมถึงเวลาในการทำงานที่เหมาะให้กับคุณ'),
                     ScreeningBoxWidget(
                         assetPath:
                             'lib/assets/images/screeningPart/get_started_5.png',
@@ -101,7 +101,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                             'สามารถกดไอคอนรูปตัว i มุมขวาบน เพื่อดูรายละเอียดแต่ละอาการปวดได้'),
                     WelcomeWidget(
                         assetPath: 'lib/assets/images/logo.png',
-                        titleLabel: 'ยินดีต้อนรับเข้าสู่ unwind ! ',
+                        titleLabel: 'ยินดีต้อนรับเข้าสู่ UNWIND ! ',
                         descriptionLabel:
                             'แอปพลิเคชันที่คุณสามารถรักษาอาการ ออฟฟิศซินโดรมได้ด้วยตัวของคุณเอง '),
                   ],
