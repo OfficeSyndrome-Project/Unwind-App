@@ -36,43 +36,62 @@ class DatabaseHelper {
           await db.execute('PRAGMA foreign_keys = ON');
         },
         onCreate: (db, version) {
-          //Create User table
-
-          // Create ScreeningTest table
           db.execute('''
-          CREATE TABLE ScreeningTest (
-            t_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          CREATE TABLE ScreeningTestAnswer (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            questionPart INTEGER,
+            area TEXT,
+            questionId INTEGER,
+            answer TEXT,
             created_at DATETIME,
             deleted_at DATETIME
-            );
-          ''');
-
-          //Create ScreeningTest_answer table
-          db.execute('''
-          CREATE TABLE ScreeningTest_answer (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            t_id INTEGER,
-            type TEXT,
-            area TEXT,
-            q_id INTEGER,
-            ans TEXT,
-            FOREIGN KEY (t_id) REFERENCES ScreeningTest(t_id)
           );
         ''');
-
           // Create WorkoutList table
           db.execute('''
           CREATE TABLE WorkoutList (
-            WOL_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             date DATETIME,
             WOL_title TEXT,
             remaining_times INTEGER,
             total_times INTEGER,
             NRS_before INTEGER,
             NRS_after INTEGER,
+            created_at DATETIME,
             deleted_at DATETIME
           );
           ''');
+          db.execute('''
+          CREATE TABLE ScreeningTestAnswerWorkoutList (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ScreeningTestAnswer_id INTEGER,
+            WorkoutList_id INTEGER,
+            FOREIGN KEY (ScreeningTestAnswer_id) REFERENCES ScreeningTestAnswer(id),
+            FOREIGN KEY (WorkoutList_id) REFERENCES WorkoutList(id)
+          );
+        ''');
+
+          //Create User table
+
+          // Create ScreeningTest table
+          // db.execute('''
+          // CREATE TABLE ScreeningTest (
+          //   t_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          //   created_at DATETIME,
+          //   deleted_at DATETIME
+          //   );
+          // ''');
+          //   //Create ScreeningTest_answer table
+          //   db.execute('''
+          //   CREATE TABLE ScreeningTest_answer (
+          //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+          //     questionPart INTEGER
+          //     area TEXT,
+          //     questionId INTEGER,
+          //     answer TEXT,
+          //     FOREIGN KEY (t_id) REFERENCES ScreeningTest(t_id)
+          //   );
+          // ''');
         },
         version: 1,
       ),

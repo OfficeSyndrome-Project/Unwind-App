@@ -1,50 +1,65 @@
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 
-class ScreeningTestAnswer_Model {
+class ScreeningTestAnswerModel {
   final int? id;
-  final int? t_id;
-  final String? questionPart;
+  final int? questionPart;
   final String? area;
   final int? questionId;
-  final String? ans;
+  final int? answer;
+  final DateTime? created_at;
+  final DateTime? deleted_at;
 
-  ScreeningTestAnswer_Model({
+  ScreeningTestAnswerModel({
     this.id,
-    this.t_id,
     this.questionPart,
     this.area,
     this.questionId,
-    this.ans,
+    this.answer,
+    this.created_at,
+    this.deleted_at,
   });
 
-  factory ScreeningTestAnswer_Model.fromAnswer(Answer answer) =>
-      ScreeningTestAnswer_Model(
-        questionPart: answer.questionPart.toString(),
-        area: answer.title,
+  factory ScreeningTestAnswerModel.fromAnswer(Answer answer) =>
+      ScreeningTestAnswerModel(
+        questionPart: answer.questionPart,
+        area: answer.area,
         questionId: answer.questionId,
-        ans: answer.answer.toString(),
+        answer: answer.answer,
       );
 
-  factory ScreeningTestAnswer_Model.fromJson(Map<String, dynamic> json) =>
-      ScreeningTestAnswer_Model(
-        id: json['id'],
-        t_id: json['t_id'],
-        questionPart: json['questionPart'],
-        area: json['area'],
-        questionId: json['questionId'],
-        ans: json['ans'],
-      );
-
-  Map<String, dynamic> toJson() => {
+  factory ScreeningTestAnswerModel.fromMap(Map<String, dynamic> data) =>
+      ScreeningTestAnswerModel();
+  Map<String, dynamic> toMap() => {
         'id': id,
-        't_id': t_id,
-        'type': questionPart,
+        'questionPart': questionPart,
         'area': area,
-        'qID': questionId,
-        'ans': ans,
+        'questionId': questionId,
+        'answer': answer,
+        'created_at': created_at?.toIso8601String(),
+        'deleted_at': deleted_at?.toIso8601String(),
       };
+
+  ScreeningTestAnswerModel copyWith({
+    int? id,
+    int? questionPart,
+    String? area,
+    int? questionId,
+    int? answer,
+    DateTime? created_at,
+    DateTime? deleted_at,
+  }) {
+    return ScreeningTestAnswerModel(
+      id: id ?? this.id,
+      questionPart: questionPart ?? this.questionPart,
+      area: area ?? this.area,
+      questionId: questionId ?? this.questionId,
+      answer: answer ?? this.answer,
+      created_at: created_at ?? this.created_at,
+      deleted_at: deleted_at ?? this.deleted_at,
+    );
+  }
 
   @override
   String toString() =>
-      'ScreeningTestAnswer_Model{id: $id, t_id: $t_id, type: $questionPart, area: $area, qID: $questionId, ans: $ans}';
+      'ScreeningTestAnswerModel(id: $id, questionPart: $questionPart, area: $area, questionId: $questionId, ans: $answer, created_at: $created_at, deleted_at: $deleted_at)';
 }

@@ -5,13 +5,13 @@ import 'package:unwind_app/models/workoutlist_model.dart';
 
 class Answer {
   final int questionPart;
-  final String? title;
+  final String? area;
   final int questionId;
   final int answer;
 
   const Answer({
     required this.questionPart,
-    required this.title,
+    required this.area,
     required this.questionId,
     required this.answer,
   });
@@ -29,27 +29,27 @@ class Answer {
 
   isSameQuestion(Answer o) =>
       o.questionPart == questionPart &&
-      o.title == title &&
+      o.area == area &&
       o.questionId == questionId;
 
   @override
   operator ==(o) =>
       o is Answer &&
       o.questionPart == questionPart &&
-      o.title == title &&
+      o.area == area &&
       o.questionId == questionId &&
       o.answer == answer;
 
   @override
   int get hashCode =>
       questionPart.hashCode ^
-      title.hashCode ^
+      area.hashCode ^
       questionId.hashCode ^
       answer.hashCode;
 
   @override
   String toString() {
-    return 'Answer{QuestionPart: $questionPart, title: $title, questionID: $questionId, answer: $answer}';
+    return 'Answer{QuestionPart: $questionPart, title: $area, questionID: $questionId, answer: $answer}';
   }
 }
 
@@ -90,43 +90,43 @@ class ShowGoToDoctorPageService {
   static final Set<Answer> shouldSeeDoctor = {
     //yes = 1 , no = 2
     //part 1
-    Answer(questionPart: 1, title: null, questionId: 1, answer: 2),
-    Answer(questionPart: 1, title: null, questionId: 2, answer: 1),
-    Answer(questionPart: 1, title: null, questionId: 3, answer: 1),
-    Answer(questionPart: 1, title: null, questionId: 4, answer: 1),
+    Answer(questionPart: 1, area: null, questionId: 1, answer: 2),
+    Answer(questionPart: 1, area: null, questionId: 2, answer: 1),
+    Answer(questionPart: 1, area: null, questionId: 3, answer: 1),
+    Answer(questionPart: 1, area: null, questionId: 4, answer: 1),
     //part 2
-    Answer(questionPart: 2, title: "คอ", questionId: 2, answer: 2),
-    Answer(questionPart: 2, title: "คอ", questionId: 3, answer: 1),
-    Answer(questionPart: 2, title: "คอ", questionId: 4, answer: 1),
-    Answer(questionPart: 2, title: "คอ", questionId: 5, answer: 1),
-    Answer(questionPart: 2, title: "คอ", questionId: 6, answer: 1),
-    Answer(questionPart: 2, title: "บ่า", questionId: 2, answer: 2),
-    Answer(questionPart: 2, title: "บ่า", questionId: 4, answer: 3),
-    Answer(questionPart: 2, title: "บ่า", questionId: 4, answer: 3),
-    Answer(questionPart: 2, title: "ไหล่", questionId: 2, answer: 2),
-    Answer(questionPart: 2, title: "ไหล่", questionId: 4, answer: 3),
-    Answer(questionPart: 2, title: "ไหล่", questionId: 4, answer: 3),
-    Answer(questionPart: 2, title: "หลังส่วนบน", questionId: 2, answer: 2),
-    Answer(questionPart: 2, title: "หลังส่วนบน", questionId: 3, answer: 1),
-    Answer(questionPart: 2, title: "หลังส่วนล่าง", questionId: 2, answer: 2),
-    Answer(questionPart: 2, title: "หลังส่วนล่าง", questionId: 3, answer: 1),
+    Answer(questionPart: 2, area: "คอ", questionId: 2, answer: 2),
+    Answer(questionPart: 2, area: "คอ", questionId: 3, answer: 1),
+    Answer(questionPart: 2, area: "คอ", questionId: 4, answer: 1),
+    Answer(questionPart: 2, area: "คอ", questionId: 5, answer: 1),
+    Answer(questionPart: 2, area: "คอ", questionId: 6, answer: 1),
+    Answer(questionPart: 2, area: "บ่า", questionId: 2, answer: 2),
+    Answer(questionPart: 2, area: "บ่า", questionId: 4, answer: 3),
+    Answer(questionPart: 2, area: "บ่า", questionId: 4, answer: 3),
+    Answer(questionPart: 2, area: "ไหล่", questionId: 2, answer: 2),
+    Answer(questionPart: 2, area: "ไหล่", questionId: 4, answer: 3),
+    Answer(questionPart: 2, area: "ไหล่", questionId: 4, answer: 3),
+    Answer(questionPart: 2, area: "หลังส่วนบน", questionId: 2, answer: 2),
+    Answer(questionPart: 2, area: "หลังส่วนบน", questionId: 3, answer: 1),
+    Answer(questionPart: 2, area: "หลังส่วนล่าง", questionId: 2, answer: 2),
+    Answer(questionPart: 2, area: "หลังส่วนล่าง", questionId: 3, answer: 1),
     //part 3
-    Answer(questionPart: 3, title: "คอ", questionId: 2, answer: 1),
-    Answer(questionPart: 3, title: "คอ", questionId: 3, answer: 1),
-    Answer(questionPart: 3, title: "คอ", questionId: 4, answer: 2),
-    Answer(questionPart: 3, title: "บ่า", questionId: 2, answer: 1),
-    Answer(questionPart: 3, title: "บ่า", questionId: 3, answer: 1),
-    Answer(questionPart: 3, title: "บ่า", questionId: 4, answer: 2),
-    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 2, answer: 1),
-    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 3, answer: 1),
-    Answer(questionPart: 3, title: "หลังส่วนล่าง", questionId: 4, answer: 2),
+    Answer(questionPart: 3, area: "คอ", questionId: 2, answer: 1),
+    Answer(questionPart: 3, area: "คอ", questionId: 3, answer: 1),
+    Answer(questionPart: 3, area: "คอ", questionId: 4, answer: 2),
+    Answer(questionPart: 3, area: "บ่า", questionId: 2, answer: 1),
+    Answer(questionPart: 3, area: "บ่า", questionId: 3, answer: 1),
+    Answer(questionPart: 3, area: "บ่า", questionId: 4, answer: 2),
+    Answer(questionPart: 3, area: "หลังส่วนล่าง", questionId: 2, answer: 1),
+    Answer(questionPart: 3, area: "หลังส่วนล่าง", questionId: 3, answer: 1),
+    Answer(questionPart: 3, area: "หลังส่วนล่าง", questionId: 4, answer: 2),
   };
 
   static bool showGoToDoctorPage(
       int questionPart, String? title, int questionID, int answer) {
     return shouldSeeDoctor.contains(Answer(
         questionPart: questionPart,
-        title: title,
+        area: title,
         questionId: questionID,
         answer: answer));
   }
@@ -184,7 +184,7 @@ class ScreeningDiagnoseService {
         .map((element) => toThai[element])
         .toList(); // ['คอ', 'บ่า', 'ไหล่'];
     final shouldSeeDoctorAnswers = ShowGoToDoctorPageService.shouldSeeDoctor
-        .where((element) => focusParts.contains(element.title))
+        .where((element) => focusParts.contains(element.area))
         .toList(); // [Answer] ที่ title อยู่ใน focusParts
 
     for (var answer in answers) {
@@ -302,7 +302,7 @@ class ScreeningDiagnoseService {
             WOL_title: WorkoutlistTitle.neckbaa_ch.name,
             remaining_times: 3,
             total_times: 3,
-            WOL_id: null,
+            id: null,
             NRS_before: null,
             NRS_after: null))
         .toList();
@@ -317,7 +317,7 @@ class ScreeningDiagnoseService {
                     WOL_title: WorkoutlistTitle.neckbaa_th.name,
                     remaining_times: 1,
                     total_times: 1,
-                    WOL_id: null,
+                    id: null,
                     NRS_before: null,
                     NRS_after: null)
               ]
@@ -333,7 +333,7 @@ class ScreeningDiagnoseService {
               WOL_title: WorkoutlistTitle.shoulder_ch.name,
               remaining_times: 3,
               total_times: 3,
-              WOL_id: null,
+              id: null,
               NRS_before: null,
               NRS_after: null),
         )
@@ -349,7 +349,7 @@ class ScreeningDiagnoseService {
                     WOL_title: WorkoutlistTitle.shoulder_th.name,
                     remaining_times: 1,
                     total_times: 1,
-                    WOL_id: null,
+                    id: null,
                     NRS_before: null,
                     NRS_after: null)
               ]
@@ -365,7 +365,7 @@ class ScreeningDiagnoseService {
               WOL_title: WorkoutlistTitle.back_ch.name,
               remaining_times: 6,
               total_times: 6,
-              WOL_id: null,
+              id: null,
               NRS_before: null,
               NRS_after: null),
         )
@@ -381,7 +381,7 @@ class ScreeningDiagnoseService {
                     WOL_title: WorkoutlistTitle.back_th.name,
                     remaining_times: 1,
                     total_times: 1,
-                    WOL_id: null,
+                    id: null,
                     NRS_before: null,
                     NRS_after: null)
               ]

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:unwind_app/database/screeningtest_db.dart';
+import 'package:unwind_app/database/screeningtestanswer_db.dart';
 
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/models/screeningtest_model.dart';
+import 'package:unwind_app/models/screeningtestanswer_model.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
 import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
@@ -30,14 +32,18 @@ void main() async {
         GeneralStoredService.isFirstTime, 0, 0, true);
   }
   print("isFirstTime: $isFirstTime");
+  ScreeningTestAnswerModel answer = ScreeningTestAnswerModel(
+    questionPart: 1,
+    area: "A",
+    questionId: 1,
+    answer: 1,
+  );
+
+  final db = serviceLocator<ScreeningTestAnswerDB>();
+  final result = await db.insertScreeningTestAnswer(answer);
+  print('result : $result');
 
   runApp(MyApp(isFirstTime: isFirstTime ?? true));
-  final ScreeningTestModel screeningTestModel = ScreeningTestModel(
-    created_at: DateTime.now(),
-  );
-  final screeningTestDB = serviceLocator<ScreeningTestDB>();
-  final success = await screeningTestDB.insertScreeningTest(screeningTestModel);
-  print('screeningTestModel: $success');
   // dispose();
 }
 

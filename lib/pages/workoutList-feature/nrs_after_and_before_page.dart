@@ -217,33 +217,33 @@ class _NrsAfterAndBeforePageState extends State<NrsAfterAndBeforePage> {
       double nrs, DateTime now, WorkoutListData workoutList) async {
     final wol = await workoutListDB.getWorkoutListByDateAndTitle(
         now, workoutList.titleCode);
-    if (wol.isEmpty || wol.first.WOL_id == null) {
+    if (wol.isEmpty || wol.first.id == null) {
       // Failed to get workout list on that day
       return 0;
     }
-    return await workoutListDB.updateNRSbefore(nrs.toInt(), wol.first.WOL_id!);
+    return await workoutListDB.updateNRSbefore(nrs.toInt(), wol.first.id!);
   }
 
   Future<int> saveNrsAfter(
       double nrs, DateTime now, WorkoutListData workoutList) async {
     final wol = await workoutListDB.getWorkoutListByDateAndTitle(
         now, workoutList.titleCode);
-    if (wol.isEmpty || wol.first.WOL_id == null) {
+    if (wol.isEmpty || wol.first.id == null) {
       // Failed to get workout list on that day
       return 0;
     }
     await updateRemainingTime(now, widget.workoutList);
-    return await workoutListDB.updateNRSafter(nrs.toInt(), wol.first.WOL_id!);
+    return await workoutListDB.updateNRSafter(nrs.toInt(), wol.first.id!);
   }
 
   updateRemainingTime(DateTime date, WorkoutListData workoutList) async {
     final wol = await workoutListDB.getWorkoutListByDateAndTitle(
         date, workoutList.titleCode);
-    if (wol.isEmpty || wol.first.WOL_id == null) {
+    if (wol.isEmpty || wol.first.id == null) {
       return 0;
     }
     return workoutListDB.updateRemainingTimes(
-        (wol.first.remaining_times ?? 0) - 1, wol.first.WOL_id!);
+        (wol.first.remaining_times ?? 0) - 1, wol.first.id!);
   }
 
   Future<void> _navigateToResultNrsFourWeekPage(BuildContext context) async {

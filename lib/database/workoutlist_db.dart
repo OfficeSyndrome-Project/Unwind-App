@@ -53,7 +53,7 @@ class WorkoutListDB {
     Database db = await database.database;
     final List<Map<String, dynamic>> maps =
         await db.query('WorkoutList', where: "deleted_at IS NULL");
-    return maps.map((e) => WorkoutListModel.fromJson(e)).toList();
+    return maps.map((e) => WorkoutListModel.fromMap(e)).toList();
   }
 
   //query workoutlist by specific date
@@ -66,7 +66,7 @@ class WorkoutListDB {
       where: "date >= ? AND date < ? AND deleted_at IS NULL",
       whereArgs: [from.toIso8601String(), to.toIso8601String()],
     );
-    return maps.map((e) => WorkoutListModel.fromJson(e)).toList();
+    return maps.map((e) => WorkoutListModel.fromMap(e)).toList();
   }
 
   //query workoutlist by date and title
@@ -83,7 +83,7 @@ class WorkoutListDB {
         where: "WOL_title = ? AND deleted_at IS NULL",
         whereArgs: [title],
         orderBy: 'date ASC');
-    return maps.map((e) => WorkoutListModel.fromJson(e)).toList();
+    return maps.map((e) => WorkoutListModel.fromMap(e)).toList();
   }
 
   //function check if there is workoutlist titles and remaining times > 0
@@ -95,35 +95,35 @@ class WorkoutListDB {
   }
 
   //update NRS before
-  Future<int> updateNRSbefore(int NRS, int WOL_id) async {
+  Future<int> updateNRSbefore(int NRS, int id) async {
     Database db = await database.database;
     return await db.update(
       'WorkoutList',
       {'NRS_before': NRS},
-      where: 'WOL_id = ? AND deleted_at IS NULL',
-      whereArgs: [WOL_id],
+      where: 'id = ? AND deleted_at IS NULL',
+      whereArgs: [id],
     );
   }
 
   //update NRS after
-  Future<int> updateNRSafter(int NRS, int WOL_id) async {
+  Future<int> updateNRSafter(int NRS, int id) async {
     Database db = await database.database;
     return await db.update(
       'WorkoutList',
       {'NRS_after': NRS},
-      where: 'WOL_id = ? AND deleted_at IS NULL',
-      whereArgs: [WOL_id],
+      where: 'id = ? AND deleted_at IS NULL',
+      whereArgs: [id],
     );
   }
 
   //delete workoutlist
-  Future<void> deleteWorkoutList(int WOL_id) async {
+  Future<void> deleteWorkoutList(int id) async {
     Database db = await database.database;
     await db.update(
       'WorkoutList',
       {'deleted_at': DateTime.now().toIso8601String()},
-      where: 'WOL_id = ?',
-      whereArgs: [WOL_id],
+      where: 'id = ?',
+      whereArgs: [id],
     );
   }
 
@@ -161,7 +161,7 @@ class WorkoutListDB {
   }
 
   //update remaining times
-  Future<int> updateRemainingTimes(int remainingTimes, int WOL_id) async {
+  Future<int> updateRemainingTimes(int remainingTimes, int id) async {
     if (remainingTimes < 0) {
       return 0;
     }
@@ -169,8 +169,8 @@ class WorkoutListDB {
     return await db.update(
       'WorkoutList',
       {'remaining_times': remainingTimes},
-      where: 'WOL_id = ? AND deleted_at IS NULL',
-      whereArgs: [WOL_id],
+      where: 'id = ? AND deleted_at IS NULL',
+      whereArgs: [id],
     );
   }
 
