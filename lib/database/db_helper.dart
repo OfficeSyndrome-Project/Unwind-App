@@ -26,12 +26,14 @@ class DatabaseHelper {
     if (withLog == "yes") {
       dbFactory = factoryWithLogs;
     }
-    print(
-        'database path: ${join(await getDatabasesPath(), 'unwind_database.db')}');
 
     final database = dbFactory.openDatabase(
       join(await getDatabasesPath(), 'unwind_database.db'),
       options: OpenDatabaseOptions(
+        onOpen: (db) async {
+          print(
+              'database path: ${join(await getDatabasesPath(), 'unwind_database.db')}');
+        },
         onConfigure: (db) async {
           await db.execute('PRAGMA foreign_keys = ON');
         },

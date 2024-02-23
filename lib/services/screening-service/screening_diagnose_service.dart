@@ -1,6 +1,11 @@
 import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/screening_test_answer_workout_list_db.dart';
+import 'package:unwind_app/database/screeningtestanswer_db.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/models/screening_test_answer_workout_list_model.dart';
+import 'package:unwind_app/models/screening_test_answer_workout_list_service.dart';
+import 'package:unwind_app/models/screeningtestanswer_model.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 
 class Answer {
@@ -201,6 +206,7 @@ class ScreeningDiagnoseService {
     Map<ScreeningTitle, int> nrsFiltered = {
       for (var entry in nrs.entries) entry.key: entry.value!
     };
+
     if (isNeckSetToDoctor(answers, nrsFiltered)) {
       nrsFiltered.remove(ScreeningTitle.neck);
       nrsFiltered.remove(ScreeningTitle.baa);
@@ -216,10 +222,43 @@ class ScreeningDiagnoseService {
         .toSet()
         .toList();
 
-    // final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
-    // Insert workout list to database, if there is workoutlist then skip
-    // final workout_days = GenerateWorkoutListByTitle(workouts);
-    await createWorkouts(workouts);
+    // Convert answer to ScreeningTestAnswerModel
+    final screeningTestAnswerModels = answers
+        .map((answer) => ScreeningTestAnswerModel.fromAnswer(answer))
+        .toList();
+
+    // Insert ScreeningTestAnswerModel to database
+    final screeningTestAnswerDB = serviceLocator<ScreeningTestAnswerDB>();
+    final insertedScreeningTestAnswerModels =
+        await screeningTestAnswerDB.insertAll(screeningTestAnswerModels);
+
+    // Insert and get workout list, we need to insert the joint table for ScreeningTestAnswer and WorkoutList
+    final acquiredWorkoutList = await createWorkouts(workouts);
+
+    // Insert the joint table for ScreeningTestAnswer and WorkoutList
+    final screeningTestAnswerWorkoutListService =
+        serviceLocator<ScreeningTestAnswerWorkoutListService>();
+
+    await screeningTestAnswerWorkoutListService.insertAll(
+      acquiredWorkoutList
+          .map((workout) => insertedScreeningTestAnswerModels
+              .whereType<ScreeningTestAnswerModel>()
+              .map((answer) => (answer.id == null || workout.id == null)
+                  ? null
+                  : ScreeningTestAnswerWorkoutListModel(
+                      screeningTestAnswerId: answer.id!,
+                      workoutListId: workout.id!,
+                    ))
+              .toList())
+          .expand((element) => element)
+          .whereType<ScreeningTestAnswerWorkoutListModel>()
+          .toList(),
+    );
+    return workouts
+        .map(
+            (workout) => WorkoutListData.workoutListFromTitleCode[workout.name])
+        .whereType<WorkoutListData>()
+        .toList();
 
     // WorkoutListDB wl_db = serviceLocator<WorkoutListDB>();
     // for (var workoutlist_title in workout_days.entries) {
@@ -234,10 +273,10 @@ class ScreeningDiagnoseService {
     //   }
     // }
     // Get workout list data
-    List<WorkoutListData> acquiredWorkoutList = workouts
-        .map((title) => WorkoutListData.workoutListFromTitle[title]!)
-        .toList();
-    return acquiredWorkoutList;
+    // List<WorkoutListData> acquiredWorkoutList = workouts
+    //     .map((title) => WorkoutListData.workoutListFromTitle[title]!)
+    //     .toList();
+    // return acquiredWorkoutList;
   }
 
   static workoutListsFromScreeningTitle(ScreeningTitle screeningTitle) {
@@ -451,29 +490,28 @@ class ScreeningDiagnoseService {
     // }
   }
 
-  static Future<void> createWorkouts(List<WorkoutlistTitle> workouts) async {
-    final workout_days = GenerateWorkoutListByTitle(workouts);
-
+  static Future<List<WorkoutListModel>> createWorkouts(
+      List<WorkoutlistTitle> workouts) async {
     WorkoutListDB wl_db = serviceLocator<WorkoutListDB>();
-    for (var entry in workout_days.entries) {
-      final there_is_workoutlist =
-          await wl_db.checkIfThereIsWorkoutListTitles(entry.key.name);
-      // if there is workoutlist then skip
-      if (there_is_workoutlist) {
-        continue;
-      }
-      /**
-       * Change this, insert all workoutlist at once
-       * with batch insert, and create the joint table
-       * for WorkoutList and ScreeningTestAnswer
-       */
-      final workoutModels = entry.value;
-      await Future.wait(
-          workoutModels.map((workout) => wl_db.insertWorkoutList(workout)));
-      // for (var workout in entry.value) {
-      //   wl_db.insertWorkoutList(workout);
-      // }
-    }
+    final workout_days = GenerateWorkoutListByTitle(workouts);
+    final workoutTitles = workout_days.entries
+        .map<WorkoutlistTitle>((entry) => entry.key)
+        .toSet();
+    final existsWorkoutTitles = await Future.wait(workoutTitles.map((title) =>
+            wl_db
+                .checkIfThereIsWorkoutListTitles(title.name)
+                .then((value) => value ? title : null)))
+        .then((value) => value.toList());
+    workoutTitles.removeAll(existsWorkoutTitles);
+    final futureInsertedWorkouts = workoutTitles
+        .map((title) => workout_days.entries
+            .where((entry) => entry.key == title)
+            .expand((entry) => entry.value))
+        .map((workoutModels) =>
+            workoutModels.map((workout) => wl_db.insertWorkoutList(workout)))
+        .expand((element) => element);
+    final insertWorkoutLists = await Future.wait(futureInsertedWorkouts);
+    return insertWorkoutLists;
   }
 
   static List<WorkoutlistTitle> workoutFromScreeningTitle(ScreeningTitle key) {
