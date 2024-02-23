@@ -28,7 +28,15 @@ class ScreeningTestAnswerModel {
       );
 
   factory ScreeningTestAnswerModel.fromMap(Map<String, dynamic> data) =>
-      ScreeningTestAnswerModel();
+      ScreeningTestAnswerModel(
+        id: data['id'],
+        questionPart: data['questionPart'],
+        area: data['area'],
+        questionId: data['questionId'],
+        answer: data['answer'],
+        created_at: DateTime.tryParse(data['created_at'] ?? ''),
+        deleted_at: DateTime.tryParse(data['deleted_at'] ?? ''),
+      );
   Map<String, dynamic> toMap() => {
         'id': id,
         'questionPart': questionPart,

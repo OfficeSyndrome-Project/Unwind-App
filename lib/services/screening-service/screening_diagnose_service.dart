@@ -218,19 +218,21 @@ class ScreeningDiagnoseService {
 
     // final uniqueWorkoutListTitles = workoutListTitles.toSet().toList();
     // Insert workout list to database, if there is workoutlist then skip
-    final workout_days = GenerateWorkoutListByTitle(workouts);
-    WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
-    for (var workoutlist_title in workout_days.entries) {
-      final there_is_workoutlist = await wl_db
-          .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
-      // if there is workoutlist then skip
-      if (there_is_workoutlist) {
-        continue;
-      }
-      for (var workout in workoutlist_title.value) {
-        wl_db.insertWorkoutList(workout);
-      }
-    }
+    // final workout_days = GenerateWorkoutListByTitle(workouts);
+    await createWorkouts(workouts);
+
+    // WorkoutListDB wl_db = serviceLocator<WorkoutListDB>();
+    // for (var workoutlist_title in workout_days.entries) {
+    //   final there_is_workoutlist = await wl_db
+    //       .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
+    //   // if there is workoutlist then skip
+    //   if (there_is_workoutlist) {
+    //     continue;
+    //   }
+    //   for (var workout in workoutlist_title.value) {
+    //     wl_db.insertWorkoutList(workout);
+    //   }
+    // }
     // Get workout list data
     List<WorkoutListData> acquiredWorkoutList = workouts
         .map((title) => WorkoutListData.workoutListFromTitle[title]!)
@@ -451,17 +453,26 @@ class ScreeningDiagnoseService {
 
   static Future<void> createWorkouts(List<WorkoutlistTitle> workouts) async {
     final workout_days = GenerateWorkoutListByTitle(workouts);
-    WorkoutListDB wl_db = WorkoutListDB(serviceLocator());
-    for (var workoutlist_title in workout_days.entries) {
-      final there_is_workoutlist = await wl_db
-          .checkIfThereIsWorkoutListTitles(workoutlist_title.key.name);
+
+    WorkoutListDB wl_db = serviceLocator<WorkoutListDB>();
+    for (var entry in workout_days.entries) {
+      final there_is_workoutlist =
+          await wl_db.checkIfThereIsWorkoutListTitles(entry.key.name);
       // if there is workoutlist then skip
       if (there_is_workoutlist) {
         continue;
       }
-      for (var workout in workoutlist_title.value) {
-        wl_db.insertWorkoutList(workout);
-      }
+      /**
+       * Change this, insert all workoutlist at once
+       * with batch insert, and create the joint table
+       * for WorkoutList and ScreeningTestAnswer
+       */
+      final workoutModels = entry.value;
+      await Future.wait(
+          workoutModels.map((workout) => wl_db.insertWorkoutList(workout)));
+      // for (var workout in entry.value) {
+      //   wl_db.insertWorkoutList(workout);
+      // }
     }
   }
 

@@ -42,7 +42,7 @@ class DatabaseHelper {
             questionPart INTEGER,
             area TEXT,
             questionId INTEGER,
-            answer TEXT,
+            answer INTEGER,
             created_at DATETIME,
             deleted_at DATETIME
           );
