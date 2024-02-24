@@ -108,7 +108,7 @@ class ResultsWorkoutPage extends StatelessWidget {
               onTap: () async {
                 await GeneralStoredService.writeBoolean(
                     GeneralStoredService.isFirstTime, 0, 0, false);
-                Navigator.push(
+                Navigator.pushReplacement(
                     context, pageRoutes.home.workoutlist().route(context));
               },
               text: "ดำเนินการต่อ",
