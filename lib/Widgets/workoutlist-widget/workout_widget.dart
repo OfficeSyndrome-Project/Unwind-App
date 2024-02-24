@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_sequence_animator/image_sequence_animator.dart';
 import 'package:unwind_app/Widgets/animate_sequence_widget.dart';
+import 'package:unwind_app/Widgets/animated_sequence_engine.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/services/tts_manager_service.dart';
@@ -11,7 +12,9 @@ class WorkoutWidget extends StatelessWidget {
   final WorkoutData workoutData;
   final int timeth; // timeth is the current time of WorkoutData.time
   final void Function(ImageSequenceAnimatorState)? onReadyToPlay;
-  const WorkoutWidget({
+  final AnimatedSequenceController animationController =
+      AnimatedSequenceController();
+  WorkoutWidget({
     super.key,
     required this.name,
     required this.timeth,
@@ -19,7 +22,6 @@ class WorkoutWidget extends StatelessWidget {
     required this.ttsManager,
     this.onReadyToPlay,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,6 +47,13 @@ class WorkoutWidget extends StatelessWidget {
             repeat: workoutData.time,
             ttsManager: ttsManager,
           ),
+          // AnimatedSequenceEngine(
+          //   times: workoutData.time,
+          //   durationPerTimeInSeconds: workoutData.sec,
+          //   animationPaths: workoutData.animationPaths ?? [],
+          //   animationController: animationController,
+          //   repetition: workoutData.time,
+          // ),
           Text('$timeth/${workoutData.time}',
               style: TextStyle(
                 fontFamily: "Noto Sans Thai",

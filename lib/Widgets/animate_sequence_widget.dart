@@ -70,15 +70,15 @@ class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
         startTimer();
       });
     } else {
-      // timer = Timer(Duration(milliseconds: duration), () {
-      //   onNext();
-      //   startTimer();
-      // });
       print("All timers completed!");
     }
   }
 
   void startSetTimer() {
+    print('--- startSetTimer called');
+    setState(() {
+      currentIndex = 0;
+    });
     if (currentRepeat < widget.repeat) {
       setTimer = Timer(Duration(seconds: widget.eachSetDuration), () {
         print("New set Begined!");
