@@ -295,7 +295,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
   Future<void> speakWhileExercising(int durationSecond) async {
     ttsManager.pause();
     ttsManager.stop();
-    // ttsManager.speak('${durationSecond}');
+    ttsManager.speak('${durationSecond}');
     Timer.periodic(Duration(seconds: 1), (timer) {
       this.ttsTimer = timer;
       print('timer: ${timer.tick}');
