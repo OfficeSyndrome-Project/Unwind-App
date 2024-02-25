@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Widgets/profile-widget/profile_textform_widget.dart';
 import 'package:unwind_app/Widgets/profile-widget/show_infomation.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
 import 'package:unwind_app/Widgets/text_withstart_icon.dart';
@@ -7,6 +8,7 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/models/user.dart';
 import 'package:unwind_app/pages/loading_page.dart';
+import 'package:unwind_app/services/debug-commands-service/command_parser.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -20,11 +22,39 @@ class ProfilePageState extends State<ProfilePage> {
   PageRoutes pageRoutes = PageRoutes();
   User user = User();
   bool loading = true;
+  final FocusNode commandTextFieldFocusNode = FocusNode();
+  final TextEditingController commandTextFieldController =
+      TextEditingController();
+  bool showDebugCommandInput = false;
 
   @override
   void initState() {
     super.initState();
     initUser();
+    commandTextFieldFocusNode.addListener(() async {
+      if (!commandTextFieldFocusNode.hasFocus) {
+        commandTextFieldFocusNode.unfocus();
+        final executionResult =
+            await executeTextCommand(commandTextFieldController.text);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('Command Result',
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: Theme.of(context).colorScheme.primary)),
+                  content: Text(executionResult.message ?? ''),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                ));
+      }
+    });
   }
 
   void initUser() async {
@@ -57,10 +87,18 @@ class ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const CircleAvatar(
-                      backgroundImage:
-                          AssetImage('lib/assets/images/blank_profile.png'),
-                      radius: 60,
+                    GestureDetector(
+                      onLongPressStart: (longPressDetails) {
+                        setState(() {
+                          // Toggle the visibility of the debug command input
+                          showDebugCommandInput = !showDebugCommandInput;
+                        });
+                      },
+                      child: const CircleAvatar(
+                        backgroundImage:
+                            AssetImage('lib/assets/images/blank_profile.png'),
+                        radius: 60,
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(16),
@@ -160,6 +198,16 @@ class ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.w600,
                           color: const Color(0xFF3B67CD),
                         )),
+                  ),
+                ),
+                Visibility(
+                  visible: showDebugCommandInput,
+                  child: ProfileTextForm(
+                    formName: 'command',
+                    inputType: TextInputType.text,
+                    controller: commandTextFieldController,
+                    focusNode: commandTextFieldFocusNode,
+                    onChange: (value) {},
                   ),
                 ),
               ],

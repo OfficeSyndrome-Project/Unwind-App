@@ -310,27 +310,31 @@ class ScreeningDiagnoseService {
 
   //function give workoutlist per day
   static Map<WorkoutlistTitle, List<WorkoutListModel>>
-      GenerateWorkoutListByTitle(List<WorkoutlistTitle> workoutList) {
+      GenerateWorkoutListByTitle(
+          List<WorkoutlistTitle> workoutList, DateTime startingFrom) {
     Map<WorkoutlistTitle, List<WorkoutListModel>> result = {};
-    final DateTime now = DateTime.now();
 
     if (workoutList.contains(WorkoutlistTitle.neckbaa_ch)) {
-      result[WorkoutlistTitle.neckbaa_ch] = GiveNeckBaaChWorkoutlist(now);
+      result[WorkoutlistTitle.neckbaa_ch] =
+          GiveNeckBaaChWorkoutlist(startingFrom);
     }
     if (workoutList.contains(WorkoutlistTitle.neckbaa_th)) {
-      result[WorkoutlistTitle.neckbaa_th] = GiveNeckBaaThWorkoutlist(now);
+      result[WorkoutlistTitle.neckbaa_th] =
+          GiveNeckBaaThWorkoutlist(startingFrom);
     }
     if (workoutList.contains(WorkoutlistTitle.shoulder_ch)) {
-      result[WorkoutlistTitle.shoulder_ch] = GiveShoulderChWorkoutlist(now);
+      result[WorkoutlistTitle.shoulder_ch] =
+          GiveShoulderChWorkoutlist(startingFrom);
     }
     if (workoutList.contains(WorkoutlistTitle.shoulder_th)) {
-      result[WorkoutlistTitle.shoulder_th] = GiveShoulderThWorkoutlist(now);
+      result[WorkoutlistTitle.shoulder_th] =
+          GiveShoulderThWorkoutlist(startingFrom);
     }
     if (workoutList.contains(WorkoutlistTitle.back_ch)) {
-      result[WorkoutlistTitle.back_ch] = GiveBackChWorkoutlist(now);
+      result[WorkoutlistTitle.back_ch] = GiveBackChWorkoutlist(startingFrom);
     }
     if (workoutList.contains(WorkoutlistTitle.back_th)) {
-      result[WorkoutlistTitle.back_th] = GiveBackThWorkoutlist(now);
+      result[WorkoutlistTitle.back_th] = GiveBackThWorkoutlist(startingFrom);
     }
     return result;
   }
@@ -490,9 +494,13 @@ class ScreeningDiagnoseService {
   }
 
   static Future<List<WorkoutListModel>> createWorkouts(
-      List<WorkoutlistTitle> workouts) async {
+      List<WorkoutlistTitle> workouts,
+      {DateTime? startingFrom}) async {
+    if (startingFrom == null) {
+      startingFrom = DateTime.now();
+    }
     WorkoutListDB wl_db = serviceLocator<WorkoutListDB>();
-    final workout_days = GenerateWorkoutListByTitle(workouts);
+    final workout_days = GenerateWorkoutListByTitle(workouts, startingFrom);
     final workoutTitles = workout_days.entries
         .map<WorkoutlistTitle>((entry) => entry.key)
         .toSet();

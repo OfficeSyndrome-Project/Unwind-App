@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 // import 'package:flutter/services.dart';
 
 class ProfileTextForm extends StatefulWidget {
@@ -11,6 +10,8 @@ class ProfileTextForm extends StatefulWidget {
     this.formUnit,
     this.controller,
     this.onChange,
+    this.focusNode,
+    this.enabled = true,
     Key? key,
   }) : super(key: key);
 
@@ -19,6 +20,8 @@ class ProfileTextForm extends StatefulWidget {
   final String? formUnit;
   final TextEditingController? controller;
   final void Function(String)? onChange;
+  final FocusNode? focusNode;
+  final bool? enabled;
 
   @override
   ProfileTextFormState createState() => ProfileTextFormState();
@@ -27,14 +30,16 @@ class ProfileTextForm extends StatefulWidget {
 class ProfileTextFormState extends State<ProfileTextForm> {
   late final FocusNode _focusNode;
   late final TextEditingController _controller;
+  late bool _enabled;
   String errorTextShow = '';
 
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
+    _focusNode = widget.focusNode ?? FocusNode();
     _controller = widget.controller ?? TextEditingController();
     _focusNode.addListener(_onFocusChange);
+    _enabled = widget.enabled ?? true;
   }
 
   @override
@@ -67,15 +72,7 @@ class ProfileTextFormState extends State<ProfileTextForm> {
       // height: 50,
       width: double.infinity,
       child: TextFormField(
-        onChanged: (value) {
-          widget.onChange?.call(value);
-          // สร้าง #SuperHero
-          if (value == 'superhero') {
-            ScreeningDiagnoseService.createAllWorkoutList();
-            Navigator.pop(context);
-            return;
-          }
-        },
+        // enabled: _enabled,
         controller: _controller,
         focusNode: _focusNode,
         style: TextStyle(

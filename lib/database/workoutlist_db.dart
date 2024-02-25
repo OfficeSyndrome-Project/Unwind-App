@@ -120,6 +120,30 @@ class WorkoutListDB {
         .isNotEmpty;
   }
 
+  Future<int> update(WorkoutListModel workoutList) async {
+    Database db = await databaseHelper.database;
+    return await db.update(
+      TABLE,
+      workoutList.toMap(),
+      where: '$ID = ? AND $DELETED_AT IS NULL',
+      whereArgs: [workoutList.id],
+    );
+  }
+
+  Future<List<Object?>> updateAll(List<WorkoutListModel> workoutList) async {
+    Database db = await databaseHelper.database;
+    final batch = db.batch();
+    workoutList.forEach((workout) {
+      batch.update(
+        TABLE,
+        workout.toMap(),
+        where: '$ID = ? AND $DELETED_AT IS NULL',
+        whereArgs: [workout.id],
+      );
+    });
+    return await batch.commit(noResult: true);
+  }
+
   //update NRS before
   Future<int> updateNRSbefore(int NRS, int id) async {
     Database db = await databaseHelper.database;

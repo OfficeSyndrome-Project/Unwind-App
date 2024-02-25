@@ -59,7 +59,10 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
           if (workouts.isNotEmpty) {
             final lastWorkoutDate = workouts.first.date;
             if (lastWorkoutDate != null) {
-              final isWorkoutExpired = now.isAfter(lastWorkoutDate);
+              final isWorkoutExpired = now.isAfter(DateTime(
+                  lastWorkoutDate.year,
+                  lastWorkoutDate.month,
+                  lastWorkoutDate.day + 1));
               if (isWorkoutExpired) {
                 return FutureBuilder(
                     future: serviceLocator<WorkoutListDB>()
