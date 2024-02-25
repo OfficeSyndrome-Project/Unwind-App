@@ -164,7 +164,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                               widget.onChanged!(
                                 Answer(
                                   questionPart: 3,
-                                  title: widget.title,
+                                  area: widget.title,
                                   questionId: widget.questionId,
                                   answer: value,
                                 ),
@@ -201,7 +201,7 @@ class _QuestionAndRadioButtonState extends State<QuestionAndRadioButton> {
                                 widget.onChanged!(
                                   Answer(
                                     questionPart: 3,
-                                    title: widget.title,
+                                    area: widget.title,
                                     questionId: widget.questionId,
                                     answer: value,
                                   ),

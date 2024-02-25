@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:unwind_app/database/screeningtestanswer_db.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
 
 import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/models/screening_test_answer_workout_list_model.dart';
+import 'package:unwind_app/models/screening_test_answer_workout_list_service.dart';
+import 'package:unwind_app/models/screeningtestanswer_model.dart';
+import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
 
@@ -51,5 +57,70 @@ class MyApp extends StatelessWidget {
             ),
       theme: appTheme,
     );
+  }
+}
+
+class TrashCan {
+  Future<void> run() async {
+    final answers = [
+      ScreeningTestAnswerModel(
+        questionPart: 1,
+        area: "A",
+        questionId: 1,
+        answer: 1,
+      ),
+      ScreeningTestAnswerModel(
+        questionPart: 1,
+        area: "B",
+        questionId: 2,
+        answer: 2,
+      ),
+    ];
+
+    ScreeningTestAnswerWorkoutListService
+        screeningTestAnswerWorkoutListService =
+        serviceLocator<ScreeningTestAnswerWorkoutListService>();
+    WorkoutListDB workoutListDB = serviceLocator<WorkoutListDB>();
+    final answerDb = serviceLocator<ScreeningTestAnswerDB>();
+    final answerModels = await Future.wait(answers
+        .map((answer) => answerDb.insertScreeningTestAnswer(answer))
+        .toList());
+    final workouts = [
+      WorkoutListModel(
+        date: DateTime.now(),
+        WOL_title: "test",
+      ),
+      WorkoutListModel(
+        date: DateTime.now(),
+        WOL_title: "test",
+      ),
+    ];
+    final workoutListModels = await Future.wait(workouts
+        .map((workout) => workoutListDB.insertWorkoutList(workout))
+        .toList());
+    print(workoutListModels);
+
+    final screeningTestAnswerWorkoutListModels = answerModels
+        .where((answer) => answer?.id != null)
+        .whereType<ScreeningTestAnswerModel>()
+        .map((answer) => workoutListModels
+            .map((workout) => ScreeningTestAnswerWorkoutListModel(
+                  screeningTestAnswerId: answer.id,
+                  workoutListId: workout.id,
+                ))
+            .toList())
+        .expand((element) => element)
+        .toList();
+
+    final result = await screeningTestAnswerWorkoutListService
+        .insertAll(screeningTestAnswerWorkoutListModels);
+    print('result : $result');
+    print(result.length);
+
+    final gg = await screeningTestAnswerWorkoutListService
+        .getAllScreeningTestAnswerByWorkoutList(workoutListModels.first);
+    print('querying by workout id : ${workoutListModels.first.id}');
+    print(gg);
+    print(gg.length);
   }
 }

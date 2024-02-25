@@ -133,6 +133,7 @@ class AnswerContext {
 class Home {
   PathRoute workoutlist() => PathRoute(
       title: "ชุดท่าบริหาร",
+      name: PageName.HOME,
       widget: const HomePage(
         selectedIndex: 0,
       ));
@@ -248,6 +249,7 @@ class PreviewPdf {
 
 class PageName {
   static String REPORT_WORKOUT = "/report-workout";
+  static String HOME = "/home";
 }
 
 class PathRoute {
