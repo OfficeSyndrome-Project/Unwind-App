@@ -15,8 +15,8 @@ int Function() Function(int) randomInt(int from) =>
     (int to) => () => from + Random().nextInt(to);
 
 CommandFailure failureMessageMaker(String message, CommandModel commandModel) {
-  return CommandFailure(
-      message, commandModel.command + ' ' + commandModel.arguments.join(' '));
+  return CommandFailure('❗️${message}',
+      commandModel.command + ' ' + commandModel.arguments.join(' '));
 }
 
 String? successMessageMaker(CommandModel commandModel, String message) {

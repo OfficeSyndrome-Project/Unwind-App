@@ -7,9 +7,22 @@ import 'package:unwind_app/services/debug-commands-service/commands/give_command
 import 'package:unwind_app/services/debug-commands-service/utils.dart';
 
 List<String> COMMANDS = [
-  '/give',
-  '/do',
+  'give',
+  'do',
 ];
+
+Future<List<CommandMonad>> executeCommandSeries(String commandString) async {
+  final commandStringSeries = commandString.split(';');
+  List<CommandMonad> result = [];
+  for (var commandString in commandStringSeries) {
+    if (commandString.isEmpty) {
+      continue;
+    }
+    final commandResult = await executeTextCommand(commandString);
+    result.add(commandResult);
+  }
+  return result;
+}
 
 Future<CommandMonad> executeTextCommand(String commandString) async {
   final result = await parseCommandString(COMMANDS)(commandString)
@@ -23,10 +36,8 @@ Future<CommandMonad> executeTextCommand(String commandString) async {
 Either<Failure, CommandModel> Function(String?) parseCommandString(
         List<String> COMMANDS) =>
     (String? commandString) {
-      if (commandString == null ||
-          commandString.isEmpty ||
-          commandString[0] != '/') {
-        return Left(CommandFailure('command must start with /', commandString));
+      if (commandString == null || commandString.isEmpty) {
+        return Left(CommandFailure('command is empty', commandString));
       }
       final commandParts = commandString.split(' ');
       if (commandParts.isEmpty) {
@@ -51,10 +62,10 @@ Future<Either<Failure, CommandMonad>> dispatchCommand(
     CommandModel commandModel) async {
   final command = commandModel.command;
   switch (command) {
-    case '/give':
+    case 'give':
       final result = await giveCommand(commandModel);
       return result;
-    case '/do':
+    case 'do':
       return await doWorkoutCommand(commandModel);
     default:
       return Left(CommandFailure('command not found', commandModel.command));

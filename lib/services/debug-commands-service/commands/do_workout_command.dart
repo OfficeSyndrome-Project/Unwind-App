@@ -55,12 +55,18 @@ Future<Either<Failure, CommandMonad>> doWorkoutCommand(
           .isAfter(DateTime(startDate.year, startDate.month, startDate.day)))
       .where((element) => element.date!
           .isBefore(DateTime(endDate.year, endDate.month, endDate.day + 1)))
-      .map((workout) => workout.copyWith(
-            remaining_times: randomInt(0)(workout.total_times! - 1)(),
-            NRS_before: randomNrsScoreBefore(),
-            NRS_after: randomNrsScoreAfter(),
-          ))
-      .toList();
+      .map((workout) {
+    final maxRemainingTime = (workout.total_times == null)
+        ? 1
+        : (workout.total_times! - 1) < 1
+            ? 1
+            : (workout.total_times! - 1);
+    return workout.copyWith(
+      remaining_times: randomInt(0)(maxRemainingTime.abs())(),
+      NRS_before: randomNrsScoreBefore(),
+      NRS_after: randomNrsScoreAfter(),
+    );
+  }).toList();
 
   await workoutListDB.updateAll(workoutsToUpdate);
   return Right(CommandMonad(

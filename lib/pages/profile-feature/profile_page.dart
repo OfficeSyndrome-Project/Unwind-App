@@ -34,8 +34,9 @@ class ProfilePageState extends State<ProfilePage> {
     commandTextFieldFocusNode.addListener(() async {
       if (!commandTextFieldFocusNode.hasFocus) {
         commandTextFieldFocusNode.unfocus();
-        final executionResult =
-            await executeTextCommand(commandTextFieldController.text);
+        final executionResults =
+            await executeCommandSeries(commandTextFieldController.text);
+
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -43,7 +44,9 @@ class ProfilePageState extends State<ProfilePage> {
                       style: TextStyle(
                           fontSize: 24,
                           color: Theme.of(context).colorScheme.primary)),
-                  content: Text(executionResult.message ?? ''),
+                  content: Text(executionResults
+                      .map((result) => result.message ?? '')
+                      .join('\n')),
                   actions: [
                     TextButton(
                       onPressed: () {
