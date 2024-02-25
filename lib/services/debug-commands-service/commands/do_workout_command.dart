@@ -53,7 +53,7 @@ Future<Either<Failure, CommandMonad>> doWorkoutCommand(
       .where((element) => element.date!
           .isAfter(DateTime(startDate.year, startDate.month, startDate.day)))
       .where((element) => element.date!
-          .isBefore(DateTime(endDate.year, endDate.month, endDate.day)))
+          .isBefore(DateTime(endDate.year, endDate.month, endDate.day + 1)))
       .map((workout) => workout.copyWith(
             remaining_times: randomInt(0)((workout.total_times ?? 1) - 1)(),
             NRS_before: randomNrsScoreUnderEight(),
@@ -65,5 +65,5 @@ Future<Either<Failure, CommandMonad>> doWorkoutCommand(
   return Right(CommandMonad(
       command: Right(commandModel),
       message: successMessageMaker(commandModel,
-          'executed successfully: ${workoutsToUpdate.length} workouts updated for $area from $startDate to $endDate')));
+          'executed successfully: ${workoutsToUpdate.length} workouts updated for $area from ${DateTime(startDate.year, startDate.month, startDate.day)} to ${DateTime(endDate.year, endDate.month, endDate.day + 1)}')));
 }
