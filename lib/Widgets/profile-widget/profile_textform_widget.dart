@@ -30,7 +30,6 @@ class ProfileTextForm extends StatefulWidget {
 class ProfileTextFormState extends State<ProfileTextForm> {
   late final FocusNode _focusNode;
   late final TextEditingController _controller;
-  late bool _enabled;
   String errorTextShow = '';
 
   @override
@@ -39,7 +38,6 @@ class ProfileTextFormState extends State<ProfileTextForm> {
     _focusNode = widget.focusNode ?? FocusNode();
     _controller = widget.controller ?? TextEditingController();
     _focusNode.addListener(_onFocusChange);
-    _enabled = widget.enabled ?? true;
   }
 
   @override
