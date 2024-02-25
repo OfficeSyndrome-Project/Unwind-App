@@ -4,12 +4,10 @@ import 'package:unwind_app/Widgets/text_withstart_icon.dart';
 
 class HeaderBox extends StatelessWidget {
   final int screeningPart;
-  final String partName;
 
   const HeaderBox({
     super.key,
     required this.screeningPart,
-    required this.partName,
   });
 
   @override
@@ -21,7 +19,7 @@ class HeaderBox extends StatelessWidget {
           Icons.attach_file,
           color: Theme.of(context).colorScheme.primary,
         ),
-        topicName: 'ส่วนที่ ${screeningPart} ${partName}',
+        topicName: 'แบบประเมินส่วนที่ ${screeningPart}',
         style: TextStyle(
           fontSize: ResponsiveCheckWidget.isSmallMobile(context) ? 14 : 16,
           fontWeight: FontWeight.w600,

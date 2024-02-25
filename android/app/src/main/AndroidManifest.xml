@@ -13,7 +13,7 @@
      <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
      <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
     <application
-        android:label="Unwind"
+        android:label="UNWIND"
         android:name="${applicationName}"
         android:roundIcon="@mipmap/round_launcher"
         android:icon="@mipmap/ic_launcher"
