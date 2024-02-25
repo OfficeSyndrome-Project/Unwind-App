@@ -173,17 +173,17 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
         await workoutListDB
             .deleteWorkoutListByTitle(widget.workoutList.titleCode);
         await ScreeningDiagnoseService.createWorkouts([workoutList]);
-        Navigator.popUntil(context, (rp) => rp.settings.name == PageName.HOME);
+        Navigator.pushReplacement(context, Home().workoutlist().route(context));
       }
       if (answers[2] == 2) {
         // remove the workout, go the home page
         await workoutListDB
             .deleteWorkoutListByTitle(widget.workoutList.titleCode);
-        Navigator.popUntil(context, (rp) => rp.settings.name == PageName.HOME);
+        Navigator.pushReplacement(context, Home().workoutlist().route(context));
       }
     }
     if (index == 2) {
-      Navigator.popUntil(context, (rp) => rp.settings.name == PageName.HOME);
+      Navigator.pushReplacement(context, Home().workoutlist().route(context));
     }
   }
 }

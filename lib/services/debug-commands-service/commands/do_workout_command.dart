@@ -45,7 +45,8 @@ Future<Either<Failure, CommandMonad>> doWorkoutCommand(
         'workouts for "$area" are not given, try /give $area 0', commandModel));
   }
 
-  int Function() randomNrsScoreUnderEight = randomInt(0)(8);
+  int Function() randomNrsScoreBefore = randomInt(1)(5);
+  int Function() randomNrsScoreAfter = randomInt(1)(3);
   final workouts = await workoutListDB.getWorkoutListByTitle(areaCode.name);
   now.add(Duration(days: startDay));
   final workoutsToUpdate = workouts
@@ -55,9 +56,9 @@ Future<Either<Failure, CommandMonad>> doWorkoutCommand(
       .where((element) => element.date!
           .isBefore(DateTime(endDate.year, endDate.month, endDate.day + 1)))
       .map((workout) => workout.copyWith(
-            remaining_times: randomInt(0)((workout.total_times ?? 1) - 1)(),
-            NRS_before: randomNrsScoreUnderEight(),
-            NRS_after: randomNrsScoreUnderEight(),
+            remaining_times: randomInt(0)(workout.total_times! - 1)(),
+            NRS_before: randomNrsScoreBefore(),
+            NRS_after: randomNrsScoreAfter(),
           ))
       .toList();
 
