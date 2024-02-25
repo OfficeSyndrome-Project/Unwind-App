@@ -11,7 +11,6 @@ class ProfileTextForm extends StatefulWidget {
     this.controller,
     this.onChange,
     this.focusNode,
-    this.enabled = true,
     Key? key,
   }) : super(key: key);
 
@@ -21,7 +20,6 @@ class ProfileTextForm extends StatefulWidget {
   final TextEditingController? controller;
   final void Function(String)? onChange;
   final FocusNode? focusNode;
-  final bool? enabled;
 
   @override
   ProfileTextFormState createState() => ProfileTextFormState();
@@ -70,9 +68,9 @@ class ProfileTextFormState extends State<ProfileTextForm> {
       // height: 50,
       width: double.infinity,
       child: TextFormField(
-        // enabled: _enabled,
         controller: _controller,
         focusNode: _focusNode,
+        onChanged: widget.onChange,
         style: TextStyle(
           // color: Color(0xFF484D56),
           color: _focusNode.hasFocus ? Color(0xFF484D56) : Color(0xFF9BA4B5),
