@@ -123,10 +123,12 @@ class AnswerContext {
   final List<ScreeningPartTwoModel>? selectedPart;
   final List<Answer>? answers;
   final Map<ScreeningTitle, int>? nrs;
+  final List<PostureAnswer>? postureAnswers;
   const AnswerContext({
     this.selectedPart,
     this.answers,
     this.nrs,
+    this.postureAnswers,
   });
 }
 
@@ -177,11 +179,13 @@ class History {
       widget: ResultPerWeekPage(
         weeklySummary: weeklySummary,
       ));
-  PathRoute resultscreening(List<KeepScoreAndDateModel> dateMockup) =>
+  PathRoute resultscreening(List<KeepScoreAndDateModel> dateMockup,
+          WorkoutListData workoutListData) =>
       PathRoute(
           title: "ประวัติ",
           widget: ResultScreeningPage(
             dateMockup: dateMockup,
+            workoutListData: workoutListData,
           ));
 }
 

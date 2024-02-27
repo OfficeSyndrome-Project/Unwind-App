@@ -13,6 +13,7 @@ import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/globals/theme/theme_app.dart';
 
 import 'package:unwind_app/pages/screening-feature/get_started_screening_page.dart';
+import 'package:unwind_app/services/answer-service/answer_service.dart';
 
 import 'package:unwind_app/services/general_stored_service.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -35,6 +36,7 @@ void main() async {
         GeneralStoredService.isFirstTime, 0, 0, true);
   }
   print("isFirstTime: $isFirstTime");
+  await TrashCan.getAnswers();
 
   runApp(MyApp(isFirstTime: isFirstTime ?? true));
   // dispose();
@@ -61,6 +63,38 @@ class MyApp extends StatelessWidget {
 }
 
 class TrashCan {
+  static Future<void> getAnswers() async {
+    final availableWorkoutListTitle =
+        await serviceLocator<WorkoutListDB>().getAvailableWorkoutListTitles();
+    if (availableWorkoutListTitle.length > 0) {
+      await serviceLocator<ScreeningTestAnswerWorkoutListService>()
+          .getAllScreeningTestByAreaTitle(availableWorkoutListTitle.first);
+    }
+    final answerDb = serviceLocator<ScreeningTestAnswerDB>();
+    final answers = await answerDb.getAllScreeningTestAnswer();
+
+    answers.forEach((answer) {
+      final question = AnswerService.questionOf(answer);
+      // print(
+      //     '--- answer.questionId : ${answer.questionId} area : ${answer.area}');
+      // print(question.assetPath);
+      // print(question.areaAssetPath);
+      // print(question.question);
+      // print(AnswerService.interpret(answer).text);
+      print('--- question : ${question.question}');
+      if (question.questionPart == 2) {
+        print('--- posture : ${question.painTypeAssetPath}');
+      }
+      if (question.questionPart == 3) {
+        print('--- posture : ${question.painTypeAssetPath}');
+      }
+      // print('--- area : ${answer.area}');
+      // print('--- areaAssetPath : ${question.areaAssetPath}');
+      // print('--- assetPath : ${question.assetPath}');
+      print('--- answer : ${AnswerService.interpret(answer).text}');
+    });
+  }
+
   Future<void> run() async {
     final answers = [
       ScreeningTestAnswerModel(

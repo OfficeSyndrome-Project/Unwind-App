@@ -1,6 +1,8 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:unwind_app/database/screening_test_answer_workout_list_db.dart';
 import 'package:unwind_app/database/screeningtestanswer_db.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
+import 'package:unwind_app/globals/failure/failure.dart';
 import 'package:unwind_app/models/screening_test_answer_workout_list_model.dart';
 import 'package:unwind_app/models/screeningtestanswer_model.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
@@ -14,6 +16,24 @@ class ScreeningTestAnswerWorkoutListService {
     required this.screeningTestAnswerDB,
     required this.workoutListDB,
   });
+
+  Future<List<ScreeningTestAnswerWorkoutListModel>> insertAllAssociations(
+      List<ScreeningTestAnswerModel> answers,
+      List<WorkoutListModel> workouts) async {
+    final screeningTestAnswerWorkoutListModels = answers
+        .where((answer) => answer.id != null)
+        .map((answer) => workouts
+            .map((workout) => ScreeningTestAnswerWorkoutListModel(
+                  screeningTestAnswerId: answer.id,
+                  workoutListId: workout.id,
+                ))
+            .toList())
+        .expand((element) => element)
+        .toList();
+
+    final result = await insertAll(screeningTestAnswerWorkoutListModels);
+    return result;
+  }
 
   Future<List<ScreeningTestAnswerWorkoutListModel>> insertAll(
       List<ScreeningTestAnswerWorkoutListModel> models) async {
@@ -34,6 +54,22 @@ class ScreeningTestAnswerWorkoutListService {
     final result = await screeningTestAnswerWorkoutListDB
         .insert(screeningTestAnswerWorkoutListModel);
     return result;
+  }
+
+  Future<Either<Failure, List<ScreeningTestAnswerModel>>>
+      getAllScreeningTestByAreaTitle(String areaTitle) async {
+    try {
+      final workouts = await workoutListDB.getWorkoutListByTitle(areaTitle);
+      if (workouts.isEmpty) {
+        return Left(DatabaseFailure(message: "No workout list found"));
+      }
+
+      final result =
+          await getAllScreeningTestAnswerByWorkoutList(workouts.first);
+      return Right(result);
+    } catch (e) {
+      return Left(DatabaseFailure(message: "Error $e"));
+    }
   }
 
   Future<List<ScreeningTestAnswerModel>> getAllScreeningTestAnswerByWorkoutList(

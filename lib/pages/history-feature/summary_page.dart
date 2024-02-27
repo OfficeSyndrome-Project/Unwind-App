@@ -297,7 +297,8 @@ class SummaryPage extends StatelessWidget {
                         Navigator.push(
                             context,
                             pageRoutes.history
-                                .resultscreening(keepscores)
+                                .resultscreening(keepscores,
+                                    workoutList) // send area to the next page, then make the query inside that
                                 .route(context));
                       },
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

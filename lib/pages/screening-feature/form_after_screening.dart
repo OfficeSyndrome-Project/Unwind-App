@@ -33,6 +33,8 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   User createUser = User();
   List<Answer> get answers => widget.answerContext?.answers ?? [];
   Map<ScreeningTitle, int> get nrs => widget.answerContext?.nrs ?? {};
+  List<PostureAnswer> get postureAnswers =>
+      widget.answerContext?.postureAnswers ?? [];
 
   bool? isChecked = false;
   bool isOpen = false;
@@ -256,9 +258,11 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                   ProfileService.writeUser(createUser);
                 });
 
+                final diagnoseResult = await ScreeningDiagnoseService.diagnose(
+                    answers, nrs, postureAnswers);
                 // call diagnose service here
                 final List<WorkoutListData> workoutList =
-                    await ScreeningDiagnoseService.diagnose(answers, nrs);
+                    diagnoseResult.workoutList;
 
                 final toDoctor = ScreeningDiagnoseService.isNeckSetToDoctor(
                         answers, nrs) ||

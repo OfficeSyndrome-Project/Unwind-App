@@ -350,8 +350,10 @@ class _QuestionAfterWarningPartThreeState
                   Navigator.push(
                       context,
                       pageRoutes.screening
-                          .formafterscreening(
-                              AnswerContext(answers: answers, nrs: nrs))
+                          .formafterscreening(AnswerContext(
+                              answers: answers,
+                              nrs: nrs,
+                              postureAnswers: postureAnswers))
                           .route(context));
                 }
                 final isNrsExceedingOnUpperBackOrLowerBack =
@@ -407,8 +409,11 @@ class _QuestionAfterWarningPartThreeState
                     : Navigator.push(
                         context,
                         pageRoutes.screening
-                            .formafterscreening(
-                                AnswerContext(answers: answers, nrs: nrs))
+                            .formafterscreening(AnswerContext(
+                              answers: answers,
+                              nrs: nrs,
+                              postureAnswers: postureAnswers,
+                            ))
                             .route(context));
               },
               text: "ถัดไป",

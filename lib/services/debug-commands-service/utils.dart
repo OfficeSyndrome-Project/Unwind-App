@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:unwind_app/services/debug-commands-service/command_failure.dart';
 import 'package:unwind_app/services/debug-commands-service/command_model.dart';
 
@@ -11,7 +11,7 @@ extension EitherAsync<L, R> on Either<L, R> {
   }
 }
 
-int Function() Function(int) randomInt(int from) =>
+int Function() Function(int) randomIntRange(int from) =>
     (int to) => () => from + Random().nextInt(to);
 
 CommandFailure failureMessageMaker(String message, CommandModel commandModel) {

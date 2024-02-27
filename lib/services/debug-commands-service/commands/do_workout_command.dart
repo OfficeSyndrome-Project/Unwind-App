@@ -1,8 +1,8 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
+import 'package:unwind_app/globals/failure/failure.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
-import 'package:unwind_app/services/debug-commands-service/command_failure.dart';
 import 'package:unwind_app/services/debug-commands-service/command_model.dart';
 import 'package:unwind_app/services/debug-commands-service/command_monad.dart';
 import 'package:unwind_app/services/debug-commands-service/utils.dart';
@@ -45,8 +45,8 @@ Future<Either<Failure, CommandMonad>> doWorkoutCommand(
         'workouts for "$area" are not given, try /give $area 0', commandModel));
   }
 
-  int Function() randomNrsScoreBefore = randomInt(1)(5);
-  int Function() randomNrsScoreAfter = randomInt(1)(3);
+  int Function() randomNrsScoreBefore = randomIntRange(1)(5);
+  int Function() randomNrsScoreAfter = randomIntRange(1)(3);
   final workouts = await workoutListDB.getWorkoutListByTitle(areaCode.name);
   now.add(Duration(days: startDay));
   final workoutsToUpdate = workouts
@@ -62,7 +62,7 @@ Future<Either<Failure, CommandMonad>> doWorkoutCommand(
             ? 1
             : (workout.total_times! - 1);
     return workout.copyWith(
-      remaining_times: randomInt(0)(maxRemainingTime.abs())(),
+      remaining_times: randomIntRange(0)(maxRemainingTime.abs())(),
       NRS_before: randomNrsScoreBefore(),
       NRS_after: randomNrsScoreAfter(),
     );

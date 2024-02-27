@@ -19,13 +19,23 @@ class ScreeningTestAnswerModel {
     this.deleted_at,
   });
 
-  factory ScreeningTestAnswerModel.fromAnswer(Answer answer) =>
-      ScreeningTestAnswerModel(
-        questionPart: answer.questionPart,
-        area: answer.area,
-        questionId: answer.questionId,
-        answer: answer.answer,
-      );
+  factory ScreeningTestAnswerModel.fromAnswer(Answer answer) {
+    return ScreeningTestAnswerModel(
+      questionPart: answer.questionPart,
+      area: ScreeningDiagnoseService.fromThai[answer.area]?.name,
+      questionId: answer.questionId,
+      answer: answer.answer,
+    );
+  }
+
+  factory ScreeningTestAnswerModel.fromPostureAnswer(PostureAnswer answer) {
+    return ScreeningTestAnswerModel(
+      questionPart: 4,
+      area: ScreeningDiagnoseService.fromThai[answer.title]?.name,
+      questionId: answer.questionId,
+      answer: answer.answer,
+    );
+  }
 
   factory ScreeningTestAnswerModel.fromMap(Map<String, dynamic> data) =>
       ScreeningTestAnswerModel(
