@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/history-widget/box_have_img.dart';
 import 'package:unwind_app/Widgets/history-widget/box_only_q.dart';
@@ -113,7 +112,7 @@ class ResultScreeningPage extends StatelessWidget {
                         Navigator.push(
                             context,
                             pageRoutes.previewPdf
-                                .pdfpreviewpage()
+                                .pdfpreviewpage(workoutListData)
                                 .route(context));
                       },
                       child: Icon(

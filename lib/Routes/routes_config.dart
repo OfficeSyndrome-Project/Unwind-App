@@ -247,8 +247,9 @@ class Workout {
 }
 
 class PreviewPdf {
-  PathRoute pdfpreviewpage() =>
-      PathRoute(title: "ผลทดสอบ", widget: PdfPreviewPage());
+  PathRoute pdfpreviewpage(WorkoutListData workoutListData) => PathRoute(
+      title: "ผลทดสอบ",
+      widget: PdfPreviewPage(workoutListData: workoutListData));
 }
 
 class PageName {
