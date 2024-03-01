@@ -3,6 +3,14 @@ import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 
+Map<String, int> screeningAreaCustomOrder = {
+  'neck': 1,
+  'baa': 2,
+  'shoulder': 3,
+  'upperback': 4,
+  'lowerback': 5,
+};
+
 //screening part one
 class ScreeningQuestionPartOneService {
   static List<ScreeningPartOneModel> questions =

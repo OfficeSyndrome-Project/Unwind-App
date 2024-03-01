@@ -1,8 +1,9 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/screeningtestanswer_db.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
+import 'package:unwind_app/globals/failure/failure.dart';
 import 'package:unwind_app/injection_container.dart';
-import 'package:unwind_app/models/screening_test_answer_workout_list_model.dart';
 import 'package:unwind_app/models/screening_test_answer_workout_list_service.dart';
 import 'package:unwind_app/models/screeningtestanswer_model.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
@@ -142,6 +143,12 @@ class ShowGoToDoctorPageService {
 
 enum ScreeningTitle { neck, baa, shoulder, lowerback, upperback }
 
+class DiagnoseResult {
+  final List<WorkoutListData> workoutList;
+  final List<WorkoutListModel> workoutModels;
+  DiagnoseResult({required this.workoutList, required this.workoutModels});
+}
+
 class ScreeningDiagnoseService {
   static const nrsLimit = 8;
 
@@ -181,6 +188,14 @@ class ScreeningDiagnoseService {
     "หลังส่วนบน": ScreeningTitle.upperback,
   };
 
+  static Map<String, ScreeningTitle> fromEngToScreeningTitle = {
+    "shoulder": ScreeningTitle.shoulder,
+    "neck": ScreeningTitle.neck,
+    "baa": ScreeningTitle.baa,
+    "upperback": ScreeningTitle.upperback,
+    "lowerback": ScreeningTitle.lowerback,
+  };
+
 //function for test list of answer and nrs
   static bool shouldGoToDoctorByParts(
       List<Answer> answers, List<ScreeningTitle> titles) {
@@ -199,8 +214,12 @@ class ScreeningDiagnoseService {
     return false;
   }
 
-  static Future<List<WorkoutListData>> diagnose(
-      List<Answer> answers, Map<ScreeningTitle, int?> nrs) async {
+  static Future<DiagnoseResult> diagnose(List<Answer> answers,
+      Map<ScreeningTitle, int?> nrs, List<PostureAnswer> postureAnswer) async {
+    final originalNrs = Map<ScreeningTitle, int?>.from(nrs);
+    final originalNrsNotNull = Map<ScreeningTitle, int>.fromEntries(
+        originalNrs.entries.where((entry) => entry.value != null).map(
+            (entry) => MapEntry<ScreeningTitle, int>(entry.key, entry.value!)));
     nrs.removeWhere((key, value) => value == null);
     Map<ScreeningTitle, int> nrsFiltered = {
       for (var entry in nrs.entries) entry.key: entry.value!
@@ -222,43 +241,56 @@ class ScreeningDiagnoseService {
         .toList();
 
     // Convert answer to ScreeningTestAnswerModel
-    final screeningTestAnswerModels = answers
-        .map((answer) => ScreeningTestAnswerModel.fromAnswer(answer))
-        .toList();
+    // final screeningTestAnswerModels = answers
+    //     .map((answer) => ScreeningTestAnswerModel.fromAnswer(answer))
+    //     .toList();
 
     // Insert ScreeningTestAnswerModel to database
-    final screeningTestAnswerDB = serviceLocator<ScreeningTestAnswerDB>();
-    final insertedScreeningTestAnswerModels =
-        await screeningTestAnswerDB.insertAll(screeningTestAnswerModels);
+    // final screeningTestAnswerDB = serviceLocator<ScreeningTestAnswerDB>();
+    // final insertedScreeningTestAnswerModels =
+    //     await screeningTestAnswerDB.insertAll(screeningTestAnswerModels);
 
     // Insert and get workout list, we need to insert the joint table for ScreeningTestAnswer and WorkoutList
     final acquiredWorkoutList = await createWorkouts(workouts);
 
     // Insert the joint table for ScreeningTestAnswer and WorkoutList
-    final screeningTestAnswerWorkoutListService =
-        serviceLocator<ScreeningTestAnswerWorkoutListService>();
+    // final screeningTestAnswerWorkoutListService =
+    //     serviceLocator<ScreeningTestAnswerWorkoutListService>();
 
-    await screeningTestAnswerWorkoutListService.insertAll(
-      acquiredWorkoutList
-          .map((workout) => insertedScreeningTestAnswerModels
-              .whereType<ScreeningTestAnswerModel>()
-              .map((answer) => (answer.id == null || workout.id == null)
-                  ? null
-                  : ScreeningTestAnswerWorkoutListModel(
-                      screeningTestAnswerId: answer.id!,
-                      workoutListId: workout.id!,
-                    ))
-              .toList())
-          .expand((element) => element)
-          .whereType<ScreeningTestAnswerWorkoutListModel>()
-          .toList(),
+    // Convert postureAnswer to ScreeningTestAnswerModel,
+
+    // Store nrs score in answer table
+
+    final eitherAnswerStored = await storeAnswer(
+        answers, postureAnswer, acquiredWorkoutList, originalNrsNotNull);
+    eitherAnswerStored.fold(
+      (failure) => print(failure),
+      (stored) => print(stored),
     );
-    return workouts
+
+    // await screeningTestAnswerWorkoutListService.insertAll(
+    //   acquiredWorkoutList
+    //       .map((workout) => insertedScreeningTestAnswerModels
+    //           .whereType<ScreeningTestAnswerModel>()
+    //           .map((answer) => (answer.id == null || workout.id == null)
+    //               ? null
+    //               : ScreeningTestAnswerWorkoutListModel(
+    //                   screeningTestAnswerId: answer.id!,
+    //                   workoutListId: workout.id!,
+    //                 ))
+    //           .toList())
+    //       .expand((element) => element)
+    //       .whereType<ScreeningTestAnswerWorkoutListModel>()
+    //       .toList(),
+    // );
+    final workoutListDatas = workouts
         .map(
             (workout) => WorkoutListData.workoutListFromTitleCode[workout.name])
         .whereType<WorkoutListData>()
         .toList();
 
+    return DiagnoseResult(
+        workoutList: workoutListDatas, workoutModels: acquiredWorkoutList);
     // WorkoutListDB wl_db = serviceLocator<WorkoutListDB>();
     // for (var workoutlist_title in workout_days.entries) {
     //   final there_is_workoutlist = await wl_db
@@ -276,6 +308,43 @@ class ScreeningDiagnoseService {
     //     .map((title) => WorkoutListData.workoutListFromTitle[title]!)
     //     .toList();
     // return acquiredWorkoutList;
+  }
+
+  static Future<Either<Failure, int>> storeAnswer(
+    List<Answer> answers,
+    List<PostureAnswer> postureAnswer,
+    List<WorkoutListModel> workouts,
+    Map<ScreeningTitle, int> nrs,
+  ) async {
+    final screeningTestAnswerWorkoutListService =
+        serviceLocator<ScreeningTestAnswerWorkoutListService>();
+    final screeningTestAnswerDB = serviceLocator<ScreeningTestAnswerDB>();
+
+    // Convert answer to ScreeningTestAnswerModel, in order to store to database
+    final screeningTestAnswerModels = answers
+        .map((answer) => ScreeningTestAnswerModel.fromAnswer(answer))
+        .toList();
+    // Convert postureAnswer to ScreeningTestAnswerModel, with the questionPart = 4
+    final postureAnswerModels = postureAnswer
+        .map((answer) => ScreeningTestAnswerModel.fromPostureAnswer(answer))
+        .toList();
+
+    // Convert nrs score to ScreeningTestAnswerModel
+    final nrsScoreAnswerModels = nrs.entries
+        .map((entry) => ScreeningTestAnswerModel.fromNrs(entry))
+        .toList();
+
+    // Store answers to database
+    final insertedScreeningTestAnswerModels =
+        await screeningTestAnswerDB.insertAll(screeningTestAnswerModels +
+            postureAnswerModels +
+            nrsScoreAnswerModels);
+
+    // Insert the joint table for ScreeningTestAnswer and WorkoutList
+    final associations =
+        await screeningTestAnswerWorkoutListService.insertAllAssociations(
+            insertedScreeningTestAnswerModels.toList(), workouts);
+    return Right(associations.length);
   }
 
   static workoutListsFromScreeningTitle(ScreeningTitle screeningTitle) {

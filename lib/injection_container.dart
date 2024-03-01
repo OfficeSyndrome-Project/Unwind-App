@@ -20,10 +20,16 @@ Future<void> init() async {
           ));
 
   //service
+
+  // question service
+
+  // answer service
   serviceLocator.registerLazySingleton<ScreeningTestAnswerWorkoutListService>(
       () => ScreeningTestAnswerWorkoutListService(
             screeningTestAnswerWorkoutListDB: serviceLocator(),
             screeningTestAnswerDB: serviceLocator(),
             workoutListDB: serviceLocator(),
           ));
+  // serviceLocator.registerLazySingleton<AnswerService>(() => AnswerService(
+  //     ));
 }

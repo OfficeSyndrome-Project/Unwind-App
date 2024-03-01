@@ -1,6 +1,6 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
-import 'package:unwind_app/services/debug-commands-service/command_failure.dart';
+import 'package:unwind_app/globals/failure/failure.dart';
 import 'package:unwind_app/services/debug-commands-service/command_model.dart';
 import 'package:unwind_app/services/debug-commands-service/command_monad.dart';
 import 'package:unwind_app/services/debug-commands-service/utils.dart';

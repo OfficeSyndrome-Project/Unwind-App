@@ -1,6 +1,4 @@
-abstract class Failure {
-  String get message;
-}
+import 'package:unwind_app/globals/failure/failure.dart';
 
 class CommandFailure extends Failure {
   final String message;

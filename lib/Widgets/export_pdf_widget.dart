@@ -20,122 +20,222 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'dart:typed_data';
 import 'package:printing/printing.dart';
-import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
+import 'package:unwind_app/Widgets/pdf-widget/pdf_question_answer_with_image_widget.dart';
+import 'package:unwind_app/Widgets/pdf-widget/pdf_short_question_and_answer_widget.dart';
+import 'package:unwind_app/Widgets/pdf-widget/pdf_title_widget.dart';
+import 'package:unwind_app/Widgets/pdf-widget/pdf_topic_widget.dart';
+import 'package:unwind_app/data/screening-data/workout_data.dart';
+import 'package:unwind_app/database/workoutlist_db.dart';
+import 'package:unwind_app/injection_container.dart';
+import 'package:unwind_app/models/screening_test_answer_workout_list_service.dart';
+import 'package:unwind_app/models/screeningtestanswer_model.dart';
 
 import 'package:unwind_app/models/user.dart';
+import 'package:unwind_app/pages/history-feature/summary_page.dart';
+import 'package:unwind_app/services/answer-service/answer_filter.dart';
+import 'package:unwind_app/services/answer-service/answer_service.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
+import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
+import 'package:unwind_app/services/screening-service/screening_service.dart';
 
-Future<Uint8List> generateDocument(PdfPageFormat format) async {
-  final doc = pw.Document(pageMode: PdfPageMode.outlines);
-
+Future<Uint8List> generateDocument(
+    PdfPageFormat format, WorkoutListData workoutListData) async {
+  final document = pw.Document(pageMode: PdfPageMode.outlines);
   final font1 = await PdfGoogleFonts.sarabunRegular();
   final font2 = await PdfGoogleFonts.sarabunBold();
   final logo = await rootBundle.load('lib/assets/images/logo.png');
   final logoByte = await logo.buffer.asUint8List();
-  final img = await rootBundle
-      .load('lib/assets/images/workout/neck-shoulder/neckch01/TP-1.png');
-  final imgByte = await img.buffer.asUint8List();
-
   final User storageUser = await ProfileService.getUser();
-  final List<ScreeningPartOneModel> q1 =
-      ScreeningPartOneModel.getScreeningPartOneModel();
+  final workouts = await serviceLocator<WorkoutListDB>()
+      .getWorkoutListByTitle(workoutListData.titleCode);
+  final answers = await serviceLocator<ScreeningTestAnswerWorkoutListService>()
+      .getAllScreeningTestAnswerByWorkoutList(workouts.first);
+  final firstDate = workouts.first.date;
+  final lastDate = workouts.last.date;
+  final answersInPartOne =
+      answers.where((element) => element.questionPart == 1).toList();
+  final answersInPartTwo =
+      answers.where((element) => element.questionPart == 2).toList();
+  final answersInPartThree = answers
+      .where((answer) => answer.questionPart == 3 || answer.questionPart == 4)
+      .toList();
+  final distinctAreasPartThree =
+      answersInPartThree.map((answer) => answer.area).toSet().toList()
+        ..sort(
+          (a, b) => (screeningAreaCustomOrder[a] ?? 0)
+              .compareTo(screeningAreaCustomOrder[b] ?? 0),
+        );
+  final answersInPartThreeGroupByArea = distinctAreasPartThree
+      .map((area) => answersInPartThree
+          .where((answer) => answer.area == area)
+          .toList()
+        ..sort((b, a) => a.questionPart?.compareTo(b.questionPart ?? 0) ?? 0))
+      .toList();
+  final answersInPartThree_ =
+      answersInPartThreeGroupByArea.expand((e) => e).toList();
+  final resultsPartOne = answersInPartOne
+      .expand((answer) => [
+            PdfShortQuestionAndAnswerWidget(
+              question: AnswerService.questionOf(answer).question,
+              answer: AnswerService.interpret(answer).text,
+              font: font1,
+            ),
+          ])
+      .toList();
+  final distinctAreas = answersInPartTwo.map((answer) => answer.area).toSet();
+  final answersInPartTwoGroupByArea = distinctAreas
+      .map((area) =>
+          answersInPartTwo.where((answer) => answer.area == area).toList())
+      .toList();
 
-  var titleWidget = pw.Container(
-    alignment: pw.Alignment.centerLeft,
-    margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-    child: pw.Text(
-      'บริเวณ หลังส่วนบน',
-      style: pw.TextStyle(fontSize: 16, font: font1),
-    ),
-  );
-
-  var widgetQuestionWithImg = pw.Container(
-      child: pw.Column(
-    mainAxisAlignment: pw.MainAxisAlignment.start,
-    crossAxisAlignment: pw.CrossAxisAlignment.start,
-    children: [
-      pw.Container(
-        alignment: pw.Alignment.centerLeft,
-        margin: pw.EdgeInsets.symmetric(vertical: 3.0 * PdfPageFormat.mm),
-        height: 100,
-        width: 100,
-        child: pw.Image(pw.MemoryImage(imgByte)),
-      ),
-      pw.Container(
-        alignment: pw.Alignment.centerLeft,
-        margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-        child:
-            pw.Text('question', style: pw.TextStyle(fontSize: 16, font: font1)),
-      ),
-      pw.Row(
-        children: [
-          pw.Text(
-            'ตอบ',
-            style: pw.TextStyle(
-                font: font1,
-                fontSize: 16,
-                decoration: pw.TextDecoration.underline),
-          ),
-          pw.SizedBox(width: 8),
-          pw.Text(
-            'ไม่เคย',
-            style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+  final resultsPartTwo =
+      await Future.wait(answersInPartTwoGroupByArea.expand((answers) {
+    final areaThai = ScreeningDiagnoseService.toThai[ScreeningDiagnoseService
+        .fromEngToScreeningTitle[AnswerService.questionOf(answers.first).area]];
+    return [
+      Future.value(PdfTitleWidget(
+        text: 'บริเวณ${areaThai ?? ''}',
+        font: font1,
+      )),
+      ...answers.expand(
+        (answer) => [
+          widgetQuestionWithImgFn(
+            AnswerService.questionOf(answer).question,
+            AnswerService.interpret(answer).text,
+            AnswerService.questionOf(answer).questionSpecificAssetPath,
+            font1,
           ),
         ],
       ),
-    ],
-  ));
+    ];
+  }).toList());
 
-  List<pw.Widget> resultWidget = [];
+  final resultsPartThree = await Future.wait(answersInPartThree_
+      .expand((answer) => [
+            widgetQuestionWithImgFn(
+              AnswerService.questionOf(answer).question,
+              AnswerService.interpret(answer).text,
+              AnswerService.questionOf(answer).questionSpecificAssetPath,
+              font1,
+            ),
+          ])
+      .toList());
 
-  for (var data in q1) {
-    var widgetQuestion = pw.Container(
-        child: pw.Column(
-      mainAxisAlignment: pw.MainAxisAlignment.start,
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      mainAxisSize: pw.MainAxisSize.min,
-      children: [
-        pw.Container(
-          alignment: pw.Alignment.centerLeft,
-          margin: pw.EdgeInsets.only(
-              top: 3.0 * PdfPageFormat.mm, bottom: 3.0 * PdfPageFormat.mm),
-          // padding: pw.EdgeInsets.only(right: 3.0),
-          child: pw.Text(
-            '${data.question}',
-            style: pw.TextStyle(fontSize: 16, font: font1),
-          ),
-        ),
-        pw.Row(
-          children: [
-            pw.Flexible(
-              flex: 1,
+  final List<ScreeningTestAnswerModel> nrsResults =
+      AnswerFilter(isNrsScore: true).apply(answers);
+
+  Future<pw.MultiPage> pdfBody() async => pw.MultiPage(
+        theme: pw.ThemeData.withFont(base: font1, bold: font2),
+        pageFormat: format.copyWith(
+            marginTop: 2.0 * PdfPageFormat.cm,
+            marginRight: 1.5 * PdfPageFormat.cm,
+            marginLeft: 1.5 * PdfPageFormat.cm,
+            marginBottom: 1.5 * PdfPageFormat.cm),
+        orientation: pw.PageOrientation.portrait,
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        header: (pw.Context context) {
+          if (context.pageNumber == 1) {
+            return pw.SizedBox();
+          }
+          return pw.Container(
+              alignment: pw.Alignment.centerRight,
+              margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+              padding: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+              child: pw.Text('UNWIND APPLICATION',
+                  style: pw.Theme.of(context)
+                      .defaultTextStyle
+                      .copyWith(color: PdfColors.grey)));
+        },
+        footer: (pw.Context context) {
+          return pw.Container(
+              alignment: pw.Alignment.centerRight,
+              margin: const pw.EdgeInsets.only(top: 1.0 * PdfPageFormat.cm),
               child: pw.Text(
-                'ตอบ',
-                style: pw.TextStyle(
-                    font: font1,
-                    fontSize: 16,
-                    decoration: pw.TextDecoration.underline),
+                  'Page ${context.pageNumber} of ${context.pagesCount}',
+                  style: pw.Theme.of(context)
+                      .defaultTextStyle
+                      .copyWith(color: PdfColors.grey)));
+        },
+        build: (pw.Context context) => <pw.Widget>[
+          pw.Container(
+            alignment: pw.Alignment.center,
+            margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+            child: pw.Text(
+              'ผลการประเมินแบบทดสอบ',
+              style: pw.TextStyle(fontSize: 20, font: font2),
+            ),
+          ),
+          pw.Container(
+            alignment: pw.Alignment.center,
+            margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+            child: pw.Text(
+              (firstDate == null || lastDate == null)
+                  ? ''
+                  : '${formatDateTimeRangeToThai(firstDate, lastDate)}',
+              style: pw.TextStyle(
+                fontSize: 18,
+                font: font1,
               ),
             ),
-            pw.SizedBox(width: 8),
-            pw.Flexible(
-              flex: 5,
-              fit: pw.FlexFit.tight,
-              child: pw.Text(
-                'ไม่เคย',
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 16),
-              ),
-            )
-          ],
-        ),
-      ],
-    ));
+          ),
+          ...generateUserInformation(storageUser, nrsResults, font1),
+          separatorLine(),
+          PdfTopicWidget(text: 'ค่าความเจ็บปวด (NRS pain score)', font: font2),
+          ...buildNrsResults(nrsResults, font1),
+          separatorLineWithTopMargin(),
+          PdfTopicWidget(text: 'ส่วนที่ 1 คัดกรองอาการ', font: font2),
+          ...resultsPartOne,
+          separatorLineWithTopMargin(),
+          PdfTopicWidget(
+              text: 'ส่วนที่ 2 ประเมินความเจ็บปวดจากบริเวณที่เลือก',
+              font: font2),
+          ...resultsPartTwo,
+          separatorLineWithTopMargin(),
+          PdfTopicWidget(
+              text: 'ส่วนที่ 3 ทดสอบจากท่าตรวจเบื้องต้น', font: font2),
+          ...resultsPartThree,
+        ],
+      );
 
-    resultWidget.add(widgetQuestion);
+  final pages = <pw.Page>[
+    await pdfCover(format, font1, font2, logoByte, firstDate, lastDate),
+    await pdfBody(),
+  ];
+  for (final page in pages) {
+    document.addPage(page);
   }
+  return await document.save();
+}
 
-  doc.addPage(
+Future<Uint8List> loadImageBytes(String path) async =>
+    await rootBundle.load(path).then((value) => value.buffer.asUint8List());
+
+Future<PdfQuestionAnswerWithImageWidget> widgetQuestionWithImgFn(
+        String question,
+        String answer,
+        String? imagePath,
+        pw.Font font) async =>
+    (imagePath == null)
+        ? PdfQuestionAnswerWithImageWidget(
+            question: question,
+            answer: answer,
+            font: font,
+          )
+        : PdfQuestionAnswerWithImageWidget(
+            question: question,
+            answer: answer,
+            font: font,
+            image: pw.MemoryImage(await loadImageBytes(imagePath)),
+          );
+
+pw.Page pdfCover(
+  PdfPageFormat format,
+  pw.Font font1,
+  pw.Font font2,
+  Uint8List logoImageBytes,
+  DateTime? firstDate,
+  DateTime? lastDate,
+) =>
     pw.Page(
       pageTheme: pw.PageTheme(
         pageFormat: format.copyWith(
@@ -160,7 +260,7 @@ Future<Uint8List> generateDocument(PdfPageFormat format) async {
               pw.Container(
                 alignment: pw.Alignment.center,
                 height: 180,
-                child: pw.Image(pw.MemoryImage(logoByte)),
+                child: pw.Image(pw.MemoryImage(logoImageBytes)),
               ),
               pw.Spacer(flex: 1),
               pw.Text(
@@ -171,7 +271,10 @@ Future<Uint8List> generateDocument(PdfPageFormat format) async {
                 ),
               ),
               pw.Text(
-                'วันที่ 8 - 18 สิงหาคม 2566',
+                // 'วันที่ 8 - 18 สิงหาคม 2566',
+                (firstDate == null || lastDate == null)
+                    ? ''
+                    : '${formatDateTimeRangeToThai(firstDate, lastDate)}',
                 style: pw.TextStyle(
                   fontSize: 30,
                 ),
@@ -181,240 +284,163 @@ Future<Uint8List> generateDocument(PdfPageFormat format) async {
           ),
         );
       },
-    ),
-  );
+    );
 
-  doc.addPage(
-    pw.MultiPage(
-      theme: pw.ThemeData.withFont(base: font1, bold: font2),
-      pageFormat: format.copyWith(
-          marginTop: 2.0 * PdfPageFormat.cm,
-          marginRight: 1.5 * PdfPageFormat.cm,
-          marginLeft: 1.5 * PdfPageFormat.cm,
-          marginBottom: 1.5 * PdfPageFormat.cm),
-      orientation: pw.PageOrientation.portrait,
-      crossAxisAlignment: pw.CrossAxisAlignment.start,
-      header: (pw.Context context) {
-        if (context.pageNumber == 1) {
-          return pw.SizedBox();
-        }
-        return pw.Container(
-            alignment: pw.Alignment.centerRight,
-            margin: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-            padding: const pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-            child: pw.Text('UNWIND APPLICATION',
-                style: pw.Theme.of(context)
-                    .defaultTextStyle
-                    .copyWith(color: PdfColors.grey)));
-      },
-      footer: (pw.Context context) {
-        return pw.Container(
-            alignment: pw.Alignment.centerRight,
-            margin: const pw.EdgeInsets.only(top: 1.0 * PdfPageFormat.cm),
-            child: pw.Text(
-                'Page ${context.pageNumber} of ${context.pagesCount}',
-                style: pw.Theme.of(context)
-                    .defaultTextStyle
-                    .copyWith(color: PdfColors.grey)));
-      },
-      build: (pw.Context context) => <pw.Widget>[
-        pw.Container(
-          alignment: pw.Alignment.center,
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Text(
-            'ผลการประเมินแบบทดสอบ',
-            style: pw.TextStyle(fontSize: 20, font: font2),
-          ),
+pw.Container separatorLine() => pw.Container(
+      margin: pw.EdgeInsets.only(bottom: 8.0 * PdfPageFormat.mm),
+      decoration: const pw.BoxDecoration(
+        border: pw.Border(
+          bottom: pw.BorderSide(width: 1, color: PdfColors.black),
         ),
-        pw.Container(
-          alignment: pw.Alignment.center,
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Text(
-            'วันที่ 15 เดือน กุมภาพันธ์ พ.ศ. 2567',
-            style: pw.TextStyle(
-              fontSize: 18,
-              font: font1,
-            ),
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Row(
-            children: [
-              pw.Text(
-                'ชื่อ',
-                style: pw.TextStyle(font: font2, fontSize: 16),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                '${storageUser.firstName} ${storageUser.lastName}',
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 16),
-              ),
-            ],
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Row(
-            children: [
-              pw.Text(
-                'อายุ',
-                style: pw.TextStyle(font: font2, fontSize: 16),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                '${storageUser.age} ปี',
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 16),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                'เพศ',
-                style: pw.TextStyle(font: font2, fontSize: 16),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                '${storageUser.sex}',
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 16),
-              ),
-            ],
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Row(
-            children: [
-              pw.Text(
-                'น้ำหนัก',
-                style: pw.TextStyle(
-                  font: font2,
-                  fontSize: 16,
-                ),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                '${storageUser.weight} กก.',
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 16),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                'ส่วนสูง',
-                style: pw.TextStyle(font: font2, fontSize: 16),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                '${storageUser.height} ซม.',
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 16),
-              ),
-            ],
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Row(
-            children: [
-              pw.Text(
-                'อาชีพ',
-                style: pw.TextStyle(
-                  font: font2,
-                  fontSize: 16,
-                ),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                '${storageUser.career}',
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 16),
-              ),
-            ],
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Row(
-            children: [
-              pw.Text(
-                'การประสบอุบัติเหตุ',
-                style: pw.TextStyle(
-                  font: font2,
-                  fontSize: 16,
-                ),
-              ),
-              pw.SizedBox(width: 8),
-              pw.Text(
-                '${storageUser.accident}',
-                style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.normal, fontSize: 16),
-              ),
-            ],
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 8.0 * PdfPageFormat.mm),
-          decoration: const pw.BoxDecoration(
-            border: pw.Border(
-              bottom: pw.BorderSide(width: 1, color: PdfColors.black),
-            ),
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Text(
-            'ส่วนที่ 1 คัดกรองอาการ',
-            style: pw.TextStyle(
-              fontSize: 16,
-              font: font2,
-            ),
-          ),
-        ),
-        ...resultWidget,
-        pw.Container(
-          margin: pw.EdgeInsets.only(
-              top: 3.0 * PdfPageFormat.mm, bottom: 8.0 * PdfPageFormat.mm),
-          decoration: const pw.BoxDecoration(
-            border: pw.Border(
-              bottom: pw.BorderSide(width: 1, color: PdfColors.black),
-            ),
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Text(
-            'ส่วนที่ 2 ประเมินความเจ็บปวดจากบริเวณที่เลือก',
-            style: pw.TextStyle(
-              fontSize: 16,
-              font: font2,
-            ),
-          ),
-        ),
-        titleWidget,
-        widgetQuestionWithImg,
-        pw.Container(
-          margin: pw.EdgeInsets.only(
-              top: 3.0 * PdfPageFormat.mm, bottom: 8.0 * PdfPageFormat.mm),
-          decoration: const pw.BoxDecoration(
-            border: pw.Border(
-              bottom: pw.BorderSide(width: 1, color: PdfColors.black),
-            ),
-          ),
-        ),
-        pw.Container(
-          margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
-          child: pw.Text(
-            'ส่วนที่ 3 ทดสอบจากท่าตรวจเบื้องต้น',
-            style: pw.TextStyle(
-              fontSize: 16,
-              font: font2,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
+      ),
+    );
 
-  return await doc.save();
+pw.Container separatorLineWithTopMargin() => pw.Container(
+      margin: pw.EdgeInsets.only(
+          top: 3.0 * PdfPageFormat.mm, bottom: 8.0 * PdfPageFormat.mm),
+      decoration: const pw.BoxDecoration(
+        border: pw.Border(
+          bottom: pw.BorderSide(width: 1, color: PdfColors.black),
+        ),
+      ),
+    );
+
+List<pw.Container> generateUserInformation(
+    User storageUser, List<ScreeningTestAnswerModel> nrsResult, pw.Font font2) {
+  return [
+    pw.Container(
+      margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+      child: pw.Row(
+        children: [
+          pw.Text(
+            'ชื่อ',
+            style: pw.TextStyle(font: font2, fontSize: 16),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            '${storageUser.firstName} ${storageUser.lastName}',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+          ),
+        ],
+      ),
+    ),
+    pw.Container(
+      margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+      child: pw.Row(
+        children: [
+          pw.Text(
+            'อายุ',
+            style: pw.TextStyle(font: font2, fontSize: 16),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            '${storageUser.age} ปี',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            'เพศ',
+            style: pw.TextStyle(font: font2, fontSize: 16),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            '${storageUser.sex}',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+          ),
+        ],
+      ),
+    ),
+    pw.Container(
+      margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+      child: pw.Row(
+        children: [
+          pw.Text(
+            'น้ำหนัก',
+            style: pw.TextStyle(
+              font: font2,
+              fontSize: 16,
+            ),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            '${storageUser.weight} กก.',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            'ส่วนสูง',
+            style: pw.TextStyle(font: font2, fontSize: 16),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            '${storageUser.height} ซม.',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+          ),
+        ],
+      ),
+    ),
+    pw.Container(
+      margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+      child: pw.Row(
+        children: [
+          pw.Text(
+            'อาชีพ',
+            style: pw.TextStyle(
+              font: font2,
+              fontSize: 16,
+            ),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            '${storageUser.career}',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+          ),
+        ],
+      ),
+    ),
+    pw.Container(
+      margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+      child: pw.Row(
+        children: [
+          pw.Text(
+            'การประสบอุบัติเหตุ',
+            style: pw.TextStyle(
+              font: font2,
+              fontSize: 16,
+            ),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            '${storageUser.accident}',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+          ),
+        ],
+      ),
+    ),
+  ];
+}
+
+List<pw.Container> buildNrsResults(
+    List<ScreeningTestAnswerModel> nrsResults, pw.Font font) {
+  return nrsResults
+      .map((result) => pw.Container(
+            margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+            child: pw.Row(
+              children: [
+                pw.Text(
+                  'บริเวณ ${AnswerService.questionOf(result).areaThai} ${AnswerService.interpret(result).answer} คะแนน',
+                  style: pw.TextStyle(
+                    font: font,
+                    fontSize: 16,
+                  ),
+                ),
+                pw.SizedBox(width: 8),
+                // pw.Text(
+                //   '${storageUser.accident}',
+                //   style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+                // ),
+              ],
+            ),
+          ))
+      .toList();
 }

@@ -26,6 +26,7 @@ class WorkoutListData {
     'back_ch': 5,
     'back_th': 6,
   };
+
   @override
   operator ==(wol) => wol is WorkoutListData && wol.titleCode == titleCode;
 
