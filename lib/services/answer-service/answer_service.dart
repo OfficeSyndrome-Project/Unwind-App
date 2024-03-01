@@ -1,5 +1,6 @@
 // ignore_for_file: sdk_version_since
 
+// import 'package:flutter/material.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_one_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart';
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
@@ -92,6 +93,8 @@ class AnswerService {
             .firstOrNull;
     final areaThai = ScreeningDiagnoseService
         .toThai[ScreeningDiagnoseService.fromEngToScreeningTitle[area]];
+    print(
+        '---x question: $questionId ${question?.question} part:${question?.questionPart} ${answer.area}');
     return QuestionModelGeneral(
       question: question?.question ?? '',
       questionId: question?.questionId ?? 0,
@@ -99,16 +102,18 @@ class AnswerService {
       questionPart: question?.questionPart ?? 0,
       area: area,
       areaThai: areaThai,
-      questionSpecificAssetName:
-          ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
-              .where((element) => element.title == areaThai)
-              .firstOrNull
-              ?.postureName,
-      questionSpecificAssetPath:
-          ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
-              .where((element) => element.title == areaThai)
-              .firstOrNull
-              ?.assetPath,
+      // questionSpecificAssetName:
+      //     ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
+      //         .where((element) => element.title == areaThai)
+      //         .where((element) => element.questionId == questionId)
+      //         .firstOrNull
+      //         ?.postureName,
+      // questionSpecificAssetPath:
+      //     ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
+      //         .where((element) => element.title == areaThai)
+      //         .where((element) => element.questionId == questionId)
+      //         .firstOrNull
+      //         ?.assetPath,
     );
   }
 
@@ -250,9 +255,3 @@ class AnswerService {
     }
   }
 }
-
-// ScreeningPartOneModel
-// ScreeningPartTwoQuestionModel.getScreeningPartTwoQuestionModel
-
-// ScreeningPartThreePostureModel
-// ScreeningPartThreeQuestionModel

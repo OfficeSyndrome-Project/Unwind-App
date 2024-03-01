@@ -19,6 +19,7 @@ import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
 import 'package:unwind_app/services/answer-service/answer_service.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
+import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 class WorkoutAnswers {
   final List<ScreeningTestAnswerModel> answers;
@@ -134,7 +135,6 @@ class ResultScreeningPage extends StatelessWidget {
       final data = snapshot.data as WorkoutAnswers;
       final workouts = data.workouts;
       if (workouts.isEmpty) {
-        print('--- workouts.isEmpty : ${workouts.isEmpty}');
         return Column(
           children: [],
         );
@@ -159,14 +159,32 @@ class ResultScreeningPage extends StatelessWidget {
           .where(
               (answer) => answer.questionPart == 3 || answer.questionPart == 4)
           .toList();
-      print('--- answersInPartThree.length : ${answersInPartThree.length}');
-      print('--- all answers : ${answers.length}');
-      print(
-          '--- all part: ${answersInPartOne.length} ${answersInPartTwo.length} ${answersInPartThree.length}');
+
+      // we must sort the answersInPartThree because part 3 and part 4 are mixed
+      // we will group answer area and question title
+      final distinctAreasPartThree =
+          answersInPartThree.map((answer) => answer.area).toSet().toList()
+            ..sort(
+              (a, b) => (screeningAreaCustomOrder[a] ?? 0)
+                  .compareTo(screeningAreaCustomOrder[b] ?? 0),
+            );
+
+      final answersInPartThreeGroupByArea = distinctAreasPartThree
+          .map(
+            (area) => answersInPartThree
+                .where((answer) => answer.area == area)
+                .toList()
+              ..sort((b, a) =>
+                  a.questionPart?.compareTo(b.questionPart ?? 0) ?? 0),
+          )
+          .toList();
+
+      final answersInPartThree_ =
+          answersInPartThreeGroupByArea.expand((e) => e).toList();
       final allAnswers = [
         answersInPartOne,
         answersInPartTwo,
-        answersInPartThree,
+        answersInPartThree_,
       ];
       final resultWidgetPartOne = answersInPartOne
           .expand<Widget>(
@@ -246,18 +264,22 @@ class ResultScreeningPage extends StatelessWidget {
       //       ],
       //     )
       //     .toList();
-      final resultWidgetPartThree = answersInPartThree
+      final resultWidgetPartThree = answersInPartThree_
           .expand<Widget>((answer) => [
-                BoxHaveImg(
-                    name: AnswerService.questionOf(answer)
-                            .questionSpecificAssetName ??
-                        '',
-                    assetPath:
-                        AnswerService.questionOf(answer).painTypeAssetPath ??
-                            AnswerService.questionOf(answer)
-                                .questionSpecificAssetPath,
-                    question: AnswerService.questionOf(answer).question,
-                    answer: AnswerService.interpret(answer).text),
+                (AnswerService.questionOf(answer).questionSpecificAssetPath ==
+                        null)
+                    ? BoxOnlyQ(
+                        question: AnswerService.questionOf(answer).question,
+                        answer: AnswerService.interpret(answer).text,
+                      )
+                    : BoxHaveImg(
+                        name: AnswerService.questionOf(answer)
+                                .questionSpecificAssetName ??
+                            '',
+                        assetPath: AnswerService.questionOf(answer)
+                            .questionSpecificAssetPath,
+                        question: AnswerService.questionOf(answer).question,
+                        answer: AnswerService.interpret(answer).text),
               ])
           .toList();
       // resultWidget.addAll(questionAndAnswerInPartOne);
@@ -271,9 +293,12 @@ class ResultScreeningPage extends StatelessWidget {
             ],
           );
       final section = [
-        sectionBuilder(resultWidgetPartOne, 1),
-        sectionBuilder(resultWidgetPartTwo, 2),
-        sectionBuilder(resultWidgetPartThree, 3),
+        if (resultWidgetPartOne.isNotEmpty)
+          sectionBuilder(resultWidgetPartOne, 1),
+        if (resultWidgetPartTwo.isNotEmpty)
+          sectionBuilder(resultWidgetPartTwo, 2),
+        if (resultWidgetPartThree.isNotEmpty)
+          sectionBuilder(resultWidgetPartThree, 3),
       ];
       _partWidget.addAll(section);
 

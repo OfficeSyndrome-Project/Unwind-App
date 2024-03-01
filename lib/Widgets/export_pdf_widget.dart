@@ -34,6 +34,7 @@ import 'package:unwind_app/pages/history-feature/summary_page.dart';
 import 'package:unwind_app/services/answer-service/answer_service.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
+import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 Future<Uint8List> generateDocument(
     PdfPageFormat format, WorkoutListData workoutListData) async {
@@ -56,6 +57,20 @@ Future<Uint8List> generateDocument(
   final answersInPartThree = answers
       .where((answer) => answer.questionPart == 3 || answer.questionPart == 4)
       .toList();
+  final distinctAreasPartThree =
+      answersInPartThree.map((answer) => answer.area).toSet().toList()
+        ..sort(
+          (a, b) => (screeningAreaCustomOrder[a] ?? 0)
+              .compareTo(screeningAreaCustomOrder[b] ?? 0),
+        );
+  final answersInPartThreeGroupByArea = distinctAreasPartThree
+      .map((area) => answersInPartThree
+          .where((answer) => answer.area == area)
+          .toList()
+        ..sort((b, a) => a.questionPart?.compareTo(b.questionPart ?? 0) ?? 0))
+      .toList();
+  final answersInPartThree_ =
+      answersInPartThreeGroupByArea.expand((e) => e).toList();
   final resultsPartOne = answersInPartOne
       .expand((answer) => [
             PdfShortQuestionAndAnswerWidget(
@@ -93,7 +108,7 @@ Future<Uint8List> generateDocument(
     ];
   }).toList());
 
-  final resultsPartThree = await Future.wait(answersInPartThree
+  final resultsPartThree = await Future.wait(answersInPartThree_
       .expand((answer) => [
             widgetQuestionWithImgFn(
               AnswerService.questionOf(answer).question,
