@@ -17,6 +17,7 @@ import 'package:unwind_app/models/screening_test_answer_workout_list_service.dar
 import 'package:unwind_app/models/screeningtestanswer_model.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
+import 'package:unwind_app/services/answer-service/answer_filter.dart';
 import 'package:unwind_app/services/answer-service/answer_service.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
@@ -143,14 +144,33 @@ class ResultScreeningPage extends StatelessWidget {
       final lastDate = workouts.last.date;
 
       final answers = data.answers;
-      List<Widget> _partWidget = [];
-      List<Widget> resultWidget = [];
+      // List<Widget> _partWidget = [];
+      // List<Widget> resultWidget = [];
       answers;
       // Tools :
       // HeaderBox
       // BoxTitlePartSelect
       // BoxOnlyQ
       // BoxHaveImg
+      final resultNrs = AnswerFilter(isNrsScore: true)
+          .apply(answers)
+          .map((answer) => Text.rich(TextSpan(
+                  style:
+                      TextStyle(color: Colors.redAccent), //apply style to all
+                  children: [
+                    TextSpan(
+                      text:
+                          'บริเวณ${AnswerService.questionOf(answer).areaThai ?? ''} ${AnswerService.interpret(answer).answer} คะแนน',
+                      style: TextStyle(
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF484D56),
+                      ),
+                    )
+                  ])))
+          .toList();
       final answersInPartOne =
           answers.where((element) => element.questionPart == 1).toList();
       final answersInPartTwo =
@@ -181,11 +201,11 @@ class ResultScreeningPage extends StatelessWidget {
 
       final answersInPartThree_ =
           answersInPartThreeGroupByArea.expand((e) => e).toList();
-      final allAnswers = [
-        answersInPartOne,
-        answersInPartTwo,
-        answersInPartThree_,
-      ];
+      // final allAnswers = [
+      //   answersInPartOne,
+      //   answersInPartTwo,
+      //   answersInPartThree_,
+      // ];
       final resultWidgetPartOne = answersInPartOne
           .expand<Widget>(
             (answer) => [
@@ -283,33 +303,26 @@ class ResultScreeningPage extends StatelessWidget {
               ])
           .toList();
       // resultWidget.addAll(questionAndAnswerInPartOne);
-      Widget sectionBuilder(List<Widget> resultWidget, int partNumber) =>
+      Widget sectionBuilder(List<Widget> resultWidget, String headingText) =>
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderBox(screeningPart: partNumber),
+              HeaderBox(text: headingText),
               ...resultWidget,
             ],
           );
-      final section = [
+      print('--- resultNrs.length: ${resultNrs.length}');
+      final sections = [
+        if (resultNrs.isNotEmpty)
+          sectionBuilder(resultNrs, 'ค่าความเจ็บปวด (NRS pain score)'),
         if (resultWidgetPartOne.isNotEmpty)
-          sectionBuilder(resultWidgetPartOne, 1),
+          sectionBuilder(resultWidgetPartOne, 'แบบประเมินส่วนที่ 1'),
         if (resultWidgetPartTwo.isNotEmpty)
-          sectionBuilder(resultWidgetPartTwo, 2),
+          sectionBuilder(resultWidgetPartTwo, 'แบบประเมินส่วนที่ 2'),
         if (resultWidgetPartThree.isNotEmpty)
-          sectionBuilder(resultWidgetPartThree, 3),
+          sectionBuilder(resultWidgetPartThree, 'แบบประเมินส่วนที่ 3'),
       ];
-      _partWidget.addAll(section);
-
-      // BoxTitlePartSelect(partSelect: 'partSelect'),
-      // BoxHaveImg(
-      //   question: 'question',
-      //   answer: 'answer',
-      //   name: 'name',
-      //   assetPath:
-      //       'lib/assets/images/workout/shoulder/shoulderch02/tp-left/TP-1.png',
-      // )
 
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -341,23 +354,8 @@ class ResultScreeningPage extends StatelessWidget {
                           )
                         : Theme.of(context).textTheme.titleLarge,
                   ),
-
-            // child: Text(
-            //   '${firstDate.day} - ${dateMockup.last.dateTime.day} ' +
-            //       DateFormat('MMMM', 'th').format(dateMockup[0].dateTime) +
-            //       ' ' +
-            //       DateFormat('yyyy')
-            //           .format(DateTime(dateMockup[0].dateTime.year + 543)),
-            //   style: ResponsiveCheckWidget.isSmallMobile(context)
-            //       ? TextStyle(
-            //           fontSize: 16,
-            //           fontWeight: FontWeight.w600,
-            //           color: const Color(0xFF484D56),
-            //         )
-            //       : Theme.of(context).textTheme.titleLarge,
-            // ),
           ),
-          ..._partWidget
+          ...sections
         ],
       );
     }

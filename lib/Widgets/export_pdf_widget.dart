@@ -28,9 +28,11 @@ import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/models/screening_test_answer_workout_list_service.dart';
+import 'package:unwind_app/models/screeningtestanswer_model.dart';
 
 import 'package:unwind_app/models/user.dart';
 import 'package:unwind_app/pages/history-feature/summary_page.dart';
+import 'package:unwind_app/services/answer-service/answer_filter.dart';
 import 'package:unwind_app/services/answer-service/answer_service.dart';
 import 'package:unwind_app/services/profile-service/profile_service.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
@@ -119,6 +121,9 @@ Future<Uint8List> generateDocument(
           ])
       .toList());
 
+  final List<ScreeningTestAnswerModel> nrsResults =
+      AnswerFilter(isNrsScore: true).apply(answers);
+
   Future<pw.MultiPage> pdfBody() async => pw.MultiPage(
         theme: pw.ThemeData.withFont(base: font1, bold: font2),
         pageFormat: format.copyWith(
@@ -173,8 +178,11 @@ Future<Uint8List> generateDocument(
               ),
             ),
           ),
-          ...generateUserInformation(storageUser, font1),
+          ...generateUserInformation(storageUser, nrsResults, font1),
           separatorLine(),
+          PdfTopicWidget(text: 'ค่าความเจ็บปวด (NRS pain score)', font: font2),
+          ...buildNrsResults(nrsResults, font1),
+          separatorLineWithTopMargin(),
           PdfTopicWidget(text: 'ส่วนที่ 1 คัดกรองอาการ', font: font2),
           ...resultsPartOne,
           separatorLineWithTopMargin(),
@@ -297,7 +305,8 @@ pw.Container separatorLineWithTopMargin() => pw.Container(
       ),
     );
 
-List<pw.Container> generateUserInformation(User storageUser, pw.Font font2) {
+List<pw.Container> generateUserInformation(
+    User storageUser, List<ScreeningTestAnswerModel> nrsResult, pw.Font font2) {
   return [
     pw.Container(
       margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
@@ -409,4 +418,29 @@ List<pw.Container> generateUserInformation(User storageUser, pw.Font font2) {
       ),
     ),
   ];
+}
+
+List<pw.Container> buildNrsResults(
+    List<ScreeningTestAnswerModel> nrsResults, pw.Font font) {
+  return nrsResults
+      .map((result) => pw.Container(
+            margin: pw.EdgeInsets.only(bottom: 3.0 * PdfPageFormat.mm),
+            child: pw.Row(
+              children: [
+                pw.Text(
+                  'บริเวณ ${AnswerService.questionOf(result).areaThai} ${AnswerService.interpret(result).answer} คะแนน',
+                  style: pw.TextStyle(
+                    font: font,
+                    fontSize: 16,
+                  ),
+                ),
+                pw.SizedBox(width: 8),
+                // pw.Text(
+                //   '${storageUser.accident}',
+                //   style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
+                // ),
+              ],
+            ),
+          ))
+      .toList();
 }

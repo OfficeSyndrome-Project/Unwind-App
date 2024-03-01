@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:unwind_app/data/screening-data/workout_data.dart';
 import 'package:unwind_app/database/screeningtestanswer_db.dart';
@@ -216,6 +218,10 @@ class ScreeningDiagnoseService {
 
   static Future<DiagnoseResult> diagnose(List<Answer> answers,
       Map<ScreeningTitle, int?> nrs, List<PostureAnswer> postureAnswer) async {
+    final originalNrs = Map<ScreeningTitle, int?>.from(nrs);
+    final originalNrsNotNull = Map<ScreeningTitle, int>.fromEntries(
+        originalNrs.entries.where((entry) => entry.value != null).map(
+            (entry) => MapEntry<ScreeningTitle, int>(entry.key, entry.value!)));
     nrs.removeWhere((key, value) => value == null);
     Map<ScreeningTitle, int> nrsFiltered = {
       for (var entry in nrs.entries) entry.key: entry.value!
@@ -255,8 +261,10 @@ class ScreeningDiagnoseService {
 
     // Convert postureAnswer to ScreeningTestAnswerModel,
 
-    final eitherAnswerStored =
-        await storeAnswer(answers, postureAnswer, acquiredWorkoutList);
+    // Store nrs score in answer table
+
+    final eitherAnswerStored = await storeAnswer(
+        answers, postureAnswer, acquiredWorkoutList, originalNrsNotNull);
     eitherAnswerStored.fold(
       (failure) => print(failure),
       (stored) => print(stored),
@@ -305,9 +313,11 @@ class ScreeningDiagnoseService {
   }
 
   static Future<Either<Failure, int>> storeAnswer(
-      List<Answer> answers,
-      List<PostureAnswer> postureAnswer,
-      List<WorkoutListModel> workouts) async {
+    List<Answer> answers,
+    List<PostureAnswer> postureAnswer,
+    List<WorkoutListModel> workouts,
+    Map<ScreeningTitle, int> nrs,
+  ) async {
     final screeningTestAnswerWorkoutListService =
         serviceLocator<ScreeningTestAnswerWorkoutListService>();
     final screeningTestAnswerDB = serviceLocator<ScreeningTestAnswerDB>();
@@ -320,9 +330,17 @@ class ScreeningDiagnoseService {
     final postureAnswerModels = postureAnswer
         .map((answer) => ScreeningTestAnswerModel.fromPostureAnswer(answer))
         .toList();
+
+    // Convert nrs score to ScreeningTestAnswerModel
+    final nrsScoreAnswerModels = nrs.entries
+        .map((entry) => ScreeningTestAnswerModel.fromNrs(entry))
+        .toList();
+
     // Store answers to database
-    final insertedScreeningTestAnswerModels = await screeningTestAnswerDB
-        .insertAll(screeningTestAnswerModels + postureAnswerModels);
+    final insertedScreeningTestAnswerModels =
+        await screeningTestAnswerDB.insertAll(screeningTestAnswerModels +
+            postureAnswerModels +
+            nrsScoreAnswerModels);
 
     // Insert the joint table for ScreeningTestAnswer and WorkoutList
     final associations =

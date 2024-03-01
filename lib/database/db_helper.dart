@@ -45,6 +45,7 @@ class DatabaseHelper {
             area TEXT,
             questionId INTEGER,
             answer INTEGER,
+            is_nrs_score BOOLEAN,
             created_at DATETIME,
             deleted_at DATETIME
           );

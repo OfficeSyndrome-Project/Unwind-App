@@ -6,6 +6,7 @@ import 'package:unwind_app/data/screening-data/screening_q_part_three_model.dart
 import 'package:unwind_app/data/screening-data/screening_q_part_two_model.dart';
 import 'package:unwind_app/data/screening-data/typepain_screening.dart';
 import 'package:unwind_app/models/screeningtestanswer_model.dart';
+import 'package:unwind_app/services/answer-service/answer_filter.dart';
 import 'package:unwind_app/services/answer-service/answer_interpret.dart';
 import 'package:unwind_app/services/answer-service/question_model_general.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
@@ -34,6 +35,21 @@ class AnswerService {
   };
 
   static QuestionModelGeneral questionOf(ScreeningTestAnswerModel answer) {
+    // Check if the answer is NRS Score
+    final nrsScore = AnswerFilter(isNrsScore: true).applyOne(answer);
+    if (nrsScore.isSome()) {
+      final nrs =
+          nrsScore.fold(() => Never as ScreeningTestAnswerModel, (a) => a);
+      return QuestionModelGeneral(
+        question: 'NRS Score',
+        questionId: -1,
+        questionPage: 0,
+        area: nrs.area,
+        areaThai: ScreeningDiagnoseService
+            .toThai[ScreeningDiagnoseService.fromEngToScreeningTitle[nrs.area]],
+      );
+    }
+
     final questionPart = answer.questionPart;
     switch (questionPart) {
       case 1:
@@ -214,40 +230,49 @@ class AnswerService {
     );
   }
 
-  static AnswerInterpret interpret(ScreeningTestAnswerModel answer) {
+  static AnswerInterpretation interpret(ScreeningTestAnswerModel answer) {
     final questionPart = answer.questionPart;
     final questionId = answer.questionId;
     final area = answer.area;
+    // Case nrs score
+    final nrsScore = AnswerFilter(isNrsScore: true).applyOne(answer);
+    if (nrsScore.isSome()) {
+      return AnswerInterpretation(
+        answer: answer.answer,
+        text: 'NRS ${answer.answer}',
+      );
+    }
+
     switch (questionPart) {
       case 1:
-        return AnswerInterpret(
+        return AnswerInterpretation(
           // answer: question?.question ?? '',
           answer: answer.answer,
           text: TWO_CHOICES_ANSWER_MEANING[answer.answer] ?? '',
         );
       case 2:
         if ((area == 'shoulder' || area == 'baa') && questionId == 4) {
-          return AnswerInterpret(
+          return AnswerInterpretation(
             answer: answer.answer,
             text: FOUR_CHOICES_ANSWER_MEANING[answer.answer] ?? '',
           );
         }
-        return AnswerInterpret(
+        return AnswerInterpretation(
           answer: answer.answer,
           text: TWO_CHOICES_ANSWER_MEANING[answer.answer] ?? '',
         );
       case 3:
-        return AnswerInterpret(
+        return AnswerInterpretation(
           answer: answer.answer,
           text: TWO_CHOICES_ANSWER_MEANING[answer.answer] ?? '',
         );
       case 4: // Posture
-        return AnswerInterpret(
+        return AnswerInterpretation(
           answer: answer.answer,
           text: TWO_CHOICES_ANSWER_MEANING[answer.answer] ?? '',
         );
       default:
-        return AnswerInterpret(
+        return AnswerInterpretation(
           text: '',
         );
     }
