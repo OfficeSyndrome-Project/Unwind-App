@@ -93,8 +93,6 @@ class AnswerService {
             .firstOrNull;
     final areaThai = ScreeningDiagnoseService
         .toThai[ScreeningDiagnoseService.fromEngToScreeningTitle[area]];
-    print(
-        '---x question: $questionId ${question?.question} part:${question?.questionPart} ${answer.area}');
     return QuestionModelGeneral(
       question: question?.question ?? '',
       questionId: question?.questionId ?? 0,
