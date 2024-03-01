@@ -113,7 +113,8 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                 await workoutListDB
                     .deleteWorkoutListByTitle(workoutList?.titleCode ?? '');
                 // Navigator.pop(context);
-                Navigator.popUntil(context, (route) => route.isFirst);
+                Navigator.popUntil(
+                    context, (route) => route.settings.name == PageName.HOME);
               }
             },
             mainAxisAlignment: MainAxisAlignment.center,
