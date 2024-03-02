@@ -288,7 +288,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                           .route(context));
                 }
               },
-              text: "สมัครสมาชิก",
+              text: "ดำเนินการต่อ",
               radius: 32,
               width: double.infinity,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
