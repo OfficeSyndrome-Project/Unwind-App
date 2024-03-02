@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unwind_app/Routes/routes_config.dart';
 // import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
@@ -172,17 +173,17 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
         await workoutListDB
             .deleteWorkoutListByTitle(widget.workoutList.titleCode);
         await ScreeningDiagnoseService.createWorkouts([workoutList]);
-        Navigator.popUntil(context, (rp) => rp.isFirst);
+        Navigator.pushReplacement(context, Home().workoutlist().route(context));
       }
       if (answers[2] == 2) {
         // remove the workout, go the home page
         await workoutListDB
             .deleteWorkoutListByTitle(widget.workoutList.titleCode);
-        Navigator.popUntil(context, (rp) => rp.isFirst);
+        Navigator.pushReplacement(context, Home().workoutlist().route(context));
       }
     }
     if (index == 2) {
-      Navigator.popUntil(context, (rp) => rp.isFirst);
+      Navigator.pushReplacement(context, Home().workoutlist().route(context));
     }
   }
 }

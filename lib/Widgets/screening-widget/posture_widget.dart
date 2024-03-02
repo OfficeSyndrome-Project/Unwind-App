@@ -76,7 +76,7 @@ class _PostuerWidgetState extends State<PostuerWidget> {
                         onChanged: (value) {
                           final answer = Answer(
                             questionPart: 2,
-                            title: widget.questions[index].title,
+                            area: widget.questions[index].title,
                             questionId: widget.questions[index].questionId,
                             answer: value,
                           );

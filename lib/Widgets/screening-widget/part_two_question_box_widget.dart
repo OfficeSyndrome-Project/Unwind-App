@@ -119,7 +119,7 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget>
                       answers,
                       Answer(
                         questionPart: widget.questions[index].questionPart,
-                        title: widget.title,
+                        area: widget.title,
                         questionId: widget.questions[index].questionId,
                         answer: value,
                       ));
@@ -133,7 +133,7 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget>
 
                   widget.onChanged(Answer(
                       questionPart: widget.questions[index].questionPart,
-                      title: widget.title,
+                      area: widget.title,
                       questionId: widget.questions[index].questionId,
                       answer: value));
                 },

@@ -13,6 +13,7 @@ class BoxOnlyQ extends StatelessWidget {
       child: Column(
         children: [
           Container(
+            width: double.infinity,
             margin: EdgeInsets.only(left: 8),
             child: Text(
               '${question}',

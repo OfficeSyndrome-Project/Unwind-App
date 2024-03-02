@@ -38,7 +38,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
             questionId: questionID,
             answer: value,
             questionPart: 1,
-            title: null,
+            area: null,
           ));
 
       // Update the state of the button
@@ -127,7 +127,7 @@ class _ScreeningPartOneQuestionState extends State<ScreeningPartOneQuestion> {
                     .forEach((element) {
                   if (ShowGoToDoctorPageService.showGoToDoctorPage(
                       element.questionPart,
-                      element.title,
+                      element.area,
                       element.questionId,
                       element.answer)) {
                     show_go_to_doctor = true;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 // import 'package:flutter/services.dart';
 
 class ProfileTextForm extends StatefulWidget {
@@ -11,6 +10,7 @@ class ProfileTextForm extends StatefulWidget {
     this.formUnit,
     this.controller,
     this.onChange,
+    this.focusNode,
     Key? key,
   }) : super(key: key);
 
@@ -19,6 +19,7 @@ class ProfileTextForm extends StatefulWidget {
   final String? formUnit;
   final TextEditingController? controller;
   final void Function(String)? onChange;
+  final FocusNode? focusNode;
 
   @override
   ProfileTextFormState createState() => ProfileTextFormState();
@@ -32,7 +33,7 @@ class ProfileTextFormState extends State<ProfileTextForm> {
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
+    _focusNode = widget.focusNode ?? FocusNode();
     _controller = widget.controller ?? TextEditingController();
     _focusNode.addListener(_onFocusChange);
   }
@@ -67,17 +68,9 @@ class ProfileTextFormState extends State<ProfileTextForm> {
       // height: 50,
       width: double.infinity,
       child: TextFormField(
-        onChanged: (value) {
-          widget.onChange?.call(value);
-          // สร้าง #SuperHero
-          if (value == 'superhero') {
-            ScreeningDiagnoseService.createAllWorkoutList();
-            Navigator.pop(context);
-            return;
-          }
-        },
         controller: _controller,
         focusNode: _focusNode,
+        onChanged: widget.onChange,
         style: TextStyle(
           // color: Color(0xFF484D56),
           color: _focusNode.hasFocus ? Color(0xFF484D56) : Color(0xFF9BA4B5),

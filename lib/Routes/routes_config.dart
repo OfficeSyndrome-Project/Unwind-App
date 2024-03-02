@@ -123,16 +123,19 @@ class AnswerContext {
   final List<ScreeningPartTwoModel>? selectedPart;
   final List<Answer>? answers;
   final Map<ScreeningTitle, int>? nrs;
+  final List<PostureAnswer>? postureAnswers;
   const AnswerContext({
     this.selectedPart,
     this.answers,
     this.nrs,
+    this.postureAnswers,
   });
 }
 
 class Home {
   PathRoute workoutlist() => PathRoute(
       title: "ชุดท่าบริหาร",
+      name: PageName.HOME,
       widget: const HomePage(
         selectedIndex: 0,
       ));
@@ -176,11 +179,13 @@ class History {
       widget: ResultPerWeekPage(
         weeklySummary: weeklySummary,
       ));
-  PathRoute resultscreening(List<KeepScoreAndDateModel> dateMockup) =>
+  PathRoute resultscreening(List<KeepScoreAndDateModel> dateMockup,
+          WorkoutListData workoutListData) =>
       PathRoute(
           title: "ประวัติ",
           widget: ResultScreeningPage(
             dateMockup: dateMockup,
+            workoutListData: workoutListData,
           ));
 }
 
@@ -242,12 +247,14 @@ class Workout {
 }
 
 class PreviewPdf {
-  PathRoute pdfpreviewpage() =>
-      PathRoute(title: "ผลทดสอบ", widget: PdfPreviewPage());
+  PathRoute pdfpreviewpage(WorkoutListData workoutListData) => PathRoute(
+      title: "ผลทดสอบ",
+      widget: PdfPreviewPage(workoutListData: workoutListData));
 }
 
 class PageName {
   static String REPORT_WORKOUT = "/report-workout";
+  static String HOME = "/home";
 }
 
 class PathRoute {

@@ -26,74 +26,75 @@ class DatabaseHelper {
     if (withLog == "yes") {
       dbFactory = factoryWithLogs;
     }
-    print(
-        'database path: ${join(await getDatabasesPath(), 'unwind_database.db')}');
 
     final database = dbFactory.openDatabase(
       join(await getDatabasesPath(), 'unwind_database.db'),
       options: OpenDatabaseOptions(
+        onOpen: (db) async {
+          print(
+              'database path: ${join(await getDatabasesPath(), 'unwind_database.db')}');
+        },
         onConfigure: (db) async {
           await db.execute('PRAGMA foreign_keys = ON');
         },
         onCreate: (db, version) {
-          //Create User table
-          // db.execute('''
-          // CREATE TABLE users(
-          //       u_id INTEGER PRIMARY KEY AUTOINCREMENT,
-          //       name TEXT, age INTEGER,
-          //       weight INTEGER,
-          //       height INTEGER,
-          //       sex TEXT,
-          //       career TEXT,
-          //       accident TEXT)
-          // ''');
-
-          // Create ScreeningTest table
           db.execute('''
-          CREATE TABLE ScreeningTest (
-            t_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            created_at DATETIME
-            );
-          ''');
-
-          //Create ScreeningTest_answer table
-          db.execute('''
-          CREATE TABLE ScreeningTest_answer (
+          CREATE TABLE ScreeningTestAnswer (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            t_id INTEGER,
-            type TEXT,
+            questionPart INTEGER,
             area TEXT,
-            q_id INTEGER,
-            ans TEXT,
-            FOREIGN KEY (t_id) REFERENCES ScreeningTest(t_id)
+            questionId INTEGER,
+            answer INTEGER,
+            is_nrs_score BOOLEAN,
+            created_at DATETIME,
+            deleted_at DATETIME
           );
         ''');
-
-          // Create NRS table
-          //   db.execute('''
-          //   CREATE TABLE NRS (
-          //     NRS_id INTEGER PRIMARY KEY AUTOINCREMENT,
-          //     NRS_before INTEGER,
-          //     NRS_after INTEGER,
-          //     WOL_id INTEGER,
-          //     timestamp DATETIME,
-          //     FOREIGN KEY (WOL_id) REFERENCES WorkoutList(WOL_id)
-          //   );
-          // ''');
-
           // Create WorkoutList table
           db.execute('''
           CREATE TABLE WorkoutList (
-            WOL_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             date DATETIME,
             WOL_title TEXT,
             remaining_times INTEGER,
             total_times INTEGER,
             NRS_before INTEGER,
             NRS_after INTEGER,
+            created_at DATETIME,
             deleted_at DATETIME
           );
           ''');
+          db.execute('''
+          CREATE TABLE ScreeningTestAnswerWorkoutList (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ScreeningTestAnswer_id INTEGER,
+            WorkoutList_id INTEGER,
+            FOREIGN KEY (ScreeningTestAnswer_id) REFERENCES ScreeningTestAnswer(id),
+            FOREIGN KEY (WorkoutList_id) REFERENCES WorkoutList(id)
+          );
+        ''');
+
+          //Create User table
+
+          // Create ScreeningTest table
+          // db.execute('''
+          // CREATE TABLE ScreeningTest (
+          //   t_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          //   created_at DATETIME,
+          //   deleted_at DATETIME
+          //   );
+          // ''');
+          //   //Create ScreeningTest_answer table
+          //   db.execute('''
+          //   CREATE TABLE ScreeningTest_answer (
+          //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+          //     questionPart INTEGER
+          //     area TEXT,
+          //     questionId INTEGER,
+          //     answer TEXT,
+          //     FOREIGN KEY (t_id) REFERENCES ScreeningTest(t_id)
+          //   );
+          // ''');
         },
         version: 1,
       ),

@@ -33,7 +33,8 @@ class HistoryPage extends StatelessWidget {
                       WorkoutListData.workoutListFromTitleCode[titleCode])
                   .where((workout) => workout != null)
                   .map((workout) => workout!)
-                  .toList();
+                  .toList()
+                ..sort(WorkoutListData.compareByTitleOrder);
               final workoutModelMaps = workouts
                   .map((workout) => {
                         workout.titleCode: workoutListDB
