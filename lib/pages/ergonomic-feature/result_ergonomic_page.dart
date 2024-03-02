@@ -179,7 +179,8 @@ class _ResultErgonomicPageState extends State<ResultErgonomicPage> {
           ButtonWithoutIconWidget(
               onTap: () {
                 StoredOptionsService.clearStoredOptions();
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.popUntil(
+                    context, (route) => route.settings.name == PageName.HOME);
               },
               text: "กลับเมนู",
               radius: 32,
