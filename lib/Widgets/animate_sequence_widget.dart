@@ -75,7 +75,7 @@ class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
   }
 
   void startSetTimer() {
-    print('--- startSetTimer called');
+    // print('--- startSetTimer called');
     setState(() {
       currentIndex = 0;
     });

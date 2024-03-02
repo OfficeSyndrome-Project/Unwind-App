@@ -312,7 +312,7 @@ class ResultScreeningPage extends StatelessWidget {
               ...resultWidget,
             ],
           );
-      print('--- resultNrs.length: ${resultNrs.length}');
+      // print('--- resultNrs.length: ${resultNrs.length}');
       final sections = [
         if (resultNrs.isNotEmpty)
           sectionBuilder(resultNrs, 'ค่าความเจ็บปวด (NRS pain score)'),
