@@ -18,13 +18,13 @@ void main() {
     test('go to doctor page by answers', () {
       expect(
         ShowGoToDoctorPageService.showGoToDoctorPageByAnswer(
-          Answer(questionPart: 1, title: null, questionId: 1, answer: 2),
+          Answer(questionPart: 1, area: null, questionId: 1, answer: 2),
         ),
         true,
       );
       expect(
         ShowGoToDoctorPageService.showGoToDoctorPageByAnswer(
-          Answer(questionPart: 1, title: null, questionId: 1, answer: 1),
+          Answer(questionPart: 1, area: null, questionId: 1, answer: 1),
         ),
         false,
       );
@@ -34,7 +34,7 @@ void main() {
   group('Test ScreeningDiagnose Service', () {
     test('isNeckSetToDoctor return true', () {
       final answers = [
-        Answer(questionPart: 1, title: null, questionId: 1, answer: 2),
+        Answer(questionPart: 1, area: null, questionId: 1, answer: 2),
       ];
       final nrs = {
         ScreeningTitle.neck: 9,
@@ -47,7 +47,7 @@ void main() {
 
     test('isNeckSetToDoctor return false', () {
       final answers = [
-        Answer(questionPart: 1, title: null, questionId: 1, answer: 1),
+        Answer(questionPart: 1, area: null, questionId: 1, answer: 1),
       ];
       final nrs = {
         ScreeningTitle.neck: 5,
@@ -60,7 +60,7 @@ void main() {
 
     test('isBackSetToDoctor return true', () {
       final answers = [
-        Answer(questionPart: 1, title: null, questionId: 1, answer: 2),
+        Answer(questionPart: 1, area: null, questionId: 1, answer: 2),
       ];
       final nrs = {
         ScreeningTitle.upperback: 9,
@@ -73,7 +73,7 @@ void main() {
 
     test('isBackSetToDoctor return false', () {
       final answers = [
-        Answer(questionPart: 1, title: null, questionId: 1, answer: 1),
+        Answer(questionPart: 1, area: null, questionId: 1, answer: 1),
       ];
       final nrs = {
         ScreeningTitle.upperback: 5,
@@ -83,8 +83,5 @@ void main() {
         false,
       );
     });
-
-    ////////////////NOTE////////////////
-    //////////get workoutlist test/////
   });
 }

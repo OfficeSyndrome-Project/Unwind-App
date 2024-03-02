@@ -31,33 +31,5 @@ void main() {
     expect(onChangedValue, 'Kridsaya');
     expect(find.text('TestForm'), findsOneWidget);
     expect(find.text('TestUnit'), findsOneWidget);
-
-    /////////////////NOTE//////////////////
-    /////////////Text Style has error///////////////
-
-    // final TextStyle unfocusedTextStyle = TextStyle(
-    //   color: Color(0xFF9BA4B5),
-    //   fontSize: 16,
-    //   fontWeight: FontWeight.w500,
-    // );
-
-    // expect(
-    //   (tester.widget(find.byType(TextFormField)) as TextFormField)
-    //       .decoration
-    //       ?.labelStyle,
-    //   equals(unfocusedTextStyle),
-    // );
-
-    // สี Text เมื่อไม่ Focus
-    // expect(tester.widget<Text>(find.text('TestForm')).style?.color,
-    //     Color(0xFF9BA4B5));
-
-    // await tester.tap(find.byType(TextFormField));
-    // await tester.pump();
-    // print(tester.widget<Text>(find.text('TestForm')).style?.color);
-
-    // สี Text เมื่อมีการ Focus
-    // expect(tester.widget<Text>(find.text('TestForm')).style?.color,
-    //     Color(0xFF484D56));
   });
 }
