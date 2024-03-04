@@ -112,8 +112,10 @@ class _TimeWatchPageState extends State<TimeWatchPage> {
       textBar: "นาฬิกาจับเวลา",
       iconButtonStart: IconButton(
         onPressed: () async {
+          stopTimer();
           final result = await alertDialog.getshowDialog(
               context, 'ยืนยันที่จะหยุดจับเวลาใช่หรือไม่ ?', null, () {
+            startTimer();
             Navigator.pop(context, false);
           }, () {
             Navigator.pop(context, true);

@@ -556,7 +556,7 @@ class WorkoutData {
             time: 12,
             set: 1,
             thumbnailPath:
-                "lib/assets/images/workout/shoulder/shoulderch03/TP-3.png",
+                "lib/assets/images/workout/shoulder/shoulderth01/2.png",
             frequency: "ทำวันเว้นวัน",
             caution: null,
             animationPaths: [
@@ -571,12 +571,12 @@ class WorkoutData {
             name: "ท่ายกไหล่",
             detail: "เพิ่มความแข็งแรงให้กล้ามเนื้อไหล่",
             step:
-                " ยืนหรือนั่งหลังตรง แขนทั้ง 2 ข้างแนบลำตัว ยกไหล่ทั้ง 2 ขึ้นพร้อมกัน กดไหล่ทั้ง 2 ข้างลงพร้อมกัน ยกและกดไหล่สลับกันขึ้นลงทั้งหมด 10ครั้ง/เซต",
+                " ยืนหรือนั่งหลังตรง แขนทั้ง 2 ข้างแนบลำตัว ยกไหล่ทั้ง 2 ขึ้นพร้อมกัน กดไหล่ทั้ง 2 ข้างลงพร้อมกัน ยกและกดไหล่สลับกันขึ้นลงทั้งหมด 10ครั้งต่อเซต",
             sec: 2,
             time: 10,
             set: 1,
             thumbnailPath:
-                "lib/assets/images/workout/shoulder/shoulderch03/TP-3.png",
+                "lib/assets/images/workout/shoulder/shoulderth02/2.png",
             frequency: "ทำวันเว้นวัน",
             caution: null,
             animationPaths: [

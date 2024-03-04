@@ -10,6 +10,7 @@ import 'package:unwind_app/database/workoutlist_db.dart';
 import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/injection_container.dart';
 import 'package:unwind_app/models/workoutlist_model.dart';
+import 'package:unwind_app/pages/home.dart';
 import 'package:unwind_app/pages/workoutList-feature/start_workout_button_widget.dart';
 
 class InfoOfListWorkoutPage extends StatelessWidget {
@@ -113,7 +114,14 @@ class InfoOfListWorkoutPage extends StatelessWidget {
                 await workoutListDB
                     .deleteWorkoutListByTitle(workoutList?.titleCode ?? '');
                 // Navigator.pop(context);
-                Navigator.popUntil(context, (route) => route.isFirst);
+                // Navigator.popUntil(
+                //     context, (route) => route.settings.name == PageName.HOME);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => (HomePage(
+                              selectedIndex: 0,
+                            ))));
               }
             },
             mainAxisAlignment: MainAxisAlignment.center,

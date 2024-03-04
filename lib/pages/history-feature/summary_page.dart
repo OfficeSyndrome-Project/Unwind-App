@@ -110,7 +110,7 @@ class SummaryPage extends StatelessWidget {
                     Center(
                       child: Text(
                         (workoutListModel.firstOrNull?.date == null ||
-                                workoutListModel.firstOrNull?.date == null)
+                                workoutListModel.lastOrNull?.date == null)
                             ? 'ไม่มีข้อมูลวันที่'
                             : '${formatDateTimeRangeToThai(workoutListModel.first.date!, workoutListModel.last.date!)}',
                         style: ResponsiveCheckWidget.isSmallMobile(context)

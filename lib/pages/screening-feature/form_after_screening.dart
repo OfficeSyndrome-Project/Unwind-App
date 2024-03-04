@@ -224,15 +224,31 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                   SizedBox(
                     width: 8,
                   ),
-                  Text(
-                    'ฉันยอมข้อกำหนดและเงื่อนไข',
-                    style: TextStyle(
-                      fontFamily: "Noto Sans Thai",
-                      fontSize: ResponsiveCheckWidget.isSmallMobile(context)
-                          ? 12
-                          : 14,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF636A75),
+                  Text.rich(
+                    TextSpan(
+                      style: TextStyle(
+                        fontFamily: "Noto Sans Thai",
+                        fontSize: ResponsiveCheckWidget.isSmallMobile(context)
+                            ? 14
+                            : 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'ฉัน',
+                          style: TextStyle(
+                            color: Color(0xFF636A75),
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'ยอมรับข้อกำหนดและเงื่อนไข',
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              decoration: TextDecoration.underline,
+                              decorationColor:
+                                  Theme.of(context).colorScheme.primary),
+                        )
+                      ],
                     ),
                   ),
                 ],
@@ -288,7 +304,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                           .route(context));
                 }
               },
-              text: "สมัครสมาชิก",
+              text: "ดำเนินการต่อ",
               radius: 32,
               width: double.infinity,
               height: ResponsiveCheckWidget.isSmallMobile(context) ? 48 : 52,
