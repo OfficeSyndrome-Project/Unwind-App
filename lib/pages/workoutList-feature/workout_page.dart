@@ -18,7 +18,7 @@ import 'package:unwind_app/pages/workoutList-feature/nrs_after_and_before_page.d
 import 'package:volume_controller/volume_controller.dart';
 
 //TODO skip workout for debugging
-bool ENABLE_WORKOUT_SKIP = true;
+bool ENABLE_WORKOUT_SKIP = false;
 
 class WorkoutPage extends StatefulWidget {
   final WorkoutListData workoutList;

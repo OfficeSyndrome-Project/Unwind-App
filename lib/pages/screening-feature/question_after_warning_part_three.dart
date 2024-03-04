@@ -205,18 +205,18 @@ class _QuestionAfterWarningPartThreeState
 
     return AppscreenTheme(
         colorBar: Colors.transparent,
-        iconButtonStart: IconButton(
-          highlightColor: Colors.transparent,
-          icon: const Icon(Icons.arrow_back_ios_rounded),
-          onPressed: () {
-            currentPage >= 1
-                ? _controller.previousPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeOut)
-                : Navigator.pop(context);
-          },
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        // iconButtonStart: IconButton(
+        //   highlightColor: Colors.transparent,
+        //   icon: const Icon(Icons.arrow_back_ios_rounded),
+        //   onPressed: () {
+        //     currentPage >= 1
+        //         ? _controller.previousPage(
+        //             duration: const Duration(milliseconds: 500),
+        //             curve: Curves.easeOut)
+        //         : Navigator.pop(context);
+        //   },
+        //   color: Theme.of(context).colorScheme.primary,
+        // ),
         iconButtonEnd: IconButton(
             onPressed: () {
               Navigator.push(context,
