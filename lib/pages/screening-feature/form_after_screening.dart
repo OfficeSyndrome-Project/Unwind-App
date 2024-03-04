@@ -35,6 +35,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   Map<ScreeningTitle, int> get nrs => widget.answerContext?.nrs ?? {};
   List<PostureAnswer> get postureAnswers =>
       widget.answerContext?.postureAnswers ?? [];
+  User _user = User();
 
   bool? isChecked = false;
   bool isOpen = false;
@@ -43,6 +44,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   void initState() {
     super.initState();
     initCreateUser();
+    initUser();
   }
 
   void initCreateUser() async {
@@ -51,6 +53,18 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
     controllerAge.text = createUser.age.toString();
     controllerHeight.text = createUser.height.toString();
     controllerWeight.text = createUser.weight.toString();
+  }
+
+  void initUser() async {
+    final User storageUser = await ProfileService.getUser();
+    setState(() {
+      _user = storageUser;
+    });
+    controllerFirstname.text = _user.firstName;
+    controllerLastname.text = _user.lastName;
+    controllerAge.text = _user.age.toString();
+    controllerHeight.text = _user.height.toString();
+    controllerWeight.text = _user.weight.toString();
   }
 
   PageRoutes pageRoutes = PageRoutes();
@@ -95,7 +109,9 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
                   controller: controllerFirstname,
                   onChange: (value) {
                     setState(() {
-                      createUser.firstName = value;
+                      if (value.isNotEmpty) {
+                        createUser.firstName = value;
+                      }
                     });
                   },
                 ),
@@ -258,6 +274,16 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
           ButtonWithoutIconWidget(
               onTap: () async {
                 setState(() {
+                  if (controllerFirstname.text.isEmpty) {
+                    return;
+                  }
+
+                  createUser.firstName = controllerFirstname.text;
+                  createUser.lastName = controllerLastname.text;
+                  createUser.age = int.tryParse(controllerAge.text) ?? 0;
+                  createUser.height = int.tryParse(controllerHeight.text) ?? 0;
+                  createUser.weight = int.tryParse(controllerWeight.text) ?? 0;
+
                   if (createUser.sex == "") {
                     createUser.sex =
                         'ชาย'; // หรือให้ค่าเป็น defaultValue ที่ต้องการ
