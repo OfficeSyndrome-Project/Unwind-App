@@ -270,16 +270,21 @@ class _QuestionAfterWarningPartThreeState
                 ]);
                 if (isDoctoringOnNeckOrBaaOrShoulder) {
                   // Show doctor page
-                  print('showing doctor page');
-                  if (lowerBackPage.isNotEmpty) {
-                    if (currentPage < lowerBackPage.first) {
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ExceptionPage(exceptionPart: 1)));
-                    }
-                  }
+                  // print('showing doctor page');
+                  // if (lowerBackPage.isNotEmpty) {
+                  //   if (currentPage < lowerBackPage.first) {
+                  //     await Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) =>
+                  //                 ExceptionPage(exceptionPart: 1)));
+                  //   }
+                  // }
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ExceptionPage(exceptionPart: 1)));
 
                   // Jump to lower back if exists
                   if (lowerBackPage.isNotEmpty) {
@@ -328,12 +333,16 @@ class _QuestionAfterWarningPartThreeState
 
                 if (isDoctoringOnUpperBackOrLowerBack) {
                   // Show doctor page
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ExceptionPage(exceptionPart: 1)));
-                  print('showing doctor page');
+                  if (lowerBackPage.isNotEmpty) {
+                    if (currentPage >= lowerBackPage.first) {
+                      print('showing doctor page');
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ExceptionPage(exceptionPart: 1)));
+                    }
+                  }
 
                   // if neck is also go to doctor, No workout list shall be given
                   if (isNeckSetToDoctor(answers, nrs)) {
@@ -342,19 +351,18 @@ class _QuestionAfterWarningPartThreeState
                       MaterialPageRoute(
                           builder: (context) => FormAfterScreening(
                               resultText:
-                                  ExceptionData.getData()[3].descriptionLabel)),
+                                  ExceptionData.getData()[1].descriptionLabel)),
                     );
                   }
-
-                  // Jump to form, for protential workout list
-                  Navigator.push(
-                      context,
-                      pageRoutes.screening
-                          .formafterscreening(AnswerContext(
-                              answers: answers,
-                              nrs: nrs,
-                              postureAnswers: postureAnswers))
-                          .route(context));
+                  // // Jump to form, for protential workout list
+                  // Navigator.push(
+                  //     context,
+                  //     pageRoutes.screening
+                  //         .formafterscreening(AnswerContext(
+                  //             answers: answers,
+                  //             nrs: nrs,
+                  //             postureAnswers: postureAnswers))
+                  //         .route(context));
                 }
                 final isNrsExceedingOnUpperBackOrLowerBack =
                     ScreeningDiagnoseService.nrsExceedOf([
