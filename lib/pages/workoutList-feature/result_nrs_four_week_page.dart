@@ -38,26 +38,26 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
-      iconButtonStart: IconButton(
-          highlightColor: Colors.transparent,
-          icon: const Icon(Icons.arrow_back_ios_rounded),
-          onPressed: () {
-            setState(() {
-              if (index == 0) {
-                Navigator.pop(context);
-                return;
-              }
-              if (index == 1) {
-                index -= 1;
-                return;
-              }
-              if (index == 2) {
-                index = 0;
-                return;
-              }
-            });
-          },
-          color: Theme.of(context).colorScheme.primary),
+      // iconButtonStart: IconButton(
+      //     highlightColor: Colors.transparent,
+      //     icon: const Icon(Icons.arrow_back_ios_rounded),
+      //     onPressed: () {
+      //       setState(() {
+      //         if (index == 0) {
+      //           Navigator.pop(context);
+      //           return;
+      //         }
+      //         if (index == 1) {
+      //           index -= 1;
+      //           return;
+      //         }
+      //         if (index == 2) {
+      //           index = 0;
+      //           return;
+      //         }
+      //       });
+      //     },
+      //     color: Theme.of(context).colorScheme.primary),
       colorBar: Colors.transparent,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
