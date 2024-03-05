@@ -19,6 +19,7 @@ class TableCalendarTheme {
           fontWeight: FontWeight.w500,
         ),
         // Use `CalendarStyle` to customize the UI
+
         outsideDaysVisible: true,
         outsideTextStyle: TextStyle(
           color: Color(0xFF9BA4B5),

@@ -402,6 +402,12 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
                     calendarFormat: _calendarFormat,
                     locale: 'th_TH',
                     rowHeight: 40,
+                    enabledDayPredicate: (day) {
+                      if (day.isBefore(getDateTimeToday()) == true) {
+                        return false;
+                      }
+                      return true;
+                    },
                     headerStyle: TableCalendarTheme().headerStyle(context),
                     daysOfWeekStyle: TableCalendarTheme().daysOfWeekStyle(),
                     calendarStyle: TableCalendarTheme().calendarStyle(context),

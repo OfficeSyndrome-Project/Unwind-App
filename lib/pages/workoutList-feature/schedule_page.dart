@@ -38,7 +38,7 @@ class _SchedulePageState extends State<SchedulePage> {
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
     initKEvent();
 
-    // ScheduleService.removeEvent(0, DateTime.parse('2024-02-07 00:00:00.000'));
+    // ScheduleService.removeEvent(0, DateTime.parse('2024-03-05 17:48:00.000'));
   }
 
   void initKEvent() async {

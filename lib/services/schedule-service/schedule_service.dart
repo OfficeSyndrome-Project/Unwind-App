@@ -65,7 +65,8 @@ class ScheduleService {
     for (var index = 0; index < events.length; index++) {
       results.add(await writeEvent(events[index], id, index));
       results.add(await writeLength(events.length, times));
-      await NotificationService.scheduleNotification(
+
+      NotificationService.scheduleNotification(
           selectedDay: events[index].times,
           id: index,
           title: 'ดูเหมือนว่าคุณจะต้องบริหารร่างกายแล้ว~ !',
@@ -91,26 +92,26 @@ class ScheduleService {
   static Future<void> removeEvent(int index, DateTime selectedDay) async {
     final int length = await readLength(selectedDay);
     final List<Event> events = await readEvents(selectedDay);
-    final List<Event> newEvents =
-        events.where((event) => event.times != selectedDay).toList();
+    if (index >= 0 && index < events.length) {
+      events.removeAt(index);
+      await writeEvents(selectedDay, events);
 
-    await writeLength(length - 1, selectedDay);
-    await writeEvents(selectedDay, newEvents);
+      if (length == 1) {
+        final List<DateTime> selectedDays = await readSelectedDays();
+        final int size = await readkEventsSize();
+        final List<DateTime> newSeletedDays =
+            selectedDays.where((day) => day != selectedDay).toList();
 
-    if (length == 1) {
-      final List<DateTime> selectedDays = await readSelectedDays();
-      final int size = await readkEventsSize();
-      final List<DateTime> newSeletedDays =
-          selectedDays.where((day) => day != selectedDay).toList();
-
-      await writeSelectedDays(newSeletedDays, size);
-      await writekEventsSize(size - 1);
+        await writeSelectedDays(newSeletedDays, size);
+        await writekEventsSize(size - 1);
+      }
       NotificationService.cancel(index);
     }
   }
 
   static Future<bool> writeLength(int length, DateTime times) async {
     int id = getDaySinceEpoch(times);
+    print(length);
     return await GeneralStoredService.writeInt(
         pagename + 'length', id, 0, length);
   }
