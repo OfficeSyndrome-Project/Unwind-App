@@ -72,47 +72,16 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                     itemCount: workoutLists.length,
                     separatorBuilder: (context, index) => SizedBox(
                           height: 16,
-                        )
-                    // children: workoutLists
-                    //     .map(
-                    //       (workoutList) => WorkoutBoxWidget(
-                    //         workoutName: workoutList.description,
-                    //         numberWorkout:
-                    //             workoutList.workoutData.length.toString(),
-                    //         time: workoutList.workoutData.isEmpty
-                    //             ? ''
-                    //             : workoutList.workoutData
-                    //                     .map((e) => Duration(seconds: e.time))
-                    //                     .reduce(
-                    //                         (value, element) => value + element)
-                    //                     .inSeconds
-                    //                     .toString() +
-                    //                 ' วินาที',
-                    //         assetName: workoutList.titlePath,
-                    //       ),
-                    //     )
-                    //     .toList(),
-                    // children: [
-                    //   WorkoutBoxWidget(
-                    //       onTap: () {
-                    //         Navigator.push(
-                    //             context,
-                    //             pageRoute.workout
-                    //                 .reportworkoutpage()
-                    //                 .route(context));
-                    //       },
-                    //       workoutName: 'ชุดท่าบริหารคอ',
-                    //       numberWorkout: '4 ชุดท่า',
-                    //       time: '',
-                    //       assetName: 'lib/assets/images/screeningPart/neck.png')
-                    // ],
-                    );
+                        ));
               }
               return Center(
                 child: CircularProgressIndicator(),
               );
             },
           )),
+          SizedBox(
+            height: 8,
+          ),
           GestureDetector(
             onLongPress: () async {
               await GeneralStoredService.writeBoolean(
