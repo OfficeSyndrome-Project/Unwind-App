@@ -34,11 +34,9 @@ class _SchedulePageState extends State<SchedulePage> {
   void initState() {
     super.initState();
 
-    _selectedDay = _focusedDay; //เปลี่ยนตรงนี้เป็น selectday จากวันที่เลือกมา
+    _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
     initKEvent();
-
-    // ScheduleService.removeEvent(0, DateTime.parse('2024-03-05 17:48:00.000'));
   }
 
   void initKEvent() async {

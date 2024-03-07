@@ -12,7 +12,6 @@ import 'package:unwind_app/globals/theme/appscreen_theme.dart';
 import 'package:unwind_app/pages/screening-feature/exception_page.dart';
 import 'package:unwind_app/pages/screening-feature/form_after_screening.dart';
 import 'package:unwind_app/pages/screening-feature/question_button_state_service.dart';
-// import 'package:unwind_app/pages/screening-feature/results_workout_page.dart';
 import 'package:unwind_app/services/screening-service/screening_diagnose_service.dart';
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
@@ -205,18 +204,6 @@ class _QuestionAfterWarningPartThreeState
 
     return AppscreenTheme(
         colorBar: Colors.transparent,
-        // iconButtonStart: IconButton(
-        //   highlightColor: Colors.transparent,
-        //   icon: const Icon(Icons.arrow_back_ios_rounded),
-        //   onPressed: () {
-        //     currentPage >= 1
-        //         ? _controller.previousPage(
-        //             duration: const Duration(milliseconds: 500),
-        //             curve: Curves.easeOut)
-        //         : Navigator.pop(context);
-        //   },
-        //   color: Theme.of(context).colorScheme.primary,
-        // ),
         iconButtonEnd: IconButton(
             onPressed: () {
               Navigator.push(context,
@@ -254,11 +241,6 @@ class _QuestionAfterWarningPartThreeState
           ),
           ButtonWithoutIconWidget(
               onTap: () async {
-                print('answers : ${answers.join('\n')}');
-                print('postureAnswer :${postureAnswers.join('\n')}');
-                print(
-                    'currentPage : ${currentPage} lowerbackpage: ${lowerBackPage}');
-
                 if (!isButtonEnable && !alwaysUnlockButton) return;
 
                 //ถ้าคอบ่าไหล่หาหมอ
@@ -269,17 +251,6 @@ class _QuestionAfterWarningPartThreeState
                   ScreeningTitle.shoulder,
                 ]);
                 if (isDoctoringOnNeckOrBaaOrShoulder) {
-                  // Show doctor page
-                  // print('showing doctor page');
-                  // if (lowerBackPage.isNotEmpty) {
-                  //   if (currentPage < lowerBackPage.first) {
-                  //     await Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (context) =>
-                  //                 ExceptionPage(exceptionPart: 1)));
-                  //   }
-                  // }
                   await Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -288,10 +259,9 @@ class _QuestionAfterWarningPartThreeState
 
                   // Jump to lower back if exists
                   if (lowerBackPage.isNotEmpty) {
-                    print('=== $currentPage, ${lowerBackPage.first}');
                     if (currentPage < lowerBackPage.first) {
                       _controller.jumpToPage(lowerBackPage.first);
-                      print('jumped to $currentPage');
+
                       return;
                     }
                   }
@@ -306,7 +276,7 @@ class _QuestionAfterWarningPartThreeState
                 ], nrs ?? {});
                 if (isNrsExceedingOnNeckOrBaaOrShoulder) {
                   // Show doctor page, because nrs exceed
-                  print('showing doctor page');
+
                   if (lowerBackPage.isNotEmpty) {
                     if (currentPage < lowerBackPage.first) {
                       await Navigator.push(
@@ -335,7 +305,6 @@ class _QuestionAfterWarningPartThreeState
                   // Show doctor page
                   if (lowerBackPage.isNotEmpty) {
                     if (currentPage >= lowerBackPage.first) {
-                      print('showing doctor page');
                       await Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -354,15 +323,6 @@ class _QuestionAfterWarningPartThreeState
                                   ExceptionData.getData()[1].descriptionLabel)),
                     );
                   }
-                  // // Jump to form, for protential workout list
-                  // Navigator.push(
-                  //     context,
-                  //     pageRoutes.screening
-                  //         .formafterscreening(AnswerContext(
-                  //             answers: answers,
-                  //             nrs: nrs,
-                  //             postureAnswers: postureAnswers))
-                  //         .route(context));
                 }
                 final isNrsExceedingOnUpperBackOrLowerBack =
                     ScreeningDiagnoseService.nrsExceedOf([
@@ -371,7 +331,7 @@ class _QuestionAfterWarningPartThreeState
                 ], nrs ?? {});
                 if (isNrsExceedingOnUpperBackOrLowerBack) {
                   // Show doctor page, because nrs exceed
-                  print('showing doctor page');
+
                   await Navigator.push(
                       context,
                       MaterialPageRoute(

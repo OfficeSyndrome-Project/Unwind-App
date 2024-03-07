@@ -13,11 +13,6 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
     required this.workoutList,
     required this.workoutListModels,
   });
-
-  // static List<ChartData> chartData = [ChartData(1, 10)];
-  // static List<KeepScoreAndDateModel> keepscores =
-  //     KeepScoreAndDateModel.getData();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +41,6 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                // keepscores.map((data) => data.name).first.toString(),
                 '${workoutList.titleTH}',
                 style: ResponsiveCheckWidget.isSmallMobile(context)
                     ? TextStyle(
@@ -57,7 +51,6 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
                     : Theme.of(context).textTheme.titleMedium,
               ),
               Text(
-                // "วันที่ ${DateFormat("dd/MM/yy").format(workoutListModels.first.date ?? DateTime.now())} ถึง ${DateFormat("dd/MM/yy").format(workoutListModels.last.date ?? DateTime.now())}",
                 (workoutListModels.first.date == null ||
                         workoutListModels.last.date == null)
                     ? ""
@@ -78,10 +71,4 @@ class HistoryWorkoutlistWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-class ChartData {
-  final int day;
-  final double frequent;
-  ChartData(this.day, this.frequent);
 }

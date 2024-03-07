@@ -25,28 +25,13 @@ class ResultPerWeekPage extends StatefulWidget {
 
 class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
   PageRoutes pageRoutes = PageRoutes();
-
-  // late SummaryListObj keepScoreObj;
-  // late int currentIndex = keepScoreObj.index;
   int get weekNumber => widget.weeklySummary.weekNumber;
   int get differentScore => 1;
   WeeklySummary get weeklySummary => widget.weeklySummary;
-  // late int differenceScore =
-  //     keepScoreObj.weeklyChunks[0].map((score) => score.beforeScore).first -
-  //         keepScoreObj.weeklyChunks[currentIndex]
-  //             .map((score) => score.afterScore)
-  //             .last;
 
   @override
   void initState() {
     super.initState();
-    initScore();
-  }
-
-  void initScore() {
-    // if (widget.summaryArr.isNotEmpty) {
-    //   keepScoreObj = widget.summaryArr.first;
-    // }
   }
 
   @override
@@ -113,28 +98,7 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                         margin: EdgeInsets.only(bottom: 16),
                         alignment: Alignment.center,
                         child: Text(
-                          // ' ${weeklySummary.dailyNrsScores.first.dateTime?.day}',
                           '${formatDateTimeRangeToThai(weeklySummary.dailyNrsScores.first.dateTime!, weeklySummary.dailyNrsScores.last.dateTime!)}',
-                          //first day
-                          // .map((data) => data.dateTime.day)
-                          // .first
-                          //     .toString() +
-                          // ' - ' + //last day
-                          // keepScoreObj.weeklyChunks[weekNumber]
-                          //     .map((data) => data.dateTime.day)
-                          //     .last
-                          //     .toString() +
-                          // ' ' + //month
-                          // keepScoreObj.weeklyChunks[weekNumber]
-                          //     .map((data) => DateFormat('MMMM', 'th')
-                          //         .format(data.dateTime))
-                          //     .first
-                          //     .toString() +
-                          // ' ' + //year
-                          // keepScoreObj.weeklyChunks[weekNumber]
-                          //     .map((data) => data.dateTime.year)
-                          //     .first
-                          //     .toString(),
                           style: ResponsiveCheckWidget.isSmallMobile(context)
                               ? TextStyle(
                                   fontSize: 14,
@@ -157,9 +121,7 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                               width: 6,
                             ),
                             animationDuration: 0,
-                            dataSource:
-                                // [keepScoreObj.weeklyChunks[weekNumber]].first,
-                                weeklySummary.dailyNrsScores,
+                            dataSource: weeklySummary.dailyNrsScores,
                             xValueMapper: (DailyNrsScore score, _) =>
                                 score.dateTime,
                             yValueMapper: (DailyNrsScore score, _) =>
@@ -253,7 +215,6 @@ class _ResultPerWeekPageState extends State<ResultPerWeekPage> {
                         differenceNrs: (firstNrs != null && lastestNrs != null)
                             ? firstNrs - lastestNrs
                             : null,
-                        // differenceScore > 0 ? differenceScore : 0,
                       ),
                     ],
                   ),

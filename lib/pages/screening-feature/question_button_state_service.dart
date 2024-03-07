@@ -2,8 +2,7 @@ import 'package:unwind_app/services/screening-service/screening_diagnose_service
 import 'package:unwind_app/services/screening-service/screening_service.dart';
 
 /// If true, the button will be enabled even if not all questions are answered
-/// Use for debugging
-//TODO skip for screening
+/// TODO for debugging
 const bool alwaysUnlockButton = false;
 
 enum ScreeningPart { one, two, three }

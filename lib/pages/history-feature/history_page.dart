@@ -113,26 +113,6 @@ class HistoryWorkoutListItem extends StatelessWidget {
   }
 }
 
-// Future<Map<K, V>> resolveFutureMap<K, V>(Map<K, Future<V>> futureMap) async {
-//   final resolvedMap = <K, V>{};
-
-//   await Future.forEach(futureMap.entries, (MapEntry<K, Future<V>> entry) async {
-//     final key = entry.key;
-//     final futureValue = entry.value;
-
-//     try {
-//       final value = await futureValue;
-//       resolvedMap[key] = value;
-//     } catch (e) {
-//       // Handle error gracefully
-//       print('Error resolving future for key $key: $e');
-//       // omit the key-value pair from the resolved map
-//     }
-//   });
-
-//   return resolvedMap;
-// }
-
 Future<Map<K, V>> resolveFutureMap<K, V>(Map<K, Future<V>> futureMap) async {
   return Future.wait(
     futureMap.entries

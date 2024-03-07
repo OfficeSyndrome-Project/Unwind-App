@@ -35,22 +35,7 @@ class _FrameAnimationState extends State<FrameAnimation> {
           isAutoPlay: false,
           fps: 2, //frame in one sec
           isLooping: false,
-          onReadyToPlay: widget.onReadyToPlay
-
-          // onPlaying: (_imageSequenceAnimator) async {
-          //   await Future.delayed(Duration(seconds: 1));
-          //   _imageSequenceAnimator.setIsLooping(false);
-          //   // debugPrint({_imageSequenceAnimator.currentTime / 1000}.toString());
-          // },
-          // onFinishPlaying: (_imageSequenceAnimator) async {
-          //   // int remainSec =
-          //   //     (widget.duration - _imageSequenceAnimator.currentTime.toInt()) -
-          //   //         1;
-          //   // _imageSequenceAnimator.setIsLooping(false);
-          //   await Future.delayed(Duration(seconds: 5));
-          //   // _imageSequenceAnimator.setIsLooping(true);
-          // },
-          ),
+          onReadyToPlay: widget.onReadyToPlay),
     );
   }
 }

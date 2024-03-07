@@ -197,7 +197,7 @@ class SummaryPage extends StatelessWidget {
                         final wols = await serviceLocator<WorkoutListDB>()
                             .getWorkoutListByTitle(workoutList.titleCode);
                         final weekScores = getWeekScores(wols);
-                        print(weekScores);
+
                         return weekScores;
                       }(),
                       builder: (context, snapshot) {
@@ -457,11 +457,6 @@ List<List<T>> Function(DateTime? Function(T) getDate) getWeekly<T>(
 
     // Grouping elements into weekly lists
     final weeklyLists = firstDatesOfWeeks.map((startDate) {
-      // Defining a function to check if the element's date falls within the current week
-      // bool Function(DateTime?) withinCurrentWeek = (date) =>
-      //     date != null &&
-      //     date.isAfter(startDate) &&
-      //     date.isBefore(startDate.add(Duration(days: 7)));
       final withinCurrentWeek =
           withinDateOrSameFirstDay(startDate)(startDate.add(Duration(days: 7)));
 

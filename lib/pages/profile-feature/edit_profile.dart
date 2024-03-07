@@ -184,12 +184,7 @@ class EditProfileState extends State<EditProfile> {
                     onPressed: () {
                       setState(() {
                         ProfileService.writeUser(_user);
-                        // print("USER:" + _user.age.toString());
                         Navigator.pop(context, _user);
-                        // Navigator.push(
-                        //   context,
-                        //   pageRoutes.profile.profilepage().route(context),
-                        // );
                       });
                     },
                   ),

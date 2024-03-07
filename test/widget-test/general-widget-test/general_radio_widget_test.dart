@@ -42,15 +42,7 @@ void main() {
           .margin,
       EdgeInsets.only(right: 4),
     );
-    // final BoxDecoration decoration = tester
-    //     .widget<Container>(
-    //       find.descendant(
-    //         of: find.byType(InkWell),
-    //         matching: find.byType(Container),
-    //       ),
-    //     )
-    //     .decoration as BoxDecoration;
-    // expect(decoration.border!.top.color, equals(Colors.grey));
+
     await tester.tap(find.byType(InkWell));
     await tester.pump();
     expect(onChangedCalled, true);

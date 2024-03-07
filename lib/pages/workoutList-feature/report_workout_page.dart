@@ -154,7 +154,6 @@ class _ReportWorkoutPageState extends State<ReportWorkoutPage> {
                               isDone: wol?.remaining_times == 0,
                               onTap: () {
                                 handleSelectDate(date);
-                                print('selecting : $currentSelectingDate');
                               },
                             );
                           }).toList(),

@@ -24,8 +24,6 @@ class AnimateSequenceWidget extends StatefulWidget {
 class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
     with SingleTickerProviderStateMixin {
   final int duration = 1000;
-  // final int repeat = 3;
-  // final int eachSetDuration = 10;
 
   late int currentIndex;
   late int currentRepeat;
@@ -58,7 +56,6 @@ class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
       else {
         currentIndex = widget.listPath.length - 1;
         isDone = true;
-        print("isDone: $isDone");
       }
     });
   }
@@ -75,7 +72,6 @@ class _AnimateSequenceWidgetState extends State<AnimateSequenceWidget>
   }
 
   void startSetTimer() {
-    // print('--- startSetTimer called');
     setState(() {
       currentIndex = 0;
     });

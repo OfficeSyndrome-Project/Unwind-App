@@ -68,7 +68,6 @@ class _QuestionBoxNrsWidgetState extends State<QuestionBoxNrsWidget> {
                         }
                         currentOptions = value;
                       });
-                      // onCurrentOptionsChanged(true);
                     },
                     activeColor: Theme.of(context).colorScheme.primary,
                     inactiveColor: Theme.of(context).colorScheme.primary),

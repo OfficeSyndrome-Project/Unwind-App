@@ -24,9 +24,5 @@ void main() {
     expect(find.byType(ButtonWithoutIconWidget), findsOneWidget);
     expect(find.text('ถัดไป'), findsOneWidget);
     await tester.pumpAndSettle();
-    // expect(find.byType(RouteResultErgonomic), findsOneWidget);
-    // await tester.tap(find.byType(ButtonWithoutIconWidget));
-    // await tester.pump();
-    // await tester.pumpAndSettle();
   });
 }

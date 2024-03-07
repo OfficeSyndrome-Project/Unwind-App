@@ -33,14 +33,12 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
   initState() {
     super.initState();
     answers.addAll(widget.answers ?? []);
-    print(widget.answers);
   }
 
   List<Answer> answers = [];
   void handleCurrentAnswerChanged(Answer answer) {
     setState(() {
       answers = Answer.updateAnswer(answers, answer);
-      // isButtonEnable = isAllQuestionAnswered(ScreeningPart.two,currentPage, answers);
     });
   }
 
@@ -66,7 +64,6 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
             return;
           }
           pagesCompleted.add(currentPage);
-          print(pagesCompleted);
         });
   }
 
@@ -164,18 +161,6 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
     return AppscreenTheme(
         vertical: ResponsiveCheckWidget.isSmallMobile(context) ? 0 : 16,
         colorBar: Colors.transparent,
-        // iconButtonStart: IconButton(
-        //   highlightColor: Colors.transparent,
-        //   icon: const Icon(Icons.arrow_back_ios_rounded),
-        //   onPressed: () {
-        //     currentPage >= 1
-        //         ? _controller.previousPage(
-        //             duration: const Duration(milliseconds: 500),
-        //             curve: Curves.easeOut)
-        //         : Navigator.pop(context);
-        //   },
-        //   color: Theme.of(context).colorScheme.primary,
-        // ),
         iconButtonEnd: IconButton(
             onPressed: () {
               Navigator.push(context,
@@ -213,10 +198,6 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
           ),
           ButtonWithoutIconWidget(
               onTap: () async {
-                print('nrs : $nrs');
-                print(answers);
-                print('current page :$currentPage');
-
                 if (!isButtonEnable && !alwaysUnlockButton) return;
 
                 final isDoctoringOnNeckOrBaaOrShoulder =
@@ -394,14 +375,6 @@ class _QuestionAfterPartTwoState extends State<QuestionAfterPartTwo> {
                   : Theme.of(context).textTheme.headlineSmall)
         ]);
   }
-
-  // bool nrsGreaterOrEqualThanEightOf(
-  //     List<ScreeningTitle> concernedTitles, Map<ScreeningTitle, int> nrs) {
-  //   final List<int> nrses =
-  //       concernedTitles.map((title) => nrs[title] ?? 0).toList();
-  //   return nrses.any((score) =>
-  //       ScreeningDiagnoseService.nrs_greater_or_equal_to_eight(score));
-  // }
 }
 
 class DoctorPageDummy extends StatelessWidget {

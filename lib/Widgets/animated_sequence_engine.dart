@@ -76,8 +76,7 @@ class _AnimatedSequenceEngineState extends State<AnimatedSequenceEngine> {
     );
     if (animationController.status == AnimatedSequenceStatus.stopped) return;
     if (animationController.status == AnimatedSequenceStatus.paused) return;
-    // print(
-    //     '--- requesting for next frame: frame ${animationController.currentAnimationFrame + 1 % listPath.length}');
+
     if (!mounted) return;
     nextFrame();
     return await startAnimation();

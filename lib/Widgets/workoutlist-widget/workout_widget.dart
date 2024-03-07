@@ -47,13 +47,6 @@ class WorkoutWidget extends StatelessWidget {
             repeat: workoutData.time,
             ttsManager: ttsManager,
           ),
-          // AnimatedSequenceEngine(
-          //   times: workoutData.time,
-          //   durationPerTimeInSeconds: workoutData.sec,
-          //   animationPaths: workoutData.animationPaths ?? [],
-          //   animationController: animationController,
-          //   repetition: workoutData.time,
-          // ),
           Text('$timeth/${workoutData.time}',
               style: TextStyle(
                 fontFamily: "Noto Sans Thai",

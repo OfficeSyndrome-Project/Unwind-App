@@ -116,15 +116,7 @@ class _SetSchedulePageState extends State<SetSchedulePage> {
     ScheduleService.kEvents.addAll({
       _selectedDay!: [...oldEvents, Event(selectWorkoutList, setSchedule())]
     });
-    // NotificationService.scheduleNotification(
-    //   selectedDay: setSchedule(),
-    //   title: 'Test title',
-    //   body: 'hey!',
-    //   id:
-    // );
-
     ScheduleService.savekEvents();
-
     Navigator.pop(context, _selectedDay);
   }
 

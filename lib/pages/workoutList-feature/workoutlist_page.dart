@@ -86,8 +86,6 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
             onLongPress: () async {
               await GeneralStoredService.writeBoolean(
                   "isFirstTime", 0, 0, true);
-              print(
-                  await GeneralStoredService.readBoolean("isFirstTime", 0, 0));
             },
             child: TextWithStartIconWidget(
                 startIcon: Icon(
@@ -113,12 +111,6 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                   WorkoutListPage.pageRoutes.screening
                       .introscreeningpage(0, [], [], null)
                       .route(context));
-            },
-            onLongPress: () async {
-              int count =
-                  await serviceLocator<WorkoutListDB>().deleteAllWorkoutList();
-              print('successfully deleted $count workouts');
-              setState(() {});
             },
             mainAxisAlignment: MainAxisAlignment.center,
             text: 'ตรวจอีกครั้ง',

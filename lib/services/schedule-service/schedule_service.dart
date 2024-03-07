@@ -111,7 +111,7 @@ class ScheduleService {
 
   static Future<bool> writeLength(int length, DateTime times) async {
     int id = getDaySinceEpoch(times);
-    print(length);
+
     return await GeneralStoredService.writeInt(
         pagename + 'length', id, 0, length);
   }

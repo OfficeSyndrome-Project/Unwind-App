@@ -31,8 +31,6 @@ void main() {
       var actualPages = ScreeningQuestionPartOneService.getAllQuestionPage();
       expect(actualPages, isList);
       expect(actualPages.length, equals(expectedPages.length));
-      // print(actualPages.lenght);
-      // print(expectedPages.length);
     });
 ////////////////////////////////////// NOTE ////////////////////////////////////////
     test('get questions by page', () {
@@ -47,8 +45,6 @@ void main() {
               .toList();
       expect(actualQuestions, isList);
       expect(actualQuestions, expectedQuestions);
-      // print(actualQuestions);
-      // print(expectedQuestions);
     });
   });
 
@@ -132,7 +128,6 @@ void main() {
           equals(testPosture
               .where((posture) => posture.questionPage == questionPage)
               .toList()));
-      // print(actualPosture);
     });
 
     test('get model by part', () {

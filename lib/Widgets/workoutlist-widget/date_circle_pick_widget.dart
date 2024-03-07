@@ -30,8 +30,6 @@ class DateCirclePickWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final bool onSelect = stateSelect;
-
     return GestureDetector(
       onTap: onTap,
       child: Column(

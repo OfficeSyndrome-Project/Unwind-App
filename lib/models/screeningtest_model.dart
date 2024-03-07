@@ -24,13 +24,12 @@ class ScreeningTestModel {
 }
 
 DateTime? parseDateTimeSafe(dynamic dateTime) {
-  print('hello');
   if (dateTime is String?) {
     if (dateTime == null) {
       return null;
     }
     return DateTime.tryParse(dateTime);
   }
-  print('hello now');
+
   return null;
 }

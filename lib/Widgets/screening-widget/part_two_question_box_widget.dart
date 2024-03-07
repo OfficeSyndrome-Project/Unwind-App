@@ -54,8 +54,7 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print("title ${widget.title}");
-    print("id ${widget.questionID}");
+
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,8 +127,6 @@ class _PartTwoQuestionBoxWidgettState extends State<PartTwoQuestionBoxWidget>
                     widget.onCompleted!(
                         answers.length == widget.questions.length);
                   }
-
-                  print(answers.length == widget.questions.length);
 
                   widget.onChanged(Answer(
                       questionPart: widget.questions[index].questionPart,

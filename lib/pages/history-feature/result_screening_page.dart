@@ -258,32 +258,6 @@ class ResultScreeningPage extends StatelessWidget {
               .toList(),
         ];
       }).toList();
-
-      // <Widget>[
-      //       BoxTitlePartSelect(partSelect: 'partSelect'),
-      //     ] +
-
-      // answersInPartTwo
-      //     .expand<Widget>(
-      //       (answer) => [
-      //         BoxHaveImg(
-      //           question: AnswerService.questionOf(answer).question,
-      //           answer: AnswerService.interpret(answer).text,
-      //           // name: AnswerService.questionOf(answer).area.toString(),
-      //           name: AnswerService.questionOf(answer)
-      //                   .questionSpecificAssetName ??
-      //               '',
-      //           assetPath: AnswerService.questionOf(answer)
-      //                   .questionSpecificAssetPath ??
-      //               AnswerService.questionOf(answer).painTypeAssetPath,
-      //         ),
-      //         SizedBox(height: 16),
-      //         // BoxOnlyQ(
-      //         //     question: AnswerService.questionOf(answer).question,
-      //         //     answer: AnswerService.interpret(answer).text),
-      //       ],
-      //     )
-      //     .toList();
       final resultWidgetPartThree = answersInPartThree_
           .expand<Widget>((answer) => [
                 (AnswerService.questionOf(answer).questionSpecificAssetPath ==
@@ -312,7 +286,7 @@ class ResultScreeningPage extends StatelessWidget {
               ...resultWidget,
             ],
           );
-      // print('--- resultNrs.length: ${resultNrs.length}');
+
       final sections = [
         if (resultNrs.isNotEmpty)
           sectionBuilder(resultNrs, 'ค่าความเจ็บปวด (NRS pain score)'),

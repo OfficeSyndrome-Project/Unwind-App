@@ -37,22 +37,7 @@ class _CircularCountdownTimerWidgetState
   @override
   void initState() {
     super.initState();
-    // startTimer();
   }
-
-  // void startTimer() {
-  //   if (currentDuration > 0) {
-  //     widget.onChange!((currentDuration - 1).toString());
-  //     timer = Timer(Duration(seconds: 1), () {
-  //       setState(() {
-  //         currentDuration -= 1;
-  //       });
-  //       startTimer();
-  //     });
-  //   } else {
-  //     LoadingPage();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

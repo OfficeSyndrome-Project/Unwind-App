@@ -36,13 +36,6 @@ class PrepareWorkoutWidget extends StatelessWidget {
             eachSetDuration: workoutData.sec,
             repeat: workoutData.time,
           ),
-
-          // RatioImageoneToOne(
-          //     assetName: assetName,
-          //     smallWidth: 320,
-          //     largeWidth: 380,
-          //     smallHeight: 320,
-          //     largeHeight: 380),
         ],
       ),
     );
