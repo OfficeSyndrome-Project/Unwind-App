@@ -1,16 +1,14 @@
-# unwind_app
+# UNWIND APP
+Office Syndrome Preventing and Relieving Application
 
-A new Flutter project.
+
+## About this app
+A research project at the undergraduate level, focusing on the development of an application for the prevention and relief of office syndrome symptoms,
+aims to create an application for individuals experiencing office syndrome. This app helps manage the symptoms by addressing pain points and providing self-assessment of office syndrome. 
+It also enables users to track their self-treatment progress and adjust their working environment to prevent recurring symptoms, all according to the app's recommendations.
+
 
 ## Getting Started
+you can download this app in link : https://drive.google.com/file/d/1tzEbvQmvC73TJli2X0qnNTE6srKq6j1E/view?usp=sharing
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
