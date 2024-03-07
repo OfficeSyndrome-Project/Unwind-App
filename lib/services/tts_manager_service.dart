@@ -37,54 +37,42 @@ class TtsManager {
     }
 
     flutterTts.setStartHandler(() {
-      print("Playing");
       ttsState = TtsState.playing;
     });
 
     if (isAndroid) {
-      flutterTts.setInitHandler(() {
-        print("TTS Initialized");
-      });
+      flutterTts.setInitHandler(() {});
     }
 
     flutterTts.setCompletionHandler(() {
-      print("Complete");
       ttsState = TtsState.stopped;
     });
 
     flutterTts.setCancelHandler(() {
-      print("Cancel");
       ttsState = TtsState.stopped;
     });
 
     flutterTts.setPauseHandler(() {
-      print("Paused");
       ttsState = TtsState.paused;
     });
 
     flutterTts.setContinueHandler(() {
-      print("Continued");
       ttsState = TtsState.continued;
     });
 
     flutterTts.setErrorHandler((msg) {
-      print("error: $msg");
       ttsState = TtsState.stopped;
     });
   }
 
   Future _getDefaultEngine() async {
     var engine = await flutterTts.getDefaultEngine;
-    if (engine != null) {
-      print(engine);
-    }
+    if (engine != null) {}
   }
 
   Future _getDefaultVoice() async {
     var voice = await flutterTts.getDefaultVoice;
-    if (voice != null) {
-      print(voice);
-    }
+    if (voice != null) {}
   }
 
   Future<void> setVolume(double _volume) async {
@@ -105,7 +93,6 @@ class TtsManager {
   Future _setAwaitOptions() async {
     await flutterTts.awaitSpeakCompletion(true);
 
-    // await flutterTts.setSharedInstance(true);
     await flutterTts.setIosAudioCategory(
         IosTextToSpeechAudioCategory.playback,
         [

@@ -116,18 +116,6 @@ class AnswerService {
       questionPart: question?.questionPart ?? 0,
       area: area,
       areaThai: areaThai,
-      // questionSpecificAssetName:
-      //     ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
-      //         .where((element) => element.title == areaThai)
-      //         .where((element) => element.questionId == questionId)
-      //         .firstOrNull
-      //         ?.postureName,
-      // questionSpecificAssetPath:
-      //     ScreeningPartThreePostureModel.getScreeningPartThreePostureModel()
-      //         .where((element) => element.title == areaThai)
-      //         .where((element) => element.questionId == questionId)
-      //         .firstOrNull
-      //         ?.assetPath,
     );
   }
 
@@ -246,7 +234,6 @@ class AnswerService {
     switch (questionPart) {
       case 1:
         return AnswerInterpretation(
-          // answer: question?.question ?? '',
           answer: answer.answer,
           text: TWO_CHOICES_ANSWER_MEANING[answer.answer] ?? '',
         );

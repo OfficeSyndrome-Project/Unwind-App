@@ -84,10 +84,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
         PrepareWorkoutWidget(
           workoutData: workoutData,
         ),
-        // WorkoutWidget( //   name: workoutData.name,
-        //   workoutData: workoutData,
-        //   timeth: 0,
-        // ),
       ];
 
   /// workoutWidgetFn is a function to create the workout widget with workout animation
@@ -282,10 +278,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   },
                   // make it ceil up, not showing zero at the end
                   timeFormatterFunction: (defaultFormatterFunction, duration) {
-                    // if (duration.inSeconds > 60) {
-                    //   // mm:ss format
-                    //   return '${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
-                    // }
                     return (duration.inMilliseconds / 1000).ceil().toString();
                   },
                 ),
@@ -298,7 +290,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     ttsManager.speak('${durationSecond}');
     Timer.periodic(Duration(seconds: 1), (timer) {
       this.ttsTimer = timer;
-      print('timer: ${timer.tick}');
+
       ttsManager.pause();
       ttsManager.stop();
       final timeSec = durationSecond - timer.tick;
@@ -310,7 +302,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
         ttsManager.speak('${durationSecond - timer.tick}');
       }
       if (timer.tick == durationSecond) {
-        print('timer cancel');
         timer.cancel();
       }
     });

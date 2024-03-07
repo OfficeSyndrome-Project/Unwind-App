@@ -80,8 +80,6 @@ class _PartThreeQuestionBoxWidgettState
             title: widget.title,
             // onChanged: widget.onChanged,
             onChanged: (answer) {
-              print(answer);
-              print(widget.questions[index].questionPage);
               // Update the answers
               answers = Answer.updateAnswer(answers, answer);
 

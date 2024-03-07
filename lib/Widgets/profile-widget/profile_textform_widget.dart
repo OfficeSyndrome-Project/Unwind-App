@@ -114,9 +114,7 @@ class ProfileTextFormState extends State<ProfileTextForm> {
                 color: Colors.red,
                 width: 1,
               ),
-            )
-            // contentPadding: EdgeInsets.only(bottom: 0, top: 10),
-            ),
+            )),
       ),
     );
   }

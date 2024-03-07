@@ -30,15 +30,7 @@ void main() {
       ),
       findsOneWidget,
     );
-    // final BoxDecoration decoration = tester
-    //     .widget<Container>(
-    //       find.descendant(
-    //         of: find.byType(InkWell),
-    //         matching: find.byType(Container).first,
-    //       ),
-    //     )
-    //     .decoration as BoxDecoration;
-    // expect(decoration.border!.top.color, equals(Colors.blue));
+
     await tester.tap(find.byType(InkWell));
     await tester.pump();
     expect(onChangedCalled, true);

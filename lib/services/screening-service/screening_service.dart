@@ -32,8 +32,7 @@ class ScreeningQuestionPartOneService {
     var result = questions
         .where((question) => question.questionPage == questionPage)
         .toList();
-    // .toString();
-    // print(result);
+
     return result;
   }
 }
@@ -131,9 +130,6 @@ class ScreeningQuestionPartTwoService {
 
 //screening part three
 class ScreeningQuestionPartThreeService {
-  // //all choice
-  // static List<ScreeningPartThreeSelectPart> choices =
-  //     ScreeningPartTwoSelectPart.getTitleQPage();
   static List<ScreeningPartThreePostureModel> posture =
       ScreeningPartThreePostureModel.getScreeningPartThreePostureModel();
   static List<ScreeningPartThreeQuestionModel> question =

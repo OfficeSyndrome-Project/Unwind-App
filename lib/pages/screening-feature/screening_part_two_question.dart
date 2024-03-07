@@ -147,7 +147,6 @@ class _ScreeningPartTwoQuestionState extends State<ScreeningPartTwoQuestion> {
             onTap: () {
               if (!disable) {
                 if (onSelectPart[notSureKey] ?? false) {
-                  print('not sure');
                   onSelectPart.clear();
                   Navigator.push(
                       context,

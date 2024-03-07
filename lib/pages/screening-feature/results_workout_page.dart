@@ -17,14 +17,12 @@ class ResultsWorkoutPage extends StatelessWidget {
   final AnswerContext? answerContext;
   final String? resultText;
   final List<WorkoutListData> workoutLists;
-  // final Widget? nextPage;
 
   ResultsWorkoutPage({
     Key? key,
     required this.workoutLists,
     this.answerContext,
     this.resultText,
-    // this.nextPage,
   }) : super(key: key);
 
   final PageRoutes pageRoutes = PageRoutes();

@@ -50,11 +50,5 @@ void main() {
     expect(find.text('ส่วนที่ 1 Type'), findsOneWidget);
     expect(find.text('1'), findsNothing);
     expect(find.text('ส่วนที่ 2'), findsNothing);
-    // for (var question in questions) {
-    //   expect(
-    //     find.widgetWithText(ErgBoxresultWidget, question.question),
-    //     findsOneWidget,
-    //   );
-    // }
   });
 }

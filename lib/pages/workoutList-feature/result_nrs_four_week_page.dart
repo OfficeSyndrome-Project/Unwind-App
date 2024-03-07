@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:unwind_app/Routes/routes_config.dart';
-// import 'package:unwind_app/Routes/routes_config.dart';
 import 'package:unwind_app/Widgets/button_withouticon_widget.dart';
 import 'package:unwind_app/Widgets/ratio_imageone_to_one.dart';
 import 'package:unwind_app/Widgets/responsive_check_widget.dart';
@@ -38,26 +37,6 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
   @override
   Widget build(BuildContext context) {
     return AppscreenTheme(
-      // iconButtonStart: IconButton(
-      //     highlightColor: Colors.transparent,
-      //     icon: const Icon(Icons.arrow_back_ios_rounded),
-      //     onPressed: () {
-      //       setState(() {
-      //         if (index == 0) {
-      //           Navigator.pop(context);
-      //           return;
-      //         }
-      //         if (index == 1) {
-      //           index -= 1;
-      //           return;
-      //         }
-      //         if (index == 2) {
-      //           index = 0;
-      //           return;
-      //         }
-      //       });
-      //     },
-      //     color: Theme.of(context).colorScheme.primary),
       colorBar: Colors.transparent,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,7 +76,6 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
                           'lib/assets/images/workout/result_nrs_four_week_2.png',
                       onChanged: (answer2) {
                         answers[2] = answer2;
-                        print('p1 ${answer2}');
                       },
                     ),
                   ),
@@ -149,8 +127,6 @@ class _ResultNrsFourWeekPageState extends State<ResultNrsFourWeekPage> {
   }
 
   Future<void> nextPage(BuildContext context, Map<int, int> answers) async {
-    print(index);
-    print(answers);
     if (index == 0) {
       setState(() {
         if (answers[1] == 2) {

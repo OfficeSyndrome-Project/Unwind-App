@@ -27,10 +27,8 @@ void main() async {
     await GeneralStoredService.writeBoolean(
         GeneralStoredService.isFirstTime, 0, 0, true);
   }
-  print("isFirstTime: $isFirstTime");
 
   runApp(MyApp(isFirstTime: isFirstTime ?? true));
-  // dispose();
 }
 
 class MyApp extends StatelessWidget {

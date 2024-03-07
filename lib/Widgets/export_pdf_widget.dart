@@ -435,10 +435,6 @@ List<pw.Container> buildNrsResults(
                   ),
                 ),
                 pw.SizedBox(width: 8),
-                // pw.Text(
-                //   '${storageUser.accident}',
-                //   style: pw.TextStyle(fontWeight: pw.FontWeight.normal, fontSize: 16),
-                // ),
               ],
             ),
           ))
