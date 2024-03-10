@@ -44,7 +44,7 @@ class _FormAfterScreeningState extends State<FormAfterScreening> {
   void initState() {
     super.initState();
     initCreateUser();
-    initUser();
+    // initUser();
   }
 
   void initCreateUser() async {
