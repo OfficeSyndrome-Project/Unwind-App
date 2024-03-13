@@ -9,6 +9,6 @@ It also enables users to track their self-treatment progress and adjust their wo
 
 
 ## Getting Started
-you can download this app in link : https://drive.google.com/file/d/1tzEbvQmvC73TJli2X0qnNTE6srKq6j1E/view?usp=sharing
+you can download this app in link : https://drive.google.com/file/d/1ru007aqTcxI5Wu6AXDva1JCzf4sNs8Du/view?usp=drive_link
 
 
